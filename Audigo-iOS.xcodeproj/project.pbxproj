@@ -1,0 +1,606 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAD20C979040063D89F /* AppDelegate.swift */; };
+		CED4CCB020C979040063D89F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* ViewController.swift */; };
+		CED4CCB320C979040063D89F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB120C979040063D89F /* Main.storyboard */; };
+		CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCB420C979040063D89F /* Audigo_iOS.xcdatamodeld */; };
+		CED4CCB820C979060063D89F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB720C979060063D89F /* Assets.xcassets */; };
+		CED4CCBB20C979060063D89F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB920C979060063D89F /* LaunchScreen.storyboard */; };
+		CED4CCC620C979060063D89F /* Audigo_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCC520C979060063D89F /* Audigo_iOSTests.swift */; };
+		CED4CCD120C979060063D89F /* Audigo_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CED4CCC220C979060063D89F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED4CCA220C979040063D89F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CED4CCA920C979040063D89F;
+			remoteInfo = "Audigo-iOS";
+		};
+		CED4CCCD20C979060063D89F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED4CCA220C979040063D89F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CED4CCA920C979040063D89F;
+			remoteInfo = "Audigo-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CED4CCAA20C979040063D89F /* Audigo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audigo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CED4CCAD20C979040063D89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CED4CCAF20C979040063D89F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CED4CCB220C979040063D89F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CED4CCB520C979040063D89F /* Audigo_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Audigo_iOS.xcdatamodel; sourceTree = "<group>"; };
+		CED4CCB720C979060063D89F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CED4CCBA20C979060063D89F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CED4CCBC20C979060063D89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CED4CCC120C979060063D89F /* Audigo-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Audigo-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CED4CCC520C979060063D89F /* Audigo_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audigo_iOSTests.swift; sourceTree = "<group>"; };
+		CED4CCC720C979060063D89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CED4CCCC20C979060063D89F /* Audigo-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Audigo-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audigo_iOSUITests.swift; sourceTree = "<group>"; };
+		CED4CCD220C979060063D89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CED4CCA720C979040063D89F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CED4CCBE20C979060063D89F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CED4CCC920C979060063D89F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CED4CCA120C979040063D89F = {
+			isa = PBXGroup;
+			children = (
+				CED4CCAC20C979040063D89F /* Audigo-iOS */,
+				CED4CCC420C979060063D89F /* Audigo-iOSTests */,
+				CED4CCCF20C979060063D89F /* Audigo-iOSUITests */,
+				CED4CCAB20C979040063D89F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CED4CCAB20C979040063D89F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CED4CCAA20C979040063D89F /* Audigo-iOS.app */,
+				CED4CCC120C979060063D89F /* Audigo-iOSTests.xctest */,
+				CED4CCCC20C979060063D89F /* Audigo-iOSUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
+				CED4CCAF20C979040063D89F /* ViewController.swift */,
+				CED4CCB120C979040063D89F /* Main.storyboard */,
+				CED4CCB720C979060063D89F /* Assets.xcassets */,
+				CED4CCB920C979060063D89F /* LaunchScreen.storyboard */,
+				CED4CCBC20C979060063D89F /* Info.plist */,
+				CED4CCB420C979040063D89F /* Audigo_iOS.xcdatamodeld */,
+			);
+			path = "Audigo-iOS";
+			sourceTree = "<group>";
+		};
+		CED4CCC420C979060063D89F /* Audigo-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				CED4CCC520C979060063D89F /* Audigo_iOSTests.swift */,
+				CED4CCC720C979060063D89F /* Info.plist */,
+			);
+			path = "Audigo-iOSTests";
+			sourceTree = "<group>";
+		};
+		CED4CCCF20C979060063D89F /* Audigo-iOSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */,
+				CED4CCD220C979060063D89F /* Info.plist */,
+			);
+			path = "Audigo-iOSUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CED4CCA920C979040063D89F /* Audigo-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CED4CCD520C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOS" */;
+			buildPhases = (
+				CED4CCA620C979040063D89F /* Sources */,
+				CED4CCA720C979040063D89F /* Frameworks */,
+				CED4CCA820C979040063D89F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Audigo-iOS";
+			productName = "Audigo-iOS";
+			productReference = CED4CCAA20C979040063D89F /* Audigo-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CED4CCC020C979060063D89F /* Audigo-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CED4CCD820C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOSTests" */;
+			buildPhases = (
+				CED4CCBD20C979060063D89F /* Sources */,
+				CED4CCBE20C979060063D89F /* Frameworks */,
+				CED4CCBF20C979060063D89F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CED4CCC320C979060063D89F /* PBXTargetDependency */,
+			);
+			name = "Audigo-iOSTests";
+			productName = "Audigo-iOSTests";
+			productReference = CED4CCC120C979060063D89F /* Audigo-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CED4CCCB20C979060063D89F /* Audigo-iOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CED4CCDB20C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOSUITests" */;
+			buildPhases = (
+				CED4CCC820C979060063D89F /* Sources */,
+				CED4CCC920C979060063D89F /* Frameworks */,
+				CED4CCCA20C979060063D89F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CED4CCCE20C979060063D89F /* PBXTargetDependency */,
+			);
+			name = "Audigo-iOSUITests";
+			productName = "Audigo-iOSUITests";
+			productReference = CED4CCCC20C979060063D89F /* Audigo-iOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CED4CCA220C979040063D89F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = BlackBurn;
+				TargetAttributes = {
+					CED4CCA920C979040063D89F = {
+						CreatedOnToolsVersion = 9.3.1;
+					};
+					CED4CCC020C979060063D89F = {
+						CreatedOnToolsVersion = 9.3.1;
+						TestTargetID = CED4CCA920C979040063D89F;
+					};
+					CED4CCCB20C979060063D89F = {
+						CreatedOnToolsVersion = 9.3.1;
+						TestTargetID = CED4CCA920C979040063D89F;
+					};
+				};
+			};
+			buildConfigurationList = CED4CCA520C979040063D89F /* Build configuration list for PBXProject "Audigo-iOS" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CED4CCA120C979040063D89F;
+			productRefGroup = CED4CCAB20C979040063D89F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CED4CCA920C979040063D89F /* Audigo-iOS */,
+				CED4CCC020C979060063D89F /* Audigo-iOSTests */,
+				CED4CCCB20C979060063D89F /* Audigo-iOSUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CED4CCA820C979040063D89F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CED4CCBB20C979060063D89F /* LaunchScreen.storyboard in Resources */,
+				CED4CCB820C979060063D89F /* Assets.xcassets in Resources */,
+				CED4CCB320C979040063D89F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CED4CCBF20C979060063D89F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CED4CCCA20C979060063D89F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CED4CCA620C979040063D89F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
+				CED4CCB020C979040063D89F /* ViewController.swift in Sources */,
+				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CED4CCBD20C979060063D89F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CED4CCC620C979060063D89F /* Audigo_iOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CED4CCC820C979060063D89F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CED4CCD120C979060063D89F /* Audigo_iOSUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CED4CCC320C979060063D89F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CED4CCA920C979040063D89F /* Audigo-iOS */;
+			targetProxy = CED4CCC220C979060063D89F /* PBXContainerItemProxy */;
+		};
+		CED4CCCE20C979060063D89F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CED4CCA920C979040063D89F /* Audigo-iOS */;
+			targetProxy = CED4CCCD20C979060063D89F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CED4CCB120C979040063D89F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CED4CCB220C979040063D89F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CED4CCB920C979060063D89F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CED4CCBA20C979060063D89F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CED4CCD320C979060063D89F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CED4CCD420C979060063D89F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CED4CCD620C979060063D89F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R2ESGSL5P9;
+				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CED4CCD720C979060063D89F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R2ESGSL5P9;
+				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CED4CCD920C979060063D89F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R2ESGSL5P9;
+				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Audigo-iOS.app/Audigo-iOS";
+			};
+			name = Debug;
+		};
+		CED4CCDA20C979060063D89F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R2ESGSL5P9;
+				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Audigo-iOS.app/Audigo-iOS";
+			};
+			name = Release;
+		};
+		CED4CCDC20C979060063D89F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R2ESGSL5P9;
+				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Audigo-iOS";
+			};
+			name = Debug;
+		};
+		CED4CCDD20C979060063D89F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R2ESGSL5P9;
+				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Audigo-iOS";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CED4CCA520C979040063D89F /* Build configuration list for PBXProject "Audigo-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CED4CCD320C979060063D89F /* Debug */,
+				CED4CCD420C979060063D89F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CED4CCD520C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CED4CCD620C979060063D89F /* Debug */,
+				CED4CCD720C979060063D89F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CED4CCD820C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CED4CCD920C979060063D89F /* Debug */,
+				CED4CCDA20C979060063D89F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CED4CCDB20C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CED4CCDC20C979060063D89F /* Debug */,
+				CED4CCDD20C979060063D89F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CED4CCB420C979040063D89F /* Audigo_iOS.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CED4CCB520C979040063D89F /* Audigo_iOS.xcdatamodel */,
+			);
+			currentVersion = CED4CCB520C979040063D89F /* Audigo_iOS.xcdatamodel */;
+			path = Audigo_iOS.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = CED4CCA220C979040063D89F /* Project object */;
+}
