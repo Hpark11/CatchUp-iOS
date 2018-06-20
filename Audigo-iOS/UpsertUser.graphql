@@ -1,0 +1,25 @@
+mutation UpsertUser($id: ID!, $email: String, $nickname: String, $gender: String, $birthday: String, $ageRange: String, $profileImagePath: String, $phone: String!) {
+  upsertUser(id: $id, email: $email, nickname: $nickname, gender: $gender, birthday: $birthday, ageRange: $ageRange, profileImagePath: $profileImagePath, phone: $phone) {
+    pocket {
+      latitude
+      longitude
+      token
+      profileImagePath
+      phone
+      promiseList {
+        id
+        address
+        timestamp
+        latitude
+        longitude
+        name
+        pockets {
+          phone
+          token
+          profileImagePath
+          nickname
+        }
+      }
+    }
+  }
+}

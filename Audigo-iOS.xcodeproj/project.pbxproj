@@ -11,6 +11,12 @@
 		A0481508A224CCDA166030F8 /* Pods_Audigo_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */; };
 		CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */; };
 		CE7D369420DA8682003E8823 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369320DA8682003E8823 /* R.generated.swift */; };
+		CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */; };
+		CE7D36A220DA9583003E8823 /* UpsertUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE7D369E20DA9582003E8823 /* UpsertUser.graphql */; };
+		CE7D36A320DA9583003E8823 /* AddPromise.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE7D369F20DA9582003E8823 /* AddPromise.graphql */; };
+		CE7D36A420DA9583003E8823 /* DeletePromiseById.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE7D36A020DA9583003E8823 /* DeletePromiseById.graphql */; };
+		CE7D36A520DA9583003E8823 /* GetUserWithPromises.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE7D36A120DA9583003E8823 /* GetUserWithPromises.graphql */; };
+		CE7D36A720DA95AB003E8823 /* GetPromise.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE7D36A620DA95AB003E8823 /* GetPromise.graphql */; };
 		CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAD20C979040063D89F /* AppDelegate.swift */; };
 		CED4CCB020C979040063D89F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* ViewController.swift */; };
 		CED4CCB320C979040063D89F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB120C979040063D89F /* Main.storyboard */; };
@@ -49,6 +55,12 @@
 		CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KakaoOpenSDK-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE7D369320DA8682003E8823 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApolloAPIService.swift; sourceTree = "<group>"; };
+		CE7D369E20DA9582003E8823 /* UpsertUser.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UpsertUser.graphql; sourceTree = "<group>"; };
+		CE7D369F20DA9582003E8823 /* AddPromise.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AddPromise.graphql; sourceTree = "<group>"; };
+		CE7D36A020DA9583003E8823 /* DeletePromiseById.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeletePromiseById.graphql; sourceTree = "<group>"; };
+		CE7D36A120DA9583003E8823 /* GetUserWithPromises.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetUserWithPromises.graphql; sourceTree = "<group>"; };
+		CE7D36A620DA95AB003E8823 /* GetPromise.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetPromise.graphql; sourceTree = "<group>"; };
 		CED4CCAA20C979040063D89F /* Audigo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audigo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCAD20C979040063D89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CED4CCAF20C979040063D89F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -136,9 +148,15 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */,
 				CE7D369320DA8682003E8823 /* R.generated.swift */,
 				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
 				CED4CCAF20C979040063D89F /* ViewController.swift */,
+				CE7D369F20DA9582003E8823 /* AddPromise.graphql */,
+				CE7D36A020DA9583003E8823 /* DeletePromiseById.graphql */,
+				CE7D36A620DA95AB003E8823 /* GetPromise.graphql */,
+				CE7D36A120DA9583003E8823 /* GetUserWithPromises.graphql */,
+				CE7D369E20DA9582003E8823 /* UpsertUser.graphql */,
 				CED4CCB120C979040063D89F /* Main.storyboard */,
 				CED4CCB720C979060063D89F /* Assets.xcassets */,
 				CED4CCB920C979060063D89F /* LaunchScreen.storyboard */,
@@ -185,7 +203,8 @@
 			buildConfigurationList = CED4CCD520C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOS" */;
 			buildPhases = (
 				4998EC94FBBA764A6C27DB0C /* [CP] Check Pods Manifest.lock */,
-				CE7D369220DA8504003E8823 /* ShellScript */,
+				CE7D369220DA8504003E8823 /* Run R.Swift Phase */,
+				CE7D369520DA8A3F003E8823 /* Generate Apollo GraphQL API */,
 				CED4CCA620C979040063D89F /* Sources */,
 				CED4CCA720C979040063D89F /* Frameworks */,
 				CED4CCA820C979040063D89F /* Resources */,
@@ -286,8 +305,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE7D36A420DA9583003E8823 /* DeletePromiseById.graphql in Resources */,
+				CE7D36A520DA9583003E8823 /* GetUserWithPromises.graphql in Resources */,
+				CE7D36A320DA9583003E8823 /* AddPromise.graphql in Resources */,
 				CED4CCBB20C979060063D89F /* LaunchScreen.storyboard in Resources */,
+				CE7D36A220DA9583003E8823 /* UpsertUser.graphql in Resources */,
 				CED4CCB820C979060063D89F /* Assets.xcassets in Resources */,
+				CE7D36A720DA95AB003E8823 /* GetPromise.graphql in Resources */,
 				CED4CCB320C979040063D89F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,18 +385,33 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CE7D369220DA8504003E8823 /* ShellScript */ = {
+		CE7D369220DA8504003E8823 /* Run R.Swift Phase */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run R.Swift Phase";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"";
+		};
+		CE7D369520DA8A3F003E8823 /* Generate Apollo GraphQL API */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Apollo GraphQL API";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output ApolloAPIService.swift";
 		};
 		D02596870FAEDD9BABFE5494 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -420,6 +459,7 @@
 				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
 				CED4CCB020C979040063D89F /* ViewController.swift in Sources */,
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
+				CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */,
 				CE7D369420DA8682003E8823 /* R.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,7 +566,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -580,7 +620,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -601,6 +641,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -647,6 +688,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

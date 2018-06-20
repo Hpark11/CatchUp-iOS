@@ -1,0 +1,30 @@
+query GetUserWithPromises($id: ID!) {
+  user(id: $id) {
+    email
+    nickname
+    profileImagePath
+    gender
+    birthday
+    ageRange
+    pocket {
+      phone
+      token
+      profileImagePath
+      nickname
+      promiseList {
+        id
+        address
+        timestamp
+        latitude
+        longitude
+        name
+        pockets {
+          phone
+          token
+          profileImagePath
+          nickname
+        }
+      }
+    }
+  }
+}

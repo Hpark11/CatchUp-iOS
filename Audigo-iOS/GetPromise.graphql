@@ -1,0 +1,18 @@
+query GetPromise($id: ID!) {
+  promise(id: $id) {
+    id
+    address
+    timestamp
+    latitude
+    longitude
+    name
+    pockets {
+      phone
+      latitude
+      longitude
+      token
+      profileImagePath
+      nickname
+    }
+  }
+}

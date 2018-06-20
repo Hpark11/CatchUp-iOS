@@ -1,0 +1,6 @@
+mutation DeletePromiseById($id: ID, $timestamp: String) {
+  deletePromise(id: $id, timestamp: $timestamp) {
+    id
+    timestamp
+  }
+}
