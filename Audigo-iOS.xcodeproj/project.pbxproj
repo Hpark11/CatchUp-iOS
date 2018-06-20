@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D21762642317F57372FC052 /* Pods_Audigo_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C23B93B7ECC5C9C81403950 /* Pods_Audigo_iOSTests.framework */; };
+		A0481508A224CCDA166030F8 /* Pods_Audigo_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */; };
+		CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */; };
+		CE7D369420DA8682003E8823 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369320DA8682003E8823 /* R.generated.swift */; };
 		CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAD20C979040063D89F /* AppDelegate.swift */; };
 		CED4CCB020C979040063D89F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* ViewController.swift */; };
 		CED4CCB320C979040063D89F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB120C979040063D89F /* Main.storyboard */; };
@@ -15,6 +19,7 @@
 		CED4CCBB20C979060063D89F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB920C979060063D89F /* LaunchScreen.storyboard */; };
 		CED4CCC620C979060063D89F /* Audigo_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCC520C979060063D89F /* Audigo_iOSTests.swift */; };
 		CED4CCD120C979060063D89F /* Audigo_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */; };
+		DAA9A1DE40416DAD7F13D98E /* Pods_Audigo_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037C740967F5570A44C65A3B /* Pods_Audigo_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +40,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		037C740967F5570A44C65A3B /* Pods_Audigo_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audigo_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		48800521CEAD7FE421842A0E /* Pods-Audigo-iOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSUITests/Pods-Audigo-iOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6C23B93B7ECC5C9C81403950 /* Pods_Audigo_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audigo_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A15A740631A4179D9F919E4F /* Pods-Audigo-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSTests/Pods-Audigo-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B5DF70456DCA29CA99440351 /* Pods-Audigo-iOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSUITests/Pods-Audigo-iOSUITests.release.xcconfig"; sourceTree = "<group>"; };
+		CA541320104F8C0FED8535D0 /* Pods-Audigo-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
+		CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KakaoOpenSDK-Bridging-Header.h"; sourceTree = "<group>"; };
+		CE7D369320DA8682003E8823 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		CED4CCAA20C979040063D89F /* Audigo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audigo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCAD20C979040063D89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CED4CCAF20C979040063D89F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +63,9 @@
 		CED4CCCC20C979060063D89F /* Audigo-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Audigo-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audigo_iOSUITests.swift; sourceTree = "<group>"; };
 		CED4CCD220C979060063D89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA147B49087C78684F7FF21E /* Pods-Audigo-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSTests/Pods-Audigo-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		E85035A84CDA31ECF6853A28 /* Pods-Audigo-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audigo_iOSUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAA9A1DE40416DAD7F13D98E /* Pods_Audigo_iOS.framework in Frameworks */,
+				CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D21762642317F57372FC052 /* Pods_Audigo_iOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,19 +90,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0481508A224CCDA166030F8 /* Pods_Audigo_iOSUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CDC07E9AFC673E36494025A4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CA541320104F8C0FED8535D0 /* Pods-Audigo-iOS.debug.xcconfig */,
+				E85035A84CDA31ECF6853A28 /* Pods-Audigo-iOS.release.xcconfig */,
+				A15A740631A4179D9F919E4F /* Pods-Audigo-iOSTests.debug.xcconfig */,
+				DA147B49087C78684F7FF21E /* Pods-Audigo-iOSTests.release.xcconfig */,
+				48800521CEAD7FE421842A0E /* Pods-Audigo-iOSUITests.debug.xcconfig */,
+				B5DF70456DCA29CA99440351 /* Pods-Audigo-iOSUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CED4CCA120C979040063D89F = {
 			isa = PBXGroup;
 			children = (
+				CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */,
 				CED4CCAC20C979040063D89F /* Audigo-iOS */,
 				CED4CCC420C979060063D89F /* Audigo-iOSTests */,
 				CED4CCCF20C979060063D89F /* Audigo-iOSUITests */,
 				CED4CCAB20C979040063D89F /* Products */,
+				CDC07E9AFC673E36494025A4 /* Pods */,
+				FCC8BC3FA2F2707845E1B047 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +136,7 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				CE7D369320DA8682003E8823 /* R.generated.swift */,
 				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
 				CED4CCAF20C979040063D89F /* ViewController.swift */,
 				CED4CCB120C979040063D89F /* Main.storyboard */,
@@ -128,6 +166,17 @@
 			path = "Audigo-iOSUITests";
 			sourceTree = "<group>";
 		};
+		FCC8BC3FA2F2707845E1B047 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */,
+				037C740967F5570A44C65A3B /* Pods_Audigo_iOS.framework */,
+				6C23B93B7ECC5C9C81403950 /* Pods_Audigo_iOSTests.framework */,
+				EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +184,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CED4CCD520C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOS" */;
 			buildPhases = (
+				4998EC94FBBA764A6C27DB0C /* [CP] Check Pods Manifest.lock */,
+				CE7D369220DA8504003E8823 /* ShellScript */,
 				CED4CCA620C979040063D89F /* Sources */,
 				CED4CCA720C979040063D89F /* Frameworks */,
 				CED4CCA820C979040063D89F /* Resources */,
+				210452AA7CCAAE35815164FE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -152,6 +204,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CED4CCD820C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOSTests" */;
 			buildPhases = (
+				D7429C5682F781A87B88FE5B /* [CP] Check Pods Manifest.lock */,
 				CED4CCBD20C979060063D89F /* Sources */,
 				CED4CCBE20C979060063D89F /* Frameworks */,
 				CED4CCBF20C979060063D89F /* Resources */,
@@ -170,6 +223,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CED4CCDB20C979060063D89F /* Build configuration list for PBXNativeTarget "Audigo-iOSUITests" */;
 			buildPhases = (
+				D02596870FAEDD9BABFE5494 /* [CP] Check Pods Manifest.lock */,
 				CED4CCC820C979060063D89F /* Sources */,
 				CED4CCC920C979060063D89F /* Frameworks */,
 				CED4CCCA20C979060063D89F /* Resources */,
@@ -254,6 +308,110 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		210452AA7CCAAE35815164FE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Action/Action.framework",
+				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
+				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxKeyboard/RxKeyboard.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxKeyboard.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4998EC94FBBA764A6C27DB0C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Audigo-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE7D369220DA8504003E8823 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"";
+		};
+		D02596870FAEDD9BABFE5494 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Audigo-iOSUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7429C5682F781A87B88FE5B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Audigo-iOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CED4CCA620C979040063D89F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -262,6 +420,7 @@
 				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
 				CED4CCB020C979040063D89F /* ViewController.swift in Sources */,
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
+				CE7D369420DA8682003E8823 /* R.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,17 +591,45 @@
 		};
 		CED4CCD620C979060063D89F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA541320104F8C0FED8535D0 /* Pods-Audigo-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Action\"",
+					"-framework",
+					"\"Apollo\"",
+					"-framework",
+					"\"Differentiator\"",
+					"-framework",
+					"\"NSObject_Rx\"",
+					"-framework",
+					"\"Rswift\"",
+					"-framework",
+					"\"RxCocoa\"",
+					"-framework",
+					"\"RxDataSources\"",
+					"-framework",
+					"\"RxKeyboard\"",
+					"-framework",
+					"\"RxSwift\"",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "KakaoOpenSDK-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -450,17 +637,45 @@
 		};
 		CED4CCD720C979060063D89F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E85035A84CDA31ECF6853A28 /* Pods-Audigo-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Action\"",
+					"-framework",
+					"\"Apollo\"",
+					"-framework",
+					"\"Differentiator\"",
+					"-framework",
+					"\"NSObject_Rx\"",
+					"-framework",
+					"\"Rswift\"",
+					"-framework",
+					"\"RxCocoa\"",
+					"-framework",
+					"\"RxDataSources\"",
+					"-framework",
+					"\"RxKeyboard\"",
+					"-framework",
+					"\"RxSwift\"",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "KakaoOpenSDK-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -468,6 +683,7 @@
 		};
 		CED4CCD920C979060063D89F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A15A740631A4179D9F919E4F /* Pods-Audigo-iOSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -489,6 +705,7 @@
 		};
 		CED4CCDA20C979060063D89F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA147B49087C78684F7FF21E /* Pods-Audigo-iOSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -510,6 +727,7 @@
 		};
 		CED4CCDC20C979060063D89F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 48800521CEAD7FE421842A0E /* Pods-Audigo-iOSUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -530,6 +748,7 @@
 		};
 		CED4CCDD20C979060063D89F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5DF70456DCA29CA99440351 /* Pods-Audigo-iOSUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
