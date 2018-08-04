@@ -8,17 +8,17 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class MainViewController: UIViewController, BindableType {
+  var viewModel: MainViewModel!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+    
     
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  func bindViewModel() {
+    
   }
 
   @IBAction func signInWithKakao(_ sender: Any) {
@@ -28,6 +28,7 @@ class ViewController: UIViewController {
       if s.isOpen() {
         s.close()
       }
+      
       s.open { (error) in
         if error == nil {
           print("No error")
@@ -41,6 +42,7 @@ class ViewController: UIViewController {
           print("Error Login: \(error!)")
         }
       }
+      
     } else {
       print("Something wrong!")
     }

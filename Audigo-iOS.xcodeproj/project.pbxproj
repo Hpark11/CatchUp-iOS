@@ -17,8 +17,18 @@
 		CE7D36A420DA9583003E8823 /* DeletePromiseById.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE7D36A020DA9583003E8823 /* DeletePromiseById.graphql */; };
 		CE7D36A520DA9583003E8823 /* GetUserWithPromises.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE7D36A120DA9583003E8823 /* GetUserWithPromises.graphql */; };
 		CE7D36A720DA95AB003E8823 /* GetPromise.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE7D36A620DA95AB003E8823 /* GetPromise.graphql */; };
+		CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EF82115C3FF006BC729 /* SceneCoordinatorType.swift */; };
+		CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EF92115C3FF006BC729 /* SceneTransitionType.swift */; };
+		CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EFA2115C3FF006BC729 /* Scene.swift */; };
+		CEB41F002115C3FF006BC729 /* Scene+ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EFB2115C3FF006BC729 /* Scene+ViewController.swift */; };
+		CEB41F012115C3FF006BC729 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EFC2115C3FF006BC729 /* AppCoordinator.swift */; };
+		CEB41F032115C41B006BC729 /* BindableTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F022115C41B006BC729 /* BindableTypes.swift */; };
+		CEB41F052115C484006BC729 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F042115C484006BC729 /* MainScene.swift */; };
+		CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F062115C4A6006BC729 /* MainViewModel.swift */; };
+		CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F082115C4F4006BC729 /* EntranceViewController.swift */; };
+		CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */; };
 		CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAD20C979040063D89F /* AppDelegate.swift */; };
-		CED4CCB020C979040063D89F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* ViewController.swift */; };
+		CED4CCB020C979040063D89F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* MainViewController.swift */; };
 		CED4CCB320C979040063D89F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB120C979040063D89F /* Main.storyboard */; };
 		CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCB420C979040063D89F /* Audigo_iOS.xcdatamodeld */; };
 		CED4CCB820C979060063D89F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB720C979060063D89F /* Assets.xcassets */; };
@@ -61,9 +71,19 @@
 		CE7D36A020DA9583003E8823 /* DeletePromiseById.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeletePromiseById.graphql; sourceTree = "<group>"; };
 		CE7D36A120DA9583003E8823 /* GetUserWithPromises.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetUserWithPromises.graphql; sourceTree = "<group>"; };
 		CE7D36A620DA95AB003E8823 /* GetPromise.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetPromise.graphql; sourceTree = "<group>"; };
+		CEB41EF82115C3FF006BC729 /* SceneCoordinatorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCoordinatorType.swift; sourceTree = "<group>"; };
+		CEB41EF92115C3FF006BC729 /* SceneTransitionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransitionType.swift; sourceTree = "<group>"; };
+		CEB41EFA2115C3FF006BC729 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		CEB41EFB2115C3FF006BC729 /* Scene+ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Scene+ViewController.swift"; sourceTree = "<group>"; };
+		CEB41EFC2115C3FF006BC729 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		CEB41F022115C41B006BC729 /* BindableTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableTypes.swift; sourceTree = "<group>"; };
+		CEB41F042115C484006BC729 /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
+		CEB41F062115C4A6006BC729 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		CEB41F082115C4F4006BC729 /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
+		CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
 		CED4CCAA20C979040063D89F /* Audigo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audigo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCAD20C979040063D89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CED4CCAF20C979040063D89F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CED4CCAF20C979040063D89F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CED4CCB220C979040063D89F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CED4CCB520C979040063D89F /* Audigo_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Audigo_iOS.xcdatamodel; sourceTree = "<group>"; };
 		CED4CCB720C979060063D89F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -122,6 +142,55 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CEB41EF52115C227006BC729 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		CEB41EF62115C2AF006BC729 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				CEB41F0D2115C545006BC729 /* Enter */,
+				CEB41F0C2115C541006BC729 /* Main */,
+				CEB41F022115C41B006BC729 /* BindableTypes.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		CEB41EF72115C3A4006BC729 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CEB41EFC2115C3FF006BC729 /* AppCoordinator.swift */,
+				CEB41EFA2115C3FF006BC729 /* Scene.swift */,
+				CEB41EFB2115C3FF006BC729 /* Scene+ViewController.swift */,
+				CEB41EF82115C3FF006BC729 /* SceneCoordinatorType.swift */,
+				CEB41EF92115C3FF006BC729 /* SceneTransitionType.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		CEB41F0C2115C541006BC729 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				CED4CCAF20C979040063D89F /* MainViewController.swift */,
+				CEB41F042115C484006BC729 /* MainScene.swift */,
+				CEB41F062115C4A6006BC729 /* MainViewModel.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		CEB41F0D2115C545006BC729 /* Enter */ = {
+			isa = PBXGroup;
+			children = (
+				CEB41F082115C4F4006BC729 /* EntranceViewController.swift */,
+				CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */,
+			);
+			path = Enter;
+			sourceTree = "<group>";
+		};
 		CED4CCA120C979040063D89F = {
 			isa = PBXGroup;
 			children = (
@@ -148,10 +217,11 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				CEB41EF72115C3A4006BC729 /* Coordinator */,
+				CEB41EF62115C2AF006BC729 /* UI */,
+				CEB41EF52115C227006BC729 /* App */,
 				CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */,
 				CE7D369320DA8682003E8823 /* R.generated.swift */,
-				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
-				CED4CCAF20C979040063D89F /* ViewController.swift */,
 				CE7D369F20DA9582003E8823 /* AddPromise.graphql */,
 				CE7D36A020DA9583003E8823 /* DeletePromiseById.graphql */,
 				CE7D36A620DA95AB003E8823 /* GetPromise.graphql */,
@@ -456,11 +526,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEB41F032115C41B006BC729 /* BindableTypes.swift in Sources */,
 				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
-				CED4CCB020C979040063D89F /* ViewController.swift in Sources */,
+				CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */,
+				CEB41F012115C3FF006BC729 /* AppCoordinator.swift in Sources */,
+				CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */,
+				CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */,
+				CED4CCB020C979040063D89F /* MainViewController.swift in Sources */,
+				CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */,
+				CEB41F002115C3FF006BC729 /* Scene+ViewController.swift in Sources */,
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
+				CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */,
 				CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */,
+				CEB41F052115C484006BC729 /* MainScene.swift in Sources */,
 				CE7D369420DA8682003E8823 /* R.generated.swift in Sources */,
+				CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -40,7 +40,7 @@ public final class AddPromiseMutation: GraphQLMutation {
     }
 
     public init(addPromise: AddPromise? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "addPromise": addPromise.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Mutation", "addPromise": addPromise.flatMap { (value: AddPromise) -> Snapshot in value.snapshot }])
     }
 
     public var addPromise: AddPromise? {
@@ -73,7 +73,7 @@ public final class AddPromiseMutation: GraphQLMutation {
       }
 
       public init(id: GraphQLID? = nil, name: String? = nil, address: String? = nil, latitude: Double? = nil, longitude: Double? = nil, timestamp: String? = nil, pockets: [Pocket?]? = nil) {
-        self.init(snapshot: ["__typename": "PromiseType", "id": id, "name": name, "address": address, "latitude": latitude, "longitude": longitude, "timestamp": timestamp, "pockets": pockets.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+        self.init(snapshot: ["__typename": "PromiseType", "id": id, "name": name, "address": address, "latitude": latitude, "longitude": longitude, "timestamp": timestamp, "pockets": pockets.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }])
       }
 
       public var __typename: String {
@@ -141,10 +141,10 @@ public final class AddPromiseMutation: GraphQLMutation {
 
       public var pockets: [Pocket?]? {
         get {
-          return (snapshot["pockets"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Pocket(snapshot: $0) } } }
+          return (snapshot["pockets"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Pocket?] in value.map { (value: Snapshot?) -> Pocket? in value.flatMap { (value: Snapshot) -> Pocket in Pocket(snapshot: value) } } }
         }
         set {
-          snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "pockets")
+          snapshot.updateValue(newValue.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }, forKey: "pockets")
         }
       }
 
@@ -248,7 +248,7 @@ public final class DeletePromiseByIdMutation: GraphQLMutation {
     }
 
     public init(deletePromise: DeletePromise? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "deletePromise": deletePromise.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Mutation", "deletePromise": deletePromise.flatMap { (value: DeletePromise) -> Snapshot in value.snapshot }])
     }
 
     public var deletePromise: DeletePromise? {
@@ -337,7 +337,7 @@ public final class GetPromiseQuery: GraphQLQuery {
     }
 
     public init(promise: Promise? = nil) {
-      self.init(snapshot: ["__typename": "RootQueryType", "promise": promise.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "RootQueryType", "promise": promise.flatMap { (value: Promise) -> Snapshot in value.snapshot }])
     }
 
     public var promise: Promise? {
@@ -370,7 +370,7 @@ public final class GetPromiseQuery: GraphQLQuery {
       }
 
       public init(id: GraphQLID? = nil, address: String? = nil, timestamp: String? = nil, latitude: Double? = nil, longitude: Double? = nil, name: String? = nil, pockets: [Pocket?]? = nil) {
-        self.init(snapshot: ["__typename": "PromiseType", "id": id, "address": address, "timestamp": timestamp, "latitude": latitude, "longitude": longitude, "name": name, "pockets": pockets.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+        self.init(snapshot: ["__typename": "PromiseType", "id": id, "address": address, "timestamp": timestamp, "latitude": latitude, "longitude": longitude, "name": name, "pockets": pockets.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }])
       }
 
       public var __typename: String {
@@ -438,10 +438,10 @@ public final class GetPromiseQuery: GraphQLQuery {
 
       public var pockets: [Pocket?]? {
         get {
-          return (snapshot["pockets"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Pocket(snapshot: $0) } } }
+          return (snapshot["pockets"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Pocket?] in value.map { (value: Snapshot?) -> Pocket? in value.flatMap { (value: Snapshot) -> Pocket in Pocket(snapshot: value) } } }
         }
         set {
-          snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "pockets")
+          snapshot.updateValue(newValue.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }, forKey: "pockets")
         }
       }
 
@@ -563,7 +563,7 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
     }
 
     public init(user: User? = nil) {
-      self.init(snapshot: ["__typename": "RootQueryType", "user": user.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "RootQueryType", "user": user.flatMap { (value: User) -> Snapshot in value.snapshot }])
     }
 
     public var user: User? {
@@ -690,7 +690,7 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
         }
 
         public init(phone: GraphQLID, token: String? = nil, profileImagePath: String? = nil, nickname: String? = nil, promiseList: [PromiseList?]? = nil) {
-          self.init(snapshot: ["__typename": "PocketType", "phone": phone, "token": token, "profileImagePath": profileImagePath, "nickname": nickname, "promiseList": promiseList.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+          self.init(snapshot: ["__typename": "PocketType", "phone": phone, "token": token, "profileImagePath": profileImagePath, "nickname": nickname, "promiseList": promiseList.flatMap { (value: [PromiseList?]) -> [Snapshot?] in value.map { (value: PromiseList?) -> Snapshot? in value.flatMap { (value: PromiseList) -> Snapshot in value.snapshot } } }])
         }
 
         public var __typename: String {
@@ -740,10 +740,10 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
 
         public var promiseList: [PromiseList?]? {
           get {
-            return (snapshot["promiseList"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { PromiseList(snapshot: $0) } } }
+            return (snapshot["promiseList"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [PromiseList?] in value.map { (value: Snapshot?) -> PromiseList? in value.flatMap { (value: Snapshot) -> PromiseList in PromiseList(snapshot: value) } } }
           }
           set {
-            snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "promiseList")
+            snapshot.updateValue(newValue.flatMap { (value: [PromiseList?]) -> [Snapshot?] in value.map { (value: PromiseList?) -> Snapshot? in value.flatMap { (value: PromiseList) -> Snapshot in value.snapshot } } }, forKey: "promiseList")
           }
         }
 
@@ -768,7 +768,7 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
           }
 
           public init(id: GraphQLID? = nil, address: String? = nil, timestamp: String? = nil, latitude: Double? = nil, longitude: Double? = nil, name: String? = nil, pockets: [Pocket?]? = nil) {
-            self.init(snapshot: ["__typename": "PromiseType", "id": id, "address": address, "timestamp": timestamp, "latitude": latitude, "longitude": longitude, "name": name, "pockets": pockets.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+            self.init(snapshot: ["__typename": "PromiseType", "id": id, "address": address, "timestamp": timestamp, "latitude": latitude, "longitude": longitude, "name": name, "pockets": pockets.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }])
           }
 
           public var __typename: String {
@@ -836,10 +836,10 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
 
           public var pockets: [Pocket?]? {
             get {
-              return (snapshot["pockets"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Pocket(snapshot: $0) } } }
+              return (snapshot["pockets"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Pocket?] in value.map { (value: Snapshot?) -> Pocket? in value.flatMap { (value: Snapshot) -> Pocket in Pocket(snapshot: value) } } }
             }
             set {
-              snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "pockets")
+              snapshot.updateValue(newValue.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }, forKey: "pockets")
             }
           }
 
@@ -957,7 +957,7 @@ public final class UpsertUserMutation: GraphQLMutation {
     }
 
     public init(upsertUser: UpsertUser? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "upsertUser": upsertUser.flatMap { $0.snapshot }])
+      self.init(snapshot: ["__typename": "Mutation", "upsertUser": upsertUser.flatMap { (value: UpsertUser) -> Snapshot in value.snapshot }])
     }
 
     public var upsertUser: UpsertUser? {
@@ -1025,7 +1025,7 @@ public final class UpsertUserMutation: GraphQLMutation {
         }
 
         public init(latitude: Double? = nil, longitude: Double? = nil, token: String? = nil, profileImagePath: String? = nil, phone: GraphQLID, promiseList: [PromiseList?]? = nil) {
-          self.init(snapshot: ["__typename": "PocketType", "latitude": latitude, "longitude": longitude, "token": token, "profileImagePath": profileImagePath, "phone": phone, "promiseList": promiseList.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+          self.init(snapshot: ["__typename": "PocketType", "latitude": latitude, "longitude": longitude, "token": token, "profileImagePath": profileImagePath, "phone": phone, "promiseList": promiseList.flatMap { (value: [PromiseList?]) -> [Snapshot?] in value.map { (value: PromiseList?) -> Snapshot? in value.flatMap { (value: PromiseList) -> Snapshot in value.snapshot } } }])
         }
 
         public var __typename: String {
@@ -1084,10 +1084,10 @@ public final class UpsertUserMutation: GraphQLMutation {
 
         public var promiseList: [PromiseList?]? {
           get {
-            return (snapshot["promiseList"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { PromiseList(snapshot: $0) } } }
+            return (snapshot["promiseList"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [PromiseList?] in value.map { (value: Snapshot?) -> PromiseList? in value.flatMap { (value: Snapshot) -> PromiseList in PromiseList(snapshot: value) } } }
           }
           set {
-            snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "promiseList")
+            snapshot.updateValue(newValue.flatMap { (value: [PromiseList?]) -> [Snapshot?] in value.map { (value: PromiseList?) -> Snapshot? in value.flatMap { (value: PromiseList) -> Snapshot in value.snapshot } } }, forKey: "promiseList")
           }
         }
 
@@ -1112,7 +1112,7 @@ public final class UpsertUserMutation: GraphQLMutation {
           }
 
           public init(id: GraphQLID? = nil, address: String? = nil, timestamp: String? = nil, latitude: Double? = nil, longitude: Double? = nil, name: String? = nil, pockets: [Pocket?]? = nil) {
-            self.init(snapshot: ["__typename": "PromiseType", "id": id, "address": address, "timestamp": timestamp, "latitude": latitude, "longitude": longitude, "name": name, "pockets": pockets.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+            self.init(snapshot: ["__typename": "PromiseType", "id": id, "address": address, "timestamp": timestamp, "latitude": latitude, "longitude": longitude, "name": name, "pockets": pockets.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }])
           }
 
           public var __typename: String {
@@ -1180,10 +1180,10 @@ public final class UpsertUserMutation: GraphQLMutation {
 
           public var pockets: [Pocket?]? {
             get {
-              return (snapshot["pockets"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { Pocket(snapshot: $0) } } }
+              return (snapshot["pockets"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Pocket?] in value.map { (value: Snapshot?) -> Pocket? in value.flatMap { (value: Snapshot) -> Pocket in Pocket(snapshot: value) } } }
             }
             set {
-              snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "pockets")
+              snapshot.updateValue(newValue.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }, forKey: "pockets")
             }
           }
 
