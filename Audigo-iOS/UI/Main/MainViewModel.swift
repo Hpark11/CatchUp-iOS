@@ -10,9 +10,8 @@ import Foundation
 import RxSwift
 import Action
 
-
 protocol MainViewModelInputsType {
-  // Mainly `PublishSubject` here
+  var updateUploadList: PublishSubject<Void> { get }
 }
 
 protocol MainViewModelOutputsType {
@@ -29,13 +28,14 @@ protocol MainViewModelType {
   var actions: MainViewModelActionsType { get }
 }
 
-class MainViewModel: MainViewModelType {
+class MainViewModel: BaseViewModel, MainViewModelType {
   var inputs:  MainViewModelInputsType  { return self }
   var outputs: MainViewModelOutputsType { return self }
   var actions: MainViewModelActionsType { return self }
   
   // MARK: Setup
   fileprivate var sceneCoordinator: SceneCoordinatorType
+  
   
   // MARK: Inputs
   
@@ -44,6 +44,8 @@ class MainViewModel: MainViewModelType {
   init(coordinator: SceneCoordinatorType) {
     // Setup
     sceneCoordinator = coordinator
+    
+    
     
     
     // Inputs

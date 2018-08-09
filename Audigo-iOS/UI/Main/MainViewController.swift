@@ -14,38 +14,17 @@ class MainViewController: UIViewController, BindableType {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    if let vc = R.storyboard.main.entranceViewController() {
+      present(vc, animated: false, completion: nil)
+    }
     
+//    present(R.storyboard.main., animated: <#T##Bool#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
+//
+//
   }
 
   func bindViewModel() {
-    
   }
 
-  @IBAction func signInWithKakao(_ sender: Any) {
-    let session = KOSession.shared()
-    
-    if let s = session {
-      if s.isOpen() {
-        s.close()
-      }
-      
-      s.open { (error) in
-        if error == nil {
-          print("No error")
-          
-          if s.isOpen() {
-            print("Success")
-          } else {
-            print("Fail")
-          }
-        } else {
-          print("Error Login: \(error!)")
-        }
-      }
-      
-    } else {
-      print("Something wrong!")
-    }
-  }
 }
 

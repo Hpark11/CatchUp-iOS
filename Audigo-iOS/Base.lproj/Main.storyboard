@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -10,20 +10,48 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Entrance View Controller-->
+        <scene sceneID="M0E-Pn-TqF">
+            <objects>
+                <viewController storyboardIdentifier="EntranceViewController" id="2YO-Ok-DZe" customClass="EntranceViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rtf-0U-5Pg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d59-dM-L8h">
+                                <rect key="frame" x="143" y="269" width="34" height="30"/>
+                                <state key="normal" title="login"/>
+                                <connections>
+                                    <action selector="login:" destination="2YO-Ok-DZe" eventType="touchUpInside" id="xhi-pU-YWH"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="d59-dM-L8h" firstAttribute="centerY" secondItem="rtf-0U-5Pg" secondAttribute="centerY" id="BuQ-wo-F6p"/>
+                            <constraint firstItem="d59-dM-L8h" firstAttribute="centerX" secondItem="rtf-0U-5Pg" secondAttribute="centerX" id="wlp-BQ-MHf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="5dO-Ub-0Fc"/>
+                    </view>
+                    <connections>
+                        <outlet property="loginButton" destination="d59-dM-L8h" id="TY0-3d-Tjx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fhh-hx-req" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-726" y="121"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="MainViewController" id="BYZ-38-t0r" customClass="MainViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtc-ta-5Eh">
-                                <rect key="frame" x="146.5" y="318" width="82" height="30"/>
+                                <rect key="frame" x="119" y="269" width="82" height="30"/>
                                 <state key="normal" title="카카오 로그인"/>
-                                <connections>
-                                    <action selector="signInWithKakao:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SjL-XL-T3f"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -36,21 +64,148 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="164" y="121"/>
         </scene>
-        <!--View Controller-->
+        <!--Permissions View Controller-->
         <scene sceneID="UkG-NI-Ioi">
             <objects>
-                <viewController id="dlb-n9-V6s" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PermissionsViewController" id="dlb-n9-V6s" customClass="PermissionsViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="S0D-ls-gGT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Qk6-Wk-XaC">
+                                <rect key="frame" x="16" y="125" width="288" height="130.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_pin" translatesAutoresizingMaskIntoConstraints="NO" id="bnm-ha-CMo">
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="64" id="8wG-PK-xuk"/>
+                                            <constraint firstAttribute="height" constant="64" id="lHw-yp-jop"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7aJ-pr-bFR">
+                                        <rect key="frame" x="76" y="0.0" width="212" height="130.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="위치정보" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pft-2K-Qul">
+                                                <rect key="frame" x="0.0" y="0.0" width="76.5" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="fFc-6h-P29"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="모임 약속 두시간 전부터 친구들의 위치를 서로 파악하기 위해 필요해요(약속 시간이 2시간 미만인 경우에는 위치정보를 조회하지 않아요)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQP-3T-2Wv">
+                                                <rect key="frame" x="0.0" y="29" width="209" height="101.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="동의해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Tg-CB-soj">
+                                <rect key="frame" x="72" y="52" width="176.5" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="p2W-WI-G5f">
+                                <rect key="frame" x="16" y="271.5" width="288" height="95.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_followers" translatesAutoresizingMaskIntoConstraints="NO" id="29C-G3-ipA">
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="gju-J1-BnB"/>
+                                            <constraint firstAttribute="width" constant="64" id="zvH-OT-mL4"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7ta-i9-3Jl">
+                                        <rect key="frame" x="76" y="0.0" width="212" height="95.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전화번호부" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tB0-dp-M5y">
+                                                <rect key="frame" x="0.0" y="0.0" width="95.5" height="26.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="친구들과의 모임 약속을 만들어 활용하기 위해 저장되어있는 그들의 연락처들이 필요해요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0B-YF-d1Z">
+                                                <rect key="frame" x="0.0" y="34.5" width="209" height="61"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="91Y-Oy-FoC">
+                                <rect key="frame" x="16" y="397" width="288" height="95.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_phone_call" translatesAutoresizingMaskIntoConstraints="NO" id="5qf-JM-1Dm">
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="66c-dC-hV1"/>
+                                            <constraint firstAttribute="width" constant="64" id="Kt4-Sh-9AV"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8P1-5J-ur7">
+                                        <rect key="frame" x="76" y="0.0" width="212" height="95.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내 전화번호" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yvL-hD-uK8">
+                                                <rect key="frame" x="0.0" y="0.0" width="100.5" height="26.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="친구들이 나를 알아보고 약속모임을 만들 수 있게 내 전화번호가 필요해요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAh-0e-dYP">
+                                                <rect key="frame" x="0.0" y="34.5" width="204.5" height="61"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBC-jP-26U">
+                                <rect key="frame" x="16" y="522" width="288" height="30"/>
+                                <state key="normal" title="알았어요"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5Q4-cv-9xa" firstAttribute="trailing" secondItem="pBC-jP-26U" secondAttribute="trailing" constant="16" id="1vN-kT-yiN"/>
+                            <constraint firstItem="p2W-WI-G5f" firstAttribute="centerX" secondItem="S0D-ls-gGT" secondAttribute="centerX" id="CCx-gk-8lF"/>
+                            <constraint firstAttribute="trailing" secondItem="p2W-WI-G5f" secondAttribute="trailing" constant="16" id="HLk-M0-jdd"/>
+                            <constraint firstItem="Qk6-Wk-XaC" firstAttribute="leading" secondItem="S0D-ls-gGT" secondAttribute="leading" constant="16" id="KK5-eu-u4n"/>
+                            <constraint firstAttribute="trailing" secondItem="Qk6-Wk-XaC" secondAttribute="trailing" constant="16" id="NSx-cv-Ij9"/>
+                            <constraint firstItem="7Tg-CB-soj" firstAttribute="centerX" secondItem="S0D-ls-gGT" secondAttribute="centerX" id="QLx-Sm-dIA"/>
+                            <constraint firstItem="91Y-Oy-FoC" firstAttribute="centerX" secondItem="S0D-ls-gGT" secondAttribute="centerX" id="VEH-D3-WDE"/>
+                            <constraint firstItem="Qk6-Wk-XaC" firstAttribute="centerX" secondItem="S0D-ls-gGT" secondAttribute="centerX" id="Vds-jA-eNw"/>
+                            <constraint firstItem="pBC-jP-26U" firstAttribute="leading" secondItem="5Q4-cv-9xa" secondAttribute="leading" constant="16" id="acd-Yx-fiD"/>
+                            <constraint firstAttribute="trailing" secondItem="91Y-Oy-FoC" secondAttribute="trailing" constant="16" id="c5N-5K-ppk"/>
+                            <constraint firstItem="5Q4-cv-9xa" firstAttribute="bottom" secondItem="pBC-jP-26U" secondAttribute="bottom" constant="16" id="eUt-oV-QtY"/>
+                            <constraint firstItem="91Y-Oy-FoC" firstAttribute="top" secondItem="p2W-WI-G5f" secondAttribute="bottom" constant="30" id="hxA-Tb-CLY"/>
+                            <constraint firstItem="7Tg-CB-soj" firstAttribute="top" secondItem="5Q4-cv-9xa" secondAttribute="top" constant="32" id="jvt-y5-M8B"/>
+                            <constraint firstItem="Qk6-Wk-XaC" firstAttribute="top" secondItem="7Tg-CB-soj" secondAttribute="bottom" constant="32" id="lsA-rB-kMl"/>
+                            <constraint firstItem="91Y-Oy-FoC" firstAttribute="leading" secondItem="S0D-ls-gGT" secondAttribute="leading" constant="16" id="m7l-ev-dPh"/>
+                            <constraint firstItem="p2W-WI-G5f" firstAttribute="top" secondItem="Qk6-Wk-XaC" secondAttribute="bottom" constant="16" id="uTw-6J-JXx"/>
+                            <constraint firstItem="p2W-WI-G5f" firstAttribute="leading" secondItem="S0D-ls-gGT" secondAttribute="leading" constant="16" id="wll-tJ-m5x"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="5Q4-cv-9xa"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O1V-0z-ZeJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1561" y="34"/>
+            <point key="canvasLocation" x="-708" y="859.52023988005999"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon_followers" width="128" height="128"/>
+        <image name="icon_phone_call" width="128" height="128"/>
+        <image name="icon_pin" width="128" height="128"/>
+    </resources>
 </document>

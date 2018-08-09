@@ -55,7 +55,7 @@ final class AppCoordinator: SceneCoordinatorType, HasDisposeBag {
                 subject.onCompleted()
             }
             currentViewController = AppCoordinator.actualViewController(for: viewController)
-            
+  
         case .pop(let animated, let level):
             switch level {
             case .root:
