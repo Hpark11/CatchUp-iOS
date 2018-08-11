@@ -37,6 +37,8 @@
 		CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F062115C4A6006BC729 /* MainViewModel.swift */; };
 		CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F082115C4F4006BC729 /* EntranceViewController.swift */; };
 		CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */; };
+		CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */; };
+		CED44218211F081D000D2A8C /* MemberCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CED44216211F081D000D2A8C /* MemberCollectionViewCell.xib */; };
 		CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAD20C979040063D89F /* AppDelegate.swift */; };
 		CED4CCB020C979040063D89F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* MainViewController.swift */; };
 		CED4CCB320C979040063D89F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB120C979040063D89F /* Main.storyboard */; };
@@ -101,6 +103,8 @@
 		CEB41F062115C4A6006BC729 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		CEB41F082115C4F4006BC729 /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
 		CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
+		CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCollectionViewCell.swift; sourceTree = "<group>"; };
+		CED44216211F081D000D2A8C /* MemberCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberCollectionViewCell.xib; sourceTree = "<group>"; };
 		CED4CCAA20C979040063D89F /* Audigo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audigo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCAD20C979040063D89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CED4CCAF20C979040063D89F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +204,8 @@
 				CEB41F042115C484006BC729 /* MainScene.swift */,
 				CEB41F062115C4A6006BC729 /* MainViewModel.swift */,
 				CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */,
+				CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */,
+				CED44216211F081D000D2A8C /* MemberCollectionViewCell.xib */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -425,6 +431,7 @@
 				CE34B4B7211E787100F92D50 /* DeletePromiseById.graphql in Resources */,
 				CE34B4C0211E787100F92D50 /* GetPocket.graphql in Resources */,
 				CE34B4BD211E787100F92D50 /* RelocatePocket.graphql in Resources */,
+				CED44218211F081D000D2A8C /* MemberCollectionViewCell.xib in Resources */,
 				CED4CCB320C979040063D89F /* Main.storyboard in Resources */,
 				CE34B4BA211E787100F92D50 /* SendPush.graphql in Resources */,
 				CE34B4C1211E787100F92D50 /* schemaBackup.json in Resources */,
@@ -460,6 +467,7 @@
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -475,6 +483,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -589,6 +598,7 @@
 				CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */,
 				CEB41F002115C3FF006BC729 /* Scene+ViewController.swift in Sources */,
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
+				CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */,
 				CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */,
 				CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */,
 				CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */,
@@ -776,10 +786,7 @@
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -823,10 +830,7 @@
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -866,11 +870,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -888,11 +888,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -909,11 +905,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -930,11 +922,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

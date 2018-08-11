@@ -10,6 +10,8 @@ import UIKit
 import RxSwift
 
 class MainViewController: UIViewController, BindableType {
+  @IBOutlet weak var promiseListTableView: UITableView!
+  
   var viewModel: MainViewModel!
   
   let disposeBag = DisposeBag()
@@ -38,6 +40,8 @@ class MainViewController: UIViewController, BindableType {
     } else {
       viewModel.signInDone.onNext(())
     }
+    
+    
   }
 
   func bindViewModel() {
@@ -45,6 +49,7 @@ class MainViewController: UIViewController, BindableType {
       guard let strongSelf = self else { return }
       switch state {
       case .completed:
+        strongSelf.viewModel.configureUser()
         break
       case .phoneRequired:
         if let vc = R.storyboard.main.phoneCheckViewController() {
@@ -58,4 +63,14 @@ class MainViewController: UIViewController, BindableType {
     }).disposed(by: disposeBag)
   }
 }
+//
+//extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+//  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//    <#code#>
+//  }
+//  
+//  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//    <#code#>
+//  }
+//}
 

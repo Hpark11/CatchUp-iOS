@@ -6,15 +6,28 @@
 //  Copyright © 2018년 BlackBurn. All rights reserved.
 //
 
-//import Foundation
 import RxSwift
+import RxDataSources
 import Action
 //import Apollo
 
 enum SignInState {
   case failed
-  case completed
   case phoneRequired
+  case completed
+}
+
+typealias PromiseSectionModel = AnimatableSectionModel<String, GetUserWithPromisesQuery.Data.User.Pocket.PromiseList>
+
+extension GetUserWithPromisesQuery.Data.User.Pocket.PromiseList: IdentifiableType, Equatable {
+  public var identity: String {
+    return id!
+  }
+  
+  public static func ==(lhs: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList,
+                        rhs: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) -> Bool {
+    return lhs.id == rhs.id
+  }
 }
 
 protocol MainViewModelInputsType {
@@ -24,6 +37,7 @@ protocol MainViewModelInputsType {
 
 protocol MainViewModelOutputsType {
   var state: Observable<SignInState> { get }
+  var promiseItems: Observable<[PromiseSectionModel]> { get }
 }
 
 protocol MainViewModelActionsType {
@@ -36,7 +50,7 @@ protocol MainViewModelType {
   var actions: MainViewModelActionsType { get }
 }
 
-class MainViewModel: BaseViewModel, MainViewModelType {
+class MainViewModel: MainViewModelType {
   var inputs:  MainViewModelInputsType  { return self }
   var outputs: MainViewModelOutputsType { return self }
   var actions: MainViewModelActionsType { return self }
@@ -47,11 +61,14 @@ class MainViewModel: BaseViewModel, MainViewModelType {
   // MARK: Inputs
   var signInDone: PublishSubject<Void>
   var phoneCertifyDone: PublishSubject<String>
-
+  
   // MARK: Outputs
   var state: Observable<SignInState>
+  var promiseItems: Observable<[PromiseSectionModel]>
   
   private let userInfo: Variable<(id: String?, phone: String?, email: String?, nickname: String?, gender: String?, birthday: String?, ageRange: String?, profileImagePath: String?)>
+  private let promiseList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
+  private let disposeBag = DisposeBag()
   
   init(coordinator: SceneCoordinatorType) {
     // Setup
@@ -60,21 +77,18 @@ class MainViewModel: BaseViewModel, MainViewModelType {
     phoneCertifyDone = PublishSubject()
     
     userInfo = Variable((id: nil, phone: nil, email: nil, nickname: nil, gender: nil, birthday: nil, ageRange: nil, profileImagePath: nil))
-  
-    state = userInfo.asObservable().map({ userInfo in
-        guard let id = userInfo.id else { return .failed }
-        guard let phone = userInfo.phone else { return .phoneRequired }
-        
-        apollo.perform(mutation: UpsertUserMutation(id: id, email: userInfo.email, nickname: userInfo.nickname, gender: userInfo.gender, birthday: userInfo.birthday, ageRange: userInfo.ageRange, profileImagePath: userInfo.profileImagePath, phone: phone)) { (result, error) in
-          if let error = error {
-            NSLog("Error while attempting to UpsertUserMutation: \(error.localizedDescription)")
-          }
-        }
-        
-        return .completed
-      }).share(replay: 1, scope: .whileConnected)
+    promiseList = Variable([])
     
-    super.init()
+    state = userInfo.asObservable().map({ userInfo in
+      guard let _ = userInfo.id else { return .failed }
+      guard let _ = userInfo.phone else { return .phoneRequired }
+      return .completed
+    }).share(replay: 1, scope: .whileConnected)
+    
+    promiseItems = promiseList.asObservable()
+      .map({ (promiseList) in
+        return [PromiseSectionModel(model: "", items: promiseList)]
+      })
     
     // Inputs
     signInDone.subscribe(onNext: { _ in
@@ -82,7 +96,7 @@ class MainViewModel: BaseViewModel, MainViewModelType {
         if let error = error {
           fatalError(error.localizedDescription)
         }
-
+        
         let gender: String?
         let ageRange: String?
         let phoneNumber: String?
@@ -146,41 +160,37 @@ class MainViewModel: BaseViewModel, MainViewModelType {
           ageRange: ageRange
         )
       })
-    })
-    .disposed(by: disposeBag)
+    }).disposed(by: disposeBag)
     
     phoneCertifyDone.subscribe(onNext: { [weak self] (phone) in
       guard let strongSelf = self else { return }
       var userInfoValue = strongSelf.userInfo.value
       userInfoValue.phone = phone
       strongSelf.userInfo.value = userInfoValue
-    })
-    .disposed(by: disposeBag)
-    
-    // Outputs
-    
-    // ViewModel Life Cycle
+    }).disposed(by: disposeBag)
   }
   
-//  public func configureViewControllers() -> [UIViewController] {
-//    let titles = ["홈", "커뮤니티", "히어로 분석", "더보기"]
-//    let imageNames = ["", "", "", "", ""]
-//
-//    let viewControllers = [
-//      HomeScene(viewModel: HomeViewModel(coordinator: sceneCoordinator)).instantiateFromStoryboard(),
-//      CommunityScene(viewModel: CommunityViewModel(coordinator: sceneCoordinator)).instantiateFromNIB(),
-//      ChampionsScene(viewModel: ChampionsViewModel(coordinator: sceneCoordinator)).instantiateFromNIB(),
-//      MoreScene(viewModel: MoreViewModel(coordinator: sceneCoordinator)).instantiateFromNIB(),
-//      ]
-//
-//    return viewControllers.enumerated().map { offset, element in
-//      element.title = titles[offset]
-//      element.tabBarItem.image = UIImage(named: imageNames[offset])
-//      return element
-//    }
-//  }
-  
-  // MARK: Actions
+  func configureUser() {
+    let info = userInfo.value
+    guard let id = info.id, let phone = info.phone else { return }
+    
+    apollo.perform(mutation: UpsertUserMutation(id: id, email: info.email, nickname: info.nickname, gender: info.gender, birthday: info.birthday, ageRange: info.ageRange, profileImagePath: info.profileImagePath, phone: phone)) { (result, error) in
+      if let error = error {
+        NSLog("Error while attempting to UpsertUserMutation: \(error.localizedDescription)")
+      }
+      
+      _ = apollo.watch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in
+        if let error = error {
+          NSLog("Error while GetUserWithPromisesQuery: \(error.localizedDescription)")
+          return
+        }
+        
+        if let list = result?.data?.user?.pocket.promiseList {
+          self.promiseList.value = list.compactMap { $0 }
+        }
+      })
+    }
+  }
 }
 
 extension MainViewModel: MainViewModelInputsType, MainViewModelOutputsType, MainViewModelActionsType {}
