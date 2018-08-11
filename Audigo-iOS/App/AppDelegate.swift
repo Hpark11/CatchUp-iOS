@@ -8,6 +8,10 @@
 
 import UIKit
 import CoreData
+import Apollo
+import Firebase
+
+let apollo = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   fileprivate var coordinator: SceneCoordinatorType?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    FirebaseApp.configure()
     
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()

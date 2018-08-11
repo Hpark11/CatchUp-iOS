@@ -1,0 +1,6 @@
+query SendPush($pushTokens: [String], $title: String, $body: String, $scheduledTime: String) {
+  push(pushTokens: $pushTokens, title: $title, body: $body, scheduledTime: $scheduledTime) {
+    isSuccess
+    error
+  }
+}

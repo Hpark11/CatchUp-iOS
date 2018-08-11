@@ -10,7 +10,7 @@ query GetPromise($id: ID!) {
       phone
       latitude
       longitude
-      token
+      pushToken
       profileImagePath
       nickname
     }

@@ -1,0 +1,10 @@
+query getPocket($phone: String!) {
+  pocket(phone: $phone) {
+    phone
+    latitude
+    longitude
+    pushToken
+    profileImagePath
+    nickname
+  }
+}

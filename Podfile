@@ -14,6 +14,8 @@ target 'Audigo-iOS' do
   pod 'RxKeyboard'
   pod 'Apollo'
   pod 'RxDataSources', '~> 3.0'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
 
   target 'Audigo-iOSTests' do
     inherit! :search_paths

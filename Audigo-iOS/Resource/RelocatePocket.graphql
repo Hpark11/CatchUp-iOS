@@ -1,0 +1,7 @@
+mutation RelocatePocket($phone: String!, $latitude: Float, $longitude: Float) {
+  relocatePocket(phone: $phone, latitude: $latitude, longitude: $longitude) {
+    phone
+    latitude
+    longitude
+  }
+}

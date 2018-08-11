@@ -4,33 +4,35 @@ import Apollo
 
 public final class AddPromiseMutation: GraphQLMutation {
   public static let operationString =
-    "mutation AddPromise($owner: String, $name: String, $address: String, $latitude: Float, $longitude: Float, $pockets: [String]) {\n  addPromise(owner: $owner, name: $name, address: $address, latitude: $latitude, longitude: $longitude, pockets: $pockets) {\n    __typename\n    id\n    name\n    address\n    latitude\n    longitude\n    timestamp\n    pockets {\n      __typename\n      nickname\n      token\n      profileImagePath\n      phone\n    }\n  }\n}"
+    "mutation AddPromise($owner: String, $name: String, $address: String, $latitude: Float, $longitude: Float, $timestamp: String, $pockets: [String]) {\n  addPromise(owner: $owner, name: $name, address: $address, latitude: $latitude, longitude: $longitude, timestamp: $timestamp, pockets: $pockets) {\n    __typename\n    id\n    name\n    address\n    latitude\n    longitude\n    timestamp\n    pockets {\n      __typename\n      nickname\n      pushToken\n      profileImagePath\n      phone\n    }\n  }\n}"
 
   public var owner: String?
   public var name: String?
   public var address: String?
   public var latitude: Double?
   public var longitude: Double?
+  public var timestamp: String?
   public var pockets: [String?]?
 
-  public init(owner: String? = nil, name: String? = nil, address: String? = nil, latitude: Double? = nil, longitude: Double? = nil, pockets: [String?]? = nil) {
+  public init(owner: String? = nil, name: String? = nil, address: String? = nil, latitude: Double? = nil, longitude: Double? = nil, timestamp: String? = nil, pockets: [String?]? = nil) {
     self.owner = owner
     self.name = name
     self.address = address
     self.latitude = latitude
     self.longitude = longitude
+    self.timestamp = timestamp
     self.pockets = pockets
   }
 
   public var variables: GraphQLMap? {
-    return ["owner": owner, "name": name, "address": address, "latitude": latitude, "longitude": longitude, "pockets": pockets]
+    return ["owner": owner, "name": name, "address": address, "latitude": latitude, "longitude": longitude, "timestamp": timestamp, "pockets": pockets]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("addPromise", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("name"), "address": GraphQLVariable("address"), "latitude": GraphQLVariable("latitude"), "longitude": GraphQLVariable("longitude"), "pockets": GraphQLVariable("pockets")], type: .object(AddPromise.selections)),
+      GraphQLField("addPromise", arguments: ["owner": GraphQLVariable("owner"), "name": GraphQLVariable("name"), "address": GraphQLVariable("address"), "latitude": GraphQLVariable("latitude"), "longitude": GraphQLVariable("longitude"), "timestamp": GraphQLVariable("timestamp"), "pockets": GraphQLVariable("pockets")], type: .object(AddPromise.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -154,9 +156,9 @@ public final class AddPromiseMutation: GraphQLMutation {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("nickname", type: .scalar(String.self)),
-          GraphQLField("token", type: .scalar(String.self)),
+          GraphQLField("pushToken", type: .scalar(String.self)),
           GraphQLField("profileImagePath", type: .scalar(String.self)),
-          GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("phone", type: .nonNull(.scalar(String.self))),
         ]
 
         public var snapshot: Snapshot
@@ -165,8 +167,8 @@ public final class AddPromiseMutation: GraphQLMutation {
           self.snapshot = snapshot
         }
 
-        public init(nickname: String? = nil, token: String? = nil, profileImagePath: String? = nil, phone: GraphQLID) {
-          self.init(snapshot: ["__typename": "PocketType", "nickname": nickname, "token": token, "profileImagePath": profileImagePath, "phone": phone])
+        public init(nickname: String? = nil, pushToken: String? = nil, profileImagePath: String? = nil, phone: String) {
+          self.init(snapshot: ["__typename": "PocketType", "nickname": nickname, "pushToken": pushToken, "profileImagePath": profileImagePath, "phone": phone])
         }
 
         public var __typename: String {
@@ -187,12 +189,12 @@ public final class AddPromiseMutation: GraphQLMutation {
           }
         }
 
-        public var token: String? {
+        public var pushToken: String? {
           get {
-            return snapshot["token"] as? String
+            return snapshot["pushToken"] as? String
           }
           set {
-            snapshot.updateValue(newValue, forKey: "token")
+            snapshot.updateValue(newValue, forKey: "pushToken")
           }
         }
 
@@ -205,13 +207,116 @@ public final class AddPromiseMutation: GraphQLMutation {
           }
         }
 
-        public var phone: GraphQLID {
+        public var phone: String {
           get {
-            return snapshot["phone"]! as! GraphQLID
+            return snapshot["phone"]! as! String
           }
           set {
             snapshot.updateValue(newValue, forKey: "phone")
           }
+        }
+      }
+    }
+  }
+}
+
+public final class AttachTokenMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation AttachToken($phone: String!, $pushToken: String, $osType: String) {\n  attachToken(phone: $phone, pushToken: $pushToken, osType: $osType) {\n    __typename\n    phone\n    pushToken\n    osType\n  }\n}"
+
+  public var phone: String
+  public var pushToken: String?
+  public var osType: String?
+
+  public init(phone: String, pushToken: String? = nil, osType: String? = nil) {
+    self.phone = phone
+    self.pushToken = pushToken
+    self.osType = osType
+  }
+
+  public var variables: GraphQLMap? {
+    return ["phone": phone, "pushToken": pushToken, "osType": osType]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("attachToken", arguments: ["phone": GraphQLVariable("phone"), "pushToken": GraphQLVariable("pushToken"), "osType": GraphQLVariable("osType")], type: .object(AttachToken.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(attachToken: AttachToken? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "attachToken": attachToken.flatMap { (value: AttachToken) -> Snapshot in value.snapshot }])
+    }
+
+    public var attachToken: AttachToken? {
+      get {
+        return (snapshot["attachToken"] as? Snapshot).flatMap { AttachToken(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "attachToken")
+      }
+    }
+
+    public struct AttachToken: GraphQLSelectionSet {
+      public static let possibleTypes = ["PocketType"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("phone", type: .nonNull(.scalar(String.self))),
+        GraphQLField("pushToken", type: .scalar(String.self)),
+        GraphQLField("osType", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(phone: String, pushToken: String? = nil, osType: String? = nil) {
+        self.init(snapshot: ["__typename": "PocketType", "phone": phone, "pushToken": pushToken, "osType": osType])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var phone: String {
+        get {
+          return snapshot["phone"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "phone")
+        }
+      }
+
+      public var pushToken: String? {
+        get {
+          return snapshot["pushToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "pushToken")
+        }
+      }
+
+      public var osType: String? {
+        get {
+          return snapshot["osType"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "osType")
         }
       }
     }
@@ -309,9 +414,138 @@ public final class DeletePromiseByIdMutation: GraphQLMutation {
   }
 }
 
+public final class GetPocketQuery: GraphQLQuery {
+  public static let operationString =
+    "query getPocket($phone: String!) {\n  pocket(phone: $phone) {\n    __typename\n    phone\n    latitude\n    longitude\n    pushToken\n    profileImagePath\n    nickname\n  }\n}"
+
+  public var phone: String
+
+  public init(phone: String) {
+    self.phone = phone
+  }
+
+  public var variables: GraphQLMap? {
+    return ["phone": phone]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["RootQueryType"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("pocket", arguments: ["phone": GraphQLVariable("phone")], type: .object(Pocket.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(pocket: Pocket? = nil) {
+      self.init(snapshot: ["__typename": "RootQueryType", "pocket": pocket.flatMap { (value: Pocket) -> Snapshot in value.snapshot }])
+    }
+
+    public var pocket: Pocket? {
+      get {
+        return (snapshot["pocket"] as? Snapshot).flatMap { Pocket(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "pocket")
+      }
+    }
+
+    public struct Pocket: GraphQLSelectionSet {
+      public static let possibleTypes = ["PocketType"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("phone", type: .nonNull(.scalar(String.self))),
+        GraphQLField("latitude", type: .scalar(Double.self)),
+        GraphQLField("longitude", type: .scalar(Double.self)),
+        GraphQLField("pushToken", type: .scalar(String.self)),
+        GraphQLField("profileImagePath", type: .scalar(String.self)),
+        GraphQLField("nickname", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(phone: String, latitude: Double? = nil, longitude: Double? = nil, pushToken: String? = nil, profileImagePath: String? = nil, nickname: String? = nil) {
+        self.init(snapshot: ["__typename": "PocketType", "phone": phone, "latitude": latitude, "longitude": longitude, "pushToken": pushToken, "profileImagePath": profileImagePath, "nickname": nickname])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var phone: String {
+        get {
+          return snapshot["phone"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "phone")
+        }
+      }
+
+      public var latitude: Double? {
+        get {
+          return snapshot["latitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "latitude")
+        }
+      }
+
+      public var longitude: Double? {
+        get {
+          return snapshot["longitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "longitude")
+        }
+      }
+
+      public var pushToken: String? {
+        get {
+          return snapshot["pushToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "pushToken")
+        }
+      }
+
+      public var profileImagePath: String? {
+        get {
+          return snapshot["profileImagePath"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "profileImagePath")
+        }
+      }
+
+      public var nickname: String? {
+        get {
+          return snapshot["nickname"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nickname")
+        }
+      }
+    }
+  }
+}
+
 public final class GetPromiseQuery: GraphQLQuery {
   public static let operationString =
-    "query GetPromise($id: ID!) {\n  promise(id: $id) {\n    __typename\n    id\n    address\n    timestamp\n    latitude\n    longitude\n    name\n    pockets {\n      __typename\n      phone\n      latitude\n      longitude\n      token\n      profileImagePath\n      nickname\n    }\n  }\n}"
+    "query GetPromise($id: ID!) {\n  promise(id: $id) {\n    __typename\n    id\n    address\n    timestamp\n    latitude\n    longitude\n    name\n    pockets {\n      __typename\n      phone\n      latitude\n      longitude\n      pushToken\n      profileImagePath\n      nickname\n    }\n  }\n}"
 
   public var id: GraphQLID
 
@@ -450,10 +684,10 @@ public final class GetPromiseQuery: GraphQLQuery {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("phone", type: .nonNull(.scalar(String.self))),
           GraphQLField("latitude", type: .scalar(Double.self)),
           GraphQLField("longitude", type: .scalar(Double.self)),
-          GraphQLField("token", type: .scalar(String.self)),
+          GraphQLField("pushToken", type: .scalar(String.self)),
           GraphQLField("profileImagePath", type: .scalar(String.self)),
           GraphQLField("nickname", type: .scalar(String.self)),
         ]
@@ -464,8 +698,8 @@ public final class GetPromiseQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(phone: GraphQLID, latitude: Double? = nil, longitude: Double? = nil, token: String? = nil, profileImagePath: String? = nil, nickname: String? = nil) {
-          self.init(snapshot: ["__typename": "PocketType", "phone": phone, "latitude": latitude, "longitude": longitude, "token": token, "profileImagePath": profileImagePath, "nickname": nickname])
+        public init(phone: String, latitude: Double? = nil, longitude: Double? = nil, pushToken: String? = nil, profileImagePath: String? = nil, nickname: String? = nil) {
+          self.init(snapshot: ["__typename": "PocketType", "phone": phone, "latitude": latitude, "longitude": longitude, "pushToken": pushToken, "profileImagePath": profileImagePath, "nickname": nickname])
         }
 
         public var __typename: String {
@@ -477,9 +711,9 @@ public final class GetPromiseQuery: GraphQLQuery {
           }
         }
 
-        public var phone: GraphQLID {
+        public var phone: String {
           get {
-            return snapshot["phone"]! as! GraphQLID
+            return snapshot["phone"]! as! String
           }
           set {
             snapshot.updateValue(newValue, forKey: "phone")
@@ -504,12 +738,12 @@ public final class GetPromiseQuery: GraphQLQuery {
           }
         }
 
-        public var token: String? {
+        public var pushToken: String? {
           get {
-            return snapshot["token"] as? String
+            return snapshot["pushToken"] as? String
           }
           set {
-            snapshot.updateValue(newValue, forKey: "token")
+            snapshot.updateValue(newValue, forKey: "pushToken")
           }
         }
 
@@ -537,7 +771,7 @@ public final class GetPromiseQuery: GraphQLQuery {
 
 public final class GetUserWithPromisesQuery: GraphQLQuery {
   public static let operationString =
-    "query GetUserWithPromises($id: ID!) {\n  user(id: $id) {\n    __typename\n    email\n    nickname\n    profileImagePath\n    gender\n    birthday\n    ageRange\n    pocket {\n      __typename\n      phone\n      token\n      profileImagePath\n      nickname\n      promiseList {\n        __typename\n        id\n        address\n        timestamp\n        latitude\n        longitude\n        name\n        pockets {\n          __typename\n          phone\n          token\n          profileImagePath\n          nickname\n        }\n      }\n    }\n  }\n}"
+    "query GetUserWithPromises($id: ID!) {\n  user(id: $id) {\n    __typename\n    email\n    nickname\n    profileImagePath\n    gender\n    birthday\n    ageRange\n    pocket {\n      __typename\n      phone\n      pushToken\n      profileImagePath\n      nickname\n      promiseList {\n        __typename\n        id\n        address\n        timestamp\n        latitude\n        longitude\n        name\n        pockets {\n          __typename\n          phone\n          pushToken\n          profileImagePath\n          nickname\n        }\n      }\n    }\n  }\n}"
 
   public var id: GraphQLID
 
@@ -676,8 +910,8 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
-          GraphQLField("token", type: .scalar(String.self)),
+          GraphQLField("phone", type: .nonNull(.scalar(String.self))),
+          GraphQLField("pushToken", type: .scalar(String.self)),
           GraphQLField("profileImagePath", type: .scalar(String.self)),
           GraphQLField("nickname", type: .scalar(String.self)),
           GraphQLField("promiseList", type: .list(.object(PromiseList.selections))),
@@ -689,8 +923,8 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
           self.snapshot = snapshot
         }
 
-        public init(phone: GraphQLID, token: String? = nil, profileImagePath: String? = nil, nickname: String? = nil, promiseList: [PromiseList?]? = nil) {
-          self.init(snapshot: ["__typename": "PocketType", "phone": phone, "token": token, "profileImagePath": profileImagePath, "nickname": nickname, "promiseList": promiseList.flatMap { (value: [PromiseList?]) -> [Snapshot?] in value.map { (value: PromiseList?) -> Snapshot? in value.flatMap { (value: PromiseList) -> Snapshot in value.snapshot } } }])
+        public init(phone: String, pushToken: String? = nil, profileImagePath: String? = nil, nickname: String? = nil, promiseList: [PromiseList?]? = nil) {
+          self.init(snapshot: ["__typename": "PocketType", "phone": phone, "pushToken": pushToken, "profileImagePath": profileImagePath, "nickname": nickname, "promiseList": promiseList.flatMap { (value: [PromiseList?]) -> [Snapshot?] in value.map { (value: PromiseList?) -> Snapshot? in value.flatMap { (value: PromiseList) -> Snapshot in value.snapshot } } }])
         }
 
         public var __typename: String {
@@ -702,21 +936,21 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
           }
         }
 
-        public var phone: GraphQLID {
+        public var phone: String {
           get {
-            return snapshot["phone"]! as! GraphQLID
+            return snapshot["phone"]! as! String
           }
           set {
             snapshot.updateValue(newValue, forKey: "phone")
           }
         }
 
-        public var token: String? {
+        public var pushToken: String? {
           get {
-            return snapshot["token"] as? String
+            return snapshot["pushToken"] as? String
           }
           set {
-            snapshot.updateValue(newValue, forKey: "token")
+            snapshot.updateValue(newValue, forKey: "pushToken")
           }
         }
 
@@ -848,8 +1082,8 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
-              GraphQLField("token", type: .scalar(String.self)),
+              GraphQLField("phone", type: .nonNull(.scalar(String.self))),
+              GraphQLField("pushToken", type: .scalar(String.self)),
               GraphQLField("profileImagePath", type: .scalar(String.self)),
               GraphQLField("nickname", type: .scalar(String.self)),
             ]
@@ -860,8 +1094,8 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(phone: GraphQLID, token: String? = nil, profileImagePath: String? = nil, nickname: String? = nil) {
-              self.init(snapshot: ["__typename": "PocketType", "phone": phone, "token": token, "profileImagePath": profileImagePath, "nickname": nickname])
+            public init(phone: String, pushToken: String? = nil, profileImagePath: String? = nil, nickname: String? = nil) {
+              self.init(snapshot: ["__typename": "PocketType", "phone": phone, "pushToken": pushToken, "profileImagePath": profileImagePath, "nickname": nickname])
             }
 
             public var __typename: String {
@@ -873,21 +1107,21 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
               }
             }
 
-            public var phone: GraphQLID {
+            public var phone: String {
               get {
-                return snapshot["phone"]! as! GraphQLID
+                return snapshot["phone"]! as! String
               }
               set {
                 snapshot.updateValue(newValue, forKey: "phone")
               }
             }
 
-            public var token: String? {
+            public var pushToken: String? {
               get {
-                return snapshot["token"] as? String
+                return snapshot["pushToken"] as? String
               }
               set {
-                snapshot.updateValue(newValue, forKey: "token")
+                snapshot.updateValue(newValue, forKey: "pushToken")
               }
             }
 
@@ -915,9 +1149,429 @@ public final class GetUserWithPromisesQuery: GraphQLQuery {
   }
 }
 
+public final class RelocatePocketMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation RelocatePocket($phone: String!, $latitude: Float, $longitude: Float) {\n  relocatePocket(phone: $phone, latitude: $latitude, longitude: $longitude) {\n    __typename\n    phone\n    latitude\n    longitude\n  }\n}"
+
+  public var phone: String
+  public var latitude: Double?
+  public var longitude: Double?
+
+  public init(phone: String, latitude: Double? = nil, longitude: Double? = nil) {
+    self.phone = phone
+    self.latitude = latitude
+    self.longitude = longitude
+  }
+
+  public var variables: GraphQLMap? {
+    return ["phone": phone, "latitude": latitude, "longitude": longitude]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("relocatePocket", arguments: ["phone": GraphQLVariable("phone"), "latitude": GraphQLVariable("latitude"), "longitude": GraphQLVariable("longitude")], type: .object(RelocatePocket.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(relocatePocket: RelocatePocket? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "relocatePocket": relocatePocket.flatMap { (value: RelocatePocket) -> Snapshot in value.snapshot }])
+    }
+
+    public var relocatePocket: RelocatePocket? {
+      get {
+        return (snapshot["relocatePocket"] as? Snapshot).flatMap { RelocatePocket(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "relocatePocket")
+      }
+    }
+
+    public struct RelocatePocket: GraphQLSelectionSet {
+      public static let possibleTypes = ["PocketType"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("phone", type: .nonNull(.scalar(String.self))),
+        GraphQLField("latitude", type: .scalar(Double.self)),
+        GraphQLField("longitude", type: .scalar(Double.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(phone: String, latitude: Double? = nil, longitude: Double? = nil) {
+        self.init(snapshot: ["__typename": "PocketType", "phone": phone, "latitude": latitude, "longitude": longitude])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var phone: String {
+        get {
+          return snapshot["phone"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "phone")
+        }
+      }
+
+      public var latitude: Double? {
+        get {
+          return snapshot["latitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "latitude")
+        }
+      }
+
+      public var longitude: Double? {
+        get {
+          return snapshot["longitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "longitude")
+        }
+      }
+    }
+  }
+}
+
+public final class SendPushQuery: GraphQLQuery {
+  public static let operationString =
+    "query SendPush($pushTokens: [String], $title: String, $body: String, $scheduledTime: String) {\n  push(pushTokens: $pushTokens, title: $title, body: $body, scheduledTime: $scheduledTime) {\n    __typename\n    isSuccess\n    error\n  }\n}"
+
+  public var pushTokens: [String?]?
+  public var title: String?
+  public var body: String?
+  public var scheduledTime: String?
+
+  public init(pushTokens: [String?]? = nil, title: String? = nil, body: String? = nil, scheduledTime: String? = nil) {
+    self.pushTokens = pushTokens
+    self.title = title
+    self.body = body
+    self.scheduledTime = scheduledTime
+  }
+
+  public var variables: GraphQLMap? {
+    return ["pushTokens": pushTokens, "title": title, "body": body, "scheduledTime": scheduledTime]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["RootQueryType"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("push", arguments: ["pushTokens": GraphQLVariable("pushTokens"), "title": GraphQLVariable("title"), "body": GraphQLVariable("body"), "scheduledTime": GraphQLVariable("scheduledTime")], type: .object(Push.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(push: Push? = nil) {
+      self.init(snapshot: ["__typename": "RootQueryType", "push": push.flatMap { (value: Push) -> Snapshot in value.snapshot }])
+    }
+
+    public var push: Push? {
+      get {
+        return (snapshot["push"] as? Snapshot).flatMap { Push(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "push")
+      }
+    }
+
+    public struct Push: GraphQLSelectionSet {
+      public static let possibleTypes = ["SimpleResponseType"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("isSuccess", type: .scalar(Bool.self)),
+        GraphQLField("error", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(isSuccess: Bool? = nil, error: String? = nil) {
+        self.init(snapshot: ["__typename": "SimpleResponseType", "isSuccess": isSuccess, "error": error])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var isSuccess: Bool? {
+        get {
+          return snapshot["isSuccess"] as? Bool
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "isSuccess")
+        }
+      }
+
+      public var error: String? {
+        get {
+          return snapshot["error"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "error")
+        }
+      }
+    }
+  }
+}
+
+public final class UpdatePromiseMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation UpdatePromise($id: ID!, $prevTimestamp: String, $owner: String, $name: String, $address: String, $latitude: Float, $longitude: Float, $timestamp: String, $pockets: [String]) {\n  updatePromise(id: $id, prevTimestamp: $prevTimestamp, owner: $owner, name: $name, address: $address, latitude: $latitude, longitude: $longitude, timestamp: $timestamp, pockets: $pockets) {\n    __typename\n    id\n    name\n    address\n    latitude\n    longitude\n    timestamp\n    pockets {\n      __typename\n      nickname\n      pushToken\n      profileImagePath\n      phone\n    }\n  }\n}"
+
+  public var id: GraphQLID
+  public var prevTimestamp: String?
+  public var owner: String?
+  public var name: String?
+  public var address: String?
+  public var latitude: Double?
+  public var longitude: Double?
+  public var timestamp: String?
+  public var pockets: [String?]?
+
+  public init(id: GraphQLID, prevTimestamp: String? = nil, owner: String? = nil, name: String? = nil, address: String? = nil, latitude: Double? = nil, longitude: Double? = nil, timestamp: String? = nil, pockets: [String?]? = nil) {
+    self.id = id
+    self.prevTimestamp = prevTimestamp
+    self.owner = owner
+    self.name = name
+    self.address = address
+    self.latitude = latitude
+    self.longitude = longitude
+    self.timestamp = timestamp
+    self.pockets = pockets
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id, "prevTimestamp": prevTimestamp, "owner": owner, "name": name, "address": address, "latitude": latitude, "longitude": longitude, "timestamp": timestamp, "pockets": pockets]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("updatePromise", arguments: ["id": GraphQLVariable("id"), "prevTimestamp": GraphQLVariable("prevTimestamp"), "owner": GraphQLVariable("owner"), "name": GraphQLVariable("name"), "address": GraphQLVariable("address"), "latitude": GraphQLVariable("latitude"), "longitude": GraphQLVariable("longitude"), "timestamp": GraphQLVariable("timestamp"), "pockets": GraphQLVariable("pockets")], type: .object(UpdatePromise.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(updatePromise: UpdatePromise? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "updatePromise": updatePromise.flatMap { (value: UpdatePromise) -> Snapshot in value.snapshot }])
+    }
+
+    public var updatePromise: UpdatePromise? {
+      get {
+        return (snapshot["updatePromise"] as? Snapshot).flatMap { UpdatePromise(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "updatePromise")
+      }
+    }
+
+    public struct UpdatePromise: GraphQLSelectionSet {
+      public static let possibleTypes = ["PromiseType"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .scalar(GraphQLID.self)),
+        GraphQLField("name", type: .scalar(String.self)),
+        GraphQLField("address", type: .scalar(String.self)),
+        GraphQLField("latitude", type: .scalar(Double.self)),
+        GraphQLField("longitude", type: .scalar(Double.self)),
+        GraphQLField("timestamp", type: .scalar(String.self)),
+        GraphQLField("pockets", type: .list(.object(Pocket.selections))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID? = nil, name: String? = nil, address: String? = nil, latitude: Double? = nil, longitude: Double? = nil, timestamp: String? = nil, pockets: [Pocket?]? = nil) {
+        self.init(snapshot: ["__typename": "PromiseType", "id": id, "name": name, "address": address, "latitude": latitude, "longitude": longitude, "timestamp": timestamp, "pockets": pockets.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID? {
+        get {
+          return snapshot["id"] as? GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var name: String? {
+        get {
+          return snapshot["name"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      public var address: String? {
+        get {
+          return snapshot["address"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "address")
+        }
+      }
+
+      public var latitude: Double? {
+        get {
+          return snapshot["latitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "latitude")
+        }
+      }
+
+      public var longitude: Double? {
+        get {
+          return snapshot["longitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "longitude")
+        }
+      }
+
+      public var timestamp: String? {
+        get {
+          return snapshot["timestamp"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "timestamp")
+        }
+      }
+
+      public var pockets: [Pocket?]? {
+        get {
+          return (snapshot["pockets"] as? [Snapshot?]).flatMap { (value: [Snapshot?]) -> [Pocket?] in value.map { (value: Snapshot?) -> Pocket? in value.flatMap { (value: Snapshot) -> Pocket in Pocket(snapshot: value) } } }
+        }
+        set {
+          snapshot.updateValue(newValue.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }, forKey: "pockets")
+        }
+      }
+
+      public struct Pocket: GraphQLSelectionSet {
+        public static let possibleTypes = ["PocketType"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("nickname", type: .scalar(String.self)),
+          GraphQLField("pushToken", type: .scalar(String.self)),
+          GraphQLField("profileImagePath", type: .scalar(String.self)),
+          GraphQLField("phone", type: .nonNull(.scalar(String.self))),
+        ]
+
+        public var snapshot: Snapshot
+
+        public init(snapshot: Snapshot) {
+          self.snapshot = snapshot
+        }
+
+        public init(nickname: String? = nil, pushToken: String? = nil, profileImagePath: String? = nil, phone: String) {
+          self.init(snapshot: ["__typename": "PocketType", "nickname": nickname, "pushToken": pushToken, "profileImagePath": profileImagePath, "phone": phone])
+        }
+
+        public var __typename: String {
+          get {
+            return snapshot["__typename"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var nickname: String? {
+          get {
+            return snapshot["nickname"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "nickname")
+          }
+        }
+
+        public var pushToken: String? {
+          get {
+            return snapshot["pushToken"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "pushToken")
+          }
+        }
+
+        public var profileImagePath: String? {
+          get {
+            return snapshot["profileImagePath"] as? String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "profileImagePath")
+          }
+        }
+
+        public var phone: String {
+          get {
+            return snapshot["phone"]! as! String
+          }
+          set {
+            snapshot.updateValue(newValue, forKey: "phone")
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class UpsertUserMutation: GraphQLMutation {
   public static let operationString =
-    "mutation UpsertUser($id: ID!, $email: String, $nickname: String, $gender: String, $birthday: String, $ageRange: String, $profileImagePath: String, $phone: String!) {\n  upsertUser(id: $id, email: $email, nickname: $nickname, gender: $gender, birthday: $birthday, ageRange: $ageRange, profileImagePath: $profileImagePath, phone: $phone) {\n    __typename\n    pocket {\n      __typename\n      latitude\n      longitude\n      token\n      profileImagePath\n      phone\n      promiseList {\n        __typename\n        id\n        address\n        timestamp\n        latitude\n        longitude\n        name\n        pockets {\n          __typename\n          phone\n          token\n          profileImagePath\n          nickname\n        }\n      }\n    }\n  }\n}"
+    "mutation UpsertUser($id: ID!, $email: String, $nickname: String, $gender: String, $birthday: String, $ageRange: String, $profileImagePath: String, $phone: String!) {\n  upsertUser(id: $id, email: $email, nickname: $nickname, gender: $gender, birthday: $birthday, ageRange: $ageRange, profileImagePath: $profileImagePath, phone: $phone) {\n    __typename\n    pocket {\n      __typename\n      latitude\n      longitude\n      pushToken\n      profileImagePath\n      phone\n      promiseList {\n        __typename\n        id\n        address\n        timestamp\n        latitude\n        longitude\n        name\n        pockets {\n          __typename\n          phone\n          pushToken\n          profileImagePath\n          nickname\n        }\n      }\n    }\n  }\n}"
 
   public var id: GraphQLID
   public var email: String?
@@ -1012,9 +1666,9 @@ public final class UpsertUserMutation: GraphQLMutation {
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("latitude", type: .scalar(Double.self)),
           GraphQLField("longitude", type: .scalar(Double.self)),
-          GraphQLField("token", type: .scalar(String.self)),
+          GraphQLField("pushToken", type: .scalar(String.self)),
           GraphQLField("profileImagePath", type: .scalar(String.self)),
-          GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
+          GraphQLField("phone", type: .nonNull(.scalar(String.self))),
           GraphQLField("promiseList", type: .list(.object(PromiseList.selections))),
         ]
 
@@ -1024,8 +1678,8 @@ public final class UpsertUserMutation: GraphQLMutation {
           self.snapshot = snapshot
         }
 
-        public init(latitude: Double? = nil, longitude: Double? = nil, token: String? = nil, profileImagePath: String? = nil, phone: GraphQLID, promiseList: [PromiseList?]? = nil) {
-          self.init(snapshot: ["__typename": "PocketType", "latitude": latitude, "longitude": longitude, "token": token, "profileImagePath": profileImagePath, "phone": phone, "promiseList": promiseList.flatMap { (value: [PromiseList?]) -> [Snapshot?] in value.map { (value: PromiseList?) -> Snapshot? in value.flatMap { (value: PromiseList) -> Snapshot in value.snapshot } } }])
+        public init(latitude: Double? = nil, longitude: Double? = nil, pushToken: String? = nil, profileImagePath: String? = nil, phone: String, promiseList: [PromiseList?]? = nil) {
+          self.init(snapshot: ["__typename": "PocketType", "latitude": latitude, "longitude": longitude, "pushToken": pushToken, "profileImagePath": profileImagePath, "phone": phone, "promiseList": promiseList.flatMap { (value: [PromiseList?]) -> [Snapshot?] in value.map { (value: PromiseList?) -> Snapshot? in value.flatMap { (value: PromiseList) -> Snapshot in value.snapshot } } }])
         }
 
         public var __typename: String {
@@ -1055,12 +1709,12 @@ public final class UpsertUserMutation: GraphQLMutation {
           }
         }
 
-        public var token: String? {
+        public var pushToken: String? {
           get {
-            return snapshot["token"] as? String
+            return snapshot["pushToken"] as? String
           }
           set {
-            snapshot.updateValue(newValue, forKey: "token")
+            snapshot.updateValue(newValue, forKey: "pushToken")
           }
         }
 
@@ -1073,9 +1727,9 @@ public final class UpsertUserMutation: GraphQLMutation {
           }
         }
 
-        public var phone: GraphQLID {
+        public var phone: String {
           get {
-            return snapshot["phone"]! as! GraphQLID
+            return snapshot["phone"]! as! String
           }
           set {
             snapshot.updateValue(newValue, forKey: "phone")
@@ -1192,8 +1846,8 @@ public final class UpsertUserMutation: GraphQLMutation {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
-              GraphQLField("token", type: .scalar(String.self)),
+              GraphQLField("phone", type: .nonNull(.scalar(String.self))),
+              GraphQLField("pushToken", type: .scalar(String.self)),
               GraphQLField("profileImagePath", type: .scalar(String.self)),
               GraphQLField("nickname", type: .scalar(String.self)),
             ]
@@ -1204,8 +1858,8 @@ public final class UpsertUserMutation: GraphQLMutation {
               self.snapshot = snapshot
             }
 
-            public init(phone: GraphQLID, token: String? = nil, profileImagePath: String? = nil, nickname: String? = nil) {
-              self.init(snapshot: ["__typename": "PocketType", "phone": phone, "token": token, "profileImagePath": profileImagePath, "nickname": nickname])
+            public init(phone: String, pushToken: String? = nil, profileImagePath: String? = nil, nickname: String? = nil) {
+              self.init(snapshot: ["__typename": "PocketType", "phone": phone, "pushToken": pushToken, "profileImagePath": profileImagePath, "nickname": nickname])
             }
 
             public var __typename: String {
@@ -1217,21 +1871,21 @@ public final class UpsertUserMutation: GraphQLMutation {
               }
             }
 
-            public var phone: GraphQLID {
+            public var phone: String {
               get {
-                return snapshot["phone"]! as! GraphQLID
+                return snapshot["phone"]! as! String
               }
               set {
                 snapshot.updateValue(newValue, forKey: "phone")
               }
             }
 
-            public var token: String? {
+            public var pushToken: String? {
               get {
-                return snapshot["token"] as? String
+                return snapshot["pushToken"] as? String
               }
               set {
-                snapshot.updateValue(newValue, forKey: "token")
+                snapshot.updateValue(newValue, forKey: "pushToken")
               }
             }
 

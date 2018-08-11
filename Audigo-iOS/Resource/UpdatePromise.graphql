@@ -1,0 +1,16 @@
+mutation UpdatePromise($id: ID!, $prevTimestamp: String, $owner: String, $name: String, $address: String, $latitude: Float, $longitude: Float, $timestamp: String, $pockets: [String]) {
+  updatePromise(id: $id, prevTimestamp: $prevTimestamp, owner: $owner, name: $name, address: $address, latitude: $latitude, longitude: $longitude, timestamp: $timestamp, pockets: $pockets) {
+    id
+    name
+    address
+    latitude
+    longitude
+    timestamp
+    pockets {
+      nickname
+      pushToken
+      profileImagePath
+      phone
+    }
+  }
+}

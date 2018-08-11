@@ -26,11 +26,28 @@
 				<string>kakaodccae63cb73bd8096d09826d2e0ce581</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.536726228034-hrdhfjdmggsvasotclolqcnabu2vjrk8</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>KAKAO_APP_KEY</key>
 	<string>dccae63cb73bd8096d09826d2e0ce581</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaodccae63cb73bd8096d09826d2e0ce581</string>
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+		<string>kakaolink</string>
+		<string>kakaotalk-5.9.7</string>
+		<string>storylink</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -54,21 +71,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <!-- 공통 -->
-    <string>kakaodccae63cb73bd8096d09826d2e0ce581</string>
-    
-    <!-- 간편로그인 -->
-    <string>kakaokompassauth</string>
-    <string>storykompassauth</string>
-    
-    <!-- 카카오톡링크 -->
-    <string>kakaolink</string>
-    <string>kakaotalk-5.9.7</string>
-    
-    <!-- 카카오스토리링크 -->
-    <string>storylink</string>
-  </array>
 </dict>
 </plist>

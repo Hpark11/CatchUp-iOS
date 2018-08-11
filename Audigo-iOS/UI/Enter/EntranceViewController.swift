@@ -7,22 +7,20 @@
 //
 
 import UIKit
+import RxSwift
 
 class EntranceViewController: UIViewController {
   @IBOutlet weak var loginButton: UIButton!
   
+  var signInDone: PublishSubject<Void>?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let marginX = 32
-    let width = view.frame.size.width - CGFloat(marginX * 2)
-    let height = 42
-    let marginBottom = 25
-    loginButton.frame = CGRect(x: marginX, y: view.frame.size.height - marginBottom - height, width: width, height: height)
-    
     let session = KOSession.shared()
     if let s = session {
       if s.isOpen() {
+        signInDone?.onNext(())
         dismiss(animated: false, completion: nil)
       }
     }
@@ -34,8 +32,8 @@ class EntranceViewController: UIViewController {
     session?.open { (error) in
       if error == nil {
         if let s = session, s.isOpen() {
-          print("Success")
-          session?.userMe
+          self.signInDone?.onNext(())
+          self.dismiss(animated: false, completion: nil)
         } else {
           print("Fail")
         }

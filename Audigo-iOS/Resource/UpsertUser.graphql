@@ -3,7 +3,7 @@ mutation UpsertUser($id: ID!, $email: String, $nickname: String, $gender: String
     pocket {
       latitude
       longitude
-      token
+      pushToken
       profileImagePath
       phone
       promiseList {
@@ -15,7 +15,7 @@ mutation UpsertUser($id: ID!, $email: String, $nickname: String, $gender: String
         name
         pockets {
           phone
-          token
+          pushToken
           profileImagePath
           nickname
         }

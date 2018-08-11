@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>536726228034-hrdhfjdmggsvasotclolqcnabu2vjrk8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.536726228034-hrdhfjdmggsvasotclolqcnabu2vjrk8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>536726228034</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>blackburn.io.Audigo-iOS</string>
+	<key>PROJECT_ID</key>
+	<string>audigo-c015a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>audigo-c015a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:536726228034:ios:66d570d665f40c57</string>
+	<key>DATABASE_URL</key>
+	<string>https://audigo-c015a.firebaseio.com</string>
+</dict>
+</plist>

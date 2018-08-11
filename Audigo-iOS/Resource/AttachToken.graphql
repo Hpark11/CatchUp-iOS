@@ -1,0 +1,8 @@
+mutation AttachToken($phone: String!, $pushToken: String, $osType: String) {
+  attachToken(phone: $phone, pushToken: $pushToken, osType: $osType) {
+    phone
+    pushToken
+    osType
+  }
+}
+
