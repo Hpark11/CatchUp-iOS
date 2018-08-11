@@ -7,29 +7,60 @@
 //
 
 import UIKit
+import FirebaseAuth
+import RxSwift
 
 class PhoneCheckViewController: UIViewController {
+  @IBOutlet weak var phoneNumberTextField: UITextField!
+  
+  var phoneCertifyDone: PublishSubject<String>?
+  
+  override func viewDidLoad() {
+      super.viewDidLoad()
+  }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+  @IBAction func certifyWithPhone(_ sender: Any) {
+    guard let phone = phoneNumberTextField.text else { return }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    PhoneAuthProvider.provider().verifyPhoneNumber("+82" + phone, uiDelegate: nil) { (verificationID, error) in
+      if let error = error {
+        print(error.localizedDescription)
+        return
+      }
+      
+      if let id = verificationID {
+        let alert = UIAlertController(title: "인증코드 입력", message: "SMS 문자메세지로 받은 인증코드를 입력하세요", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        alert.addTextField(configurationHandler: { textField in
+          textField.placeholder = "인증코드 입력"
+          textField.keyboardType = .numberPad
+        })
+        
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+          if let code = alert.textFields?.first?.text {
+            let credential = PhoneAuthProvider.provider().credential(withVerificationID: id, verificationCode: code)
+          
+            Auth.auth().signIn(with: credential) { (user, error) in
+              if let error = error {
+                print(error.localizedDescription)
+                return
+              }
+              
+              UserDefaults.standard.set(phone, forKey: "phoneNumber")
+              UserDefaults.standard.synchronize()
+              
+              self.phoneCertifyDone?.onNext(phone)
+            }
+          }
+        }))
+        
+        self.present(alert, animated: true)
+      }
     }
-    */
-
+  }
+  
+//  let credential = PhoneAuthProvider.provider().credential(
+//    withVerificationID: verificationID,
+//    verificationCode: verificationCode)
 }

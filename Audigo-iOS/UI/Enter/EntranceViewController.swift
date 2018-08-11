@@ -15,17 +15,9 @@ class EntranceViewController: UIViewController {
   var signInDone: PublishSubject<Void>?
   
   override func viewDidLoad() {
-    super.viewDidLoad()
-
-    let session = KOSession.shared()
-    if let s = session {
-      if s.isOpen() {
-        signInDone?.onNext(())
-        dismiss(animated: false, completion: nil)
-      }
-    }
+    super.viewDidLoad()    
   }
-  
+
   @IBAction func login(_ sender: Any) {
     let session = KOSession.shared()
     

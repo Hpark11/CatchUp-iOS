@@ -23,6 +23,7 @@
 		CE34B4C1211E787100F92D50 /* schemaBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B5211E787100F92D50 /* schemaBackup.json */; };
 		CE34B4C3211E86A000F92D50 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */; };
 		CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */; };
+		CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */; };
 		CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */; };
 		CE7D369420DA8682003E8823 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369320DA8682003E8823 /* R.generated.swift */; };
 		CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */; };
@@ -85,6 +86,7 @@
 		CE34B4B5211E787100F92D50 /* schemaBackup.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schemaBackup.json; sourceTree = "<group>"; };
 		CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCheckViewController.swift; sourceTree = "<group>"; };
+		CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTableViewCell.swift; sourceTree = "<group>"; };
 		CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KakaoOpenSDK-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE7D369320DA8682003E8823 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
@@ -197,6 +199,7 @@
 				CED4CCAF20C979040063D89F /* MainViewController.swift */,
 				CEB41F042115C484006BC729 /* MainScene.swift */,
 				CEB41F062115C4A6006BC729 /* MainViewModel.swift */,
+				CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				CEB41F002115C3FF006BC729 /* Scene+ViewController.swift in Sources */,
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
 				CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */,
+				CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */,
 				CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */,
 				CEB41F052115C484006BC729 /* MainScene.swift in Sources */,
 				CE7D369420DA8682003E8823 /* R.generated.swift in Sources */,

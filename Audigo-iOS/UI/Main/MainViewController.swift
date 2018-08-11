@@ -14,15 +14,29 @@ class MainViewController: UIViewController, BindableType {
   
   let disposeBag = DisposeBag()
   
+  var needSignIn = false
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    let session = KOSession.shared()
+    guard let s = session, s.isOpen() else {
+      needSignIn = true
+      return
+    }
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    if let vc = R.storyboard.main.entranceViewController() {
-      vc.signInDone = viewModel.signInDone
-      present(vc, animated: false, completion: nil)
+    
+    if needSignIn {
+      if let vc = R.storyboard.main.entranceViewController() {
+        vc.signInDone = viewModel.signInDone
+        present(vc, animated: false, completion: nil)
+        needSignIn = false
+      }
+    } else {
+      viewModel.signInDone.onNext(())
     }
   }
 
@@ -34,6 +48,7 @@ class MainViewController: UIViewController, BindableType {
         break
       case .phoneRequired:
         if let vc = R.storyboard.main.phoneCheckViewController() {
+          vc.phoneCertifyDone = strongSelf.viewModel.phoneCertifyDone
           strongSelf.present(vc, animated: false, completion: nil)
         }
         break
@@ -42,6 +57,5 @@ class MainViewController: UIViewController, BindableType {
       }
     }).disposed(by: disposeBag)
   }
-
 }
 
