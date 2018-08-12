@@ -59,8 +59,4 @@ class PhoneCheckViewController: UIViewController {
       }
     }
   }
-  
-//  let credential = PhoneAuthProvider.provider().credential(
-//    withVerificationID: verificationID,
-//    verificationCode: verificationCode)
 }

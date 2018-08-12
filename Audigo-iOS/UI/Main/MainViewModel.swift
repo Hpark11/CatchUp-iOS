@@ -41,7 +41,7 @@ protocol MainViewModelOutputsType {
 }
 
 protocol MainViewModelActionsType {
-  // Mainly `Actions` here
+  var pushNewPromiseScene: CocoaAction { get }
 }
 
 protocol MainViewModelType {
@@ -71,7 +71,7 @@ class MainViewModel: MainViewModelType {
   private let disposeBag = DisposeBag()
   
   init(coordinator: SceneCoordinatorType) {
-    // Setup
+    
     sceneCoordinator = coordinator
     signInDone = PublishSubject()
     phoneCertifyDone = PublishSubject()
@@ -191,6 +191,15 @@ class MainViewModel: MainViewModelType {
       })
     }
   }
+  
+  lazy var pushNewPromiseScene: CocoaAction = {
+    return Action { [weak self] in
+      guard let strongSelf = self else { return .empty() }
+      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator)
+      let scene = NewPromiseScene(viewModel: viewModel)
+      return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: false))
+    }
+  }()
 }
 
 extension MainViewModel: MainViewModelInputsType, MainViewModelOutputsType, MainViewModelActionsType {}

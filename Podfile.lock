@@ -26,6 +26,13 @@ PODS:
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (3.1.1):
     - FirebaseCore (~> 5.0)
+  - GoogleMaps (2.7.0):
+    - GoogleMaps/Maps (= 2.7.0)
+  - GoogleMaps/Base (2.7.0)
+  - GoogleMaps/Maps (2.7.0):
+    - GoogleMaps/Base
+  - GooglePlaces (2.7.0):
+    - GoogleMaps/Base (= 2.7.0)
   - GoogleToolboxForMac/Defines (2.1.4)
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
@@ -47,6 +54,9 @@ PODS:
     - Differentiator (~> 3.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
+  - RxGesture (1.2.1):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - RxKeyboard (0.8.1):
     - RxCocoa (>= 4.0.0)
     - RxSwift (>= 4.0.0)
@@ -57,11 +67,14 @@ DEPENDENCIES:
   - Apollo
   - Firebase/Auth
   - Firebase/Core
+  - GoogleMaps
+  - GooglePlaces
   - Kingfisher
   - "NSObject+Rx"
   - R.swift
   - RxCocoa (~> 4.0)
   - RxDataSources (~> 3.0)
+  - RxGesture
   - RxKeyboard
   - RxSwift (~> 4.0)
 
@@ -75,6 +88,8 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseInstanceID
+    - GoogleMaps
+    - GooglePlaces
     - GoogleToolboxForMac
     - GTMSessionFetcher
     - Kingfisher
@@ -84,6 +99,7 @@ SPEC REPOS:
     - R.swift.Library
     - RxCocoa
     - RxDataSources
+    - RxGesture
     - RxKeyboard
     - RxSwift
 
@@ -96,6 +112,8 @@ SPEC CHECKSUMS:
   FirebaseAuth: 096e457cdd4274412a66c4a35874787e411f5a03
   FirebaseCore: 4c28e3b9708ba48a765e76515f913a71596eb5dd
   FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
+  GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
@@ -105,9 +123,10 @@ SPEC CHECKSUMS:
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
+  RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
   RxKeyboard: 28d984440671becc75350b1dfae7ae08d31076df
   RxSwift: e49536837d9901277638493ea537394d4b55f570
 
-PODFILE CHECKSUM: 15c8722763455f59dc9ea6766de05ca5fc4ffd77
+PODFILE CHECKSUM: f46bcf0bc3fcd9c842df9106ea18a2c90818737c
 
 COCOAPODS: 1.5.0

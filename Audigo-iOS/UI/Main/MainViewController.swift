@@ -8,13 +8,20 @@
 
 import UIKit
 import RxSwift
+import RxDataSources
 
 class MainViewController: UIViewController, BindableType {
   @IBOutlet weak var promiseListTableView: UITableView!
+  @IBOutlet weak var newPromiseButton: UIButton!
   
   var viewModel: MainViewModel!
   
   let disposeBag = DisposeBag()
+  let dataSource = RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: { data, tableView, indexPath, promise in
+    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseTableViewCell, for: indexPath)
+    cell?.configure(promise: promise)
+    return cell!
+  })
   
   var needSignIn = false
   
@@ -26,6 +33,10 @@ class MainViewController: UIViewController, BindableType {
       needSignIn = true
       return
     }
+    
+    viewModel.promiseItems
+      .bind(to: promiseListTableView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -40,8 +51,6 @@ class MainViewController: UIViewController, BindableType {
     } else {
       viewModel.signInDone.onNext(())
     }
-    
-    
   }
 
   func bindViewModel() {
@@ -61,16 +70,8 @@ class MainViewController: UIViewController, BindableType {
         break
       }
     }).disposed(by: disposeBag)
+    
+    newPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
   }
 }
-//
-//extension MainViewController: UITableViewDelegate, UITableViewDataSource {
-//  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//    <#code#>
-//  }
-//  
-//  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//    <#code#>
-//  }
-//}
 

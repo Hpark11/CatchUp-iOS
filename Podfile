@@ -12,11 +12,14 @@ target 'Audigo-iOS' do
   pod 'RxCocoa',    '~> 4.0'
   pod 'R.swift'
   pod 'RxKeyboard'
+  pod 'RxGesture'
   pod 'Apollo'
   pod 'RxDataSources', '~> 3.0'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Kingfisher'
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
 
   target 'Audigo-iOSTests' do
     inherit! :search_paths

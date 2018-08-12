@@ -24,9 +24,16 @@
 		CE34B4C3211E86A000F92D50 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */; };
 		CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */; };
 		CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */; };
+		CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */; };
+		CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDC9212071F9007A6BF6 /* NewPromiseScene.swift */; };
+		CE77EDCC21207204007A6BF6 /* NewPromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */; };
+		CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */; };
+		CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */; };
+		CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */; };
 		CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */; };
 		CE7D369420DA8682003E8823 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369320DA8682003E8823 /* R.generated.swift */; };
 		CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */; };
+		CE825F9021205BF800697F52 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE825F8F21205BF800697F52 /* Util.swift */; };
 		CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EF82115C3FF006BC729 /* SceneCoordinatorType.swift */; };
 		CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EF92115C3FF006BC729 /* SceneTransitionType.swift */; };
 		CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EFA2115C3FF006BC729 /* Scene.swift */; };
@@ -89,10 +96,17 @@
 		CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCheckViewController.swift; sourceTree = "<group>"; };
 		CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTableViewCell.swift; sourceTree = "<group>"; };
+		CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPromiseViewController.swift; sourceTree = "<group>"; };
+		CE77EDC9212071F9007A6BF6 /* NewPromiseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPromiseScene.swift; sourceTree = "<group>"; };
+		CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPromiseViewModel.swift; sourceTree = "<group>"; };
+		CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailViewController.swift; sourceTree = "<group>"; };
+		CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopupViewController.swift; sourceTree = "<group>"; };
+		CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePopupViewController.swift; sourceTree = "<group>"; };
 		CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KakaoOpenSDK-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE7D369320DA8682003E8823 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApolloAPIService.swift; sourceTree = "<group>"; };
+		CE825F8F21205BF800697F52 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		CEB41EF82115C3FF006BC729 /* SceneCoordinatorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCoordinatorType.swift; sourceTree = "<group>"; };
 		CEB41EF92115C3FF006BC729 /* SceneTransitionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransitionType.swift; sourceTree = "<group>"; };
 		CEB41EFA2115C3FF006BC729 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
@@ -166,11 +180,39 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CE77EDC521206AE4007A6BF6 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		CE77EDC621206AF4007A6BF6 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */,
+				CE77EDC9212071F9007A6BF6 /* NewPromiseScene.swift */,
+				CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		CE77EDCF2120962E007A6BF6 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */,
+				CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		CEB41EF52115C227006BC729 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
 				CE0B6A87211C927A003FA382 /* BaseViewModel.swift */,
+				CE825F8F21205BF800697F52 /* Util.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -178,6 +220,9 @@
 		CEB41EF62115C2AF006BC729 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				CE77EDCF2120962E007A6BF6 /* Common */,
+				CE77EDC621206AF4007A6BF6 /* Add */,
+				CE77EDC521206AE4007A6BF6 /* Detail */,
 				CEB41F0D2115C545006BC729 /* Enter */,
 				CEB41F0C2115C541006BC729 /* Main */,
 				CEB41F022115C41B006BC729 /* BindableTypes.swift */,
@@ -323,6 +368,7 @@
 				CED4CCA720C979040063D89F /* Frameworks */,
 				CED4CCA820C979040063D89F /* Resources */,
 				210452AA7CCAAE35815164FE /* [CP] Embed Pods Frameworks */,
+				10EAA5BE51508375557439EF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -455,6 +501,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		10EAA5BE51508375557439EF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		210452AA7CCAAE35815164FE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -472,6 +538,7 @@
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxKeyboard/RxKeyboard.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -488,6 +555,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxKeyboard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -590,9 +658,16 @@
 				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
 				CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */,
 				CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */,
+				CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */,
 				CEB41F012115C3FF006BC729 /* AppCoordinator.swift in Sources */,
+				CE77EDCC21207204007A6BF6 /* NewPromiseViewModel.swift in Sources */,
 				CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */,
+				CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */,
 				CE0B6A88211C927A003FA382 /* BaseViewModel.swift in Sources */,
+				CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */,
+				CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */,
+				CE825F9021205BF800697F52 /* Util.swift in Sources */,
+				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
 				CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */,
 				CED4CCB020C979040063D89F /* MainViewController.swift in Sources */,
 				CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */,

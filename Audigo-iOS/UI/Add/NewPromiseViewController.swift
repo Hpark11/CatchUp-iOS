@@ -1,0 +1,53 @@
+//
+//  NewPromiseViewController.swift
+//  Audigo-iOS
+//
+//  Created by hPark on 2018. 8. 12..
+//  Copyright © 2018년 BlackBurn. All rights reserved.
+//
+
+import UIKit
+import RxSwift
+import RxGesture
+
+class NewPromiseViewController: UIViewController, BindableType {
+  var viewModel: NewPromiseViewModel!
+  
+  let disposeBag = DisposeBag()
+  
+  @IBOutlet weak var popButton: UIButton!
+  @IBOutlet weak var promiseNameLabel: UILabel!
+  @IBOutlet weak var promiseDateLabel: UILabel!
+  @IBOutlet weak var promiseTimeLabel: UILabel!
+  @IBOutlet weak var promiseAddressLabel: UILabel!
+  @IBOutlet weak var promiseMembersLabel: UILabel!
+  @IBOutlet weak var membersCollectionView: UICollectionView!
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
+  func bindViewModel() {
+    popButton.rx.action = viewModel.actions.popScene
+    
+    promiseNameLabel.rx.tapGesture().when(.recognized).subscribe { _ in
+      let alert = UIAlertController(title: "이름 짓기", message: "생성할 약속의 이름을 입력해주세요", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+      
+      alert.addTextField(configurationHandler: { textField in
+        textField.placeholder = "이름 입력"
+      })
+      
+      alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+        if let name = alert.textFields?.first?.text {
+          
+        }
+      }))
+      
+      self.present(alert, animated: true)
+    }.disposed(by: disposeBag)
+    
+    
+  }
+  
+}
