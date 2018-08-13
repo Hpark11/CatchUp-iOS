@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import Apollo
 import Firebase
+import GoogleMaps
+import GooglePlaces
 
 let apollo = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
 
@@ -22,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     FirebaseApp.configure()
+    GMSServices.provideAPIKey("AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE")
+    GMSPlacesClient.provideAPIKey("AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE")
     
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()

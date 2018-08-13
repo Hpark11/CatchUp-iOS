@@ -10,6 +10,7 @@
 		2D21762642317F57372FC052 /* Pods_Audigo_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C23B93B7ECC5C9C81403950 /* Pods_Audigo_iOSTests.framework */; };
 		A0481508A224CCDA166030F8 /* Pods_Audigo_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */; };
 		CE0B6A88211C927A003FA382 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0B6A87211C927A003FA382 /* BaseViewModel.swift */; };
+		CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */; };
 		CE34B4B6211E787100F92D50 /* UpsertUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AA211E787000F92D50 /* UpsertUser.graphql */; };
 		CE34B4B7211E787100F92D50 /* DeletePromiseById.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */; };
 		CE34B4B8211E787100F92D50 /* GetUserWithPromises.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */; };
@@ -82,6 +83,7 @@
 		B5DF70456DCA29CA99440351 /* Pods-Audigo-iOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSUITests/Pods-Audigo-iOSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CA541320104F8C0FED8535D0 /* Pods-Audigo-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		CE0B6A87211C927A003FA382 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
 		CE34B4AA211E787000F92D50 /* UpsertUser.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UpsertUser.graphql; sourceTree = "<group>"; };
 		CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeletePromiseById.graphql; sourceTree = "<group>"; };
 		CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetUserWithPromises.graphql; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */,
 				CE77EDC9212071F9007A6BF6 /* NewPromiseScene.swift */,
 				CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */,
+				CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxKeyboard/RxKeyboard.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyContacts/SwiftyContacts.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -558,6 +562,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxKeyboard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyContacts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -658,6 +663,7 @@
 				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
 				CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */,
 				CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */,
+				CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */,
 				CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */,
 				CEB41F012115C3FF006BC729 /* AppCoordinator.swift in Sources */,
 				CE77EDCC21207204007A6BF6 /* NewPromiseViewModel.swift in Sources */,

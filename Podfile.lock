@@ -61,6 +61,9 @@ PODS:
     - RxCocoa (>= 4.0.0)
     - RxSwift (>= 4.0.0)
   - RxSwift (4.1.2)
+  - SwiftyContacts (3.0.11):
+    - SwiftyContacts/Core (= 3.0.11)
+  - SwiftyContacts/Core (3.0.11)
 
 DEPENDENCIES:
   - Action
@@ -77,6 +80,7 @@ DEPENDENCIES:
   - RxGesture
   - RxKeyboard
   - RxSwift (~> 4.0)
+  - SwiftyContacts
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -102,6 +106,7 @@ SPEC REPOS:
     - RxGesture
     - RxKeyboard
     - RxSwift
+    - SwiftyContacts
 
 SPEC CHECKSUMS:
   Action: d60087ebce41b969d1afdad01e2fa1372a82f26e
@@ -126,7 +131,8 @@ SPEC CHECKSUMS:
   RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
   RxKeyboard: 28d984440671becc75350b1dfae7ae08d31076df
   RxSwift: e49536837d9901277638493ea537394d4b55f570
+  SwiftyContacts: 3b38d400d2480e8a2323194f3f8fcf6b317d8147
 
-PODFILE CHECKSUM: f46bcf0bc3fcd9c842df9106ea18a2c90818737c
+PODFILE CHECKSUM: 39416a56e98e23d6bd17b952073c39d353ceed8e
 
 COCOAPODS: 1.5.0

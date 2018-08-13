@@ -9,6 +9,8 @@
 import UIKit
 import RxSwift
 import RxGesture
+import GooglePlaces
+import GoogleMaps
 
 class NewPromiseViewController: UIViewController, BindableType {
   var viewModel: NewPromiseViewModel!
@@ -25,6 +27,19 @@ class NewPromiseViewController: UIViewController, BindableType {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    //    // Create a GMSCameraPosition that tells the map to display the
+    //    // coordinate -33.86,151.20 at zoom level 6.
+    //    let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+    //    let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+    //    view = mapView
+    //
+    //    // Creates a marker in the center of the map.
+    //    let marker = GMSMarker()
+    //    marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
+    //    marker.title = "Sydney"
+    //    marker.snippet = "Australia"
+    //    marker.map = mapView
   }
   
   func bindViewModel() {
@@ -47,7 +62,38 @@ class NewPromiseViewController: UIViewController, BindableType {
       self.present(alert, animated: true)
     }.disposed(by: disposeBag)
     
-    
+    promiseAddressLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
+      let autocompleteController = GMSAutocompleteViewController()
+      autocompleteController.delegate = self
+      self.present(autocompleteController, animated: true, completion: nil)
+    }).disposed(by: disposeBag)
+  }
+}
+
+extension NewPromiseViewController: GMSAutocompleteViewControllerDelegate {
+
+  func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+    print("Place name: \(place.name)")
+    print("Place address: \(place.formattedAddress)")
+    promiseAddressLabel.text = place.formattedAddress
+    print("Place attributions: \(place.attributions)")
+    dismiss(animated: true, completion: nil)
   }
   
+  func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+    print("Error: ", error.localizedDescription)
+  }
+  
+  func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+  }
+  
+  func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+  }
 }
+
