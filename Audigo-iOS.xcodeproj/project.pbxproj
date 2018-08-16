@@ -11,6 +11,8 @@
 		A0481508A224CCDA166030F8 /* Pods_Audigo_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */; };
 		CE0B6A88211C927A003FA382 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0B6A87211C927A003FA382 /* BaseViewModel.swift */; };
 		CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */; };
+		CE280193212575E20066B344 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE280192212575E20066B344 /* ContactItem.swift */; };
+		CE2801952125A55D0066B344 /* RxApollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2801942125A55D0066B344 /* RxApollo.swift */; };
 		CE34B4B6211E787100F92D50 /* UpsertUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AA211E787000F92D50 /* UpsertUser.graphql */; };
 		CE34B4B7211E787100F92D50 /* DeletePromiseById.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */; };
 		CE34B4B8211E787100F92D50 /* GetUserWithPromises.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */; };
@@ -35,6 +37,7 @@
 		CE7D369420DA8682003E8823 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369320DA8682003E8823 /* R.generated.swift */; };
 		CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */; };
 		CE825F9021205BF800697F52 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE825F8F21205BF800697F52 /* Util.swift */; };
+		CEAD38B321230B63009B0A5A /* MemberSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */; };
 		CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EF82115C3FF006BC729 /* SceneCoordinatorType.swift */; };
 		CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EF92115C3FF006BC729 /* SceneTransitionType.swift */; };
 		CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EFA2115C3FF006BC729 /* Scene.swift */; };
@@ -84,6 +87,8 @@
 		CA541320104F8C0FED8535D0 /* Pods-Audigo-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		CE0B6A87211C927A003FA382 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
+		CE280192212575E20066B344 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
+		CE2801942125A55D0066B344 /* RxApollo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxApollo.swift; sourceTree = "<group>"; };
 		CE34B4AA211E787000F92D50 /* UpsertUser.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UpsertUser.graphql; sourceTree = "<group>"; };
 		CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeletePromiseById.graphql; sourceTree = "<group>"; };
 		CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetUserWithPromises.graphql; sourceTree = "<group>"; };
@@ -109,6 +114,7 @@
 		CE7D369320DA8682003E8823 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApolloAPIService.swift; sourceTree = "<group>"; };
 		CE825F8F21205BF800697F52 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectTableViewCell.swift; sourceTree = "<group>"; };
 		CEB41EF82115C3FF006BC729 /* SceneCoordinatorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCoordinatorType.swift; sourceTree = "<group>"; };
 		CEB41EF92115C3FF006BC729 /* SceneTransitionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransitionType.swift; sourceTree = "<group>"; };
 		CEB41EFA2115C3FF006BC729 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
@@ -182,6 +188,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CE280191212575B10066B344 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				CE280192212575E20066B344 /* ContactItem.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		CE77EDC521206AE4007A6BF6 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +211,7 @@
 				CE77EDC9212071F9007A6BF6 /* NewPromiseScene.swift */,
 				CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */,
 				CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */,
+				CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -216,6 +231,7 @@
 				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
 				CE0B6A87211C927A003FA382 /* BaseViewModel.swift */,
 				CE825F8F21205BF800697F52 /* Util.swift */,
+				CE2801942125A55D0066B344 /* RxApollo.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -294,11 +310,12 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */,
 				CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */,
 				CEB41EF52115C227006BC729 /* App */,
 				CED4CCB420C979040063D89F /* Audigo_iOS.xcdatamodeld */,
 				CEB41EF72115C3A4006BC729 /* Coordinator */,
+				CE280191212575B10066B344 /* Data */,
+				CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */,
 				CED4CCBC20C979060063D89F /* Info.plist */,
 				CED4CCB920C979060063D89F /* LaunchScreen.storyboard */,
 				CED4CCB120C979040063D89F /* Main.storyboard */,
@@ -538,7 +555,10 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
+				"${BUILT_PRODUCTS_DIR}/Permission/Permission.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
@@ -556,7 +576,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Permission.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
@@ -664,6 +687,7 @@
 				CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */,
 				CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */,
 				CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */,
+				CEAD38B321230B63009B0A5A /* MemberSelectTableViewCell.swift in Sources */,
 				CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */,
 				CEB41F012115C3FF006BC729 /* AppCoordinator.swift in Sources */,
 				CE77EDCC21207204007A6BF6 /* NewPromiseViewModel.swift in Sources */,
@@ -671,6 +695,8 @@
 				CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */,
 				CE0B6A88211C927A003FA382 /* BaseViewModel.swift in Sources */,
 				CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */,
+				CE280193212575E20066B344 /* ContactItem.swift in Sources */,
+				CE2801952125A55D0066B344 /* RxApollo.swift in Sources */,
 				CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */,
 				CE825F9021205BF800697F52 /* Util.swift in Sources */,
 				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
@@ -867,7 +893,10 @@
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -911,7 +940,10 @@
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -951,7 +983,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -969,7 +1005,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -986,7 +1026,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1003,7 +1047,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

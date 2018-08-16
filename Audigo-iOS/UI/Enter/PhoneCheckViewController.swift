@@ -51,6 +51,7 @@ class PhoneCheckViewController: UIViewController {
               UserDefaults.standard.synchronize()
               
               self.phoneCertifyDone?.onNext(phone)
+              self.dismiss(animated: false, completion: nil)
             }
           }
         }))

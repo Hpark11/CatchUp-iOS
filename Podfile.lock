@@ -45,9 +45,21 @@ PODS:
   - nanopb/encode (0.3.8)
   - "NSObject+Rx (4.3.0)":
     - RxSwift (~> 4.0)
+  - Permission/Contacts (2.0.4):
+    - Permission/Core
+  - Permission/Core (2.0.4)
+  - Permission/Location (2.0.4):
+    - Permission/Core
+  - Permission/Notifications (2.0.4):
+    - Permission/Core
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
+  - Realm (3.7.4):
+    - Realm/Headers (= 3.7.4)
+  - Realm/Headers (3.7.4)
+  - RealmSwift (3.7.4):
+    - Realm (= 3.7.4)
   - RxCocoa (4.1.2):
     - RxSwift (~> 4.0)
   - RxDataSources (3.0.2):
@@ -61,9 +73,8 @@ PODS:
     - RxCocoa (>= 4.0.0)
     - RxSwift (>= 4.0.0)
   - RxSwift (4.1.2)
-  - SwiftyContacts (3.0.11):
-    - SwiftyContacts/Core (= 3.0.11)
-  - SwiftyContacts/Core (3.0.11)
+  - SwiftyContacts/RxSwift (3.0.11):
+    - RxSwift (~> 4.0)
 
 DEPENDENCIES:
   - Action
@@ -74,13 +85,17 @@ DEPENDENCIES:
   - GooglePlaces
   - Kingfisher
   - "NSObject+Rx"
+  - Permission/Contacts
+  - Permission/Location
+  - Permission/Notifications
   - R.swift
+  - RealmSwift
   - RxCocoa (~> 4.0)
   - RxDataSources (~> 3.0)
   - RxGesture
   - RxKeyboard
   - RxSwift (~> 4.0)
-  - SwiftyContacts
+  - SwiftyContacts/RxSwift
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -99,8 +114,11 @@ SPEC REPOS:
     - Kingfisher
     - nanopb
     - "NSObject+Rx"
+    - Permission
     - R.swift
     - R.swift.Library
+    - Realm
+    - RealmSwift
     - RxCocoa
     - RxDataSources
     - RxGesture
@@ -124,8 +142,11 @@ SPEC CHECKSUMS:
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   "NSObject+Rx": 9a5eeff5e08156f849fa973514456f28eef08742
+  Permission: 6853b9694e66a6c9197468c66d1935c3629cbf9c
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
+  Realm: a469bb59e33f9926102ccaea4349822c53b9117e
+  RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
@@ -133,6 +154,6 @@ SPEC CHECKSUMS:
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   SwiftyContacts: 3b38d400d2480e8a2323194f3f8fcf6b317d8147
 
-PODFILE CHECKSUM: 39416a56e98e23d6bd17b952073c39d353ceed8e
+PODFILE CHECKSUM: ba5058d93954cee21771a60ef4b6076bb1a4a75c
 
 COCOAPODS: 1.5.0

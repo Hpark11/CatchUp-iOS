@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -550,30 +551,48 @@
                                 <rect key="frame" x="20" y="90" width="280" height="458"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="73" id="Sx8-QD-Ylv">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberSelectTableViewCell" rowHeight="73" id="Sx8-QD-Ylv" customClass="MemberSelectTableViewCell" customModule="Audigo_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="280" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Sx8-QD-Ylv" id="byU-fb-2mK">
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="72.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VLZ-rQ-qMF">
-                                                    <rect key="frame" x="8" y="10" width="56" height="52"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VLZ-rQ-qMF">
+                                                    <rect key="frame" x="8" y="10" width="52" height="52"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="52" id="IEf-P8-009"/>
+                                                        <constraint firstAttribute="width" constant="52" id="Xbs-pL-efi"/>
+                                                    </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcA-Bt-ugN">
-                                                    <rect key="frame" x="79" y="26" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcA-Bt-ugN">
+                                                    <rect key="frame" x="68" y="26" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DTT-hw-VtG">
-                                                    <rect key="frame" x="237" y="21" width="28" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DTT-hw-VtG">
+                                                    <rect key="frame" x="245" y="22.5" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="RbE-QY-GE1"/>
+                                                        <constraint firstAttribute="width" constant="28" id="XN4-Ab-dJ3"/>
+                                                    </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="rcA-Bt-ugN" firstAttribute="centerY" secondItem="byU-fb-2mK" secondAttribute="centerY" id="37s-g7-wy9"/>
+                                                <constraint firstItem="rcA-Bt-ugN" firstAttribute="leading" secondItem="VLZ-rQ-qMF" secondAttribute="trailing" constant="8" id="DEt-Xi-TL0"/>
+                                                <constraint firstItem="VLZ-rQ-qMF" firstAttribute="leading" secondItem="byU-fb-2mK" secondAttribute="leading" constant="8" id="Usi-aa-R0W"/>
+                                                <constraint firstItem="VLZ-rQ-qMF" firstAttribute="centerY" secondItem="byU-fb-2mK" secondAttribute="centerY" id="Wvr-Ig-fFe"/>
+                                                <constraint firstItem="DTT-hw-VtG" firstAttribute="trailing" secondItem="byU-fb-2mK" secondAttribute="trailingMargin" constant="8" id="eCo-RK-yoH"/>
+                                                <constraint firstItem="DTT-hw-VtG" firstAttribute="centerY" secondItem="byU-fb-2mK" secondAttribute="centerY" id="wLc-CS-QOf"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="checkImageView" destination="DTT-hw-VtG" id="m2E-rP-wQd"/>
+                                            <outlet property="memberNameLabel" destination="rcA-Bt-ugN" id="TUq-Cd-fe1"/>
+                                            <outlet property="profileImageView" destination="VLZ-rQ-qMF" id="H2d-dq-Og9"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -703,6 +722,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBC-jP-26U">
                                 <rect key="frame" x="16" y="522" width="288" height="30"/>
                                 <state key="normal" title="알았어요"/>
+                                <connections>
+                                    <action selector="allowPermissions:" destination="dlb-n9-V6s" eventType="touchUpInside" id="pil-WE-zC9"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

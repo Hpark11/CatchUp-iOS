@@ -20,7 +20,11 @@ target 'Audigo-iOS' do
   pod 'Kingfisher'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
-  pod 'SwiftyContacts'
+  pod 'SwiftyContacts/RxSwift'
+  pod 'RealmSwift'
+  pod 'Permission/Contacts'
+  pod 'Permission/Location'
+  pod 'Permission/Notifications'
 
   target 'Audigo-iOSTests' do
     inherit! :search_paths

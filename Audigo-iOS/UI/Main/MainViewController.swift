@@ -9,6 +9,10 @@
 import UIKit
 import RxSwift
 import RxDataSources
+import Permission
+import SwiftyContacts
+import Apollo
+import RealmSwift
 
 class MainViewController: UIViewController, BindableType {
   @IBOutlet weak var promiseListTableView: UITableView!
@@ -27,6 +31,37 @@ class MainViewController: UIViewController, BindableType {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
+
+    rx_fetchContacts().map({ contacts in
+      return contacts.compactMap {
+        $0.phoneNumbers.first?.value.stringValue
+      }
+    }).subscribeOn(backgroundScheduler)
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { (phoneNumbers) in
+        
+        phoneNumbers.forEach { phoneNumber in
+          if phoneNumber.starts(with: "010") {
+            let phone = phoneNumber
+              .components(separatedBy:CharacterSet.decimalDigits.inverted)
+              .joined(separator: "")
+          
+            apollo.fetch(query: GetPocketQuery(phone: phone)) { result, error in
+              guard error != nil else {
+                ContactItem.create(phone)
+                return
+              }
+              
+              if let pocket = result?.data?.pocket {
+                ContactItem.create(pocket.phone, nickname: pocket.nickname ?? "", imagePath: pocket.profileImagePath ?? "", pushToken: pocket.pushToken ?? "")
+              }
+            }
+          }
+        }
+    })
+    .disposed(by: disposeBag)
     
     let session = KOSession.shared()
     guard let s = session, s.isOpen() else {
@@ -58,6 +93,10 @@ class MainViewController: UIViewController, BindableType {
       guard let strongSelf = self else { return }
       switch state {
       case .completed:
+        let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
+        if let vc = R.storyboard.main.permissionsViewController(), permissionSet.status != .authorized {
+          strongSelf.present(vc, animated: true, completion: nil)
+        }
         strongSelf.viewModel.configureUser()
         break
       case .phoneRequired:

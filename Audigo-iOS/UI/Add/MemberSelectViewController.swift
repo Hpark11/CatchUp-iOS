@@ -7,11 +7,19 @@
 //
 
 import UIKit
+import RxSwift
+import RealmSwift
 
 class MemberSelectViewController: UIViewController {
   
+  private var items: Results<ContactItem>?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    items = ContactItem.all()
+    
+    
     
     // Do any additional setup after loading the view.
     //      let results = searchBar.rx.text.orEmpty
@@ -33,7 +41,9 @@ class MemberSelectViewController: UIViewController {
     //                                      cell.setup(for: nflPlayerStats)
     //        }
     //        .disposed(by: disposeBag)
-    
+
   }
   
+  
+
 }
