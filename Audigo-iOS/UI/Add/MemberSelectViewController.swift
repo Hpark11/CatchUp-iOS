@@ -13,6 +13,7 @@ import RealmSwift
 class MemberSelectViewController: UIViewController {
   
   private var items: Results<ContactItem>?
+  @IBOutlet weak var memberSelectTableView: UITableView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,9 +42,21 @@ class MemberSelectViewController: UIViewController {
     //                                      cell.setup(for: nflPlayerStats)
     //        }
     //        .disposed(by: disposeBag)
+  }
+}
 
+extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return items?.count ?? 0
   }
   
-  
-
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.memberSelectTableViewCell.identifier, for: indexPath) as? MemberSelectTableViewCell,
+      let item = items?[indexPath.row] else {
+        return MemberSelectTableViewCell(frame: .zero)
+    }
+    
+    cell.configure(item: item)
+    return cell
+  }
 }

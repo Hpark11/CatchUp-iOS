@@ -610,6 +610,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="who-Oe-5t5"/>
                     </view>
+                    <connections>
+                        <outlet property="memberSelectTableView" destination="i6F-vu-b53" id="xY9-SU-heq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Big-Uj-Qt1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
