@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import RxDataSources
 
 class PromiseDetailViewController: UIViewController, BindableType {
@@ -22,10 +23,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
     
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseDetailUserTableViewCell, for: indexPath)
     cell?.configure(pocket: pocket)
-    
-//    cell?.itemView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
-//      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise.id ?? "")
-//    }).disposed(by: strongSelf.disposeBag)
+  
     return cell!
   }
   
@@ -56,11 +54,11 @@ class PromiseDetailViewController: UIViewController, BindableType {
 //
 //    }).disposed(by: disposeBag)
     
+    // navigationItem.rx.t
+    
     viewModel.pocketItems
       .bind(to: pocketListTableView.rx.items(dataSource: RxTableViewSectionedAnimatedDataSource<PocketSectionModel>(configureCell: configureCell)))
       .disposed(by: disposeBag)
   }
-  
-  
 }
 

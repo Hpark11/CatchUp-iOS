@@ -14,11 +14,13 @@ import RxDataSources
 typealias PocketSectionModel = AnimatableSectionModel<String, GetPromiseQuery.Data.Promise.Pocket>
 
 protocol PromiseDetailViewModelInputsType {
-  // Mainly `PublishSubject` here
+  
 }
 
 protocol PromiseDetailViewModelOutputsType {
-  var promiseItem: Observable<GetPromiseQuery.Data.Promise?> { get }
+  var name: Observable<String> { get }
+  var location: Observable<(latitude: Double, longitude: Double)> { get }
+  var timestamp: Observable<TimeInterval> { get }
   var pocketItems: Observable<[PocketSectionModel]> { get }
 }
 
@@ -44,10 +46,14 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   // MARK: Inputs
   
   // MARK: Outputs
-  var promiseItem: Observable<GetPromiseQuery.Data.Promise?>
   var pocketItems: Observable<[PocketSectionModel]>
+  var name: Observable<String>
+  var location: Observable<(latitude: Double, longitude: Double)>
+  var timestamp: Observable<TimeInterval>
   
-  private let promiseInfo: Variable<GetPromiseQuery.Data.Promise?>
+  private let promiseName: Variable<String>
+  private let promiseLocation: Variable<(latitude: Double, longitude: Double)>
+  private let promiseTimestamp: Variable<TimeInterval>
   private let pocketList: Variable<[GetPromiseQuery.Data.Promise.Pocket]>
   
   init(coordinator: SceneCoordinatorType, promiseId: String) {
@@ -55,13 +61,18 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     sceneCoordinator = coordinator
     disposeBag = DisposeBag()
     
-    promiseInfo = Variable(nil)
     pocketList = Variable([])
-    promiseItem = promiseInfo.asObservable().share(replay: 1, scope: .whileConnected)
-    
+    promiseName = Variable("")
+    promiseLocation = Variable((latitude: 0, longitude: 0))
+    promiseTimestamp = Variable(0)
+      
     // Inputs
     
     // Outputs
+    name = promiseName.asObservable()
+    location = promiseLocation.asObservable()
+    timestamp = promiseTimestamp.asObservable()
+    
     pocketItems = pocketList.asObservable()
       .map({ (pocketList) in
         return [PocketSectionModel(model: "", items: pocketList)]
@@ -74,10 +85,22 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
       }
       
       guard let strongSelf = self else { return }
-      strongSelf.promiseInfo.value = result?.data?.promise
+//      strongSelf.promiseInfo.value = result?.data?.promise
       
       if let pockets = result?.data?.promise?.pockets as? [GetPromiseQuery.Data.Promise.Pocket] {
         strongSelf.pocketList.value = pockets
+      }
+      
+      if let name = result?.data?.promise?.name {
+        strongSelf.promiseName.value = name
+      }
+      
+      if let latitude = result?.data?.promise?.latitude, let longitude = result?.data?.promise?.longitude {
+        strongSelf.promiseLocation.value = (latitude: latitude, longitude: longitude)
+      }
+      
+      if let timestamp = UInt64(result?.data?.promise?.timestamp ?? "1") {
+        strongSelf.promiseTimestamp.value = TimeInterval(timestamp / 1000)
       }
     }
   }

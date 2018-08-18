@@ -71,7 +71,7 @@ class MainViewModel: MainViewModelType {
       guard let _ = userInfo.id else { return .failed }
       guard let _ = userInfo.phone else { return .phoneRequired }
       return .completed
-    }).share(replay: 1, scope: .whileConnected)
+    })
     
     promiseItems = promiseList.asObservable()
       .map({ (promiseList) in
