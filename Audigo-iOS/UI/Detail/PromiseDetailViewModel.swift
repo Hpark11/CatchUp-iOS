@@ -15,7 +15,7 @@ protocol PromiseDetailViewModelInputsType {
 }
 
 protocol PromiseDetailViewModelOutputsType {
-  // Mainly `Observable` here
+  var promise: Observable<GetPromiseQuery.Data.Promise?> { get }
 }
 
 protocol PromiseDetailViewModelActionsType {
@@ -41,16 +41,29 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   
   // MARK: Outputs
   
+  var promise: Observable<GetPromiseQuery.Data.Promise?>
+  private let promiseInfo: Variable<GetPromiseQuery.Data.Promise?>
+  
   init(coordinator: SceneCoordinatorType, promiseId: String) {
     // Setup
     sceneCoordinator = coordinator
     disposeBag = DisposeBag()
     
+    promiseInfo = Variable(nil)
+    promise = promiseInfo.asObservable().share(replay: 1, scope: .whileConnected)
+    
     // Inputs
     
     // Outputs
-    
-    // ViewModel Life Cycle
+    apollo.watch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
+      if let error = error {
+        NSLog("Error while GetPromiseQuery: \(error.localizedDescription)")
+        return
+      }
+      
+      guard let strongSelf = self else { return }
+      strongSelf.promiseInfo.value = result?.data?.promise
+    }
   }
   
   // MARK: Actions

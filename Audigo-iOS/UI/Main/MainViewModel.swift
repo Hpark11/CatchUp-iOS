@@ -71,7 +71,6 @@ class MainViewModel: MainViewModelType {
   private let disposeBag = DisposeBag()
   
   init(coordinator: SceneCoordinatorType) {
-    
     sceneCoordinator = coordinator
     signInDone = PublishSubject()
     phoneCertifyDone = PublishSubject()

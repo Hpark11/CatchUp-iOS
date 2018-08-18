@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import RxSwift
 
 class PromiseDetailViewController: UIViewController, BindableType {
   var viewModel: PromiseDetailViewModel!
+  
+  let disposeBag = DisposeBag()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -36,7 +39,10 @@ class PromiseDetailViewController: UIViewController, BindableType {
   }
   
   func bindViewModel() {
-    
+    viewModel.outputs.promise.subscribe(onNext: { promise in
+      guard let promise = promise else { return }
+      
+    }).disposed(by: disposeBag)
   }
   
 }
