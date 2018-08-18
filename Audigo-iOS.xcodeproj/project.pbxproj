@@ -58,6 +58,9 @@
 		CED4CCBB20C979060063D89F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB920C979060063D89F /* LaunchScreen.storyboard */; };
 		CED4CCC620C979060063D89F /* Audigo_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCC520C979060063D89F /* Audigo_iOSTests.swift */; };
 		CED4CCD120C979060063D89F /* Audigo_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */; };
+		CEEE5D9C212717090023E2FC /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */; };
+		CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */; };
+		CEEE5DA02127D6540023E2FC /* PromiseDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */; };
 		DAA9A1DE40416DAD7F13D98E /* Pods_Audigo_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037C740967F5570A44C65A3B /* Pods_Audigo_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +144,9 @@
 		CED4CCCC20C979060063D89F /* Audigo-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Audigo-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audigo_iOSUITests.swift; sourceTree = "<group>"; };
 		CED4CCD220C979060063D89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
+		CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailScene.swift; sourceTree = "<group>"; };
+		CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailViewModel.swift; sourceTree = "<group>"; };
 		DA147B49087C78684F7FF21E /* Pods-Audigo-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSTests/Pods-Audigo-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		E85035A84CDA31ECF6853A28 /* Pods-Audigo-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audigo_iOSUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,6 +206,8 @@
 			isa = PBXGroup;
 			children = (
 				CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */,
+				CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */,
+				CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -310,6 +318,7 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				CEEE5D9A2127149B0023E2FC /* Utility */,
 				CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */,
 				CEB41EF52115C227006BC729 /* App */,
 				CED4CCB420C979040063D89F /* Audigo_iOS.xcdatamodeld */,
@@ -342,6 +351,14 @@
 				CED4CCD220C979060063D89F /* Info.plist */,
 			);
 			path = "Audigo-iOSUITests";
+			sourceTree = "<group>";
+		};
+		CEEE5D9A2127149B0023E2FC /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		CEEF4B942117260B002BEF65 /* Resource */ = {
@@ -694,16 +711,19 @@
 				CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */,
 				CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */,
 				CE0B6A88211C927A003FA382 /* BaseViewModel.swift in Sources */,
+				CEEE5D9C212717090023E2FC /* UITableView+Ext.swift in Sources */,
 				CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */,
 				CE280193212575E20066B344 /* ContactItem.swift in Sources */,
 				CE2801952125A55D0066B344 /* RxApollo.swift in Sources */,
 				CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */,
 				CE825F9021205BF800697F52 /* Util.swift in Sources */,
 				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
+				CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */,
 				CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */,
 				CED4CCB020C979040063D89F /* MainViewController.swift in Sources */,
 				CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */,
 				CEB41F002115C3FF006BC729 /* Scene+ViewController.swift in Sources */,
+				CEEE5DA02127D6540023E2FC /* PromiseDetailViewModel.swift in Sources */,
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
 				CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */,
 				CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */,

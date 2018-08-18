@@ -42,4 +42,8 @@ class PromiseTableViewCell: UITableViewCell {
     promiseDateLabel.text = dateFormat.string(from: dateTime)
     promiseDayLabel.text = dayFormat.string(from: dateTime)
   }
+  
+  
+  
+  
 }

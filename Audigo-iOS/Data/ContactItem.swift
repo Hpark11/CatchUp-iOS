@@ -43,7 +43,7 @@ import RealmSwift
 extension ContactItem {
   static func all(in realm: Realm = try! Realm()) -> Results<ContactItem> {
     return realm.objects(ContactItem.self)
-      .sorted(byKeyPath: ContactItem.Property.nickname.rawValue)
+      .sorted(byKeyPath: ContactItem.Property.nickname.rawValue, ascending: true)
   }
   
   static func create(_ phone: String, nickname: String, imagePath: String, pushToken: String, in realm: Realm = try! Realm()) {
@@ -57,9 +57,10 @@ extension ContactItem {
     }
   }
   
-  static func create(_ phone: String, in realm: Realm = try! Realm()) {
+  static func create(_ phone: String, nickname: String, in realm: Realm = try! Realm()) {
     try! realm.write {
-      realm.create(ContactItem.self, value: [ContactItem.Property.phone.rawValue: phone], update: true)
+      realm.create(ContactItem.self, value: [ContactItem.Property.phone.rawValue: phone,
+                                             ContactItem.Property.nickname.rawValue: nickname], update: true)
     }
   }
   

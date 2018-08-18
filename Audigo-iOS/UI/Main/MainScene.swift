@@ -14,12 +14,16 @@ struct MainScene: SceneType, InstantiatableFromStoryboard {
   var viewModel: MainViewModel
   
   func instantiateFromStoryboard() -> UIViewController {
-    guard let vc = R.storyboard.main.mainViewController() else {
+    guard let nc = R.storyboard.main.mainNavigationController() else {
       fatalError("Unable to instantiate a view controller")
     }
-    
+
+    guard let vc = nc.viewControllers.first as? MainViewController else {
+      fatalError("Unable to instantiate a view controller")
+    }
+
     vc.bindViewModel(to: self.viewModel)
-    return vc
+    return nc
   }
 }
 

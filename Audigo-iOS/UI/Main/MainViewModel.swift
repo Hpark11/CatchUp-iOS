@@ -9,7 +9,6 @@
 import RxSwift
 import RxDataSources
 import Action
-//import Apollo
 
 enum SignInState {
   case failed
@@ -42,6 +41,7 @@ protocol MainViewModelOutputsType {
 
 protocol MainViewModelActionsType {
   var pushNewPromiseScene: CocoaAction { get }
+  var pushPromiseDetailScene: Action<String, Void> { get }
 }
 
 protocol MainViewModelType {
@@ -198,6 +198,15 @@ class MainViewModel: MainViewModelType {
       let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator)
       let scene = NewPromiseScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: false))
+    }
+  }()
+  
+  lazy var pushPromiseDetailScene: Action<String, Void> = {
+    return Action { [weak self] promiseId in
+      guard let strongSelf = self else { return .empty() }
+      let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, promiseId: promiseId)
+      let scene = PromiseDetailScene(viewModel: viewModel)
+      return strongSelf.sceneCoordinator.transition(to: scene, type: .push(animated: true))
     }
   }()
 }

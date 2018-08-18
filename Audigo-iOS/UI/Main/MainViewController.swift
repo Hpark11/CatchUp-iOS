@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import RxDataSources
 import Permission
 import SwiftyContacts
@@ -19,38 +20,45 @@ class MainViewController: UIViewController, BindableType {
   @IBOutlet weak var newPromiseButton: UIButton!
   
   var viewModel: MainViewModel!
+  var needSignIn = false
   
   let disposeBag = DisposeBag()
-  let dataSource = RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: { data, tableView, indexPath, promise in
+  
+  lazy var configureCell: (TableViewSectionedDataSource<PromiseSectionModel>, UITableView, IndexPath, GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) -> UITableViewCell = { [weak self] data, tableView, indexPath, promise in
+    guard let strongSelf = self else { return PromiseTableViewCell(frame: .zero) }
+    
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseTableViewCell, for: indexPath)
     cell?.configure(promise: promise)
+    
+    cell?.itemView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
+      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise.id ?? "")
+    }).disposed(by: strongSelf.disposeBag)
     return cell!
-  })
-  
-  var needSignIn = false
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
-
+    
     rx_fetchContacts().map({ contacts in
       return contacts.compactMap {
-        $0.phoneNumbers.first?.value.stringValue
+        ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
       }
     }).subscribeOn(backgroundScheduler)
       .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { (phoneNumbers) in
-        
-        phoneNumbers.forEach { phoneNumber in
-          if phoneNumber.starts(with: "010") {
-            let phone = phoneNumber
+      .subscribe(onNext: { (contacts) in
+        contacts.forEach { contact in
+          if contact.0.starts(with: "010") {
+            let phone = contact.0
               .components(separatedBy:CharacterSet.decimalDigits.inverted)
               .joined(separator: "")
+            
+            let nickname = contact.1
           
             apollo.fetch(query: GetPocketQuery(phone: phone)) { result, error in
               guard error != nil else {
-                ContactItem.create(phone)
+                ContactItem.create(phone, nickname: nickname)
                 return
               }
               
@@ -67,24 +75,6 @@ class MainViewController: UIViewController, BindableType {
     guard let s = session, s.isOpen() else {
       needSignIn = true
       return
-    }
-    
-    viewModel.promiseItems
-      .bind(to: promiseListTableView.rx.items(dataSource: dataSource))
-      .disposed(by: disposeBag)
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    
-    if needSignIn {
-      if let vc = R.storyboard.main.entranceViewController() {
-        vc.signInDone = viewModel.signInDone
-        present(vc, animated: false, completion: nil)
-        needSignIn = false
-      }
-    } else {
-      viewModel.signInDone.onNext(())
     }
   }
 
@@ -109,6 +99,20 @@ class MainViewController: UIViewController, BindableType {
         break
       }
     }).disposed(by: disposeBag)
+    
+    viewModel.promiseItems
+      .bind(to: promiseListTableView.rx.items(dataSource: RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)))
+      .disposed(by: disposeBag)
+    
+    if needSignIn {
+      if let vc = R.storyboard.main.entranceViewController() {
+        vc.signInDone = viewModel.signInDone
+        present(vc, animated: false, completion: nil)
+        needSignIn = false
+      }
+    } else {
+      viewModel.signInDone.onNext(())
+    }
     
     newPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
   }

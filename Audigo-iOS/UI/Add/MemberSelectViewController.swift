@@ -13,15 +13,13 @@ import RealmSwift
 class MemberSelectViewController: UIViewController {
   
   private var items: Results<ContactItem>?
+  private var itemsToken: NotificationToken?
+  
   @IBOutlet weak var memberSelectTableView: UITableView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     items = ContactItem.all()
-    
-    
-    
     // Do any additional setup after loading the view.
     //      let results = searchBar.rx.text.orEmpty
     //        .throttle(0.5, scheduler: MainScheduler.instance)
@@ -43,6 +41,25 @@ class MemberSelectViewController: UIViewController {
     //        }
     //        .disposed(by: disposeBag)
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    itemsToken = items?.observe({ [weak memberSelectTableView] (changes) in
+      guard let tableView = memberSelectTableView else { return }
+      switch changes {
+      case .initial:
+        tableView.reloadData()
+      case .update(_, let deletions, let insertions, let updates):
+        tableView.applyChanges(deletions: deletions, insertions: insertions, updates: updates)
+      case .error: break
+      }
+    })
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    itemsToken?.invalidate()
+  }
 }
 
 extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource {
@@ -59,4 +76,6 @@ extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource
     cell.configure(item: item)
     return cell
   }
+  
+  
 }

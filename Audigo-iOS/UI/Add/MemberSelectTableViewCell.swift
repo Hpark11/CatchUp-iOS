@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MemberSelectTableViewCell: UITableViewCell {
   
@@ -20,8 +21,7 @@ class MemberSelectTableViewCell: UITableViewCell {
   }
   
   func configure(item: ContactItem) {
+    profileImageView.kf.setImage(with: URL(string: item.imagePath))
     memberNameLabel.text = item.nickname
-    
-    
   }
 }
