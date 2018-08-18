@@ -21,10 +21,7 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
     // Configure the view for the selected state
   }
   
-  func configure() {
+  func configure(pocket: GetPromiseQuery.Data.Promise.Pocket) {
     
   }
-  
-  
-
 }

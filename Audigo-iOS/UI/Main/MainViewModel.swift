@@ -18,17 +18,6 @@ enum SignInState {
 
 typealias PromiseSectionModel = AnimatableSectionModel<String, GetUserWithPromisesQuery.Data.User.Pocket.PromiseList>
 
-extension GetUserWithPromisesQuery.Data.User.Pocket.PromiseList: IdentifiableType, Equatable {
-  public var identity: String {
-    return id!
-  }
-  
-  public static func ==(lhs: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList,
-                        rhs: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) -> Bool {
-    return lhs.id == rhs.id
-  }
-}
-
 protocol MainViewModelInputsType {
   var signInDone: PublishSubject<Void> { get }
   var phoneCertifyDone: PublishSubject<String> { get }
@@ -211,3 +200,14 @@ class MainViewModel: MainViewModelType {
 }
 
 extension MainViewModel: MainViewModelInputsType, MainViewModelOutputsType, MainViewModelActionsType {}
+
+extension GetUserWithPromisesQuery.Data.User.Pocket.PromiseList: IdentifiableType, Equatable {
+  public var identity: String {
+    return id!
+  }
+  
+  public static func ==(lhs: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList,
+                        rhs: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) -> Bool {
+    return lhs.id == rhs.id
+  }
+}

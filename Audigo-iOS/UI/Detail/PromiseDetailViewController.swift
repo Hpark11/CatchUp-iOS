@@ -8,11 +8,26 @@
 
 import UIKit
 import RxSwift
+import RxDataSources
 
 class PromiseDetailViewController: UIViewController, BindableType {
+  @IBOutlet weak var pocketListTableView: UITableView!
+  
   var viewModel: PromiseDetailViewModel!
   
   let disposeBag = DisposeBag()
+  
+  lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, GetPromiseQuery.Data.Promise.Pocket) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
+    guard let strongSelf = self else { return PromiseDetailUserTableViewCell(frame: .zero) }
+    
+    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseDetailUserTableViewCell, for: indexPath)
+    cell?.configure(pocket: pocket)
+    
+//    cell?.itemView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
+//      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise.id ?? "")
+//    }).disposed(by: strongSelf.disposeBag)
+    return cell!
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,16 +48,19 @@ class PromiseDetailViewController: UIViewController, BindableType {
     // Do any additional setup after loading the view.
   }
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  func bindViewModel() {
+//    navigationItem.t
+    
+//    viewModel.outputs.promise.subscribe(onNext: { promise in
+//      guard let promise = promise else { return }
+//
+//    }).disposed(by: disposeBag)
+    
+    viewModel.pocketItems
+      .bind(to: pocketListTableView.rx.items(dataSource: RxTableViewSectionedAnimatedDataSource<PocketSectionModel>(configureCell: configureCell)))
+      .disposed(by: disposeBag)
   }
   
-  func bindViewModel() {
-    viewModel.outputs.promise.subscribe(onNext: { promise in
-      guard let promise = promise else { return }
-      
-    }).disposed(by: disposeBag)
-  }
   
 }
+

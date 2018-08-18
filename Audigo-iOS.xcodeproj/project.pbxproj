@@ -34,7 +34,6 @@
 		CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */; };
 		CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */; };
 		CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */; };
-		CE7D369420DA8682003E8823 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369320DA8682003E8823 /* R.generated.swift */; };
 		CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */; };
 		CE825F9021205BF800697F52 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE825F8F21205BF800697F52 /* Util.swift */; };
 		CEAD38B321230B63009B0A5A /* MemberSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */; };
@@ -62,6 +61,7 @@
 		CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */; };
 		CEEE5DA02127D6540023E2FC /* PromiseDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */; };
 		CEEE5DA5212817F50023E2FC /* PromiseDetailUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5DA4212817F50023E2FC /* PromiseDetailUserTableViewCell.swift */; };
+		CEEE5DA7212843400023E2FC /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5DA62128433F0023E2FC /* R.generated.swift */; };
 		DAA9A1DE40416DAD7F13D98E /* Pods_Audigo_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037C740967F5570A44C65A3B /* Pods_Audigo_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -115,7 +115,6 @@
 		CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePopupViewController.swift; sourceTree = "<group>"; };
 		CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KakaoOpenSDK-Bridging-Header.h"; sourceTree = "<group>"; };
-		CE7D369320DA8682003E8823 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = R.generated.swift; path = "Audigo-iOS/Assets/R.generated.swift"; sourceTree = SOURCE_ROOT; };
 		CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApolloAPIService.swift; sourceTree = "<group>"; };
 		CE825F8F21205BF800697F52 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectTableViewCell.swift; sourceTree = "<group>"; };
@@ -149,6 +148,7 @@
 		CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailScene.swift; sourceTree = "<group>"; };
 		CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailViewModel.swift; sourceTree = "<group>"; };
 		CEEE5DA4212817F50023E2FC /* PromiseDetailUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailUserTableViewCell.swift; sourceTree = "<group>"; };
+		CEEE5DA62128433F0023E2FC /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		DA147B49087C78684F7FF21E /* Pods-Audigo-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSTests/Pods-Audigo-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		E85035A84CDA31ECF6853A28 /* Pods-Audigo-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Audigo_iOSUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */,
+				CEEE5DA62128433F0023E2FC /* R.generated.swift */,
 				CED4CCAC20C979040063D89F /* Audigo-iOS */,
 				CED4CCC420C979060063D89F /* Audigo-iOSTests */,
 				CED4CCCF20C979060063D89F /* Audigo-iOSUITests */,
@@ -365,7 +366,6 @@
 			isa = PBXGroup;
 			children = (
 				CED4CCB420C979040063D89F /* Audigo_iOS.xcdatamodeld */,
-				CE7D369320DA8682003E8823 /* R.generated.swift */,
 				CED4CCB920C979060063D89F /* LaunchScreen.storyboard */,
 				CED4CCB120C979040063D89F /* Main.storyboard */,
 			);
@@ -735,6 +735,7 @@
 				CED4CCB020C979040063D89F /* MainViewController.swift in Sources */,
 				CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */,
 				CEB41F002115C3FF006BC729 /* Scene+ViewController.swift in Sources */,
+				CEEE5DA7212843400023E2FC /* R.generated.swift in Sources */,
 				CEEE5DA02127D6540023E2FC /* PromiseDetailViewModel.swift in Sources */,
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
 				CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */,
@@ -742,7 +743,6 @@
 				CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */,
 				CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */,
 				CEB41F052115C484006BC729 /* MainScene.swift in Sources */,
-				CE7D369420DA8682003E8823 /* R.generated.swift in Sources */,
 				CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

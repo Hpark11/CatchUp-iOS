@@ -9,13 +9,17 @@
 import Foundation
 import Action
 import RxSwift
+import RxDataSources
+
+typealias PocketSectionModel = AnimatableSectionModel<String, GetPromiseQuery.Data.Promise.Pocket>
 
 protocol PromiseDetailViewModelInputsType {
   // Mainly `PublishSubject` here
 }
 
 protocol PromiseDetailViewModelOutputsType {
-  var promise: Observable<GetPromiseQuery.Data.Promise?> { get }
+  var promiseItem: Observable<GetPromiseQuery.Data.Promise?> { get }
+  var pocketItems: Observable<[PocketSectionModel]> { get }
 }
 
 protocol PromiseDetailViewModelActionsType {
@@ -40,9 +44,11 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   // MARK: Inputs
   
   // MARK: Outputs
+  var promiseItem: Observable<GetPromiseQuery.Data.Promise?>
+  var pocketItems: Observable<[PocketSectionModel]>
   
-  var promise: Observable<GetPromiseQuery.Data.Promise?>
   private let promiseInfo: Variable<GetPromiseQuery.Data.Promise?>
+  private let pocketList: Variable<[GetPromiseQuery.Data.Promise.Pocket]>
   
   init(coordinator: SceneCoordinatorType, promiseId: String) {
     // Setup
@@ -50,11 +56,17 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     disposeBag = DisposeBag()
     
     promiseInfo = Variable(nil)
-    promise = promiseInfo.asObservable().share(replay: 1, scope: .whileConnected)
+    pocketList = Variable([])
+    promiseItem = promiseInfo.asObservable().share(replay: 1, scope: .whileConnected)
     
     // Inputs
     
     // Outputs
+    pocketItems = pocketList.asObservable()
+      .map({ (pocketList) in
+        return [PocketSectionModel(model: "", items: pocketList)]
+      })
+    
     apollo.watch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
       if let error = error {
         NSLog("Error while GetPromiseQuery: \(error.localizedDescription)")
@@ -63,6 +75,10 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
       
       guard let strongSelf = self else { return }
       strongSelf.promiseInfo.value = result?.data?.promise
+      
+      if let pockets = result?.data?.promise?.pockets as? [GetPromiseQuery.Data.Promise.Pocket] {
+        strongSelf.pocketList.value = pockets
+      }
     }
   }
   
@@ -77,3 +93,14 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
 }
 
 extension PromiseDetailViewModel: PromiseDetailViewModelInputsType, PromiseDetailViewModelOutputsType, PromiseDetailViewModelActionsType {}
+
+extension GetPromiseQuery.Data.Promise.Pocket: IdentifiableType, Equatable {
+  public var identity: String {
+    return phone
+  }
+  
+  public static func ==(lhs: GetPromiseQuery.Data.Promise.Pocket,
+                        rhs: GetPromiseQuery.Data.Promise.Pocket) -> Bool {
+    return lhs.phone == rhs.phone
+  }
+}
