@@ -82,19 +82,20 @@ class MainViewController: UIViewController, BindableType {
     viewModel.state.subscribe(onNext: { [weak self] (state) in
       guard let strongSelf = self else { return }
       switch state {
+        
       case .completed:
         let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
         if let vc = R.storyboard.main.permissionsViewController(), permissionSet.status != .authorized {
           strongSelf.present(vc, animated: true, completion: nil)
         }
         strongSelf.viewModel.configureUser()
-        break
+        
       case .phoneRequired:
         if let vc = R.storyboard.main.phoneCheckViewController() {
           vc.phoneCertifyDone = strongSelf.viewModel.phoneCertifyDone
           strongSelf.present(vc, animated: false, completion: nil)
         }
-        break
+        
       case .failed:
         break
       }

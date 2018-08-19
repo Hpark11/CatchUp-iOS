@@ -13,10 +13,7 @@ import GooglePlaces
 import GoogleMaps
 
 class NewPromiseViewController: UIViewController, BindableType {
-  var viewModel: NewPromiseViewModel!
-  
-  let disposeBag = DisposeBag()
-  
+  @IBOutlet weak var newPromiseButton: UIButton!
   @IBOutlet weak var popButton: UIButton!
   @IBOutlet weak var promiseNameLabel: UILabel!
   @IBOutlet weak var promiseDateLabel: UILabel!
@@ -25,6 +22,9 @@ class NewPromiseViewController: UIViewController, BindableType {
   @IBOutlet weak var promiseMembersLabel: UILabel!
   @IBOutlet weak var membersCollectionView: UICollectionView!
   
+  var viewModel: NewPromiseViewModel!
+  let disposeBag = DisposeBag()
+
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -42,7 +42,7 @@ class NewPromiseViewController: UIViewController, BindableType {
       
       alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
         if let name = alert.textFields?.first?.text {
-          
+          self.promiseNameLabel.text = name
         }
       }))
       
@@ -50,11 +50,17 @@ class NewPromiseViewController: UIViewController, BindableType {
     }.disposed(by: disposeBag)
     
     promiseDateLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { (_) in
-      
+      if let vc = R.storyboard.main.datePopupViewController() {
+        vc.dateSelectDone = self.viewModel.dateSelectDone
+        self.present(vc, animated: true, completion: nil)
+      }
     }).disposed(by: disposeBag)
     
     promiseTimeLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { (_) in
-      
+      if let vc = R.storyboard.main.timePopupViewController() {
+        vc.timeSelectDone = self.viewModel.timeSelectDone
+        self.present(vc, animated: true, completion: nil)
+      }
     }).disposed(by: disposeBag)
     
     promiseAddressLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
@@ -66,6 +72,21 @@ class NewPromiseViewController: UIViewController, BindableType {
     promiseMembersLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
       if let vc = R.storyboard.main.memberSelectViewController() {
         self.present(vc, animated: true, completion: nil)
+      }
+    }).disposed(by: disposeBag)
+    
+    viewModel.dateItems.subscribe(onNext: { components in
+      if let year = components.year, let month = components.month, let day = components.day {
+        self.promiseDateLabel.text = "\(year)년 \(month)월 \(day)일"
+      }
+    }).disposed(by: disposeBag)
+    
+    viewModel.timeItems.subscribe(onNext: { components in
+      let timeFormat = DateFormatter()
+      timeFormat.dateFormat = "a hh시 mm분"
+      
+      if let time = Calendar.current.date(from: components) {
+        self.promiseTimeLabel.text = timeFormat.string(from: time)
       }
     }).disposed(by: disposeBag)
   }

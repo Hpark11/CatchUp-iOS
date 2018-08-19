@@ -28,7 +28,7 @@ class PromiseTableViewCell: UITableViewCell {
     promiseAddressLabel.text = promise.address
     
     let timeFormat = DateFormatter()
-    timeFormat.dateFormat = "a hh시 MM분"
+    timeFormat.dateFormat = "a hh시 mm분"
     
     let dateFormat = DateFormatter()
     dateFormat.dateFormat = "dd"
@@ -42,8 +42,4 @@ class PromiseTableViewCell: UITableViewCell {
     promiseDateLabel.text = dateFormat.string(from: dateTime)
     promiseDayLabel.text = dayFormat.string(from: dateTime)
   }
-  
-  
-  
-  
 }

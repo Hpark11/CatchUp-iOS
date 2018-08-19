@@ -7,27 +7,15 @@
 //
 
 import UIKit
+import RxSwift
 
 class TimePopupViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  @IBOutlet weak var timePicker: UIDatePicker!
+  var timeSelectDone: PublishSubject<DateComponents>?
+  
+  @IBAction func selectTime(_ sender: Any) {
+    let components = timePicker.calendar.dateComponents([.hour, .minute, .second], from: timePicker.date)
+    timeSelectDone?.onNext(components)
+    dismiss(animated: true, completion: nil)
+  }
 }

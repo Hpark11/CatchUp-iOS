@@ -21,7 +21,6 @@ class MemberSelectViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     items = ContactItem.all()
-    
     // Do any additional setup after loading the view.
     //      let results = searchBar.rx.text.orEmpty
     //        .throttle(0.5, scheduler: MainScheduler.instance)
@@ -94,7 +93,6 @@ extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource
       }
       
     }).disposed(by: disposeBag)
-    
     return cell
   }
 }

@@ -11,11 +11,13 @@ import Action
 import RxSwift
 
 protocol NewPromiseViewModelInputsType {
-  // Mainly `PublishSubject` here
+  var dateSelectDone: PublishSubject<DateComponents> { get }
+  var timeSelectDone: PublishSubject<DateComponents> { get }
 }
 
 protocol NewPromiseViewModelOutputsType {
-  // Mainly `Observable` here
+  var dateItems: Observable<DateComponents> { get }
+  var timeItems: Observable<DateComponents> { get }
 }
 
 protocol NewPromiseViewModelActionsType {
@@ -38,19 +40,40 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   fileprivate let disposeBag: DisposeBag
   
   // MARK: Inputs
+  var dateSelectDone: PublishSubject<DateComponents>
+  var timeSelectDone: PublishSubject<DateComponents>
+  
+  fileprivate var dateComponents: Variable<DateComponents>
+  fileprivate var timeComponents: Variable<DateComponents>
   
   // MARK: Outputs
+  var dateItems: Observable<DateComponents>
+  var timeItems: Observable<DateComponents>
   
   init(coordinator: SceneCoordinatorType) {
     // Setup
     sceneCoordinator = coordinator
     disposeBag = DisposeBag()
     
+    dateComponents = Variable(Calendar.current.dateComponents([.year, .month, .day], from: Date()))
+    timeComponents = Variable(Calendar.current.dateComponents([.hour, .minute], from: Date()))
+    
+    dateSelectDone = PublishSubject()
+    timeSelectDone = PublishSubject()
+    
+    dateItems = dateComponents.asObservable()
+    timeItems = timeComponents.asObservable()
+    
     // Inputs
+    dateSelectDone.subscribe(onNext: { [weak self] components in
+      guard let strongSelf = self else { return }
+      strongSelf.dateComponents.value = components
+    }).disposed(by: disposeBag)
     
-    // Outputs
-    
-    // ViewModel Life Cycle
+    timeSelectDone.subscribe(onNext: { [weak self] components in
+      guard let strongSelf = self else { return }
+      strongSelf.timeComponents.value = components
+    }).disposed(by: disposeBag)
   }
   
   // MARK: Actions
