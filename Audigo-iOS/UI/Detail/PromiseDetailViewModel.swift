@@ -14,7 +14,7 @@ import RxDataSources
 typealias PocketSectionModel = AnimatableSectionModel<String, GetPromiseQuery.Data.Promise.Pocket>
 
 protocol PromiseDetailViewModelInputsType {
-  
+
 }
 
 protocol PromiseDetailViewModelOutputsType {
@@ -57,7 +57,6 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   private let pocketList: Variable<[GetPromiseQuery.Data.Promise.Pocket]>
   
   init(coordinator: SceneCoordinatorType, promiseId: String) {
-    // Setup
     sceneCoordinator = coordinator
     disposeBag = DisposeBag()
     
@@ -65,10 +64,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     promiseName = Variable("")
     promiseLocation = Variable((latitude: 0, longitude: 0))
     promiseTimestamp = Variable(0)
-      
-    // Inputs
     
-    // Outputs
     name = promiseName.asObservable()
     location = promiseLocation.asObservable()
     timestamp = promiseTimestamp.asObservable()
@@ -85,7 +81,6 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
       }
       
       guard let strongSelf = self else { return }
-//      strongSelf.promiseInfo.value = result?.data?.promise
       
       if let pockets = result?.data?.promise?.pockets as? [GetPromiseQuery.Data.Promise.Pocket] {
         strongSelf.pocketList.value = pockets
@@ -104,8 +99,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
       }
     }
   }
-  
-  // MARK: Actions
+
   internal lazy var popScene: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }

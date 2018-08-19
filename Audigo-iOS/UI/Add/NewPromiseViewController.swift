@@ -49,6 +49,14 @@ class NewPromiseViewController: UIViewController, BindableType {
       self.present(alert, animated: true)
     }.disposed(by: disposeBag)
     
+    promiseDateLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { (_) in
+      
+    }).disposed(by: disposeBag)
+    
+    promiseTimeLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { (_) in
+      
+    }).disposed(by: disposeBag)
+    
     promiseAddressLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
       let autocompleteController = GMSAutocompleteViewController()
       autocompleteController.delegate = self

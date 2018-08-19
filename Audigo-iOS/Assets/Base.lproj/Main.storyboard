@@ -548,7 +548,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i6F-vu-b53">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i6F-vu-b53">
                                 <rect key="frame" x="20" y="90" width="280" height="458"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -591,6 +591,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="checkImageView" destination="DTT-hw-VtG" id="m2E-rP-wQd"/>
+                                            <outlet property="itemView" destination="byU-fb-2mK" id="7bx-Dj-yIG"/>
                                             <outlet property="memberNameLabel" destination="rcA-Bt-ugN" id="TUq-Cd-fe1"/>
                                             <outlet property="profileImageView" destination="VLZ-rQ-qMF" id="H2d-dq-Og9"/>
                                         </connections>
@@ -830,18 +831,29 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebK-O2-z3q">
+                                <rect key="frame" x="0.0" y="20" width="320" height="21"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="n3h-jh-NqN" firstAttribute="bottom" secondItem="I5h-GV-WgS" secondAttribute="bottom" id="4O8-0V-dFx"/>
                             <constraint firstItem="n3h-jh-NqN" firstAttribute="trailing" secondItem="I5h-GV-WgS" secondAttribute="trailing" id="TNy-iI-LhK"/>
+                            <constraint firstItem="n3h-jh-NqN" firstAttribute="trailing" secondItem="ebK-O2-z3q" secondAttribute="trailing" id="W6y-25-L88"/>
                             <constraint firstItem="I5h-GV-WgS" firstAttribute="leading" secondItem="n3h-jh-NqN" secondAttribute="leading" id="XBq-pX-44i"/>
                             <constraint firstItem="I5h-GV-WgS" firstAttribute="top" secondItem="n3h-jh-NqN" secondAttribute="top" id="YJ9-3x-voH"/>
+                            <constraint firstItem="ebK-O2-z3q" firstAttribute="top" secondItem="n3h-jh-NqN" secondAttribute="top" id="b9C-y1-rq2"/>
+                            <constraint firstItem="ebK-O2-z3q" firstAttribute="leading" secondItem="n3h-jh-NqN" secondAttribute="leading" id="fyo-EP-I8T"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="n3h-jh-NqN"/>
                     </view>
                     <connections>
                         <outlet property="pocketListTableView" destination="I5h-GV-WgS" id="2TK-2l-xPO"/>
+                        <outlet property="promisedDateLabel" destination="ebK-O2-z3q" id="ycU-k2-kzJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJ8-vR-Qm5" userLabel="First Responder" sceneMemberID="firstResponder"/>

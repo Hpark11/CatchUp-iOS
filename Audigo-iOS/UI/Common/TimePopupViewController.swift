@@ -20,7 +20,6 @@ class TimePopupViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation
@@ -31,5 +30,4 @@ class TimePopupViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

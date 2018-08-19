@@ -11,15 +11,17 @@ import RxSwift
 import RealmSwift
 
 class MemberSelectViewController: UIViewController {
+  @IBOutlet weak var memberSelectTableView: UITableView!
   
   private var items: Results<ContactItem>?
   private var itemsToken: NotificationToken?
-  
-  @IBOutlet weak var memberSelectTableView: UITableView!
+  private var selected = Set<String>()
+  private let disposeBag = DisposeBag()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     items = ContactItem.all()
+    
     // Do any additional setup after loading the view.
     //      let results = searchBar.rx.text.orEmpty
     //        .throttle(0.5, scheduler: MainScheduler.instance)
@@ -74,8 +76,25 @@ extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     cell.configure(item: item)
+    if selected.contains(item.phone) {
+      cell.checkImageView.image = UIImage(resource: R.image.icon_ok)
+    } else {
+      cell.checkImageView.image = nil
+    }
+    
+    cell.itemView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+      guard let strongSelf = self else { return }
+      
+      if strongSelf.selected.contains(item.phone) {
+        strongSelf.selected.remove(item.phone)
+        cell.checkImageView.image = nil
+      } else {
+        strongSelf.selected.insert(item.phone)
+        cell.checkImageView.image = UIImage(resource: R.image.icon_ok)
+      }
+      
+    }).disposed(by: disposeBag)
+    
     return cell
   }
-  
-  
 }
