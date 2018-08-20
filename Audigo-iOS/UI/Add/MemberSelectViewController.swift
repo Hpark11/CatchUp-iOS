@@ -17,6 +17,7 @@ class MemberSelectViewController: UIViewController {
   private var itemsToken: NotificationToken?
   private var selected = Set<String>()
   private let disposeBag = DisposeBag()
+  private var memberSelectDone: PublishSubject<Set<String>>?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -60,6 +61,15 @@ class MemberSelectViewController: UIViewController {
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     itemsToken?.invalidate()
+  }
+  
+  @IBAction func dismissScene(_ sender: Any) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  @IBAction func completeMemberSelect(_ sender: Any) {
+    memberSelectDone?.onNext(selected)
+    dismiss(animated: true, completion: nil)
   }
 }
 

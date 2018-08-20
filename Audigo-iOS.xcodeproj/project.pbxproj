@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2D21762642317F57372FC052 /* Pods_Audigo_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C23B93B7ECC5C9C81403950 /* Pods_Audigo_iOSTests.framework */; };
 		A0481508A224CCDA166030F8 /* Pods_Audigo_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */; };
-		CE0B6A88211C927A003FA382 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0B6A87211C927A003FA382 /* BaseViewModel.swift */; };
 		CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */; };
 		CE280193212575E20066B344 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE280192212575E20066B344 /* ContactItem.swift */; };
 		CE2801952125A55D0066B344 /* RxApollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2801942125A55D0066B344 /* RxApollo.swift */; };
@@ -57,6 +56,8 @@
 		CED4CCBB20C979060063D89F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB920C979060063D89F /* LaunchScreen.storyboard */; };
 		CED4CCC620C979060063D89F /* Audigo_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCC520C979060063D89F /* Audigo_iOSTests.swift */; };
 		CED4CCD120C979060063D89F /* Audigo_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */; };
+		CED6494B212B803100C6BD6D /* LocationTrackingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED6494A212B803100C6BD6D /* LocationTrackingService.swift */; };
+		CED6494D212B80E600C6BD6D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED6494C212B80E600C6BD6D /* CoreLocation.framework */; };
 		CEEE5D9C212717090023E2FC /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */; };
 		CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */; };
 		CEEE5DA02127D6540023E2FC /* PromiseDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */; };
@@ -89,7 +90,6 @@
 		A15A740631A4179D9F919E4F /* Pods-Audigo-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSTests/Pods-Audigo-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B5DF70456DCA29CA99440351 /* Pods-Audigo-iOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSUITests/Pods-Audigo-iOSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CA541320104F8C0FED8535D0 /* Pods-Audigo-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		CE0B6A87211C927A003FA382 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
 		CE280192212575E20066B344 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
 		CE2801942125A55D0066B344 /* RxApollo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxApollo.swift; sourceTree = "<group>"; };
@@ -144,6 +144,8 @@
 		CED4CCCC20C979060063D89F /* Audigo-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Audigo-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audigo_iOSUITests.swift; sourceTree = "<group>"; };
 		CED4CCD220C979060063D89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CED6494A212B803100C6BD6D /* LocationTrackingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTrackingService.swift; sourceTree = "<group>"; };
+		CED6494C212B80E600C6BD6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
 		CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailScene.swift; sourceTree = "<group>"; };
 		CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailViewModel.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CED6494D212B80E600C6BD6D /* CoreLocation.framework in Frameworks */,
 				DAA9A1DE40416DAD7F13D98E /* Pods_Audigo_iOS.framework in Frameworks */,
 				CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */,
 			);
@@ -241,7 +244,6 @@
 			children = (
 				CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */,
 				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
-				CE0B6A87211C927A003FA382 /* BaseViewModel.swift */,
 				CE825F8F21205BF800697F52 /* Util.swift */,
 				CE2801942125A55D0066B344 /* RxApollo.swift */,
 			);
@@ -323,6 +325,7 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				CED64949212B801E00C6BD6D /* Service */,
 				CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */,
 				CED4CCBC20C979060063D89F /* Info.plist */,
 				CEB41EF52115C227006BC729 /* App */,
@@ -331,7 +334,7 @@
 				CE280191212575B10066B344 /* Data */,
 				CEEF4B942117260B002BEF65 /* Resource */,
 				CEB41EF62115C2AF006BC729 /* UI */,
-				CEEE5D9A2127149B0023E2FC /* Utility */,
+				CEEE5D9A2127149B0023E2FC /* Extension */,
 			);
 			path = "Audigo-iOS";
 			sourceTree = "<group>";
@@ -354,12 +357,20 @@
 			path = "Audigo-iOSUITests";
 			sourceTree = "<group>";
 		};
-		CEEE5D9A2127149B0023E2FC /* Utility */ = {
+		CED64949212B801E00C6BD6D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				CED6494A212B803100C6BD6D /* LocationTrackingService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		CEEE5D9A2127149B0023E2FC /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */,
 			);
-			path = Utility;
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		CEEE5DA1212814AB0023E2FC /* Assets */ = {
@@ -394,6 +405,7 @@
 		FCC8BC3FA2F2707845E1B047 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CED6494C212B80E600C6BD6D /* CoreLocation.framework */,
 				CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */,
 				037C740967F5570A44C65A3B /* Pods_Audigo_iOS.framework */,
 				6C23B93B7ECC5C9C81403950 /* Pods_Audigo_iOSTests.framework */,
@@ -722,7 +734,6 @@
 				CE77EDCC21207204007A6BF6 /* NewPromiseViewModel.swift in Sources */,
 				CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */,
 				CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */,
-				CE0B6A88211C927A003FA382 /* BaseViewModel.swift in Sources */,
 				CEEE5D9C212717090023E2FC /* UITableView+Ext.swift in Sources */,
 				CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */,
 				CE280193212575E20066B344 /* ContactItem.swift in Sources */,
@@ -732,6 +743,7 @@
 				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
 				CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */,
 				CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */,
+				CED6494B212B803100C6BD6D /* LocationTrackingService.swift in Sources */,
 				CED4CCB020C979040063D89F /* MainViewController.swift in Sources */,
 				CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */,
 				CEB41F002115C3FF006BC729 /* Scene+ViewController.swift in Sources */,

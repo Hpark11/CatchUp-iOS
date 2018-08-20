@@ -25,10 +25,6 @@ class NewPromiseViewController: UIViewController, BindableType {
   var viewModel: NewPromiseViewModel!
   let disposeBag = DisposeBag()
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
-  
   func bindViewModel() {
     popButton.rx.action = viewModel.actions.popScene
     
@@ -43,6 +39,7 @@ class NewPromiseViewController: UIViewController, BindableType {
       alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
         if let name = alert.textFields?.first?.text {
           self.promiseNameLabel.text = name
+          self.viewModel.inputs.nameSetDone.onNext(name)
         }
       }))
       
@@ -76,7 +73,7 @@ class NewPromiseViewController: UIViewController, BindableType {
     }).disposed(by: disposeBag)
     
     viewModel.dateItems.subscribe(onNext: { components in
-      if let year = components.year, let month = components.month, let day = components.day {
+      if let cp = components, let year = cp.year, let month = cp.month, let day = cp.day {
         self.promiseDateLabel.text = "\(year)년 \(month)월 \(day)일"
       }
     }).disposed(by: disposeBag)
@@ -84,10 +81,13 @@ class NewPromiseViewController: UIViewController, BindableType {
     viewModel.timeItems.subscribe(onNext: { components in
       let timeFormat = DateFormatter()
       timeFormat.dateFormat = "a hh시 mm분"
-      
-      if let time = Calendar.current.date(from: components) {
+      if let cp = components, let time = Calendar.current.date(from: cp) {
         self.promiseTimeLabel.text = timeFormat.string(from: time)
       }
+    }).disposed(by: disposeBag)
+    
+    viewModel.outputs.isEnabled.subscribe(onNext: { isEnabled in
+      self.newPromiseButton.isEnabled = isEnabled
     }).disposed(by: disposeBag)
   }
 }
@@ -95,11 +95,10 @@ class NewPromiseViewController: UIViewController, BindableType {
 extension NewPromiseViewController: GMSAutocompleteViewControllerDelegate {
 
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-    print("Place name: \(place.name)")
-    print("Place address: \(place.formattedAddress)")
     promiseAddressLabel.text = place.formattedAddress
+    viewModel.inputs.addressSetDone.onNext(place.formattedAddress)
+    viewModel.inputs.coordinateSetDone.onNext((latitude: place.coordinate.latitude, longitude: place.coordinate.longitude))
     print("Place attributions: \(place.attributions)")
-    
     dismiss(animated: true, completion: nil)
   }
   

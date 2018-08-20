@@ -77,7 +77,7 @@ final class AppCoordinator: SceneCoordinatorType, HasDisposeBag {
 extension AppCoordinator {
     fileprivate func pop(animated: Bool) -> PublishSubject<Void> {
         let subject = PublishSubject<Void>()
-        
+      
         if let presenter = currentViewController?.presentingViewController {
             // dismiss a modal controller
             currentViewController?.dismiss(animated: animated) {

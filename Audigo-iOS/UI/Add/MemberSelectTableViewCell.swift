@@ -25,4 +25,10 @@ class MemberSelectTableViewCell: UITableViewCell {
     profileImageView.kf.setImage(with: URL(string: item.imagePath))
     memberNameLabel.text = item.nickname
   }
+  
+  override var isSelected: Bool {
+    didSet {
+      
+    }
+  }
 }

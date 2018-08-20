@@ -37,8 +37,6 @@ class PromiseDetailViewController: UIViewController, BindableType {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // Create a GMSCameraPosition that tells the map to display the
-    // coordinate -33.86,151.20 at zoom level 6.
     let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
     mapView = GMSMapView.map(withFrame: CGRect(x: 0, y: 200, width: 200, height: 200), camera: camera)
     if let mapView = mapView {
