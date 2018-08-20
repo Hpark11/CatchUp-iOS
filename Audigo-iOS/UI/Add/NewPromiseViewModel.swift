@@ -11,6 +11,9 @@ import Action
 import RxSwift
 
 protocol NewPromiseViewModelInputsType {
+  var nameSetDone: PublishSubject<String> { get }
+  var addressSetDone: PublishSubject<String> { get }
+  var pocketSelectDone: PublishSubject<[String]> { get }
   var dateSelectDone: PublishSubject<DateComponents> { get }
   var timeSelectDone: PublishSubject<DateComponents> { get }
 }
@@ -22,6 +25,7 @@ protocol NewPromiseViewModelOutputsType {
 
 protocol NewPromiseViewModelActionsType {
   var popScene: CocoaAction { get }
+  var newPromiseCompleted: CocoaAction { get }
 }
 
 protocol NewPromiseViewModelType {
@@ -42,6 +46,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   // MARK: Inputs
   var dateSelectDone: PublishSubject<DateComponents>
   var timeSelectDone: PublishSubject<DateComponents>
+  var nameSetDone: PublishSubject<String>
+  var addressSetDone: PublishSubject<String>
+  var pocketSelectDone: PublishSubject<[String]>
   
   fileprivate var dateComponents: Variable<DateComponents>
   fileprivate var timeComponents: Variable<DateComponents>
@@ -60,6 +67,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     
     dateSelectDone = PublishSubject()
     timeSelectDone = PublishSubject()
+    nameSetDone = PublishSubject()
+    addressSetDone = PublishSubject()
+    pocketSelectDone = PublishSubject()
     
     dateItems = dateComponents.asObservable()
     timeItems = timeComponents.asObservable()
@@ -81,6 +91,12 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
       strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: MainViewModel(coordinator: strongSelf.sceneCoordinator)), type: .pop(animated: true, level: .parent))
+      return .empty()
+    }
+  }()
+  
+  lazy var newPromiseCompleted: CocoaAction = {
+    return Action { [weak self] _ in
       return .empty()
     }
   }()

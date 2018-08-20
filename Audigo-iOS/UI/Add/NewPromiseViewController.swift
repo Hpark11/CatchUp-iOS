@@ -99,6 +99,7 @@ extension NewPromiseViewController: GMSAutocompleteViewControllerDelegate {
     print("Place address: \(place.formattedAddress)")
     promiseAddressLabel.text = place.formattedAddress
     print("Place attributions: \(place.attributions)")
+    
     dismiss(animated: true, completion: nil)
   }
   
