@@ -561,11 +561,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i6F-vu-b53">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i6F-vu-b53">
                                 <rect key="frame" x="0.0" y="103" width="320" height="465"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberSelectTableViewCell" rowHeight="73" id="Sx8-QD-Ylv" customClass="MemberSelectTableViewCell" customModule="Audigo_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MemberSelectTableViewCell" rowHeight="73" id="Sx8-QD-Ylv" customClass="MemberSelectTableViewCell" customModule="Audigo_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Sx8-QD-Ylv" id="byU-fb-2mK">
@@ -616,21 +616,21 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2iK-dH-o0r">
-                                <rect key="frame" x="8" y="28" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="8" y="28" width="34" height="30"/>
+                                <state key="normal" title="Back"/>
                                 <connections>
                                     <action selector="dismissScene:" destination="ebw-sL-nCw" eventType="touchUpInside" id="fJF-KU-39D"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7X1-r6-Sov">
-                                <rect key="frame" x="139" y="32" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약속 추가" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7X1-r6-Sov">
+                                <rect key="frame" x="128.5" y="32" width="63.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbn-2B-w9N">
-                                <rect key="frame" x="266" y="28" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="282" y="28" width="30" height="30"/>
+                                <state key="normal" title="확인"/>
                                 <connections>
                                     <action selector="completeMemberSelect:" destination="ebw-sL-nCw" eventType="touchUpInside" id="wB0-Ms-BfE"/>
                                 </connections>
@@ -663,6 +663,8 @@
                     </view>
                     <connections>
                         <outlet property="memberSelectTableView" destination="i6F-vu-b53" id="xY9-SU-heq"/>
+                        <outlet property="searchItemTextField" destination="Me4-oE-x6H" id="oc2-kB-c43"/>
+                        <outlet property="selectButton" destination="fbn-2B-w9N" id="fJp-Sa-kUS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Big-Uj-Qt1" userLabel="First Responder" sceneMemberID="firstResponder"/>

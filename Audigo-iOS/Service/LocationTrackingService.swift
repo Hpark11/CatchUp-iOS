@@ -17,15 +17,47 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate{
   override init() {
     locationManager = CLLocationManager()
     locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+    locationManager.allowsBackgroundLocationUpdates = true
+    
+//    locationManager.pausesLocationUpdatesAutomatically = true
+//    locationManager.activityType = .otherNavigation
+    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+    locationManager.distanceFilter = 8
     locationManager.requestAlwaysAuthorization()
+
     
     super.init()
     locationManager.delegate = self
   }
   
-  public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    if let newLocation = locations.last {
-      print("(\(newLocation.coordinate.latitude), \(newLocation.coordinate.latitude))")
+  func startUpdatingLocation() {
+    if CLLocationManager.locationServicesEnabled() {
+      locationManager.startUpdatingLocation()
     }
   }
+  
+  public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    if let newLocation = locations.last {
+      print("(\(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude))")
+    }
+  }
+
+  public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    if (error as NSError).domain == kCLErrorDomain && (error as NSError).code == CLError.Code.denied.rawValue{
+//      showTurnOnLocationServiceAlert()
+    }
+  }
+  
+  public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    if status == .authorizedWhenInUse {
+    }
+  }
+  
+//  func showTurnOnLocationServiceAlert(){
+//    NotificationCenter.default.post(name: Notification.Name(rawValue:"showTurnOnLocationServiceAlert"), object: nil)
+//  }
+//
+//  func notifiyDidUpdateLocation(newLocation:CLLocation){
+//    NotificationCenter.default.post(name: Notification.Name(rawValue:"didUpdateLocation"), object: nil, userInfo: ["location" : newLocation])
+//  }
 }

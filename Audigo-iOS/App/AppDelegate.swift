@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UINavigationBar.appearance().shadowImage = UIImage()
     UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
     
+    LocationTrackingService.shared.startUpdatingLocation()
     return true
   }
   

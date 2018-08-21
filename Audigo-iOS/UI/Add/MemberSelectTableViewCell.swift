@@ -26,9 +26,8 @@ class MemberSelectTableViewCell: UITableViewCell {
     memberNameLabel.text = item.nickname
   }
   
-  override var isSelected: Bool {
-    didSet {
-      
-    }
+  override func prepareForReuse() {
+    accessoryType = .none
+    setSelected(false, animated: false)
   }
 }

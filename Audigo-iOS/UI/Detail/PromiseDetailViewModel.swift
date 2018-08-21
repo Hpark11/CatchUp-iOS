@@ -74,7 +74,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
         return [PocketSectionModel(model: "", items: pocketList)]
       })
     
-    apollo.watch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
+    _ = apollo.watch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
       if let error = error {
         NSLog("Error while GetPromiseQuery: \(error.localizedDescription)")
         return
