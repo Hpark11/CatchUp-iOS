@@ -7,9 +7,16 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PromiseDetailUserTableViewCell: UITableViewCell {
 
+  @IBOutlet weak var profileImageView: UIImageView!
+  @IBOutlet weak var notifyImageView: UIImageView!
+  @IBOutlet weak var memberNameLabel: UILabel!
+  @IBOutlet weak var arrivalTimeLabel: UILabel!
+  @IBOutlet weak var statusLabel: UILabel!
+  
   override func awakeFromNib() {
     super.awakeFromNib()
     // Initialization code
@@ -21,6 +28,8 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
   }
   
   func configure(pocket: GetPromiseQuery.Data.Promise.Pocket) {
+    memberNameLabel.text = pocket.nickname
+    
     
   }
 }

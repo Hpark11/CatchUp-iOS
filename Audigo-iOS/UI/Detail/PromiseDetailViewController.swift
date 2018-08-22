@@ -15,6 +15,8 @@ import GoogleMaps
 class PromiseDetailViewController: UIViewController, BindableType {
   @IBOutlet weak var pocketListTableView: UITableView!
   @IBOutlet weak var promisedDateLabel: UILabel!
+  @IBOutlet weak var membersMapView: GMSMapView!
+  @IBOutlet weak var panelChangeButton: UIButton!
   
   var viewModel: PromiseDetailViewModel!
   let disposeBag = DisposeBag()
@@ -28,24 +30,16 @@ class PromiseDetailViewController: UIViewController, BindableType {
     return cell!
   }
   
-  var mapView: GMSMapView?
-  
-  let button: UIButton = {
-    return UIButton()
-  }()
-  
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-    mapView = GMSMapView.map(withFrame: CGRect(x: 0, y: 200, width: 200, height: 200), camera: camera)
-    if let mapView = mapView {
-      view.addSubview(mapView)
-    }
     
     navigationItem.leftBarButtonItem?.buttonGroup?.barButtonItems = [
       UIBarButtonItem(title: "Park", style: .plain, target: nil, action: nil)
     ]
+  }
+  
+  @IBAction func changeMapVisibility(_ sender: Any) {
+    membersMapView.isHidden = !membersMapView.isHidden
   }
   
   func bindViewModel() {
@@ -54,14 +48,12 @@ class PromiseDetailViewController: UIViewController, BindableType {
     }).disposed(by: disposeBag)
     
     viewModel.outputs.location.subscribe(onNext: { (latitude, longitude) in
-      self.mapView?.animate(to: GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 6.0))
+      self.membersMapView.animate(to: GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 14.0))
       let marker = GMSMarker()
       marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
       marker.title = "Park"
       marker.snippet = "Hyunsoo"
-      if let mapView = self.mapView {
-        marker.map = mapView
-      }
+      marker.map = self.membersMapView
     }).disposed(by: disposeBag)
     
     viewModel.outputs.timestamp.subscribe(onNext: { (timestamp) in
@@ -72,8 +64,10 @@ class PromiseDetailViewController: UIViewController, BindableType {
       self.promisedDateLabel.text = timeFormat.string(from: dateTime)
     }).disposed(by: disposeBag)
     
+    let dataSource = RxTableViewSectionedAnimatedDataSource<PocketSectionModel>(configureCell: configureCell)
+    
     viewModel.pocketItems
-      .bind(to: pocketListTableView.rx.items(dataSource: RxTableViewSectionedAnimatedDataSource<PocketSectionModel>(configureCell: configureCell)))
+      .bind(to: pocketListTableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
   }
 }

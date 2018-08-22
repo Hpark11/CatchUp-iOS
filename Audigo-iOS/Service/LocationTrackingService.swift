@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-public class LocationTrackingService: NSObject, CLLocationManagerDelegate{
+public class LocationTrackingService: NSObject, CLLocationManagerDelegate {
   
   public static var shared = LocationTrackingService()
   let locationManager: CLLocationManager
@@ -25,7 +25,6 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate{
     locationManager.distanceFilter = 8
     locationManager.requestAlwaysAuthorization()
 
-    
     super.init()
     locationManager.delegate = self
   }
