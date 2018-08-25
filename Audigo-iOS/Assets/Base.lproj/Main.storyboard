@@ -182,16 +182,16 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6X1-oM-GMu">
                                                     <rect key="frame" x="16" y="31" width="88" height="100"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYc-99-hK4">
-                                                            <rect key="frame" x="23" y="27" width="42" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYc-99-hK4">
+                                                            <rect key="frame" x="13" y="8.5" width="62.5" height="60"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Tl-fX-7Cl">
-                                                            <rect key="frame" x="23" y="63" width="42" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수요일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Tl-fX-7Cl">
+                                                            <rect key="frame" x="22" y="70.5" width="44.5" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -199,7 +199,7 @@
                                                     <constraints>
                                                         <constraint firstItem="0Tl-fX-7Cl" firstAttribute="centerX" secondItem="6X1-oM-GMu" secondAttribute="centerX" id="5OT-Kn-MTY"/>
                                                         <constraint firstItem="AYc-99-hK4" firstAttribute="centerX" secondItem="6X1-oM-GMu" secondAttribute="centerX" id="7in-tY-StL"/>
-                                                        <constraint firstItem="0Tl-fX-7Cl" firstAttribute="top" secondItem="AYc-99-hK4" secondAttribute="bottom" constant="15" id="MgR-ad-1Pd"/>
+                                                        <constraint firstItem="0Tl-fX-7Cl" firstAttribute="top" secondItem="AYc-99-hK4" secondAttribute="bottom" constant="2" id="MgR-ad-1Pd"/>
                                                         <constraint firstItem="AYc-99-hK4" firstAttribute="centerY" secondItem="6X1-oM-GMu" secondAttribute="centerY" constant="-12" id="XcL-Gv-GbT"/>
                                                         <constraint firstAttribute="height" constant="100" id="f7h-bB-wQP"/>
                                                         <constraint firstAttribute="width" constant="88" id="zUX-1W-iP1"/>
@@ -217,6 +217,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="itemDateView" destination="6X1-oM-GMu" id="pCO-mg-y98"/>
                                             <outlet property="itemPanelView" destination="aF2-xt-phE" id="XNe-d4-3eh"/>
                                             <outlet property="itemView" destination="hIw-dD-zKs" id="03W-CG-mdA"/>
                                             <outlet property="promiseAddressLabel" destination="TdX-2M-azS" id="FVm-fT-2Qg"/>
@@ -471,7 +472,7 @@
         <!--NewPromiseViewController-->
         <scene sceneID="N7T-uq-0Vs">
             <objects>
-                <viewController storyboardIdentifier="NewPromiseViewController" title="NewPromiseViewController" id="0sL-c7-ubZ" customClass="NewPromiseViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewPromiseViewController" title="NewPromiseViewController" modalTransitionStyle="crossDissolve" id="0sL-c7-ubZ" customClass="NewPromiseViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8QN-0m-0FK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

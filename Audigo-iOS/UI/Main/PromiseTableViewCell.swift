@@ -19,19 +19,23 @@ class PromiseTableViewCell: UITableViewCell {
   @IBOutlet weak var promiseMembersCollectionView: UICollectionView!
   @IBOutlet weak var itemView: UIView!
   @IBOutlet weak var itemPanelView: UIView!
+  @IBOutlet weak var itemDateView: UIView!
   
   override func awakeFromNib() {
     super.awakeFromNib()
     itemPanelView.layer.borderColor = UIColor.paleGray.cgColor
     itemPanelView.layer.borderWidth = 1
     itemPanelView.layer.cornerRadius = 5
+    itemPanelView.backgroundColor = .white
+    itemDateView.layer.cornerRadius = 5
   }
   
   func configure(promise: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) {
+    let calendar = Calendar(identifier: .gregorian)
     let timestamp = UInt64(promise.timestamp ?? "1000")!
-    let now = Date().timeInMillis
+    let now = Date()
     
-    itemView.alpha = timestamp >= now ? 1 : 0.4
+    itemView.alpha = timestamp >= now.timeInMillis ? 1 : 0.4
     promiseNameLabel.text = promise.name
     promiseAddressLabel.text = promise.address
     
@@ -51,6 +55,20 @@ class PromiseTableViewCell: UITableViewCell {
     promiseDayLabel.text = dayFormat.string(from: dateTime)
     
     // 오늘일 경우
+    if let gapByDay = calendar.dateComponents([.day], from: now, to: dateTime).day {
+      switch gapByDay {
+      case 0:
+        itemDateView.backgroundColor = UIColor.darkSkyBlue
+      case 1...Int.max:
+        itemDateView.backgroundColor = UIColor.darkSoftSkyBlue
+      default:
+        itemPanelView.backgroundColor = .paleSoftGray
+      }
+    }
+    
+    // calendar.dateComponents([.day], from: date!, to: date2!).day
+
+    
     // 오늘은 아니지만 아직 남은경우
     // 지난 경우
   }

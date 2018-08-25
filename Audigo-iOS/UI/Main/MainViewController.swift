@@ -94,7 +94,7 @@ class MainViewController: UIViewController, BindableType {
       case .phoneRequired:
         if let vc = R.storyboard.main.phoneCheckViewController() {
           vc.phoneCertifyDone = strongSelf.viewModel.phoneCertifyDone
-          strongSelf.present(vc, animated: false, completion: nil)
+          strongSelf.present(vc, animated: true, completion: nil)
         }
         
       case .failed:

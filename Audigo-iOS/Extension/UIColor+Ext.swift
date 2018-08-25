@@ -24,6 +24,8 @@ extension UIColor {
 extension UIColor {
   static let paleGray = UIColor(hex: 0xe5eced)
   static let paleSoftGray = UIColor(hex: 0xf6f8f9)
+  static let darkSkyBlue = UIColor(hex: 0x4974e1)
+  static let darkSoftSkyBlue = UIColor(hex: 0x2eb8dc)
   
   struct Flat {
     struct Green {
