@@ -18,6 +18,14 @@ class PromiseTableViewCell: UITableViewCell {
   @IBOutlet weak var promiseAddressLabel: UILabel!
   @IBOutlet weak var promiseMembersCollectionView: UICollectionView!
   @IBOutlet weak var itemView: UIView!
+  @IBOutlet weak var itemPanelView: UIView!
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    itemPanelView.layer.borderColor = UIColor.paleGray.cgColor
+    itemPanelView.layer.borderWidth = 1
+    itemPanelView.layer.cornerRadius = 5
+  }
   
   func configure(promise: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) {
     let timestamp = UInt64(promise.timestamp ?? "1000")!
@@ -41,5 +49,9 @@ class PromiseTableViewCell: UITableViewCell {
     promiseTimeLabel.text = timeFormat.string(from: dateTime)
     promiseDateLabel.text = dateFormat.string(from: dateTime)
     promiseDayLabel.text = dayFormat.string(from: dateTime)
+    
+    // 오늘일 경우
+    // 오늘은 아니지만 아직 남은경우
+    // 지난 경우
   }
 }

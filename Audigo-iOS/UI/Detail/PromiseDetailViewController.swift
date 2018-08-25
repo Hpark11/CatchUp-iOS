@@ -58,7 +58,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
     
     viewModel.outputs.timestamp.subscribe(onNext: { (timestamp) in
       let timeFormat = DateFormatter()
-      timeFormat.dateFormat = "MM.dd (EEEE) a hh시 mm분"
+      timeFormat.dateFormat = "MM.dd (EEE) a hh시 mm분"
       
       let dateTime = Date(timeIntervalSince1970: timestamp)
       self.promisedDateLabel.text = timeFormat.string(from: dateTime)

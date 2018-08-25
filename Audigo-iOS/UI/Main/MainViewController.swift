@@ -18,6 +18,7 @@ import RealmSwift
 class MainViewController: UIViewController, BindableType {
   @IBOutlet weak var promiseListTableView: UITableView!
   @IBOutlet weak var newPromiseButton: UIButton!
+  @IBOutlet weak var monthSelectButton: UIButton!
   
   var viewModel: MainViewModel!
   var needSignIn = false
@@ -105,6 +106,16 @@ class MainViewController: UIViewController, BindableType {
       .bind(to: promiseListTableView.rx.items(dataSource: RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)))
       .disposed(by: disposeBag)
     
+    viewModel.outputs.current.map { (month, year) in
+      let calendar = Calendar(identifier: .gregorian)
+      let timeFormat = DateFormatter()
+      timeFormat.dateFormat = "yyyy.MM"
+      
+      let dateTime = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? Date()
+      return timeFormat.string(from: dateTime)
+    }.bind(to: monthSelectButton.rx.title())
+    .disposed(by: disposeBag)
+    
     if needSignIn {
       if let vc = R.storyboard.main.entranceViewController() {
         vc.signInDone = viewModel.signInDone
@@ -116,6 +127,21 @@ class MainViewController: UIViewController, BindableType {
     }
     
     newPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
+  }
+  
+  @IBAction func selectMonth(_ sender: Any) {
+    if let vc = R.storyboard.main.monthPopupViewController() {
+      let dateFormatter = DateFormatter()
+      let calendar = Calendar(identifier: .gregorian)
+      dateFormatter.dateFormat = "yyyy.MM"
+      
+      if let date = dateFormatter.date(from: monthSelectButton.currentTitle ?? "") {
+        vc.monthSelectDone = self.viewModel.monthSelectDone
+        vc.month = calendar.component(.month, from: date)
+        vc.year = calendar.component(.year, from: date)
+        self.present(vc, animated: true, completion: nil)
+      }
+    }
   }
 }
 

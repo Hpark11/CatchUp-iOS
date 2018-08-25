@@ -21,11 +21,13 @@ typealias PromiseSectionModel = AnimatableSectionModel<String, GetUserWithPromis
 protocol MainViewModelInputsType {
   var signInDone: PublishSubject<Void> { get }
   var phoneCertifyDone: PublishSubject<String> { get }
+  var monthSelectDone: PublishSubject<(Int, Int)> { get }
 }
 
 protocol MainViewModelOutputsType {
   var state: Observable<SignInState> { get }
   var promiseItems: Observable<[PromiseSectionModel]> { get }
+  var current: Observable<(Int, Int)> { get }
 }
 
 protocol MainViewModelActionsType {
@@ -50,22 +52,30 @@ class MainViewModel: MainViewModelType {
   // MARK: Inputs
   var signInDone: PublishSubject<Void>
   var phoneCertifyDone: PublishSubject<String>
+  var monthSelectDone: PublishSubject<(Int, Int)>
   
   // MARK: Outputs
   var state: Observable<SignInState>
   var promiseItems: Observable<[PromiseSectionModel]>
+  var current: Observable<(Int, Int)>
   
   private let userInfo: Variable<(id: String?, phone: String?, email: String?, nickname: String?, gender: String?, birthday: String?, ageRange: String?, profileImagePath: String?)>
   private let promiseList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
+  private let filteredList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
+  private let currentMonth: Variable<(Int, Int)>
   private let disposeBag = DisposeBag()
   
   init(coordinator: SceneCoordinatorType) {
+    let calendar = Calendar(identifier: .gregorian)
     sceneCoordinator = coordinator
     signInDone = PublishSubject()
     phoneCertifyDone = PublishSubject()
+    monthSelectDone = PublishSubject()
     
     userInfo = Variable((id: nil, phone: nil, email: nil, nickname: nil, gender: nil, birthday: nil, ageRange: nil, profileImagePath: nil))
     promiseList = Variable([])
+    filteredList = Variable([])
+    currentMonth = Variable((calendar.component(.month, from: Date()), calendar.component(.year, from: Date())))
     
     state = userInfo.asObservable().map({ userInfo in
       guard let _ = userInfo.id else { return .failed }
@@ -73,10 +83,12 @@ class MainViewModel: MainViewModelType {
       return .completed
     })
     
-    promiseItems = promiseList.asObservable()
+    promiseItems = filteredList.asObservable()
       .map({ (promiseList) in
         return [PromiseSectionModel(model: "", items: promiseList)]
       })
+    
+    current = currentMonth.asObservable()
     
     // Inputs
     signInDone.subscribe(onNext: { _ in
@@ -156,6 +168,22 @@ class MainViewModel: MainViewModelType {
       userInfoValue.phone = phone
       strongSelf.userInfo.value = userInfoValue
     }).disposed(by: disposeBag)
+    
+    monthSelectDone.subscribe(onNext: { [weak self] (month, year) in
+      guard let strongSelf = self else { return }
+      strongSelf.filterPromisesByMonth(month: month, year: year)
+      strongSelf.currentMonth.value = (month, year)
+    }).disposed(by: disposeBag)
+  }
+  
+  private func filterPromisesByMonth(month: Int, year: Int) {
+    let calendar = Calendar(identifier:  .gregorian)
+    if let start = calendar.date(from: DateComponents(year: year, month: month, day: 1)), let end = calendar.date(byAdding: .month, value: 1, to: start) {
+      filteredList.value = promiseList.value.filter {
+        let timeInMillis = (UInt64($0.timestamp ?? "0") ?? 0)
+        return timeInMillis >= start.timeInMillis && timeInMillis < end.timeInMillis
+      }
+    }
   }
   
   func configureUser() {
@@ -175,6 +203,11 @@ class MainViewModel: MainViewModelType {
         
         if let list = result?.data?.user?.pocket.promiseList {
           self.promiseList.value = list.compactMap { $0 }
+          
+          let calendar = Calendar(identifier:  .gregorian)
+          let month = calendar.component(.month, from: Date())
+          let year = calendar.component(.year, from: Date())
+          self.filterPromisesByMonth(month: month, year: year)
         }
       })
     }

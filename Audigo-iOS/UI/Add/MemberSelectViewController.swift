@@ -87,6 +87,4 @@ extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource
       selectButton.setTitle("\(selectedSet.count) 확인", for: .normal)
     }
   }
-  
-  
 }

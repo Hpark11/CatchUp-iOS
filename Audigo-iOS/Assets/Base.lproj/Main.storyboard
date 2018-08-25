@@ -166,7 +166,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="meR-s2-sxZ" firstAttribute="leading" secondItem="bdD-YP-xgt" secondAttribute="leading" id="4Rd-za-Ivc"/>
                                                         <constraint firstItem="GQT-E2-UU4" firstAttribute="top" secondItem="TdX-2M-azS" secondAttribute="bottom" constant="2" id="KNF-Wi-9J0"/>
@@ -217,6 +217,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="itemPanelView" destination="aF2-xt-phE" id="XNe-d4-3eh"/>
                                             <outlet property="itemView" destination="hIw-dD-zKs" id="03W-CG-mdA"/>
                                             <outlet property="promiseAddressLabel" destination="TdX-2M-azS" id="FVm-fT-2Qg"/>
                                             <outlet property="promiseDateLabel" destination="AYc-99-hK4" id="Ax5-mv-mPd"/>
@@ -245,8 +246,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="wgo-jl-KXf"/>
+                    <navigationItem key="navigationItem" id="wgo-jl-KXf">
+                        <nil key="title"/>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JsE-lu-ykR">
+                            <rect key="frame" x="103" y="0.0" width="114" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="2018.08" image="icon_down_date">
+                                <color key="titleColor" red="0.23529411759999999" green="0.31372549020000001" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="selectMonth:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CB8-oA-uBO"/>
+                            </connections>
+                        </button>
+                    </navigationItem>
                     <connections>
+                        <outlet property="monthSelectButton" destination="JsE-lu-ykR" id="eMZ-NV-5fk"/>
                         <outlet property="newPromiseButton" destination="Ek5-lI-khR" id="IKh-hI-NxN"/>
                         <outlet property="promiseListTableView" destination="EBT-kt-cyk" id="pxm-Jy-HtD"/>
                     </connections>
@@ -254,6 +268,71 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="309" y="117"/>
+        </scene>
+        <!--MonthPopupViewController-->
+        <scene sceneID="s78-gm-hES">
+            <objects>
+                <viewController storyboardIdentifier="MonthPopupViewController" title="MonthPopupViewController" modalTransitionStyle="crossDissolve" id="gVw-Uf-mC3" customClass="MonthPopupViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TVC-uM-8tN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ea8-gk-uHx">
+                                <rect key="frame" x="40" y="164" width="240" height="240"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="월별 선택" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoA-I8-I3h">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="bXC-lc-YS5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5xO-fj-hKW" customClass="MonthSelectPickerView" customModule="Audigo_iOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="40" width="240" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="WVG-kJ-EkC"/>
+                                        </constraints>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HbU-JD-lt1">
+                                        <rect key="frame" x="92" y="194" width="56" height="30"/>
+                                        <state key="normal" title="년월 선택"/>
+                                        <connections>
+                                            <action selector="selectDate:" destination="AhD-Qp-thm" eventType="touchUpInside" id="VKJ-n8-E27"/>
+                                            <action selector="selectMonth:" destination="gVw-Uf-mC3" eventType="touchUpInside" id="KEC-5s-2An"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="5xO-fj-hKW" secondAttribute="trailing" id="Lgh-G7-T3e"/>
+                                    <constraint firstItem="HbU-JD-lt1" firstAttribute="centerX" secondItem="Ea8-gk-uHx" secondAttribute="centerX" id="MhK-OQ-gGD"/>
+                                    <constraint firstAttribute="width" constant="240" id="VyG-q1-70W"/>
+                                    <constraint firstAttribute="bottom" secondItem="HbU-JD-lt1" secondAttribute="bottom" constant="16" id="cVC-ns-iao"/>
+                                    <constraint firstItem="5xO-fj-hKW" firstAttribute="leading" secondItem="Ea8-gk-uHx" secondAttribute="leading" id="cmO-E8-uYh"/>
+                                    <constraint firstAttribute="trailing" secondItem="qoA-I8-I3h" secondAttribute="trailing" id="ppk-6H-eET"/>
+                                    <constraint firstAttribute="height" constant="240" id="pry-0r-orc"/>
+                                    <constraint firstItem="5xO-fj-hKW" firstAttribute="top" secondItem="qoA-I8-I3h" secondAttribute="bottom" id="uic-LT-ftf"/>
+                                    <constraint firstItem="qoA-I8-I3h" firstAttribute="leading" secondItem="Ea8-gk-uHx" secondAttribute="leading" id="xxV-2d-NSt"/>
+                                    <constraint firstItem="qoA-I8-I3h" firstAttribute="top" secondItem="Ea8-gk-uHx" secondAttribute="top" id="z2f-KF-G2r"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.65000000000000002" alpha="0.4955710827" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ea8-gk-uHx" firstAttribute="centerY" secondItem="TVC-uM-8tN" secondAttribute="centerY" id="7Dk-fL-OxM"/>
+                            <constraint firstItem="Ea8-gk-uHx" firstAttribute="centerX" secondItem="TVC-uM-8tN" secondAttribute="centerX" id="A6P-o0-lk6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="R88-Eg-cpg"/>
+                    </view>
+                    <connections>
+                        <outlet property="monthPicker" destination="5xO-fj-hKW" id="S0Q-YE-wHX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pxo-CN-Rbf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2762" y="-587"/>
         </scene>
         <!--DatePopupViewController-->
         <scene sceneID="1fB-h3-KCH">
@@ -960,6 +1039,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon_down_date" width="24" height="24"/>
         <image name="icon_followers" width="128" height="128"/>
         <image name="icon_phone_call" width="128" height="128"/>
         <image name="icon_pin" width="128" height="128"/>
