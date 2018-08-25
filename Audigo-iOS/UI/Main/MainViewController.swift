@@ -33,12 +33,16 @@ class MainViewController: UIViewController, BindableType {
     
     cell?.itemView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
       strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise.id ?? "")
+      
+      strongSelf.navigationController?.navigationBar.backgroundColor = .darkSkyBlue
+      strongSelf.navigationController?.navigationBar.barStyle = .blackOpaque
     }).disposed(by: strongSelf.disposeBag)
     return cell!
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    UIApplication.shared.statusBarView?.backgroundColor = .white
     
     let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
     

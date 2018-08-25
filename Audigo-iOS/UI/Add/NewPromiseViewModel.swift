@@ -53,6 +53,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var pocketSelectDone: PublishSubject<[String]>
   var coordinateSetDone: PublishSubject<(latitude: Double, longitude: Double)>
   
+  fileprivate var owner: Variable<String>
   fileprivate var dateComponents: Variable<DateComponents?>
   fileprivate var timeComponents: Variable<DateComponents?>
   fileprivate var name: Variable<String?>
@@ -65,7 +66,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var timeItems: Observable<DateComponents?>
   var isEnabled: Observable<Bool>
   
-  init(coordinator: SceneCoordinatorType) {
+  init(coordinator: SceneCoordinatorType, ownerPhoneNumber: String) {
     // Setup
     sceneCoordinator = coordinator
     disposeBag = DisposeBag()
@@ -76,6 +77,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     address = Variable(nil)
     pockets = Variable([])
     coordinate = Variable(nil)
+    owner = Variable(ownerPhoneNumber)
     
     dateSelectDone = PublishSubject()
     timeSelectDone = PublishSubject()
@@ -132,7 +134,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }).disposed(by: disposeBag)
   }
   
-  // MARK: Actions
   internal lazy var popScene: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
@@ -143,7 +144,27 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   
   lazy var newPromiseCompleted: CocoaAction = {
     return Action { [weak self] _ in
-//      apollo.perform(mutation: AddPromiseMutation(owner: <#T##String?#>, name: name, address: <#T##String?#>, latitude: <#T##Double?#>, longitude: <#T##Double?#>, timestamp: <#T##String?#>, pockets: <#T##[String?]?#>))
+      guard let strongSelf = self else { return .empty() }
+      let calendar = Calendar(identifier: .gregorian)
+      
+      var components = strongSelf.dateComponents.value
+      components?.hour = strongSelf.timeComponents.value?.hour
+      components?.minute = strongSelf.timeComponents.value?.minute
+      components?.second = strongSelf.timeComponents.value?.second
+      
+      apollo.perform(mutation: AddPromiseMutation(
+        owner: strongSelf.owner.value,
+        name: strongSelf.name.value,
+        address: strongSelf.address.value,
+        latitude: strongSelf.coordinate.value?.latitude,
+        longitude: strongSelf.coordinate.value?.longitude,
+        timestamp: String(components?.date?.timeInMillis ?? 0),
+        pockets: strongSelf.pockets.value)) { (result, error) in
+          if let error = error {
+            NSLog("Error while attempting to AddPromiseMutation: \(error.localizedDescription)")
+          }
+      }
+      
       return .empty()
     }
   }()

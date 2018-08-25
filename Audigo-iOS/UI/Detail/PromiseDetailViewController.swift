@@ -32,10 +32,18 @@ class PromiseDetailViewController: UIViewController, BindableType {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    UIApplication.shared.statusBarView?.backgroundColor = .darkSkyBlue
+    navigationItem.leftBarButtonItems = [UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)]
+    navigationItem.leftBarButtonItem?.image = UIImage(named: R.image.icon_back.name)
+    navigationItem.leftBarButtonItem?.tintColor = .white
+    navigationItem.leftBarButtonItem?.rx.action = viewModel.actions.popScene
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
     
-    navigationItem.leftBarButtonItem?.buttonGroup?.barButtonItems = [
-      UIBarButtonItem(title: "Park", style: .plain, target: nil, action: nil)
-    ]
+    navigationController?.navigationBar.backgroundColor = .white
+    navigationController?.navigationBar.barStyle = .default
   }
   
   @IBAction func changeMapVisibility(_ sender: Any) {
@@ -69,6 +77,10 @@ class PromiseDetailViewController: UIViewController, BindableType {
     viewModel.pocketItems
       .bind(to: pocketListTableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
+  }
+  
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
   }
 }
 

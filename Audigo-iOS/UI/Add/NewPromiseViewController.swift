@@ -27,6 +27,7 @@ class NewPromiseViewController: UIViewController, BindableType {
 
   func bindViewModel() {
     popButton.rx.action = viewModel.actions.popScene
+    newPromiseButton.rx.action = viewModel.actions.newPromiseCompleted
     
     promiseNameLabel.rx.tapGesture().when(.recognized).subscribe { _ in
       let alert = UIAlertController(title: "이름 짓기", message: "생성할 약속의 이름을 입력해주세요", preferredStyle: .alert)

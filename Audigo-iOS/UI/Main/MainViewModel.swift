@@ -216,7 +216,7 @@ class MainViewModel: MainViewModelType {
   lazy var pushNewPromiseScene: CocoaAction = {
     return Action { [weak self] in
       guard let strongSelf = self else { return .empty() }
-      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator)
+      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, ownerPhoneNumber: strongSelf.userInfo.value.phone ?? "")
       let scene = NewPromiseScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
     }

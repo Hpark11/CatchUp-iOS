@@ -27,6 +27,7 @@ extension UIColor {
   static let darkSkyBlue = UIColor(hex: 0x4974e1)
   static let darkSoftSkyBlue = UIColor(hex: 0x2eb8dc)
   static let silver = UIColor(hex: 0xcdd3d9)
+  static let stale = UIColor(hex: 0x3c5063)
   
   struct Flat {
     struct Green {

@@ -38,8 +38,6 @@ import RealmSwift
   }
 }
 
-// MARK: - CRUD methods
-
 extension ContactItem {
   static func all(in realm: Realm = try! Realm()) -> Results<ContactItem> {
     return realm.objects(ContactItem.self)
