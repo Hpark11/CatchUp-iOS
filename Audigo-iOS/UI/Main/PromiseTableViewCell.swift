@@ -54,22 +54,16 @@ class PromiseTableViewCell: UITableViewCell {
     promiseDateLabel.text = dateFormat.string(from: dateTime)
     promiseDayLabel.text = dayFormat.string(from: dateTime)
     
-    // 오늘일 경우
     if let gapByDay = calendar.dateComponents([.day], from: now, to: dateTime).day {
       switch gapByDay {
       case 0:
-        itemDateView.backgroundColor = UIColor.darkSkyBlue
+        itemDateView.backgroundColor = .darkSkyBlue
       case 1...Int.max:
-        itemDateView.backgroundColor = UIColor.darkSoftSkyBlue
+        itemDateView.backgroundColor = .darkSoftSkyBlue
       default:
+        itemDateView.backgroundColor = .silver
         itemPanelView.backgroundColor = .paleSoftGray
       }
     }
-    
-    // calendar.dateComponents([.day], from: date!, to: date2!).day
-
-    
-    // 오늘은 아니지만 아직 남은경우
-    // 지난 경우
   }
 }

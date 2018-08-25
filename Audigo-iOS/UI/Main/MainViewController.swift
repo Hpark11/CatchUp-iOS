@@ -119,7 +119,7 @@ class MainViewController: UIViewController, BindableType {
     if needSignIn {
       if let vc = R.storyboard.main.entranceViewController() {
         vc.signInDone = viewModel.signInDone
-        present(vc, animated: false, completion: nil)
+        present(vc, animated: true, completion: nil)
         needSignIn = false
       }
     } else {

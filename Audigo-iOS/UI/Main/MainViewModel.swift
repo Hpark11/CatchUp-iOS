@@ -218,7 +218,7 @@ class MainViewModel: MainViewModelType {
       guard let strongSelf = self else { return .empty() }
       let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator)
       let scene = NewPromiseScene(viewModel: viewModel)
-      return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: false))
+      return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
     }
   }()
   
