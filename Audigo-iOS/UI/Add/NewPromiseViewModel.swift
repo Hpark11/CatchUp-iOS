@@ -63,7 +63,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   fileprivate var address: Variable<String?>
   fileprivate var pockets: Variable<[String]>
   fileprivate var coordinate: Variable<(latitude: Double, longitude: Double)?>
-  fileprivate var selectedMembers: Variable<[String]>
   
   // MARK: Outputs
   var dateItems: Observable<DateComponents?>
@@ -83,7 +82,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     pockets = Variable([])
     coordinate = Variable(nil)
     owner = Variable(ownerPhoneNumber)
-    selectedMembers = Variable([])
     
     dateSelectDone = PublishSubject()
     timeSelectDone = PublishSubject()
@@ -95,7 +93,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     
     dateItems = dateComponents.asObservable()
     timeItems = timeComponents.asObservable()
-    members = selectedMembers.asObservable()
+    members = pockets.asObservable()
     
     isEnabled = Observable.combineLatest(
       dateComponents.asObservable(),
@@ -143,7 +141,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     
     memberSelectDone.subscribe(onNext: { [weak self] memberSet in
       guard let strongSelf = self else { return }
-      strongSelf.selectedMembers.value = memberSet.map { $0 }
+      strongSelf.pockets.value = memberSet.map { $0 }
     }).disposed(by: disposeBag)
   }
   

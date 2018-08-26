@@ -51,6 +51,7 @@
 		CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F082115C4F4006BC729 /* EntranceViewController.swift */; };
 		CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */; };
 		CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */; };
+		CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */; };
 		CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */; };
 		CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAD20C979040063D89F /* AppDelegate.swift */; };
 		CED4CCB020C979040063D89F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* MainViewController.swift */; };
@@ -137,6 +138,7 @@
 		CEB41F082115C4F4006BC729 /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
 		CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
 		CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectedCollectionViewCell.swift; sourceTree = "<group>"; };
+		CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseConfirmViewController.swift; sourceTree = "<group>"; };
 		CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		CED4CCAA20C979040063D89F /* Audigo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audigo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCAD20C979040063D89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */,
 				CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */,
 				CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */,
+				CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -754,6 +757,7 @@
 				CE2801952125A55D0066B344 /* RxApollo.swift in Sources */,
 				CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */,
 				CE825F9021205BF800697F52 /* Util.swift in Sources */,
+				CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */,
 				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
 				CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */,
 				CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */,

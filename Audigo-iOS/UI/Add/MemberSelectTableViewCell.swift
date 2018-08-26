@@ -17,7 +17,7 @@ class MemberSelectTableViewCell: UITableViewCell {
   @IBOutlet weak var itemView: UIView!
   
   func configure(item: ContactItem) {
-    profileImageView.layer.cornerRadius = 26
+    profileImageView.layer.cornerRadius = 21
     profileImageView.kf.setImage(with: URL(string: item.imagePath))
     memberNameLabel.text = item.nickname
   }

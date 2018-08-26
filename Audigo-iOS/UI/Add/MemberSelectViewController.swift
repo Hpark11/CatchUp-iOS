@@ -87,4 +87,8 @@ extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource
       selectButton.setTitle("\(selectedSet.count) 확인", for: .normal)
     }
   }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 56
+  }
 }
