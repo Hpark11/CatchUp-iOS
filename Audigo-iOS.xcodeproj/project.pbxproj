@@ -50,8 +50,8 @@
 		CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F062115C4A6006BC729 /* MainViewModel.swift */; };
 		CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F082115C4F4006BC729 /* EntranceViewController.swift */; };
 		CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */; };
+		CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */; };
 		CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */; };
-		CED44218211F081D000D2A8C /* MemberCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CED44216211F081D000D2A8C /* MemberCollectionViewCell.xib */; };
 		CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAD20C979040063D89F /* AppDelegate.swift */; };
 		CED4CCB020C979040063D89F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* MainViewController.swift */; };
 		CED4CCB320C979040063D89F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CED4CCB120C979040063D89F /* Main.storyboard */; };
@@ -136,8 +136,8 @@
 		CEB41F062115C4A6006BC729 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		CEB41F082115C4F4006BC729 /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
 		CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
+		CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectedCollectionViewCell.swift; sourceTree = "<group>"; };
 		CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCollectionViewCell.swift; sourceTree = "<group>"; };
-		CED44216211F081D000D2A8C /* MemberCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberCollectionViewCell.xib; sourceTree = "<group>"; };
 		CED4CCAA20C979040063D89F /* Audigo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audigo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCAD20C979040063D89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CED4CCAF20C979040063D89F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +234,7 @@
 				CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */,
 				CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */,
 				CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */,
+				CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -293,7 +294,6 @@
 				CEB41F062115C4A6006BC729 /* MainViewModel.swift */,
 				CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */,
 				CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */,
-				CED44216211F081D000D2A8C /* MemberCollectionViewCell.xib */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -549,7 +549,6 @@
 				CE34B4B7211E787100F92D50 /* DeletePromiseById.graphql in Resources */,
 				CE34B4C0211E787100F92D50 /* GetPocket.graphql in Resources */,
 				CE34B4BD211E787100F92D50 /* RelocatePocket.graphql in Resources */,
-				CED44218211F081D000D2A8C /* MemberCollectionViewCell.xib in Resources */,
 				CED4CCB320C979040063D89F /* Main.storyboard in Resources */,
 				CE34B4BA211E787100F92D50 /* SendPush.graphql in Resources */,
 				CE34B4C1211E787100F92D50 /* schemaBackup.json in Resources */,
@@ -736,6 +735,7 @@
 			files = (
 				CEB41F032115C41B006BC729 /* BindableTypes.swift in Sources */,
 				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
+				CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */,
 				CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */,
 				CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */,
 				CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */,

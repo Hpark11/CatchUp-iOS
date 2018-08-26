@@ -9,7 +9,7 @@
 import UIKit
 
 class PromiseTableViewCell: UITableViewCell {
-  
+
   @IBOutlet weak var promiseDateLabel: UILabel!
   @IBOutlet weak var promiseDayLabel: UILabel!
   @IBOutlet weak var promiseNameLabel: UILabel!
@@ -21,6 +21,8 @@ class PromiseTableViewCell: UITableViewCell {
   @IBOutlet weak var itemPanelView: UIView!
   @IBOutlet weak var itemDateView: UIView!
   
+  private var memberList = [String]()
+  
   override func awakeFromNib() {
     super.awakeFromNib()
     itemPanelView.layer.borderColor = UIColor.paleGray.cgColor
@@ -28,6 +30,9 @@ class PromiseTableViewCell: UITableViewCell {
     itemPanelView.layer.cornerRadius = 5
     itemPanelView.backgroundColor = .white
     itemDateView.layer.cornerRadius = 5
+    
+    promiseMembersCollectionView.delegate = self
+    promiseMembersCollectionView.dataSource = self
   }
   
   func configure(promise: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) {
@@ -65,5 +70,23 @@ class PromiseTableViewCell: UITableViewCell {
         itemPanelView.backgroundColor = .paleSoftGray
       }
     }
+    
+    memberList = promise.pockets?.compactMap { pocket in
+      return pocket?.profileImagePath
+    } ?? []
+    
+    promiseMembersCollectionView.reloadData()
+  }
+}
+
+extension PromiseTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return memberList.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.memberCollectionViewCell.identifier, for: indexPath) as! MemberCollectionViewCell
+    cell.configure(imagePath: memberList[indexPath.item])
+    return cell
   }
 }

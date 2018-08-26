@@ -13,6 +13,7 @@ import GooglePlaces
 import GoogleMaps
 
 class NewPromiseViewController: UIViewController, BindableType {
+  
   @IBOutlet weak var newPromiseButton: UIButton!
   @IBOutlet weak var popButton: UIButton!
   @IBOutlet weak var promiseNameLabel: UILabel!
@@ -117,6 +118,17 @@ extension NewPromiseViewController: GMSAutocompleteViewControllerDelegate {
   
   func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
     UIApplication.shared.isNetworkActivityIndicatorVisible = false
+  }
+}
+
+extension NewPromiseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 0
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    return UICollectionViewCell()
   }
 }
 

@@ -7,19 +7,18 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MemberCollectionViewCell: UICollectionViewCell {
-  
-  
-  
   @IBOutlet weak var memberImageView: UIImageView!
   
   override func awakeFromNib() {
-    super.awakeFromNib()
-    // Initialization code
-    
-    memberImageView.layer.cornerRadius = memberImageView.frame.size.width / 2
+    super.awakeFromNib()    
   }
   
-  
+  func configure(imagePath: String) {
+    let url = URL(string: imagePath)
+    memberImageView.kf.setImage(with: url)
+    memberImageView.layer.cornerRadius = 15
+  }
 }
