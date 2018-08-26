@@ -20,7 +20,7 @@ class MemberSelectViewController: UIViewController {
   
   private var selectedSet = Set<String>()
   private let disposeBag = DisposeBag()
-  private var memberSelectDone: PublishSubject<Set<String>>?
+  var memberSelectDone: PublishSubject<Set<String>>?
   
   override func viewDidLoad() {
     super.viewDidLoad()

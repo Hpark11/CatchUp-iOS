@@ -17,12 +17,14 @@ protocol NewPromiseViewModelInputsType {
   var coordinateSetDone: PublishSubject<(latitude: Double, longitude: Double)> { get }
   var dateSelectDone: PublishSubject<DateComponents> { get }
   var timeSelectDone: PublishSubject<DateComponents> { get }
+  var memberSelectDone: PublishSubject<Set<String>> { get }
 }
 
 protocol NewPromiseViewModelOutputsType {
   var dateItems: Observable<DateComponents?> { get }
   var timeItems: Observable<DateComponents?> { get }
   var isEnabled: Observable<Bool> { get }
+  var members: Observable<[String]> { get }
 }
 
 protocol NewPromiseViewModelActionsType {
@@ -52,6 +54,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var addressSetDone: PublishSubject<String?>
   var pocketSelectDone: PublishSubject<[String]>
   var coordinateSetDone: PublishSubject<(latitude: Double, longitude: Double)>
+  var memberSelectDone: PublishSubject<Set<String>>
   
   fileprivate var owner: Variable<String>
   fileprivate var dateComponents: Variable<DateComponents?>
@@ -60,11 +63,13 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   fileprivate var address: Variable<String?>
   fileprivate var pockets: Variable<[String]>
   fileprivate var coordinate: Variable<(latitude: Double, longitude: Double)?>
+  fileprivate var selectedMembers: Variable<[String]>
   
   // MARK: Outputs
   var dateItems: Observable<DateComponents?>
   var timeItems: Observable<DateComponents?>
   var isEnabled: Observable<Bool>
+  var members: Observable<[String]>
   
   init(coordinator: SceneCoordinatorType, ownerPhoneNumber: String) {
     // Setup
@@ -78,6 +83,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     pockets = Variable([])
     coordinate = Variable(nil)
     owner = Variable(ownerPhoneNumber)
+    selectedMembers = Variable([])
     
     dateSelectDone = PublishSubject()
     timeSelectDone = PublishSubject()
@@ -85,9 +91,11 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     addressSetDone = PublishSubject()
     pocketSelectDone = PublishSubject()
     coordinateSetDone = PublishSubject()
+    memberSelectDone = PublishSubject()
     
     dateItems = dateComponents.asObservable()
     timeItems = timeComponents.asObservable()
+    members = selectedMembers.asObservable()
     
     isEnabled = Observable.combineLatest(
       dateComponents.asObservable(),
@@ -132,6 +140,11 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       guard let strongSelf = self else { return }
       strongSelf.coordinate.value = coordinate
     }).disposed(by: disposeBag)
+    
+    memberSelectDone.subscribe(onNext: { [weak self] memberSet in
+      guard let strongSelf = self else { return }
+      strongSelf.selectedMembers.value = memberSet.map { $0 }
+    }).disposed(by: disposeBag)
   }
   
   internal lazy var popScene: CocoaAction = {
@@ -142,7 +155,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }
   }()
   
-  lazy var newPromiseCompleted: CocoaAction = {
+  internal lazy var newPromiseCompleted: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
       let calendar = Calendar(identifier: .gregorian)

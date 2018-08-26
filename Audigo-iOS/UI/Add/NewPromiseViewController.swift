@@ -24,6 +24,8 @@ class NewPromiseViewController: UIViewController, BindableType {
   @IBOutlet weak var membersCollectionView: UICollectionView!
   
   var viewModel: NewPromiseViewModel!
+  private var selectedMembers = [String]()
+  
   let disposeBag = DisposeBag()
 
   func bindViewModel() {
@@ -70,6 +72,7 @@ class NewPromiseViewController: UIViewController, BindableType {
     
     promiseMembersLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
       if let vc = R.storyboard.main.memberSelectViewController() {
+        vc.memberSelectDone = self.viewModel.inputs.memberSelectDone
         self.present(vc, animated: true, completion: nil)
       }
     }).disposed(by: disposeBag)
@@ -90,6 +93,11 @@ class NewPromiseViewController: UIViewController, BindableType {
     
     viewModel.outputs.isEnabled.subscribe(onNext: { isEnabled in
       self.newPromiseButton.isEnabled = isEnabled
+    }).disposed(by: disposeBag)
+    
+    viewModel.outputs.members.subscribe(onNext: { members in
+      self.selectedMembers = members
+      self.membersCollectionView.reloadData()
     }).disposed(by: disposeBag)
   }
 }
@@ -124,11 +132,13 @@ extension NewPromiseViewController: GMSAutocompleteViewControllerDelegate {
 extension NewPromiseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 0
+    return selectedMembers.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    return UICollectionViewCell()
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.memberSelectedCollectionViewCell.identifier, for: indexPath) as! MemberSelectedCollectionViewCell
+    cell.configure(phone: selectedMembers[indexPath.item])
+    return cell
   }
 }
 

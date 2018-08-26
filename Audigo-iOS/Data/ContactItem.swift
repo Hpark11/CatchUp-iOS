@@ -44,6 +44,10 @@ extension ContactItem {
       .sorted(byKeyPath: ContactItem.Property.nickname.rawValue, ascending: true)
   }
   
+  static func find(phone: String, in realm: Realm = try! Realm()) -> ContactItem? {
+    return realm.object(ofType: ContactItem.self, forPrimaryKey: phone)
+  }
+  
   static func create(_ phone: String, nickname: String, imagePath: String, pushToken: String, in realm: Realm = try! Realm()) {
     try! realm.write {
       realm.create(ContactItem.self, value: [

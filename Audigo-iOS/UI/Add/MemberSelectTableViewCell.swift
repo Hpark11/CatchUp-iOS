@@ -16,12 +16,8 @@ class MemberSelectTableViewCell: UITableViewCell {
   @IBOutlet weak var checkImageView: UIImageView!
   @IBOutlet weak var itemView: UIView!
   
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    // Initialization code
-  }
-  
   func configure(item: ContactItem) {
+    profileImageView.layer.cornerRadius = 26
     profileImageView.kf.setImage(with: URL(string: item.imagePath))
     memberNameLabel.text = item.nickname
   }
