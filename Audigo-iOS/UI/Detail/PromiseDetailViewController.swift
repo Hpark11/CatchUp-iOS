@@ -32,6 +32,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    pocketListTableView.rowHeight = 85
     UIApplication.shared.statusBarView?.backgroundColor = .darkSkyBlue
     navigationItem.leftBarButtonItems = [UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)]
     navigationItem.leftBarButtonItem?.image = UIImage(named: R.image.icon_back.name)

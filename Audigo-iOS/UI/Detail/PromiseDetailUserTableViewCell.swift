@@ -12,15 +12,10 @@ import Kingfisher
 class PromiseDetailUserTableViewCell: UITableViewCell {
 
   @IBOutlet weak var profileImageView: UIImageView!
-  @IBOutlet weak var notifyImageView: UIImageView!
   @IBOutlet weak var memberNameLabel: UILabel!
   @IBOutlet weak var arrivalTimeLabel: UILabel!
   @IBOutlet weak var statusLabel: UILabel!
-  
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    // Initialization code
-  }
+  @IBOutlet weak var itemView: UIView!
   
   override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
@@ -29,7 +24,12 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
   
   func configure(pocket: GetPromiseQuery.Data.Promise.Pocket) {
     memberNameLabel.text = pocket.nickname
+    profileImageView.layer.cornerRadius = 20
+    let url = URL(string: pocket.profileImagePath ?? "")
+    profileImageView.kf.setImage(with: url)
     
-    
+    itemView.layer.borderWidth = 1
+    itemView.layer.borderColor = UIColor.paleGray.cgColor
+    itemView.layer.cornerRadius = 5
   }
 }
