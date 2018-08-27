@@ -24,9 +24,12 @@ class NewPromiseViewController: UIViewController, BindableType {
   @IBOutlet weak var membersCollectionView: UICollectionView!
   
   var viewModel: NewPromiseViewModel!
+  var isEditingPromise = false
   private var selectedMembers = [String]()
   
   let disposeBag = DisposeBag()
+  
+  private let confirmDone = PublishSubject<Void>()
 
   func bindViewModel() {
     popButton.rx.action = viewModel.actions.popScene
@@ -97,7 +100,38 @@ class NewPromiseViewController: UIViewController, BindableType {
     
     viewModel.outputs.members.subscribe(onNext: { members in
       self.selectedMembers = members
+      if let member = members.first, let nickname = ContactItem.find(phone: member)?.nickname {
+        self.promiseMembersLabel.text = "\(nickname) 외 \(members.count)명"
+      }
+      
       self.membersCollectionView.reloadData()
+    }).disposed(by: disposeBag)
+    
+    viewModel.outputs.state.subscribe(onNext: { [weak self] state in
+      guard let strongSelf = self else { return }
+      switch state {
+      case .normal:
+        break
+      case .pending:
+        strongSelf.newPromiseButton.isEnabled = false
+        break
+      case .completed(let dateTime, let location, let members):
+        if let vc = R.storyboard.main.promiseConfirmViewController() {
+          vc.confirmDone = strongSelf.confirmDone
+          vc.dateTime = dateTime
+          vc.location = location
+          vc.members = members
+          vc.isEditingPromise = strongSelf.isEditingPromise
+          strongSelf.present(vc, animated: true, completion: nil)
+        }
+      case .error:
+        strongSelf.newPromiseButton.isEnabled = true
+      }
+    }).disposed(by: disposeBag)
+    
+    confirmDone.subscribe(onNext: { [weak self] _ in
+      guard let strongSelf = self else { return }
+      strongSelf.dismiss(animated: true, completion: nil)
     }).disposed(by: disposeBag)
   }
 }

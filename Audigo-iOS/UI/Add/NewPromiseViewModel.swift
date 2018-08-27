@@ -10,6 +10,13 @@ import Foundation
 import Action
 import RxSwift
 
+enum CreatePromiseState {
+  case normal
+  case pending
+  case completed(dateTime: String, location: String, members: String)
+  case error(description: String)
+}
+
 protocol NewPromiseViewModelInputsType {
   var nameSetDone: PublishSubject<String> { get }
   var addressSetDone: PublishSubject<String?> { get }
@@ -25,6 +32,7 @@ protocol NewPromiseViewModelOutputsType {
   var timeItems: Observable<DateComponents?> { get }
   var isEnabled: Observable<Bool> { get }
   var members: Observable<[String]> { get }
+  var state: Observable<CreatePromiseState> { get }
 }
 
 protocol NewPromiseViewModelActionsType {
@@ -56,6 +64,13 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var coordinateSetDone: PublishSubject<(latitude: Double, longitude: Double)>
   var memberSelectDone: PublishSubject<Set<String>>
   
+  // MARK: Outputs
+  var dateItems: Observable<DateComponents?>
+  var timeItems: Observable<DateComponents?>
+  var isEnabled: Observable<Bool>
+  var members: Observable<[String]>
+  var state: Observable<CreatePromiseState>
+  
   fileprivate var owner: Variable<String>
   fileprivate var dateComponents: Variable<DateComponents?>
   fileprivate var timeComponents: Variable<DateComponents?>
@@ -63,12 +78,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   fileprivate var address: Variable<String?>
   fileprivate var pockets: Variable<[String]>
   fileprivate var coordinate: Variable<(latitude: Double, longitude: Double)?>
-  
-  // MARK: Outputs
-  var dateItems: Observable<DateComponents?>
-  var timeItems: Observable<DateComponents?>
-  var isEnabled: Observable<Bool>
-  var members: Observable<[String]>
+  fileprivate var createPromiseState: Variable<CreatePromiseState>
   
   init(coordinator: SceneCoordinatorType, ownerPhoneNumber: String) {
     // Setup
@@ -82,6 +92,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     pockets = Variable([])
     coordinate = Variable(nil)
     owner = Variable(ownerPhoneNumber)
+    createPromiseState = Variable(.normal)
     
     dateSelectDone = PublishSubject()
     timeSelectDone = PublishSubject()
@@ -107,6 +118,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
         guard let _ = dateComponents, let _ = timeComponents, let _ = coordinate, let _ = name, let _ = address, !pockets.isEmpty else { return false }
         return true
     }
+    
+    state = createPromiseState.asObservable()
     
     // Inputs
     dateSelectDone.subscribe(onNext: { [weak self] components in
@@ -156,6 +169,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   internal lazy var newPromiseCompleted: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
+      strongSelf.createPromiseState.value = .pending
       let calendar = Calendar(identifier: .gregorian)
       
       var components = strongSelf.dateComponents.value
@@ -163,16 +177,32 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       components?.minute = strongSelf.timeComponents.value?.minute
       components?.second = strongSelf.timeComponents.value?.second
       
+      guard let dateTimeComponents = components else { return .empty() }
+      
       apollo.perform(mutation: AddPromiseMutation(
         owner: strongSelf.owner.value,
         name: strongSelf.name.value,
         address: strongSelf.address.value,
         latitude: strongSelf.coordinate.value?.latitude,
         longitude: strongSelf.coordinate.value?.longitude,
-        timestamp: String(components?.date?.timeInMillis ?? 0),
-        pockets: strongSelf.pockets.value)) { (result, error) in
+        timestamp: String(calendar.date(from: dateTimeComponents)?.timeInMillis ?? 0),
+        pockets: strongSelf.pockets.value
+        )) { (result, error) in
+          
+          let timeFormat = DateFormatter()
+          timeFormat.dateFormat = "MM.dd (EEE) a hh시 mm분"
+          
           if let error = error {
-            NSLog("Error while attempting to AddPromiseMutation: \(error.localizedDescription)")
+            strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
+            return
+          }
+          
+          if let date = calendar.date(from: dateTimeComponents),
+            let location = strongSelf.address.value,
+            let member = ContactItem.find(phone: strongSelf.pockets.value.first ?? "")?.nickname {
+            let dateTime = timeFormat.string(from: date)
+            let members = "\(member) 외 \(strongSelf.pockets.value.count)명"
+            strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
           }
       }
       

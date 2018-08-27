@@ -7,29 +7,33 @@
 //
 
 import UIKit
+import RxSwift
 
 class PromiseConfirmViewController: UIViewController {
+  
+  @IBOutlet weak var confirmationLabel: UILabel!
+  @IBOutlet weak var dateTimeLabel: UILabel!
+  @IBOutlet weak var locationLabel: UILabel!
+  @IBOutlet weak var membersLabel: UILabel!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+  var confirmDone: PublishSubject<Void>?
+  var isEditingPromise = false
+  var dateTime = ""
+  var location = ""
+  var members = ""
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+   
+    confirmationLabel.text = "약속 \(isEditingPromise ? "편집" : "추가") 완료"
+    dateTimeLabel.text = dateTime
+    locationLabel.text = location
+    membersLabel.text = members
+  }
+  
+  @IBAction func checkedConfirmation(_ sender: Any) {
+    dismiss(animated: true) {
+      self.confirmDone?.onNext(())
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+  }
 }
