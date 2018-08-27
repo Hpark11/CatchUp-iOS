@@ -50,6 +50,9 @@
 		CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F062115C4A6006BC729 /* MainViewModel.swift */; };
 		CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F082115C4F4006BC729 /* EntranceViewController.swift */; };
 		CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */; };
+		CEBD21F121344F570039A457 /* KakaoLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD21F021344F570039A457 /* KakaoLink.framework */; };
+		CEBD21F321344F900039A457 /* KakaoCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD21F221344F900039A457 /* KakaoCommon.framework */; };
+		CEBD21F521344FAE0039A457 /* KakaoMessageTemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD21F421344FAE0039A457 /* KakaoMessageTemplate.framework */; };
 		CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */; };
 		CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */; };
 		CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */; };
@@ -137,6 +140,9 @@
 		CEB41F062115C4A6006BC729 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		CEB41F082115C4F4006BC729 /* EntranceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewController.swift; sourceTree = "<group>"; };
 		CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
+		CEBD21F021344F570039A457 /* KakaoLink.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoLink.framework; sourceTree = "<group>"; };
+		CEBD21F221344F900039A457 /* KakaoCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoCommon.framework; sourceTree = "<group>"; };
+		CEBD21F421344FAE0039A457 /* KakaoMessageTemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoMessageTemplate.framework; sourceTree = "<group>"; };
 		CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectedCollectionViewCell.swift; sourceTree = "<group>"; };
 		CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseConfirmViewController.swift; sourceTree = "<group>"; };
 		CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -171,8 +177,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBD21F321344F900039A457 /* KakaoCommon.framework in Frameworks */,
+				CEBD21F121344F570039A457 /* KakaoLink.framework in Frameworks */,
 				CED6494D212B80E600C6BD6D /* CoreLocation.framework in Frameworks */,
 				DAA9A1DE40416DAD7F13D98E /* Pods_Audigo_iOS.framework in Frameworks */,
+				CEBD21F521344FAE0039A457 /* KakaoMessageTemplate.framework in Frameworks */,
 				CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +429,9 @@
 		FCC8BC3FA2F2707845E1B047 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEBD21F421344FAE0039A457 /* KakaoMessageTemplate.framework */,
+				CEBD21F221344F900039A457 /* KakaoCommon.framework */,
+				CEBD21F021344F570039A457 /* KakaoLink.framework */,
 				CED6494C212B80E600C6BD6D /* CoreLocation.framework */,
 				CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */,
 				037C740967F5570A44C65A3B /* Pods_Audigo_iOS.framework */,
