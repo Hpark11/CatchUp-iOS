@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PromiseInputView" customModule="Audigo_iOS" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="swN-ga-ich"/>
+                <outlet property="inputLabel" destination="Yif-0r-iu6" id="fdw-Hp-ZcI"/>
+                <outlet property="promiseLowerLine" destination="g7V-lE-g4R" id="VbI-ot-DZ9"/>
+                <outlet property="subIconImageView" destination="jiA-v3-Wvk" id="bkS-Vs-CQm"/>
+                <outlet property="titleLabel" destination="fau-sX-rqw" id="AXS-Rh-d9c"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="315" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fau-sX-rqw">
+                    <rect key="frame" x="0.0" y="0.0" width="22.5" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.23529411764705882" green="0.31372549019607843" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g7V-lE-g4R">
+                    <rect key="frame" x="0.0" y="59" width="315" height="1"/>
+                    <color key="backgroundColor" red="0.89803921568627454" green="0.92549019607843142" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="vv9-e7-EcU"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jiA-v3-Wvk">
+                    <rect key="frame" x="293" y="26" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="22" id="mQu-Ek-Sf8"/>
+                        <constraint firstAttribute="height" constant="22" id="oKs-Yi-S4o"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="APP 개발 모임" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yif-0r-iu6">
+                    <rect key="frame" x="4" y="29" width="288" height="19.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.23529411764705882" green="0.31372549019607843" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fau-sX-rqw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="7ZN-Kq-kaO"/>
+                <constraint firstItem="g7V-lE-g4R" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="NTG-HO-a7c"/>
+                <constraint firstItem="Yif-0r-iu6" firstAttribute="top" secondItem="fau-sX-rqw" secondAttribute="bottom" constant="13" id="Nrc-ne-exv"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="g7V-lE-g4R" secondAttribute="trailing" id="NvA-RO-coy"/>
+                <constraint firstItem="jiA-v3-Wvk" firstAttribute="leading" secondItem="Yif-0r-iu6" secondAttribute="trailing" constant="1" id="Ogx-v7-etO"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="g7V-lE-g4R" secondAttribute="bottom" id="R3q-b8-NKB"/>
+                <constraint firstItem="jiA-v3-Wvk" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="26" id="Vx4-JG-YCn"/>
+                <constraint firstItem="fau-sX-rqw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="ah3-so-uq1"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jiA-v3-Wvk" secondAttribute="trailing" id="yDf-r3-W25"/>
+                <constraint firstItem="Yif-0r-iu6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="4" id="yrv-fn-sZL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="100" y="-166"/>
+        </view>
+    </objects>
+</document>

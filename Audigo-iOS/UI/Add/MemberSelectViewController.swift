@@ -18,7 +18,7 @@ class MemberSelectViewController: UIViewController {
   private var originalItems: Results<ContactItem>?
   private var items = [ContactItem]()
   
-  private var selectedSet = Set<String>()
+  var selectedSet = Set<String>()
   private let disposeBag = DisposeBag()
   var memberSelectDone: PublishSubject<Set<String>>?
   
@@ -28,6 +28,7 @@ class MemberSelectViewController: UIViewController {
     if let items = originalItems {
       self.items = items.map { $0 }
     }
+    selectButton.setTitle("\(selectedSet.count) 확인", for: .normal)
   }
   
   @IBAction func dismissScene(_ sender: Any) {
@@ -63,9 +64,12 @@ extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource
     
     if selectedSet.contains(items[indexPath.row].phone) {
       cell.accessoryType = .checkmark
+      tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
       cell.setSelected(true, animated: true)
     } else {
       cell.accessoryType = .none
+      tableView.deselectRow(at: indexPath, animated: true)
+//      tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
       cell.setSelected(false, animated: true)
     }
     

@@ -177,14 +177,13 @@ class MainViewModel: MainViewModelType {
   }
   
   private func filterPromisesByMonth(month: Int, year: Int) {
-    filteredList.value = promiseList.value
-//    let calendar = Calendar(identifier:  .gregorian)
-//    if let start = calendar.date(from: DateComponents(year: year, month: month, day: 1)), let end = calendar.date(byAdding: .month, value: 1, to: start) {
-//      filteredList.value = promiseList.value.filter {
-//        let timeInMillis = (UInt64($0.timestamp ?? "0") ?? 0)
-//        return timeInMillis >= start.timeInMillis && timeInMillis < end.timeInMillis
-//      }
-//    }
+    let calendar = Calendar(identifier:  .gregorian)
+    if let start = calendar.date(from: DateComponents(year: year, month: month, day: 1)), let end = calendar.date(byAdding: .month, value: 1, to: start) {
+      filteredList.value = promiseList.value.filter {
+        let timeInMillis = (UInt64($0.timestamp ?? "0") ?? 0)
+        return timeInMillis >= start.timeInMillis && timeInMillis < end.timeInMillis
+      }
+    }
   }
   
   func configureUser() {

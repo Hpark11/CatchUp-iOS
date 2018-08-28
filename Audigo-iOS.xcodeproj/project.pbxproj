@@ -39,6 +39,8 @@
 		CE7D369D20DA952D003E8823 /* ApolloAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */; };
 		CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */; };
 		CE825F9021205BF800697F52 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE825F8F21205BF800697F52 /* Util.swift */; };
+		CEA2EA1E21357AA5006F05C3 /* PromiseInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA2EA1D21357AA5006F05C3 /* PromiseInputView.swift */; };
+		CEA2EA2021357AB2006F05C3 /* PromiseInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA2EA1F21357AB2006F05C3 /* PromiseInputView.xib */; };
 		CEAD38B321230B63009B0A5A /* MemberSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */; };
 		CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EF82115C3FF006BC729 /* SceneCoordinatorType.swift */; };
 		CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB41EF92115C3FF006BC729 /* SceneTransitionType.swift */; };
@@ -129,6 +131,8 @@
 		CE7D369C20DA952D003E8823 /* ApolloAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApolloAPIService.swift; sourceTree = "<group>"; };
 		CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
 		CE825F8F21205BF800697F52 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		CEA2EA1D21357AA5006F05C3 /* PromiseInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInputView.swift; sourceTree = "<group>"; };
+		CEA2EA1F21357AB2006F05C3 /* PromiseInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PromiseInputView.xib; sourceTree = "<group>"; };
 		CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectTableViewCell.swift; sourceTree = "<group>"; };
 		CEB41EF82115C3FF006BC729 /* SceneCoordinatorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCoordinatorType.swift; sourceTree = "<group>"; };
 		CEB41EF92115C3FF006BC729 /* SceneTransitionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransitionType.swift; sourceTree = "<group>"; };
@@ -258,6 +262,8 @@
 				CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */,
 				CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */,
 				CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */,
+				CEA2EA1D21357AA5006F05C3 /* PromiseInputView.swift */,
+				CEA2EA1F21357AB2006F05C3 /* PromiseInputView.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -567,6 +573,7 @@
 				CED4CCB320C979040063D89F /* Main.storyboard in Resources */,
 				CE34B4BA211E787100F92D50 /* SendPush.graphql in Resources */,
 				CE34B4C1211E787100F92D50 /* schemaBackup.json in Resources */,
+				CEA2EA2021357AB2006F05C3 /* PromiseInputView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,6 +782,7 @@
 				CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */,
 				CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */,
 				CED6494B212B803100C6BD6D /* LocationTrackingService.swift in Sources */,
+				CEA2EA1E21357AA5006F05C3 /* PromiseInputView.swift in Sources */,
 				CED4CCB020C979040063D89F /* MainViewController.swift in Sources */,
 				CEB41F072115C4A6006BC729 /* MainViewModel.swift in Sources */,
 				CEB41F002115C3FF006BC729 /* Scene+ViewController.swift in Sources */,

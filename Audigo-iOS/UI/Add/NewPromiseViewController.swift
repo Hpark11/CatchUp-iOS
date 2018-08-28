@@ -16,12 +16,13 @@ class NewPromiseViewController: UIViewController, BindableType {
   
   @IBOutlet weak var newPromiseButton: UIButton!
   @IBOutlet weak var popButton: UIButton!
-  @IBOutlet weak var promiseNameLabel: UILabel!
-  @IBOutlet weak var promiseDateLabel: UILabel!
-  @IBOutlet weak var promiseTimeLabel: UILabel!
-  @IBOutlet weak var promiseAddressLabel: UILabel!
-  @IBOutlet weak var promiseMembersLabel: UILabel!
   @IBOutlet weak var membersCollectionView: UICollectionView!
+  
+  @IBOutlet weak var promiseNameInputView: PromiseInputView!
+  @IBOutlet weak var promiseDateInputView: PromiseInputView!
+  @IBOutlet weak var promiseTimeInputView: PromiseInputView!
+  @IBOutlet weak var promiseAddressInputView: PromiseInputView!
+  @IBOutlet weak var promiseMembersInputView: PromiseInputView!
   
   var viewModel: NewPromiseViewModel!
   var isEditingPromise = false
@@ -31,11 +32,21 @@ class NewPromiseViewController: UIViewController, BindableType {
   
   private let confirmDone = PublishSubject<Void>()
 
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    promiseNameInputView.inputState = .none(title: "약속명", input: "약속명을 입력해주세요")
+    promiseDateInputView.inputState = .choice(title: "언제", input: "0000월 00월 00일")
+    promiseTimeInputView.inputState = .choice(title: "몇시", input: "오후 00시 00분")
+    promiseAddressInputView.inputState = .search(title: "어디서", input: "장소를 검색해주세요")
+    promiseMembersInputView.inputState = .search(title: "누구랑", input: "구성원을 검색해주세요")
+  }
+  
   func bindViewModel() {
     popButton.rx.action = viewModel.actions.popScene
     newPromiseButton.rx.action = viewModel.actions.newPromiseCompleted
     
-    promiseNameLabel.rx.tapGesture().when(.recognized).subscribe { _ in
+    promiseNameInputView.rx.tapGesture().when(.recognized).subscribe { _ in
       let alert = UIAlertController(title: "이름 짓기", message: "생성할 약속의 이름을 입력해주세요", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
       
@@ -45,7 +56,7 @@ class NewPromiseViewController: UIViewController, BindableType {
       
       alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
         if let name = alert.textFields?.first?.text {
-          self.promiseNameLabel.text = name
+          self.promiseNameInputView.inputState = .applied(input: name)
           self.viewModel.inputs.nameSetDone.onNext(name)
         }
       }))
@@ -53,36 +64,37 @@ class NewPromiseViewController: UIViewController, BindableType {
       self.present(alert, animated: true)
     }.disposed(by: disposeBag)
     
-    promiseDateLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { (_) in
+    promiseDateInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { (_) in
       if let vc = R.storyboard.main.datePopupViewController() {
         vc.dateSelectDone = self.viewModel.dateSelectDone
         self.present(vc, animated: true, completion: nil)
       }
     }).disposed(by: disposeBag)
     
-    promiseTimeLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { (_) in
+    promiseTimeInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { (_) in
       if let vc = R.storyboard.main.timePopupViewController() {
         vc.timeSelectDone = self.viewModel.timeSelectDone
         self.present(vc, animated: true, completion: nil)
       }
     }).disposed(by: disposeBag)
     
-    promiseAddressLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
+    promiseAddressInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
       let autocompleteController = GMSAutocompleteViewController()
       autocompleteController.delegate = self
       self.present(autocompleteController, animated: true, completion: nil)
     }).disposed(by: disposeBag)
     
-    promiseMembersLabel.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
+    promiseMembersInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
       if let vc = R.storyboard.main.memberSelectViewController() {
         vc.memberSelectDone = self.viewModel.inputs.memberSelectDone
+        vc.selectedSet = Set(self.selectedMembers)
         self.present(vc, animated: true, completion: nil)
       }
     }).disposed(by: disposeBag)
     
     viewModel.dateItems.subscribe(onNext: { components in
       if let cp = components, let year = cp.year, let month = cp.month, let day = cp.day {
-        self.promiseDateLabel.text = "\(year)년 \(month)월 \(day)일"
+        self.promiseDateInputView.inputState = .applied(input: "\(year)년 \(month)월 \(day)일")
       }
     }).disposed(by: disposeBag)
     
@@ -90,7 +102,7 @@ class NewPromiseViewController: UIViewController, BindableType {
       let timeFormat = DateFormatter()
       timeFormat.dateFormat = "a hh시 mm분"
       if let cp = components, let time = Calendar.current.date(from: cp) {
-        self.promiseTimeLabel.text = timeFormat.string(from: time)
+        self.promiseTimeInputView.inputState = .applied(input: timeFormat.string(from: time))
       }
     }).disposed(by: disposeBag)
     
@@ -101,7 +113,7 @@ class NewPromiseViewController: UIViewController, BindableType {
     viewModel.outputs.members.subscribe(onNext: { members in
       self.selectedMembers = members
       if let member = members.first, let nickname = ContactItem.find(phone: member)?.nickname {
-        self.promiseMembersLabel.text = "\(nickname) 외 \(members.count)명"
+        self.promiseMembersInputView.inputState = .applied(input: "\(nickname) 외 \(members.count)명")
       }
       
       self.membersCollectionView.reloadData()
@@ -139,7 +151,7 @@ class NewPromiseViewController: UIViewController, BindableType {
 extension NewPromiseViewController: GMSAutocompleteViewControllerDelegate {
 
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-    promiseAddressLabel.text = place.formattedAddress
+    promiseAddressInputView.inputState = .applied(input: place.formattedAddress ?? "")
     viewModel.inputs.addressSetDone.onNext(place.formattedAddress)
     viewModel.inputs.coordinateSetDone.onNext((latitude: place.coordinate.latitude, longitude: place.coordinate.longitude))
     print("Place attributions: \(place.attributions)")
