@@ -1158,6 +1158,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpr-BH-jvI">
                                 <rect key="frame" x="278" y="27.5" width="30" height="30"/>
                                 <state key="normal" title="수정"/>
+                                <connections>
+                                    <action selector="editPromise:" destination="3fI-9P-lsb" eventType="touchUpInside" id="pjp-64-GaH"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

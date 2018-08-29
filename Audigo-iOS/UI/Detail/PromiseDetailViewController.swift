@@ -53,6 +53,10 @@ class PromiseDetailViewController: UIViewController, BindableType {
     membersMapView.isHidden = !membersMapView.isHidden
   }
   
+  @IBAction func editPromise(_ sender: Any) {
+    
+  }
+  
   func bindViewModel() {
     refreshButton.rx.action = viewModel.actions.refresh
     
