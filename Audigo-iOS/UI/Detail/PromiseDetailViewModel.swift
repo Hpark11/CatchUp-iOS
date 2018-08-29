@@ -26,6 +26,7 @@ protocol PromiseDetailViewModelOutputsType {
 
 protocol PromiseDetailViewModelActionsType {
   var popScene: CocoaAction { get }
+  var refresh: CocoaAction { get }
 }
 
 protocol PromiseDetailViewModelType {
@@ -55,6 +56,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   private let promiseLocation: Variable<(latitude: Double, longitude: Double)>
   private let promiseTimestamp: Variable<TimeInterval>
   private let pocketList: Variable<[GetPromiseQuery.Data.Promise.Pocket]>
+  private let promiseId: String
   
   init(coordinator: SceneCoordinatorType, promiseId: String) {
     sceneCoordinator = coordinator
@@ -74,6 +76,11 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
         return [PocketSectionModel(model: "", items: pocketList)]
       })
     
+    self.promiseId = promiseId
+    loadSinglePromise()
+  }
+  
+  private func loadSinglePromise() {
     _ = apollo.watch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
       if let error = error {
         NSLog("Error while GetPromiseQuery: \(error.localizedDescription)")
@@ -100,10 +107,18 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     }
   }
 
-  internal lazy var popScene: CocoaAction = {
+  lazy var popScene: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
       strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: MainViewModel(coordinator: strongSelf.sceneCoordinator)), type: .pop(animated: true, level: .parent))
+      return .empty()
+    }
+  }()
+  
+  lazy var refresh: CocoaAction = {
+    return Action { [weak self] _ in
+      guard let strongSelf = self else { return .empty() }
+      strongSelf.loadSinglePromise()
       return .empty()
     }
   }()

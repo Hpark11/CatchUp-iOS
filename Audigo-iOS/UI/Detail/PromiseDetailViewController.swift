@@ -17,9 +17,11 @@ class PromiseDetailViewController: UIViewController, BindableType {
   @IBOutlet weak var promisedDateLabel: UILabel!
   @IBOutlet weak var membersMapView: GMSMapView!
   @IBOutlet weak var panelChangeButton: UIButton!
+  @IBOutlet weak var refreshButton: UIButton!
   
   var viewModel: PromiseDetailViewModel!
   let disposeBag = DisposeBag()
+  private var markers: [GMSMarker]? = []
   
   lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, GetPromiseQuery.Data.Promise.Pocket) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
     guard let strongSelf = self else { return PromiseDetailUserTableViewCell(frame: .zero) }
@@ -52,6 +54,8 @@ class PromiseDetailViewController: UIViewController, BindableType {
   }
   
   func bindViewModel() {
+    refreshButton.rx.action = viewModel.actions.refresh
+    
     viewModel.outputs.name.subscribe(onNext: { name in
       self.navigationItem.title = name
     }).disposed(by: disposeBag)
@@ -60,8 +64,9 @@ class PromiseDetailViewController: UIViewController, BindableType {
       self.membersMapView.animate(to: GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 14.0))
       let marker = GMSMarker()
       marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-      marker.title = "Park"
-      marker.snippet = "Hyunsoo"
+      marker.title = "목적지"
+      marker.snippet = "도착 장소"
+      
       marker.map = self.membersMapView
     }).disposed(by: disposeBag)
     
@@ -74,6 +79,27 @@ class PromiseDetailViewController: UIViewController, BindableType {
     }).disposed(by: disposeBag)
     
     let dataSource = RxTableViewSectionedAnimatedDataSource<PocketSectionModel>(configureCell: configureCell)
+    
+    viewModel.outputs.pocketItems.subscribe(onNext: { [weak self] sectionModel in
+      guard let strongSelf = self else { return }
+      strongSelf.markers = strongSelf.markers?.compactMap { marker in
+        marker.map = nil
+        return nil
+      }
+      
+      strongSelf.markers = sectionModel.first?.items.compactMap { pocket in
+        guard let latitude = pocket.latitude, let longitude = pocket.longitude else { return nil }
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        marker.title = pocket.nickname ?? ""
+        marker.snippet = pocket.phone
+        let markerView = CatchUpMarkerView(frame: CGRect(x: 0, y: 0, width: 48, height: 58))
+        markerView.markerState = .moving(imagePath: pocket.profileImagePath ?? "")
+        marker.iconView = markerView
+        marker.map = strongSelf.membersMapView
+        return marker
+      }
+    }).disposed(by: disposeBag)
     
     viewModel.pocketItems
       .bind(to: pocketListTableView.rx.items(dataSource: dataSource))

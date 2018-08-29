@@ -205,7 +205,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
             strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
           }
       }
-      
       return .empty()
     }
   }()

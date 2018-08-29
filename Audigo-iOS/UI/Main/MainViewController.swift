@@ -19,6 +19,7 @@ class MainViewController: UIViewController, BindableType {
   @IBOutlet weak var promiseListTableView: UITableView!
   @IBOutlet weak var newPromiseButton: UIButton!
   @IBOutlet weak var monthSelectButton: UIButton!
+  @IBOutlet weak var promiseGuide: UIImageView!
   
   var viewModel: MainViewModel!
   var needSignIn = false
@@ -109,6 +110,14 @@ class MainViewController: UIViewController, BindableType {
     viewModel.promiseItems
       .bind(to: promiseListTableView.rx.items(dataSource: RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)))
       .disposed(by: disposeBag)
+    
+    viewModel.promiseItems.subscribe(onNext: { sectionModel in
+      if let items = sectionModel.first?.items, !items.isEmpty {
+        self.promiseGuide.isHidden = true
+      } else {
+        self.promiseGuide.isHidden = false
+      }
+    }).disposed(by: disposeBag)
     
     viewModel.outputs.current.map { (month, year) in
       let calendar = Calendar(identifier: .gregorian)

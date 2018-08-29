@@ -29,6 +29,8 @@
 		CE34B4C3211E86A000F92D50 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */; };
 		CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */; };
 		CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */; };
+		CE72ECFA2136B49F004BC9C6 /* CatchUpMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */; };
+		CE72ECFC2136B4AC004BC9C6 /* CatchUpMarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */; };
 		CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */; };
 		CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDC9212071F9007A6BF6 /* NewPromiseScene.swift */; };
 		CE77EDCC21207204007A6BF6 /* NewPromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */; };
@@ -120,6 +122,8 @@
 		CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCheckViewController.swift; sourceTree = "<group>"; };
 		CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTableViewCell.swift; sourceTree = "<group>"; };
+		CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpMarkerView.swift; sourceTree = "<group>"; };
+		CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatchUpMarkerView.xib; sourceTree = "<group>"; };
 		CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPromiseViewController.swift; sourceTree = "<group>"; };
 		CE77EDC9212071F9007A6BF6 /* NewPromiseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPromiseScene.swift; sourceTree = "<group>"; };
 		CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPromiseViewModel.swift; sourceTree = "<group>"; };
@@ -264,6 +268,8 @@
 				CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */,
 				CEA2EA1D21357AA5006F05C3 /* PromiseInputView.swift */,
 				CEA2EA1F21357AB2006F05C3 /* PromiseInputView.xib */,
+				CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */,
+				CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -562,6 +568,7 @@
 				CE34B4BB211E787100F92D50 /* GetPromise.graphql in Resources */,
 				CE34B4C3211E86A000F92D50 /* GoogleService-Info.plist in Resources */,
 				CE34B4B9211E787100F92D50 /* UpdatePromise.graphql in Resources */,
+				CE72ECFC2136B4AC004BC9C6 /* CatchUpMarkerView.xib in Resources */,
 				CE34B4B8211E787100F92D50 /* GetUserWithPromises.graphql in Resources */,
 				CE34B4B6211E787100F92D50 /* UpsertUser.graphql in Resources */,
 				CE34B4BC211E787100F92D50 /* AddPromise.graphql in Resources */,
@@ -770,6 +777,7 @@
 				CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */,
 				CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */,
 				CEEE5D9C212717090023E2FC /* UITableView+Ext.swift in Sources */,
+				CE72ECFA2136B49F004BC9C6 /* CatchUpMarkerView.swift in Sources */,
 				CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */,
 				CE280193212575E20066B344 /* ContactItem.swift in Sources */,
 				CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */,

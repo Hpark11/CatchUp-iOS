@@ -13,10 +13,6 @@ class EntranceViewController: UIViewController {
   @IBOutlet weak var loginButton: UIButton!
   
   var signInDone: PublishSubject<Void>?
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()    
-  }
 
   @IBAction func login(_ sender: Any) {
     let session = KOSession.shared()
