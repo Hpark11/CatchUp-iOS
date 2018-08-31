@@ -34,7 +34,7 @@ class PromiseConfirmViewController: UIViewController {
   }
   
   @IBAction func checkedConfirmation(_ sender: Any) {
-    let alert = UIAlertController(title: "이름 짓기", message: "생성할 약속의 이름을 입력해주세요", preferredStyle: .alert)
+    let alert = UIAlertController(title: "약속 정보 공유", message: "생성된 약속을 카카오톡으로 공유하시겠어요?", preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: { _ in
       self.dismiss(animated: true) {
         self.confirmDone?.onNext(())
@@ -49,9 +49,9 @@ class PromiseConfirmViewController: UIViewController {
         builder.content = KMTContentObject.init(builderBlock: { contentBuilder in
           contentBuilder.title = ""
           contentBuilder.desc = ""
-          contentBuilder.imageURL = URL.init(string: "")!
+          contentBuilder.imageURL = URL.init(string: "www.naver.com")!
           contentBuilder.link = KMTLinkObject.init(builderBlock: { linkBuilder in
-            linkBuilder.mobileWebURL = URL.init(string: "")!
+            linkBuilder.mobileWebURL = URL.init(string: "www.naver.com")!
           })
         })
         

@@ -35,6 +35,7 @@ class CatchUpMarkerView: UIView {
     addSubview(contentView)
     contentView.frame = self.bounds
     contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    profileImageView.layer.cornerRadius = 15
   }
   
   var markerState: MarkerState = .moving(imagePath: "") {
