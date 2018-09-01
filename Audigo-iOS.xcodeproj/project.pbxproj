@@ -13,6 +13,7 @@
 		CE22AEF121311A03004477E8 /* MonthPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */; };
 		CE22AEF321313C72004477E8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF221313C72004477E8 /* UIColor+Ext.swift */; };
 		CE22C76E213A558900878BB1 /* ApolloAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22C76D213A558900878BB1 /* ApolloAPIService.swift */; };
+		CE22C770213AA6CC00878BB1 /* PromisePocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22C76F213AA6CC00878BB1 /* PromisePocket.swift */; };
 		CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */; };
 		CE280193212575E20066B344 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE280192212575E20066B344 /* ContactItem.swift */; };
 		CE2801952125A55D0066B344 /* RxApollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2801942125A55D0066B344 /* RxApollo.swift */; };
@@ -106,6 +107,7 @@
 		CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPopupViewController.swift; sourceTree = "<group>"; };
 		CE22AEF221313C72004477E8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		CE22C76D213A558900878BB1 /* ApolloAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApolloAPIService.swift; path = "Audigo-iOS/ApolloAPIService.swift"; sourceTree = SOURCE_ROOT; };
+		CE22C76F213AA6CC00878BB1 /* PromisePocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromisePocket.swift; sourceTree = "<group>"; };
 		CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
 		CE280192212575E20066B344 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
 		CE2801942125A55D0066B344 /* RxApollo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxApollo.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				CE280192212575E20066B344 /* ContactItem.swift */,
+				CE22C76F213AA6CC00878BB1 /* PromisePocket.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -777,6 +780,7 @@
 				CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */,
 				CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */,
 				CEEE5D9C212717090023E2FC /* UITableView+Ext.swift in Sources */,
+				CE22C770213AA6CC00878BB1 /* PromisePocket.swift in Sources */,
 				CE72ECFA2136B49F004BC9C6 /* CatchUpMarkerView.swift in Sources */,
 				CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */,
 				CE280193212575E20066B344 /* ContactItem.swift in Sources */,

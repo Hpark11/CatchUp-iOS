@@ -24,11 +24,11 @@ class PromiseDetailViewController: UIViewController, BindableType {
   let disposeBag = DisposeBag()
   private var markers: [GMSMarker]? = []
   
-  lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, GetPromiseQuery.Data.Promise.Pocket) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
+  private lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, PromisePocket) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
     guard let strongSelf = self else { return PromiseDetailUserTableViewCell(frame: .zero) }
     
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseDetailUserTableViewCell, for: indexPath)
-    cell?.configure(pocket: pocket)
+    cell?.configure(promisePocket: pocket)
   
     return cell!
   }
@@ -72,6 +72,8 @@ class PromiseDetailViewController: UIViewController, BindableType {
     }).disposed(by: disposeBag)
     
     viewModel.outputs.location.subscribe(onNext: { (latitude, longitude) in
+      guard latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0 else { return }
+      
       self.membersMapView.animate(to: GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 14.0))
       let marker = GMSMarker()
       marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -98,8 +100,10 @@ class PromiseDetailViewController: UIViewController, BindableType {
         return nil
       }
       
-      strongSelf.markers = sectionModel.first?.items.compactMap { pocket in
-        guard let latitude = pocket.latitude, let longitude = pocket.longitude else { return nil }
+      strongSelf.markers = sectionModel.first?.items.compactMap { promisePocket in
+        let pocket = promisePocket.pocket
+        guard let latitude = pocket.latitude, let longitude = pocket.longitude, latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0 else { return nil }
+        
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         marker.title = pocket.nickname ?? ""

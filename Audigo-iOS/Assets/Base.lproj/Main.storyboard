@@ -1083,7 +1083,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오후 6시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Is0-aJ-u4H">
-                                                            <rect key="frame" x="75" y="42.5" width="46" height="16"/>
+                                                            <rect key="frame" x="75" y="40.5" width="46" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="0.57647058823529407" green="0.61960784313725492" blue="0.6588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1100,6 +1100,9 @@
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VR8-BF-m3P">
                                                             <rect key="frame" x="246" y="20.5" width="24" height="24"/>
                                                             <state key="normal" image="icon_talk"/>
+                                                            <connections>
+                                                                <action selector="notifyPromise:" destination="DRO-nN-0eo" eventType="touchUpInside" id="xKb-Bw-6Sc"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1115,7 +1118,7 @@
                                                         <constraint firstItem="fbh-c6-j93" firstAttribute="centerY" secondItem="F8h-dL-2Qy" secondAttribute="centerY" id="mcm-9q-gAX"/>
                                                         <constraint firstItem="fbh-c6-j93" firstAttribute="leading" secondItem="F8h-dL-2Qy" secondAttribute="leading" constant="20" id="qBK-tB-7HD"/>
                                                         <constraint firstAttribute="trailing" secondItem="VR8-BF-m3P" secondAttribute="trailing" constant="20" id="v9v-a1-Glc"/>
-                                                        <constraint firstItem="Is0-aJ-u4H" firstAttribute="top" secondItem="k6E-Hy-gqw" secondAttribute="bottom" constant="8" id="vGy-Mr-DTv"/>
+                                                        <constraint firstItem="Is0-aJ-u4H" firstAttribute="top" secondItem="k6E-Hy-gqw" secondAttribute="bottom" constant="6" id="vGy-Mr-DTv"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>

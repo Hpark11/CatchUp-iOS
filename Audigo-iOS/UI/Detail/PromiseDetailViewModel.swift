@@ -11,7 +11,7 @@ import Action
 import RxSwift
 import RxDataSources
 
-typealias PocketSectionModel = AnimatableSectionModel<String, GetPromiseQuery.Data.Promise.Pocket>
+typealias PocketSectionModel = AnimatableSectionModel<String, PromisePocket>
 
 protocol PromiseDetailViewModelInputsType {
 
@@ -58,7 +58,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   private let promiseName: Variable<String>
   private let promiseLocation: Variable<(latitude: Double, longitude: Double)>
   private let promiseTimestamp: Variable<TimeInterval>
-  private let pocketList: Variable<[GetPromiseQuery.Data.Promise.Pocket]>
+  private let pocketList: Variable<[PromisePocket]>
   private let promiseId: String
   private let owner: Variable<String>
   private let address: Variable<String>
@@ -108,16 +108,13 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
         strongSelf.address.value = address
       }
       
-      if let pockets = result?.data?.promise?.pockets as? [GetPromiseQuery.Data.Promise.Pocket] {
-        strongSelf.pocketList.value = pockets
-      }
-      
       if let name = result?.data?.promise?.name {
         strongSelf.promiseName.value = name
       }
       
-      if let latitude = result?.data?.promise?.latitude, let longitude = result?.data?.promise?.longitude {
+      if let pockets = result?.data?.promise?.pockets as? [GetPromiseQuery.Data.Promise.Pocket], let latitude = result?.data?.promise?.latitude, let longitude = result?.data?.promise?.longitude {
         strongSelf.promiseLocation.value = (latitude: latitude, longitude: longitude)
+        strongSelf.pocketList.value = pockets.map { PromisePocket(destLatitude: latitude, destLongitude: longitude, pocket: $0) }
       }
       
       if let timestamp = UInt64(result?.data?.promise?.timestamp ?? "1") {
@@ -156,7 +153,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
         datetime: calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date(timeIntervalSince1970: strongSelf.promiseTimestamp.value)),
         latitude: strongSelf.promiseLocation.value.latitude,
         longitude: strongSelf.promiseLocation.value.longitude,
-        pockets: strongSelf.pocketList.value.compactMap { pocket in phone == pocket.phone ? nil : pocket.phone }
+        pockets: strongSelf.pocketList.value.compactMap { promisePocket in phone == promisePocket.pocket.phone ? nil : promisePocket.pocket.phone }
       )
       
       let scene = NewPromiseScene(viewModel: viewModel)
@@ -167,13 +164,4 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
 
 extension PromiseDetailViewModel: PromiseDetailViewModelInputsType, PromiseDetailViewModelOutputsType, PromiseDetailViewModelActionsType {}
 
-extension GetPromiseQuery.Data.Promise.Pocket: IdentifiableType, Equatable {
-  public var identity: String {
-    return phone
-  }
-  
-  public static func ==(lhs: GetPromiseQuery.Data.Promise.Pocket,
-                        rhs: GetPromiseQuery.Data.Promise.Pocket) -> Bool {
-    return lhs.phone == rhs.phone
-  }
-}
+

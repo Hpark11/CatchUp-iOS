@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import CoreLocation
 
 class PromiseDetailUserTableViewCell: UITableViewCell {
 
@@ -17,12 +18,27 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
   @IBOutlet weak var statusLabel: UILabel!
   @IBOutlet weak var itemView: UIView!
   
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-    // Configure the view for the selected state
-  }
-  
-  func configure(pocket: GetPromiseQuery.Data.Promise.Pocket) {
+  func configure(promisePocket: PromisePocket) {
+    let pocket = promisePocket.pocket
+    
+    if let latitude = pocket.latitude, let longitude = pocket.longitude {
+      let fromCoordinate = CLLocation(latitude: latitude, longitude: longitude)
+      let destCoordinate = CLLocation(latitude: promisePocket.destLatitude, longitude: promisePocket.destLongitude)
+      let distanceInMeters = fromCoordinate.distance(from: destCoordinate) / 1000.0
+      
+      if distanceInMeters >= 700 {
+        arrivalTimeLabel.text = "GPS 차단 중"
+        statusLabel.text = "행방불명"
+      } else if distanceInMeters <= 0.15 {
+        statusLabel.text = "도착"
+        statusLabel.textColor = .warmPink
+        arrivalTimeLabel.text = "약 \(round(distanceInMeters * 100) / 100) km"
+      } else {
+        statusLabel.text = "이동중"
+        statusLabel.textColor = .warmBlue
+        arrivalTimeLabel.text = "약 \(round(distanceInMeters * 100) / 100) km"
+      }
+    }
     
     if let nickname = pocket.nickname {
       memberNameLabel.text = nickname
@@ -38,5 +54,9 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
     itemView.layer.borderWidth = 1
     itemView.layer.borderColor = UIColor.paleGray.cgColor
     itemView.layer.cornerRadius = 5
+  }
+  
+  @IBAction func notifyPromise(_ sender: Any) {
+    
   }
 }
