@@ -31,6 +31,11 @@ class PromiseTableViewCell: UITableViewCell {
     itemPanelView.backgroundColor = .white
     itemDateView.layer.cornerRadius = 5
     
+    itemPanelView.layer.shadowColor = UIColor.paleGray.cgColor
+    itemPanelView.layer.shadowOpacity = 1
+    itemPanelView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+    itemPanelView.layer.shadowRadius = 4
+    
     promiseMembersCollectionView.delegate = self
     promiseMembersCollectionView.dataSource = self
   }
@@ -59,12 +64,28 @@ class PromiseTableViewCell: UITableViewCell {
     promiseDateLabel.text = dateFormat.string(from: dateTime)
     promiseDayLabel.text = dayFormat.string(from: dateTime)
     
-    if let gapByDay = calendar.dateComponents([.day], from: now, to: dateTime).day {
-      switch gapByDay {
+    let gap = calendar.dateComponents([.day, .hour, .minute], from: now, to: dateTime)
+    
+    if now.timeIntervalSince1970 > dateTime.timeIntervalSince1970 {
+      itemDateView.backgroundColor = .silver
+      itemPanelView.backgroundColor = .paleSoftGray
+      promiseTimeLeftLabel.text = "지난 약속"
+      promiseTimeLeftLabel.textColor = .stale
+    } else if let dayGap = gap.day, let hourGap = gap.hour, let minuteGap = gap.minute {
+      switch dayGap {
       case 0:
         itemDateView.backgroundColor = .darkSkyBlue
+        if hourGap >= 1 {
+          promiseTimeLeftLabel.text = "\(hourGap)시간 전"
+          promiseTimeLeftLabel.textColor = .warmBlue
+        } else {
+          promiseTimeLeftLabel.text = "\(minuteGap)분 전"
+          promiseTimeLeftLabel.textColor = .darkSkyBlue
+        }
       case 1...Int.max:
+        promiseTimeLeftLabel.text = "D - \(dayGap)"
         itemDateView.backgroundColor = .darkSoftSkyBlue
+        promiseTimeLeftLabel.textColor = .stale
       default:
         itemDateView.backgroundColor = .silver
         itemPanelView.backgroundColor = .paleSoftGray
@@ -72,10 +93,15 @@ class PromiseTableViewCell: UITableViewCell {
     }
     
     memberList = promise.pockets?.compactMap { pocket in
-      return pocket?.profileImagePath
+      return pocket?.profileImagePath ?? ""
     } ?? []
     
     promiseMembersCollectionView.reloadData()
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    itemPanelView.backgroundColor = .white
   }
 }
 

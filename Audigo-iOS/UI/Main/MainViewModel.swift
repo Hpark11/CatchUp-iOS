@@ -195,22 +195,28 @@ class MainViewModel: MainViewModelType {
         NSLog("Error while attempting to UpsertUserMutation: \(error.localizedDescription)")
       }
       
-      _ = apollo.watch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in
-        if let error = error {
-          NSLog("Error while GetUserWithPromisesQuery: \(error.localizedDescription)")
-          return
-        }
-        
-        if let list = result?.data?.user?.pocket.promiseList {
-          self.promiseList.value = list.compactMap { $0 }
-          
-          let calendar = Calendar(identifier:  .gregorian)
-          let month = calendar.component(.month, from: Date())
-          let year = calendar.component(.year, from: Date())
-          self.filterPromisesByMonth(month: month, year: year)
-        }
-      })
+      self.refreshUserPromises()
     }
+  }
+  
+  func refreshUserPromises() {
+    guard let id = userInfo.value.id else { return }
+    
+    _ = apollo.watch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in
+      if let error = error {
+        NSLog("Error while GetUserWithPromisesQuery: \(error.localizedDescription)")
+        return
+      }
+      
+      if let list = result?.data?.user?.pocket.promiseList {
+        self.promiseList.value = list.compactMap { $0 }
+        
+        let calendar = Calendar(identifier:  .gregorian)
+        let month = calendar.component(.month, from: Date())
+        let year = calendar.component(.year, from: Date())
+        self.filterPromisesByMonth(month: month, year: year)
+      }
+    })
   }
   
   lazy var pushNewPromiseScene: CocoaAction = {

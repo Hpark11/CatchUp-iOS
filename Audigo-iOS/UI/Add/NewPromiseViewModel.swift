@@ -187,7 +187,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   lazy var popScene: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
-      strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: MainViewModel(coordinator: strongSelf.sceneCoordinator)), type: .pop(animated: true, level: .parent))
+      let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator)
+      viewModel.refreshUserPromises()
+      strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       return .empty()
     }
   }()

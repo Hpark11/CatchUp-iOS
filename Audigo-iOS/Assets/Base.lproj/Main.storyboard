@@ -150,28 +150,29 @@
                                                             <color key="textColor" red="0.57647058819999997" green="0.61960784310000006" blue="0.6588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GQT-E2-UU4">
+                                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GQT-E2-UU4">
                                                             <rect key="frame" x="63" y="101" width="185" height="33"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="33" id="58y-pT-Pak"/>
                                                             </constraints>
-                                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tub-o0-zuo">
-                                                                <size key="itemSize" width="33" height="33"/>
+                                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="6" minimumInteritemSpacing="2" id="tub-o0-zuo">
+                                                                <size key="itemSize" width="30" height="33"/>
                                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                             </collectionViewFlowLayout>
                                                             <cells>
                                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="MemberCollectionViewCell" reuseIdentifier="MemberCollectionViewCell" id="bZ8-yz-M7Q" customClass="MemberCollectionViewCell" customModule="Audigo_iOS" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="33" height="33"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="33"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="33" height="33"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="33"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fTL-Vu-4JS">
                                                                                 <rect key="frame" x="1" y="1" width="30" height="30"/>
+                                                                                <color key="backgroundColor" red="0.80392156859999997" green="0.82745098039999998" blue="0.85098039219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="30" id="TTs-VG-rYr"/>
                                                                                     <constraint firstAttribute="height" constant="30" id="yk1-ER-32g"/>
@@ -183,7 +184,7 @@
                                                                         <constraint firstItem="fTL-Vu-4JS" firstAttribute="centerY" secondItem="bZ8-yz-M7Q" secondAttribute="centerY" id="c4K-9i-aVG"/>
                                                                         <constraint firstItem="fTL-Vu-4JS" firstAttribute="centerX" secondItem="bZ8-yz-M7Q" secondAttribute="centerX" id="cyL-dl-7sf"/>
                                                                     </constraints>
-                                                                    <size key="customSize" width="33" height="33"/>
+                                                                    <size key="customSize" width="30" height="33"/>
                                                                     <connections>
                                                                         <outlet property="memberImageView" destination="fTL-Vu-4JS" id="PgY-bd-Hfl"/>
                                                                     </connections>
@@ -242,6 +243,7 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="aF2-xt-phE" firstAttribute="top" secondItem="hIw-dD-zKs" secondAttribute="top" constant="8" id="Ddr-fF-5DO"/>
                                                 <constraint firstAttribute="trailing" secondItem="aF2-xt-phE" secondAttribute="trailing" constant="8" id="FuY-EA-Krl"/>
@@ -252,6 +254,7 @@
                                                 <constraint firstItem="6X1-oM-GMu" firstAttribute="leading" secondItem="hIw-dD-zKs" secondAttribute="leading" constant="16" id="rxz-68-VXv"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="itemDateView" destination="6X1-oM-GMu" id="pCO-mg-y98"/>
                                             <outlet property="itemPanelView" destination="aF2-xt-phE" id="XNe-d4-3eh"/>

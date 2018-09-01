@@ -18,6 +18,14 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
   @IBOutlet weak var statusLabel: UILabel!
   @IBOutlet weak var itemView: UIView!
   
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    itemView.layer.shadowColor = UIColor.paleGray.cgColor
+    itemView.layer.shadowOpacity = 1
+    itemView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+    itemView.layer.shadowRadius = 4
+  }
+  
   func configure(promisePocket: PromisePocket) {
     let pocket = promisePocket.pocket
     
