@@ -35,6 +35,7 @@ class NewPromiseViewController: UIViewController, BindableType {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    UIApplication.shared.statusBarView?.backgroundColor = .white
     
     promiseNameInputView.inputState = .none(title: "약속명", input: "약속명을 입력해주세요")
     promiseDateInputView.inputState = .choice(title: "언제", input: "0000월 00월 00일")
@@ -153,8 +154,8 @@ class NewPromiseViewController: UIViewController, BindableType {
     
     viewModel.outputs.editMode.subscribe(onNext: { isEditMode in
       self.titleLabel.text = isEditMode ? "약속 수정" : "약속 추가"
-      
-//      self.newPromiseButton.set
+      self.isEditingPromise = isEditMode
+//      self.newPromiseButton.setImage(<#T##image: UIImage?##UIImage?#>, for: .normal)
     }).disposed(by: disposeBag)
     
     confirmDone.subscribe(onNext: { [weak self] _ in

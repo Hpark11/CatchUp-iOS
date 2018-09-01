@@ -36,16 +36,25 @@ class PromiseDetailViewController: UIViewController, BindableType {
   override func viewDidLoad() {
     super.viewDidLoad()
     pocketListTableView.rowHeight = 85
-    UIApplication.shared.statusBarView?.backgroundColor = .darkSkyBlue
+    
+    navigationController?.navigationBar.barStyle = .blackOpaque
     navigationItem.leftBarButtonItems = [UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)]
     navigationItem.leftBarButtonItem?.image = UIImage(named: R.image.icon_back.name)
     navigationItem.leftBarButtonItem?.tintColor = .white
     navigationItem.leftBarButtonItem?.rx.action = viewModel.actions.popScene
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    UIApplication.shared.statusBarView?.backgroundColor = .darkSkyBlue
+    navigationController?.navigationBar.backgroundColor = .darkSkyBlue
+    navigationController?.navigationBar.barStyle = .blackOpaque
+  }
+  
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     
+    UIApplication.shared.statusBarView?.backgroundColor = .white
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barStyle = .default
   }

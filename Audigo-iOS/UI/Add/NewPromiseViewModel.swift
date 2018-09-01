@@ -35,7 +35,7 @@ protocol NewPromiseViewModelOutputsType {
   var name: Observable<String?> { get }
   var place: Observable<String?> { get }
   var state: Observable<CreatePromiseState> { get }
-  var editMode: Observable<Bool>
+  var editMode: Observable<Bool> { get }
 }
 
 protocol NewPromiseViewModelActionsType {
@@ -86,6 +86,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   fileprivate var coordinate: Variable<(latitude: Double, longitude: Double)?>
   fileprivate var createPromiseState: Variable<CreatePromiseState>
   fileprivate var isEditMode: Variable<Bool>
+  fileprivate var promiseId: Variable<String?>
+  fileprivate var prevTimestamp: Variable<Int?>
   
   init(coordinator: SceneCoordinatorType, ownerPhoneNumber: String, editMode: Bool = false) {
     // Setup
@@ -98,6 +100,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     address = Variable(nil)
     pockets = Variable([])
     coordinate = Variable(nil)
+    promiseId = Variable(nil)
+    prevTimestamp = Variable(nil)
     owner = Variable(ownerPhoneNumber)
     createPromiseState = Variable(.normal)
     isEditMode = Variable(editMode)
@@ -115,7 +119,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     members = pockets.asObservable()
     name = promiseName.asObservable()
     place = address.asObservable()
-    editMode = isEditMode.asObservable()
+    self.editMode = isEditMode.asObservable()
     
     isEnabled = Observable.combineLatest(
       dateComponents.asObservable(),
@@ -169,7 +173,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }).disposed(by: disposeBag)
   }
   
-  func applyPreviousInfo(name: String, address: String, datetime: DateComponents, latitude: Double, longitude: Double, pockets: [String]) {
+  func applyPreviousInfo(id: String, prevTimestamp: Int, name: String, address: String, datetime: DateComponents, latitude: Double, longitude: Double, pockets: [String]) {
+    self.promiseId.value = id
+    self.prevTimestamp.value = prevTimestamp
     self.promiseName.value = name
     self.address.value = address
     self.dateComponents.value = datetime
@@ -199,15 +205,47 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       
       guard let dateTimeComponents = components else { return .empty() }
       
-      
-      apollo.perform(mutation: AddPromiseMutation(
-        owner: strongSelf.owner.value,
-        name: strongSelf.promiseName.value,
-        address: strongSelf.address.value,
-        latitude: strongSelf.coordinate.value?.latitude,
-        longitude: strongSelf.coordinate.value?.longitude,
-        timestamp: String(calendar.date(from: dateTimeComponents)?.timeInMillis ?? 0),
-        pockets: strongSelf.pockets.value
+      if strongSelf.isEditMode.value {
+        if let id = strongSelf.promiseId.value, let prevTimestamp = strongSelf.prevTimestamp.value {
+          apollo.perform(mutation: UpdatePromiseMutation(
+            id: id,
+            prevTimestamp: String(prevTimestamp),
+            owner: strongSelf.owner.value,
+            name: strongSelf.promiseName.value,
+            address: strongSelf.address.value,
+            latitude: strongSelf.coordinate.value?.latitude,
+            longitude: strongSelf.coordinate.value?.longitude,
+            timestamp: String(calendar.date(from: dateTimeComponents)?.timeInMillis ?? 0),
+            pockets: strongSelf.pockets.value
+          )) { (result, error) in
+            
+            let timeFormat = DateFormatter()
+            timeFormat.dateFormat = "MM.dd (EEE) a hh시 mm분"
+            
+            if let error = error {
+              strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
+              return
+            }
+            
+            if let date = calendar.date(from: dateTimeComponents),
+              let location = strongSelf.address.value,
+              let member = ContactItem.find(phone: strongSelf.pockets.value.first ?? "")?.nickname {
+              let dateTime = timeFormat.string(from: date)
+              let members = "\(member) 외 \(strongSelf.pockets.value.count - 1)명"
+              strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
+            }
+          }
+        }
+
+      } else {
+        apollo.perform(mutation: AddPromiseMutation(
+          owner: strongSelf.owner.value,
+          name: strongSelf.promiseName.value,
+          address: strongSelf.address.value,
+          latitude: strongSelf.coordinate.value?.latitude,
+          longitude: strongSelf.coordinate.value?.longitude,
+          timestamp: String(calendar.date(from: dateTimeComponents)?.timeInMillis ?? 0),
+          pockets: strongSelf.pockets.value
         )) { (result, error) in
           
           let timeFormat = DateFormatter()
@@ -225,7 +263,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
             let members = "\(member) 외 \(strongSelf.pockets.value.count - 1)명"
             strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
           }
+        }
       }
+      
       return .empty()
     }
   }()

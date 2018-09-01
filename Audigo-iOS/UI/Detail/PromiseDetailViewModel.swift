@@ -145,10 +145,12 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   lazy var pushNewPromiseScene: CocoaAction = {
     return Action { [weak self] in
       guard let strongSelf = self, let phone = UserDefaults.standard.string(forKey: "phoneNumber") else { return .empty() }
-      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, ownerPhoneNumber: phone)
+      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, ownerPhoneNumber: phone, editMode: true)
       let calendar = Calendar(identifier: .gregorian)
       
       viewModel.applyPreviousInfo(
+        id: strongSelf.promiseId,
+        prevTimestamp: Int(strongSelf.promiseTimestamp.value * 1000),
         name: strongSelf.promiseName.value,
         address: strongSelf.address.value,
         datetime: calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date(timeIntervalSince1970: strongSelf.promiseTimestamp.value)),

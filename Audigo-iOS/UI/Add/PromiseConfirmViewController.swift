@@ -27,7 +27,7 @@ class PromiseConfirmViewController: UIViewController {
     super.viewDidLoad()
     
     contentView.layer.cornerRadius = 10
-    confirmationLabel.text = "약속 \(isEditingPromise ? "편집" : "추가") 완료"
+    confirmationLabel.text = "약속 \(isEditingPromise ? "수정" : "추가") 완료"
     dateTimeLabel.text = dateTime
     locationLabel.text = location
     membersLabel.text = members
