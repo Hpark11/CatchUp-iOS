@@ -14,6 +14,7 @@ class MemberSelectViewController: UIViewController {
   @IBOutlet weak var memberSelectTableView: UITableView!
   @IBOutlet weak var selectButton: UIButton!
   @IBOutlet weak var searchItemTextField: UITextField!
+  @IBOutlet weak var titleLabel: UILabel!
   
   private var originalItems: Results<ContactItem>?
   private var items = [ContactItem]()

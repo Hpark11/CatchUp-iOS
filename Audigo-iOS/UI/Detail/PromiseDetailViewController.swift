@@ -18,6 +18,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
   @IBOutlet weak var membersMapView: GMSMapView!
   @IBOutlet weak var panelChangeButton: UIButton!
   @IBOutlet weak var refreshButton: UIButton!
+  @IBOutlet weak var editPromiseButton: UIButton!
   
   var viewModel: PromiseDetailViewModel!
   let disposeBag = DisposeBag()
@@ -53,11 +54,8 @@ class PromiseDetailViewController: UIViewController, BindableType {
     membersMapView.isHidden = !membersMapView.isHidden
   }
   
-  @IBAction func editPromise(_ sender: Any) {
-    
-  }
-  
   func bindViewModel() {
+    editPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
     refreshButton.rx.action = viewModel.actions.refresh
     
     viewModel.outputs.name.subscribe(onNext: { name in
@@ -108,6 +106,10 @@ class PromiseDetailViewController: UIViewController, BindableType {
     viewModel.pocketItems
       .bind(to: pocketListTableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
+    
+    viewModel.outputs.isOwner.subscribe(onNext: { (isOwner) in
+      self.editPromiseButton.isHidden = !isOwner
+    }).disposed(by: disposeBag)
   }
   
   override var preferredStatusBarStyle: UIStatusBarStyle {

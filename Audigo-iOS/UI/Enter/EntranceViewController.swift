@@ -14,6 +14,10 @@ class EntranceViewController: UIViewController {
   
   var signInDone: PublishSubject<Void>?
 
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
   @IBAction func login(_ sender: Any) {
     let session = KOSession.shared()
     
@@ -21,7 +25,7 @@ class EntranceViewController: UIViewController {
       if error == nil {
         if let s = session, s.isOpen() {
           self.signInDone?.onNext(())
-          self.dismiss(animated: false, completion: nil)
+          self.dismiss(animated: true, completion: nil)
         } else {
           print("Fail")
         }

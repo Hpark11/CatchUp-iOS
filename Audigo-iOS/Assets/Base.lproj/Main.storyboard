@@ -67,14 +67,14 @@
         <!--Entrance View Controller-->
         <scene sceneID="M0E-Pn-TqF">
             <objects>
-                <viewController storyboardIdentifier="EntranceViewController" id="2YO-Ok-DZe" customClass="EntranceViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EntranceViewController" modalTransitionStyle="crossDissolve" id="2YO-Ok-DZe" customClass="EntranceViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rtf-0U-5Pg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d59-dM-L8h">
-                                <rect key="frame" x="119" y="513" width="82" height="30"/>
-                                <state key="normal" title="카카오 로그인"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d59-dM-L8h">
+                                <rect key="frame" x="22.5" y="497" width="275" height="46"/>
+                                <state key="normal" image="image_kakao_login"/>
                                 <connections>
                                     <action selector="login:" destination="2YO-Ok-DZe" eventType="touchUpInside" id="xhi-pU-YWH"/>
                                 </connections>
@@ -610,7 +610,7 @@
         <!--NewPromiseViewController-->
         <scene sceneID="N7T-uq-0Vs">
             <objects>
-                <viewController storyboardIdentifier="NewPromiseViewController" title="NewPromiseViewController" modalTransitionStyle="crossDissolve" id="0sL-c7-ubZ" customClass="NewPromiseViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewPromiseViewController" title="NewPromiseViewController" modalTransitionStyle="flipHorizontal" id="0sL-c7-ubZ" customClass="NewPromiseViewController" customModule="Audigo_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8QN-0m-0FK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -625,9 +625,13 @@
                                 <color key="textColor" red="0.23529411764705882" green="0.31372549019607843" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JMD-ZY-aVr">
-                                <rect key="frame" x="119" y="510" width="82" height="30"/>
-                                <state key="normal" title="약속 추가하기"/>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JMD-ZY-aVr">
+                                <rect key="frame" x="54.5" y="502" width="211" height="66"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <size key="titleShadowOffset" width="9" height="9"/>
+                                <state key="normal" image="image_button_promise_add">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zh-ly-6mi" customClass="PromiseInputView" customModule="Audigo_iOS" customModuleProvider="target">
                                 <rect key="frame" x="24" y="78.5" width="272" height="60"/>
@@ -723,7 +727,7 @@
                             <constraint firstItem="N8K-1M-fqk" firstAttribute="trailing" secondItem="5zh-ly-6mi" secondAttribute="trailing" constant="24" id="55H-2J-3bW"/>
                             <constraint firstItem="nMn-MS-bS1" firstAttribute="top" secondItem="5zh-ly-6mi" secondAttribute="bottom" constant="24" id="6pX-g2-zUc"/>
                             <constraint firstItem="5Bn-7r-Afa" firstAttribute="trailing" secondItem="xFr-bJ-b4W" secondAttribute="trailing" id="83X-4T-zvp"/>
-                            <constraint firstItem="N8K-1M-fqk" firstAttribute="bottom" secondItem="JMD-ZY-aVr" secondAttribute="bottom" constant="28" id="879-Fs-b02"/>
+                            <constraint firstItem="N8K-1M-fqk" firstAttribute="bottom" secondItem="JMD-ZY-aVr" secondAttribute="bottom" id="879-Fs-b02"/>
                             <constraint firstItem="nMn-MS-bS1" firstAttribute="trailing" secondItem="5zh-ly-6mi" secondAttribute="trailing" id="As0-hf-nGN"/>
                             <constraint firstItem="gc9-9n-T50" firstAttribute="leading" secondItem="sWW-PW-sHV" secondAttribute="leading" id="CTF-kg-nBg"/>
                             <constraint firstItem="TWZ-tS-V0V" firstAttribute="leading" secondItem="N8K-1M-fqk" secondAttribute="leading" constant="12" id="FT3-0o-hAr"/>
@@ -755,6 +759,7 @@
                         <outlet property="promiseMembersInputView" destination="xFr-bJ-b4W" id="X7G-6n-HAc"/>
                         <outlet property="promiseNameInputView" destination="5zh-ly-6mi" id="LZO-lC-RWF"/>
                         <outlet property="promiseTimeInputView" destination="nMn-MS-bS1" id="BYy-w2-BQt"/>
+                        <outlet property="titleLabel" destination="Bzx-0D-vEM" id="giR-ow-70h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ioc-ac-0DS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -895,6 +900,7 @@
                         <outlet property="memberSelectTableView" destination="i6F-vu-b53" id="xY9-SU-heq"/>
                         <outlet property="searchItemTextField" destination="Me4-oE-x6H" id="oc2-kB-c43"/>
                         <outlet property="selectButton" destination="fbn-2B-w9N" id="fJp-Sa-kUS"/>
+                        <outlet property="titleLabel" destination="7X1-r6-Sov" id="4fS-zb-6zO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Big-Uj-Qt1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1155,12 +1161,9 @@
                                 <color key="textColor" red="0.23529411764705882" green="0.31372549019607843" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpr-BH-jvI">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpr-BH-jvI">
                                 <rect key="frame" x="278" y="27.5" width="30" height="30"/>
                                 <state key="normal" title="수정"/>
-                                <connections>
-                                    <action selector="editPromise:" destination="3fI-9P-lsb" eventType="touchUpInside" id="pjp-64-GaH"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1186,6 +1189,7 @@
                         <viewLayoutGuide key="safeArea" id="n3h-jh-NqN"/>
                     </view>
                     <connections>
+                        <outlet property="editPromiseButton" destination="hpr-BH-jvI" id="eee-yo-S8g"/>
                         <outlet property="membersMapView" destination="unb-AW-p6r" id="SQV-na-W3k"/>
                         <outlet property="panelChangeButton" destination="xu6-tY-G6N" id="Dmh-no-MZs"/>
                         <outlet property="pocketListTableView" destination="I5h-GV-WgS" id="2TK-2l-xPO"/>
@@ -1228,7 +1232,9 @@
         <image name="icon_search" width="24" height="24"/>
         <image name="icon_talk" width="24" height="24"/>
         <image name="icon_x" width="24" height="24"/>
+        <image name="image_button_promise_add" width="211" height="66"/>
         <image name="image_group" width="253" height="363"/>
+        <image name="image_kakao_login" width="275" height="46"/>
         <image name="image_logo_symbol" width="72" height="66"/>
         <image name="image_logo_text_main" width="123" height="22"/>
         <image name="image_logo_text_sub" width="95" height="12"/>

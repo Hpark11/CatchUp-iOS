@@ -32,7 +32,10 @@ protocol NewPromiseViewModelOutputsType {
   var timeItems: Observable<DateComponents?> { get }
   var isEnabled: Observable<Bool> { get }
   var members: Observable<[String]> { get }
+  var name: Observable<String?> { get }
+  var place: Observable<String?> { get }
   var state: Observable<CreatePromiseState> { get }
+  var editMode: Observable<Bool>
 }
 
 protocol NewPromiseViewModelActionsType {
@@ -70,29 +73,34 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var isEnabled: Observable<Bool>
   var members: Observable<[String]>
   var state: Observable<CreatePromiseState>
+  var name: Observable<String?>
+  var place: Observable<String?>
+  var editMode: Observable<Bool>
   
   fileprivate var owner: Variable<String>
   fileprivate var dateComponents: Variable<DateComponents?>
   fileprivate var timeComponents: Variable<DateComponents?>
-  fileprivate var name: Variable<String?>
+  fileprivate var promiseName: Variable<String?>
   fileprivate var address: Variable<String?>
   fileprivate var pockets: Variable<[String]>
   fileprivate var coordinate: Variable<(latitude: Double, longitude: Double)?>
   fileprivate var createPromiseState: Variable<CreatePromiseState>
+  fileprivate var isEditMode: Variable<Bool>
   
-  init(coordinator: SceneCoordinatorType, ownerPhoneNumber: String) {
+  init(coordinator: SceneCoordinatorType, ownerPhoneNumber: String, editMode: Bool = false) {
     // Setup
     sceneCoordinator = coordinator
     disposeBag = DisposeBag()
     
     dateComponents = Variable(nil)
     timeComponents = Variable(nil)
-    name = Variable(nil)
+    promiseName = Variable(nil)
     address = Variable(nil)
     pockets = Variable([])
     coordinate = Variable(nil)
     owner = Variable(ownerPhoneNumber)
     createPromiseState = Variable(.normal)
+    isEditMode = Variable(editMode)
     
     dateSelectDone = PublishSubject()
     timeSelectDone = PublishSubject()
@@ -105,11 +113,14 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     dateItems = dateComponents.asObservable()
     timeItems = timeComponents.asObservable()
     members = pockets.asObservable()
+    name = promiseName.asObservable()
+    place = address.asObservable()
+    editMode = isEditMode.asObservable()
     
     isEnabled = Observable.combineLatest(
       dateComponents.asObservable(),
       timeComponents.asObservable(),
-      name.asObservable(),
+      promiseName.asObservable(),
       address.asObservable(),
       pockets.asObservable(),
       coordinate.asObservable()
@@ -134,7 +145,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     
     nameSetDone.subscribe(onNext: { [weak self] name in
       guard let strongSelf = self else { return }
-      strongSelf.name.value = name
+      strongSelf.promiseName.value = name
     }).disposed(by: disposeBag)
     
     addressSetDone.subscribe(onNext: { [weak self] address in
@@ -158,7 +169,16 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }).disposed(by: disposeBag)
   }
   
-  internal lazy var popScene: CocoaAction = {
+  func applyPreviousInfo(name: String, address: String, datetime: DateComponents, latitude: Double, longitude: Double, pockets: [String]) {
+    self.promiseName.value = name
+    self.address.value = address
+    self.dateComponents.value = datetime
+    self.timeComponents.value = datetime
+    self.coordinate.value = (latitude: latitude, longitude: longitude)
+    self.pockets.value = pockets
+  }
+  
+  lazy var popScene: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
       strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: MainViewModel(coordinator: strongSelf.sceneCoordinator)), type: .pop(animated: true, level: .parent))
@@ -166,7 +186,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }
   }()
   
-  internal lazy var newPromiseCompleted: CocoaAction = {
+  lazy var newPromiseCompleted: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
       strongSelf.createPromiseState.value = .pending
@@ -179,9 +199,10 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       
       guard let dateTimeComponents = components else { return .empty() }
       
+      
       apollo.perform(mutation: AddPromiseMutation(
         owner: strongSelf.owner.value,
-        name: strongSelf.name.value,
+        name: strongSelf.promiseName.value,
         address: strongSelf.address.value,
         latitude: strongSelf.coordinate.value?.latitude,
         longitude: strongSelf.coordinate.value?.longitude,
@@ -201,7 +222,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
             let location = strongSelf.address.value,
             let member = ContactItem.find(phone: strongSelf.pockets.value.first ?? "")?.nickname {
             let dateTime = timeFormat.string(from: date)
-            let members = "\(member) 외 \(strongSelf.pockets.value.count)명"
+            let members = "\(member) 외 \(strongSelf.pockets.value.count - 1)명"
             strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
           }
       }

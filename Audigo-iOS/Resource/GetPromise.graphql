@@ -1,6 +1,7 @@
 query GetPromise($id: ID!) {
   promise(id: $id) {
     id
+    owner
     address
     timestamp
     latitude

@@ -22,11 +22,13 @@ protocol PromiseDetailViewModelOutputsType {
   var location: Observable<(latitude: Double, longitude: Double)> { get }
   var timestamp: Observable<TimeInterval> { get }
   var pocketItems: Observable<[PocketSectionModel]> { get }
+  var isOwner: Observable<Bool> { get }
 }
 
 protocol PromiseDetailViewModelActionsType {
   var popScene: CocoaAction { get }
   var refresh: CocoaAction { get }
+  var pushNewPromiseScene: CocoaAction { get }
 }
 
 protocol PromiseDetailViewModelType {
@@ -51,12 +53,15 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   var name: Observable<String>
   var location: Observable<(latitude: Double, longitude: Double)>
   var timestamp: Observable<TimeInterval>
+  var isOwner: Observable<Bool>
   
   private let promiseName: Variable<String>
   private let promiseLocation: Variable<(latitude: Double, longitude: Double)>
   private let promiseTimestamp: Variable<TimeInterval>
   private let pocketList: Variable<[GetPromiseQuery.Data.Promise.Pocket]>
   private let promiseId: String
+  private let owner: Variable<String>
+  private let address: Variable<String>
   
   init(coordinator: SceneCoordinatorType, promiseId: String) {
     sceneCoordinator = coordinator
@@ -66,10 +71,16 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     promiseName = Variable("")
     promiseLocation = Variable((latitude: 0, longitude: 0))
     promiseTimestamp = Variable(0)
+    owner = Variable("")
+    address = Variable("")
     
     name = promiseName.asObservable()
     location = promiseLocation.asObservable()
     timestamp = promiseTimestamp.asObservable()
+    isOwner = owner.asObservable().map { owner in
+      guard let phone = UserDefaults.standard.string(forKey: "phoneNumber") else { return false }
+      return phone == owner
+    }
     
     pocketItems = pocketList.asObservable()
       .map({ (pocketList) in
@@ -88,6 +99,14 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
       }
       
       guard let strongSelf = self else { return }
+      
+      if let owner = result?.data?.promise?.owner {
+        strongSelf.owner.value = owner
+      }
+      
+      if let address = result?.data?.promise?.address {
+        strongSelf.address.value = address
+      }
       
       if let pockets = result?.data?.promise?.pockets as? [GetPromiseQuery.Data.Promise.Pocket] {
         strongSelf.pocketList.value = pockets
@@ -120,6 +139,26 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
       guard let strongSelf = self else { return .empty() }
       strongSelf.loadSinglePromise()
       return .empty()
+    }
+  }()
+  
+  lazy var pushNewPromiseScene: CocoaAction = {
+    return Action { [weak self] in
+      guard let strongSelf = self, let phone = UserDefaults.standard.string(forKey: "phoneNumber") else { return .empty() }
+      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, ownerPhoneNumber: phone)
+      let calendar = Calendar(identifier: .gregorian)
+      
+      viewModel.applyPreviousInfo(
+        name: strongSelf.promiseName.value,
+        address: strongSelf.address.value,
+        datetime: calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date(timeIntervalSince1970: strongSelf.promiseTimestamp.value)),
+        latitude: strongSelf.promiseLocation.value.latitude,
+        longitude: strongSelf.promiseLocation.value.longitude,
+        pockets: strongSelf.pocketList.value.compactMap { pocket in phone == pocket.phone ? nil : pocket.phone }
+      )
+      
+      let scene = NewPromiseScene(viewModel: viewModel)
+      return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
     }
   }()
 }

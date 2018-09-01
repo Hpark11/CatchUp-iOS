@@ -23,7 +23,14 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
   }
   
   func configure(pocket: GetPromiseQuery.Data.Promise.Pocket) {
-    memberNameLabel.text = pocket.nickname
+    
+    if let nickname = pocket.nickname {
+      memberNameLabel.text = nickname
+    } else {
+      let item = ContactItem.find(phone: pocket.phone)
+      memberNameLabel.text = item?.nickname
+    }
+    
     profileImageView.layer.cornerRadius = 20
     let url = URL(string: pocket.profileImagePath ?? "")
     profileImageView.kf.setImage(with: url)

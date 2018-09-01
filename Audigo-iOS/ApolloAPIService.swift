@@ -545,7 +545,7 @@ public final class GetPocketQuery: GraphQLQuery {
 
 public final class GetPromiseQuery: GraphQLQuery {
   public static let operationString =
-    "query GetPromise($id: ID!) {\n  promise(id: $id) {\n    __typename\n    id\n    address\n    timestamp\n    latitude\n    longitude\n    name\n    pockets {\n      __typename\n      phone\n      latitude\n      longitude\n      pushToken\n      profileImagePath\n      nickname\n    }\n  }\n}"
+    "query GetPromise($id: ID!) {\n  promise(id: $id) {\n    __typename\n    id\n    owner\n    address\n    timestamp\n    latitude\n    longitude\n    name\n    pockets {\n      __typename\n      phone\n      latitude\n      longitude\n      pushToken\n      profileImagePath\n      nickname\n    }\n  }\n}"
 
   public var id: GraphQLID
 
@@ -589,6 +589,7 @@ public final class GetPromiseQuery: GraphQLQuery {
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("id", type: .scalar(GraphQLID.self)),
+        GraphQLField("owner", type: .scalar(String.self)),
         GraphQLField("address", type: .scalar(String.self)),
         GraphQLField("timestamp", type: .scalar(String.self)),
         GraphQLField("latitude", type: .scalar(Double.self)),
@@ -603,8 +604,8 @@ public final class GetPromiseQuery: GraphQLQuery {
         self.snapshot = snapshot
       }
 
-      public init(id: GraphQLID? = nil, address: String? = nil, timestamp: String? = nil, latitude: Double? = nil, longitude: Double? = nil, name: String? = nil, pockets: [Pocket?]? = nil) {
-        self.init(snapshot: ["__typename": "PromiseType", "id": id, "address": address, "timestamp": timestamp, "latitude": latitude, "longitude": longitude, "name": name, "pockets": pockets.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }])
+      public init(id: GraphQLID? = nil, owner: String? = nil, address: String? = nil, timestamp: String? = nil, latitude: Double? = nil, longitude: Double? = nil, name: String? = nil, pockets: [Pocket?]? = nil) {
+        self.init(snapshot: ["__typename": "PromiseType", "id": id, "owner": owner, "address": address, "timestamp": timestamp, "latitude": latitude, "longitude": longitude, "name": name, "pockets": pockets.flatMap { (value: [Pocket?]) -> [Snapshot?] in value.map { (value: Pocket?) -> Snapshot? in value.flatMap { (value: Pocket) -> Snapshot in value.snapshot } } }])
       }
 
       public var __typename: String {
@@ -622,6 +623,15 @@ public final class GetPromiseQuery: GraphQLQuery {
         }
         set {
           snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var owner: String? {
+        get {
+          return snapshot["owner"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "owner")
         }
       }
 

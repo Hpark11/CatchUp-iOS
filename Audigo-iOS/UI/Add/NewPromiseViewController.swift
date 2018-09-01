@@ -17,6 +17,7 @@ class NewPromiseViewController: UIViewController, BindableType {
   @IBOutlet weak var newPromiseButton: UIButton!
   @IBOutlet weak var popButton: UIButton!
   @IBOutlet weak var membersCollectionView: UICollectionView!
+  @IBOutlet weak var titleLabel: UILabel!
   
   @IBOutlet weak var promiseNameInputView: PromiseInputView!
   @IBOutlet weak var promiseDateInputView: PromiseInputView!
@@ -56,7 +57,6 @@ class NewPromiseViewController: UIViewController, BindableType {
       
       alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
         if let name = alert.textFields?.first?.text {
-          self.promiseNameInputView.inputState = .applied(input: name)
           self.viewModel.inputs.nameSetDone.onNext(name)
         }
       }))
@@ -92,6 +92,16 @@ class NewPromiseViewController: UIViewController, BindableType {
       }
     }).disposed(by: disposeBag)
     
+    viewModel.outputs.name.subscribe(onNext: { promiseName in
+      guard let name = promiseName, !name.isEmpty else { return }
+      self.promiseNameInputView.inputState = .applied(input: name)
+    }).disposed(by: disposeBag)
+    
+    viewModel.outputs.place.subscribe(onNext: { promiseAddress in
+      guard let address = promiseAddress, !address.isEmpty else { return }
+      self.promiseAddressInputView.inputState = .applied(input: address)
+    }).disposed(by: disposeBag)
+    
     viewModel.dateItems.subscribe(onNext: { components in
       if let cp = components, let year = cp.year, let month = cp.month, let day = cp.day {
         self.promiseDateInputView.inputState = .applied(input: "\(year)년 \(month)월 \(day)일")
@@ -122,23 +132,29 @@ class NewPromiseViewController: UIViewController, BindableType {
     viewModel.outputs.state.subscribe(onNext: { [weak self] state in
       guard let strongSelf = self else { return }
       switch state {
-      case .normal:
-        break
-      case .pending:
-        strongSelf.newPromiseButton.isEnabled = false
-        break
-      case .completed(let dateTime, let location, let members):
-        if let vc = R.storyboard.main.promiseConfirmViewController() {
-          vc.confirmDone = strongSelf.confirmDone
-          vc.dateTime = dateTime
-          vc.location = location
-          vc.members = members
-          vc.isEditingPromise = strongSelf.isEditingPromise
-          strongSelf.present(vc, animated: true, completion: nil)
-        }
-      case .error:
-        strongSelf.newPromiseButton.isEnabled = true
+        case .normal:
+          break
+        case .pending:
+          strongSelf.newPromiseButton.isEnabled = false
+          break
+        case .completed(let dateTime, let location, let members):
+          if let vc = R.storyboard.main.promiseConfirmViewController() {
+            vc.confirmDone = strongSelf.confirmDone
+            vc.dateTime = dateTime
+            vc.location = location
+            vc.members = members
+            vc.isEditingPromise = strongSelf.isEditingPromise
+            strongSelf.present(vc, animated: true, completion: nil)
+          }
+        case .error:
+          strongSelf.newPromiseButton.isEnabled = true
       }
+    }).disposed(by: disposeBag)
+    
+    viewModel.outputs.editMode.subscribe(onNext: { isEditMode in
+      self.titleLabel.text = isEditMode ? "약속 수정" : "약속 추가"
+      
+//      self.newPromiseButton.set
     }).disposed(by: disposeBag)
     
     confirmDone.subscribe(onNext: { [weak self] _ in
