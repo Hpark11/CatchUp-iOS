@@ -33,14 +33,6 @@ class MainViewController: UIViewController, BindableType {
     
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseTableViewCell, for: indexPath)
     cell?.configure(promise: promise)
-    print(promise.id)
-    
-    cell?.itemView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
-      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(strongPromise.id ?? "")
-      
-      strongSelf.navigationController?.navigationBar.backgroundColor = .darkSkyBlue
-      strongSelf.navigationController?.navigationBar.barStyle = .blackOpaque
-    }).disposed(by: strongSelf.disposeBag)
     return cell!
   }
   
@@ -84,6 +76,15 @@ class MainViewController: UIViewController, BindableType {
     viewModel.promiseItems
       .bind(to: promiseListTableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
+    
+    Observable.zip(promiseListTableView.rx.itemSelected, promiseListTableView.rx.modelSelected(GetUserWithPromisesQuery.Data.User.Pocket.PromiseList.self)).bind { [weak self] indexPath, promise in
+      guard let strongSelf = self else { return }
+      strongSelf.promiseListTableView.deselectRow(at: indexPath, animated: true)
+      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise.id ?? "")
+      
+      strongSelf.navigationController?.navigationBar.backgroundColor = .darkSkyBlue
+      strongSelf.navigationController?.navigationBar.barStyle = .blackOpaque
+    }.disposed(by: disposeBag)
     
     viewModel.promiseItems.subscribe(onNext: { [weak self] sectionModel in
       guard let strongSelf = self else { return }

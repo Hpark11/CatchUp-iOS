@@ -277,9 +277,6 @@ class MainViewModel: MainViewModelType {
             let rhs = UInt64($1.timestamp ?? "") ?? Date().timeInMillis
             return (lhs > now ? lhs : lhs * 2) < (rhs > now ? rhs : rhs * 2)
           }
-          strongSelf.promiseList.value.forEach {
-            print($0.id)
-          }
           
           let current = strongSelf.currentMonth.value
           strongSelf.filterPromisesByMonth(month: current.0, year: current.1)
