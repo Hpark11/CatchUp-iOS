@@ -17,6 +17,8 @@ class PermissionsViewController: UIViewController {
   let notifications: Permission = .notifications
   let disposeBag = DisposeBag()
   
+  var contactAuthorized: PublishSubject<Bool>?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -67,6 +69,7 @@ class PermissionsViewController: UIViewController {
   
   private func startServices() {
     LocationTrackingService.shared.startUpdatingLocation()
+    contactAuthorized?.onNext(true)
     self.dismiss(animated: true, completion: nil)
   }
 }

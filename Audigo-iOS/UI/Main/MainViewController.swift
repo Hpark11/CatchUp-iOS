@@ -13,6 +13,7 @@ import RxDataSources
 import Permission
 import Apollo
 import RealmSwift
+import SwiftyContacts
 
 class MainViewController: UIViewController, BindableType {
   @IBOutlet weak var promiseListTableView: UITableView!
@@ -53,31 +54,27 @@ class MainViewController: UIViewController, BindableType {
     }
   }
   
-//  override func viewWillAppear(_ animated: Bool) {
-//    super.viewWillAppear(animated)
-////    viewModel.refreshUserPromises()
-//  }
-
   func bindViewModel() {
     viewModel.state.subscribe(onNext: { [weak self] (state) in
       guard let strongSelf = self else { return }
       switch state {
-        case .completed:
-          let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
-          if let vc = R.storyboard.main.permissionsViewController(), permissionSet.status != .authorized {
-            strongSelf.present(vc, animated: true, completion: nil)
-          }
-          
-          strongSelf.viewModel.configureUser()
-          strongSelf.isConfigured = true
-        
-        case .phoneRequired:
-          if let vc = R.storyboard.main.phoneCheckViewController() {
-            vc.phoneCertifyDone = strongSelf.viewModel.phoneCertifyDone
-            strongSelf.present(vc, animated: true, completion: nil)
-          }
-        case .failed:
-          break
+      case .completed:
+        let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
+        if let vc = R.storyboard.main.permissionsViewController(), permissionSet.status != .authorized {
+          vc.contactAuthorized = strongSelf.viewModel.contactAuthorized
+          strongSelf.present(vc, animated: true, completion: nil)
+        } else {
+          strongSelf.viewModel.contactAuthorized.onNext(true)
+        }
+        strongSelf.viewModel.configureUser()
+        strongSelf.isConfigured = true
+      case .phoneRequired:
+        if let vc = R.storyboard.main.phoneCheckViewController() {
+          vc.phoneCertifyDone = strongSelf.viewModel.phoneCertifyDone
+          strongSelf.present(vc, animated: true, completion: nil)
+        }
+      case .failed:
+        break
       }
     }).disposed(by: disposeBag)
     
@@ -106,8 +103,8 @@ class MainViewController: UIViewController, BindableType {
       
       let dateTime = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? Date()
       return timeFormat.string(from: dateTime)
-    }.bind(to: monthSelectButton.rx.title())
-    .disposed(by: disposeBag)
+      }.bind(to: monthSelectButton.rx.title())
+      .disposed(by: disposeBag)
     
     newPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
   }
@@ -122,8 +119,6 @@ class MainViewController: UIViewController, BindableType {
       }
     } else if !isConfigured {
       viewModel.signInDone.onNext(())
-    } else {
-      viewModel.refreshUserPromises()
     }
   }
   

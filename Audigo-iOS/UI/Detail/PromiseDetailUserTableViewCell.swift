@@ -57,7 +57,9 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
     
     profileImageView.layer.cornerRadius = 20
     let url = URL(string: pocket.profileImagePath ?? "")
-    profileImageView.kf.setImage(with: url)
+    profileImageView.kf.setImage(with: url, placeholder: R.image.image_profile_default())
+    profileImageView.layer.borderWidth = 1
+    profileImageView.layer.borderColor = UIColor.paleGray.cgColor
     
     itemView.layer.borderWidth = 1
     itemView.layer.borderColor = UIColor.paleGray.cgColor

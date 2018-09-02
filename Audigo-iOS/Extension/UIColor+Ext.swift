@@ -31,6 +31,7 @@ extension UIColor {
   static let coolGrey = UIColor(hex: 0xacb6c0)
   static let warmPink = UIColor(hex: 0xf85e83)
   static let warmBlue = UIColor(hex: 0x759bfa)
+  static let marineBlue = UIColor(hex: 0x7f002073)
   
   struct Flat {
     struct Green {

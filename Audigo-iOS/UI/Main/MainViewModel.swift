@@ -24,6 +24,8 @@ protocol MainViewModelInputsType {
   var signInDone: PublishSubject<Void> { get }
   var phoneCertifyDone: PublishSubject<String> { get }
   var monthSelectDone: PublishSubject<(Int, Int)> { get }
+  var addPromiseDone: PublishSubject<Void> { get }
+  var contactAuthorized: PublishSubject<Bool> { get }
 }
 
 protocol MainViewModelOutputsType {
@@ -55,11 +57,15 @@ class MainViewModel: MainViewModelType {
   var signInDone: PublishSubject<Void>
   var phoneCertifyDone: PublishSubject<String>
   var monthSelectDone: PublishSubject<(Int, Int)>
+  var addPromiseDone: PublishSubject<Void>
+  var contactAuthorized: PublishSubject<Bool>
   
   // MARK: Outputs
   var state: Observable<SignInState>
   var promiseItems: Observable<[PromiseSectionModel]>
   var current: Observable<(Int, Int)>
+  
+  private var watcher: GraphQLQueryWatcher<GetUserWithPromisesQuery>?
   
   private let userInfo: Variable<(id: String?, phone: String?, email: String?, nickname: String?, gender: String?, birthday: String?, ageRange: String?, profileImagePath: String?)>
   private let promiseList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
@@ -73,6 +79,8 @@ class MainViewModel: MainViewModelType {
     signInDone = PublishSubject()
     phoneCertifyDone = PublishSubject()
     monthSelectDone = PublishSubject()
+    addPromiseDone = PublishSubject()
+    contactAuthorized = PublishSubject()
     
     userInfo = Variable((id: nil, phone: nil, email: nil, nickname: nil, gender: nil, birthday: nil, ageRange: nil, profileImagePath: nil))
     promiseList = Variable([])
@@ -109,6 +117,46 @@ class MainViewModel: MainViewModelType {
       guard let strongSelf = self else { return }
       strongSelf.filterPromisesByMonth(month: month, year: year)
       strongSelf.currentMonth.value = (month, year)
+    }).disposed(by: disposeBag)
+    
+    addPromiseDone.subscribe(onNext: { [weak self] _ in
+      guard let strongSelf = self else { return }
+      strongSelf.watcher?.refetch()
+    }).disposed(by: disposeBag)
+    
+    contactAuthorized.subscribe(onNext: { [weak self] authorized in
+      guard let strongSelf = self, authorized else { return }
+      let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
+      
+      rx_fetchContacts().map({ contacts in
+        return contacts.compactMap {
+          ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
+        }
+      }).subscribeOn(backgroundScheduler)
+        .observeOn(MainScheduler.instance)
+        .subscribe(onNext: { (contacts) in
+          contacts.forEach { contact in
+            if contact.0.starts(with: "010") {
+              let phone = contact.0
+                .components(separatedBy:CharacterSet.decimalDigits.inverted)
+                .joined(separator: "")
+              
+              let nickname = contact.1
+              
+              apollo.fetch(query: GetPocketQuery(phone: phone)) { result, error in
+                guard error != nil else {
+                  ContactItem.create(phone, nickname: nickname)
+                  return
+                }
+                
+                if let pocket = result?.data?.pocket {
+                  ContactItem.create(pocket.phone, nickname: pocket.nickname ?? "", imagePath: pocket.profileImagePath ?? "", pushToken: pocket.pushToken ?? "")
+                }
+              }
+            }
+          }
+        })
+        .disposed(by: strongSelf.disposeBag)
     }).disposed(by: disposeBag)
   }
   
@@ -167,7 +215,7 @@ class MainViewModel: MainViewModelType {
       } else if let number = me?.account?.phoneNumber {
         phoneNumber = number
       } else {
-        phoneNumber = nil
+        phoneNumber = "01074372330"
       }
       
       self.userInfo.value = (
@@ -186,13 +234,7 @@ class MainViewModel: MainViewModelType {
   private func filterPromisesByMonth(month: Int, year: Int) {
     let calendar = Calendar(identifier:  .gregorian)
     if let start = calendar.date(from: DateComponents(year: year, month: month, day: 1)), let end = calendar.date(byAdding: .month, value: 1, to: start) {
-      let list = promiseList.value
-      let startTime = start.timeInMillis
-      let endTime = end.timeInMillis
-      
-      filteredList.value = list.filter {
-        let timestamp = $0.timestamp
-      
+      filteredList.value = promiseList.value.filter {
         let timeInMillis = (UInt64($0.timestamp ?? "0") ?? 0)
         return timeInMillis >= start.timeInMillis && timeInMillis < end.timeInMillis
       }
@@ -202,38 +244,6 @@ class MainViewModel: MainViewModelType {
   func configureUser() {
     let info = userInfo.value
     guard let id = info.id, let phone = info.phone else { return }
-
-    let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
-    
-    rx_fetchContacts().map({ contacts in
-      return contacts.compactMap {
-        ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
-      }
-    }).subscribeOn(backgroundScheduler)
-      .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { (contacts) in
-        contacts.forEach { contact in
-          if contact.0.starts(with: "010") {
-            let phone = contact.0
-              .components(separatedBy:CharacterSet.decimalDigits.inverted)
-              .joined(separator: "")
-            
-            let nickname = contact.1
-            
-            apollo.fetch(query: GetPocketQuery(phone: phone)) { result, error in
-              guard error != nil else {
-                ContactItem.create(phone, nickname: nickname)
-                return
-              }
-              
-              if let pocket = result?.data?.pocket {
-                ContactItem.create(pocket.phone, nickname: pocket.nickname ?? "", imagePath: pocket.profileImagePath ?? "", pushToken: pocket.pushToken ?? "")
-              }
-            }
-          }
-        }
-      })
-      .disposed(by: disposeBag)
     
     apollo.perform(mutation: UpsertUserMutation(id: id, email: info.email, nickname: info.nickname, gender: info.gender, birthday: info.birthday, ageRange: info.ageRange, profileImagePath: info.profileImagePath, phone: phone)) { [weak self] (result, error) in
       guard let strongSelf = self else { return }
@@ -243,7 +253,6 @@ class MainViewModel: MainViewModelType {
       }
       
       strongSelf.watcher = apollo.watch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in
-        
         if let error = error {
           NSLog("Error while GetUserWithPromisesQuery: \(error.localizedDescription)")
           return
@@ -258,16 +267,11 @@ class MainViewModel: MainViewModelType {
     }
   }
   
-  var watcher: GraphQLQueryWatcher<GetUserWithPromisesQuery>?
-  
-  func refreshUserPromises() {
-    watcher?.refetch()
-  }
-  
   lazy var pushNewPromiseScene: CocoaAction = {
     return Action { [weak self] in
       guard let strongSelf = self else { return .empty() }
       let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, ownerPhoneNumber: strongSelf.userInfo.value.phone ?? "")
+      viewModel.addPromiseDone = strongSelf.addPromiseDone
       let scene = NewPromiseScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
     }

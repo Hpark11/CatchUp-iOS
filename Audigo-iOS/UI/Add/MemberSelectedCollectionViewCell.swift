@@ -15,11 +15,14 @@ class MemberSelectedCollectionViewCell: UICollectionViewCell {
   
   func configure(phone: String) {
     memberImageView.layer.cornerRadius = 16
+    memberImageView.layer.borderWidth = 1
+    memberImageView.layer.borderColor = UIColor.paleGray.cgColor
     
     if let info = ContactItem.find(phone: phone) {
       memberNameLabel.text = info.nickname
       let url = URL(string: info.imagePath)
-      memberImageView.kf.setImage(with: url)
+      memberImageView.kf.setImage(with: url, placeholder: R.image.image_profile_default())
+      
     }
   }
 }

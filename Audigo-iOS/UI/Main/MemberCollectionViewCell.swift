@@ -18,7 +18,9 @@ class MemberCollectionViewCell: UICollectionViewCell {
   
   func configure(imagePath: String) {
     let url = URL(string: imagePath)
-    memberImageView.kf.setImage(with: url)
+    memberImageView.kf.setImage(with: url, placeholder: R.image.image_profile_default())
     memberImageView.layer.cornerRadius = 15
+    memberImageView.layer.borderWidth = 1
+    memberImageView.layer.borderColor = UIColor.paleGray.cgColor
   }
 }

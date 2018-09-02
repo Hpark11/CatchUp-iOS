@@ -31,6 +31,11 @@ class PromiseConfirmViewController: UIViewController {
     dateTimeLabel.text = dateTime
     locationLabel.text = location
     membersLabel.text = members
+    
+    contentView.layer.shadowColor = UIColor.marineBlue.cgColor
+    contentView.layer.shadowOpacity = 0.7
+    contentView.layer.shadowOffset = CGSize(width: 1.0, height: 4.0)
+    contentView.layer.shadowRadius = 4
   }
   
   @IBAction func checkedConfirmation(_ sender: Any) {

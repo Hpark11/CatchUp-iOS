@@ -77,6 +77,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var place: Observable<String?>
   var editMode: Observable<Bool>
   
+  var addPromiseDone: PublishSubject<Void>?
+  
   fileprivate var owner: Variable<String>
   fileprivate var dateComponents: Variable<DateComponents?>
   fileprivate var timeComponents: Variable<DateComponents?>
@@ -191,6 +193,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
         let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, promiseId: promiseId)
         strongSelf.sceneCoordinator.transition(to: PromiseDetailScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       } else {
+        strongSelf.addPromiseDone?.onNext(())
         let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator)
         strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       }
