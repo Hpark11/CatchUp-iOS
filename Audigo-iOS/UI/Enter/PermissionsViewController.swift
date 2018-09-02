@@ -9,7 +9,6 @@
 import UIKit
 import Permission
 import RxSwift
-import SwiftyContacts
 
 class PermissionsViewController: UIViewController {
   
@@ -69,37 +68,5 @@ class PermissionsViewController: UIViewController {
   private func startServices() {
     LocationTrackingService.shared.startUpdatingLocation()
     self.dismiss(animated: true, completion: nil)
-    
-    let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
-    
-    rx_fetchContacts().map({ contacts in
-      return contacts.compactMap {
-        ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
-      }
-    }).subscribeOn(backgroundScheduler)
-      .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { (contacts) in
-        contacts.forEach { contact in
-          if contact.0.starts(with: "010") {
-            let phone = contact.0
-              .components(separatedBy:CharacterSet.decimalDigits.inverted)
-              .joined(separator: "")
-            
-            let nickname = contact.1
-            
-            apollo.fetch(query: GetPocketQuery(phone: phone)) { result, error in
-              guard error != nil else {
-                ContactItem.create(phone, nickname: nickname)
-                return
-              }
-              
-              if let pocket = result?.data?.pocket {
-                ContactItem.create(pocket.phone, nickname: pocket.nickname ?? "", imagePath: pocket.profileImagePath ?? "", pushToken: pocket.pushToken ?? "")
-              }
-            }
-          }
-        }
-      })
-      .disposed(by: disposeBag)
   }
 }

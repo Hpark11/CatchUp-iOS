@@ -9,6 +9,8 @@
 import RxSwift
 import RxDataSources
 import Action
+import SwiftyContacts
+import Apollo
 
 enum SignInState {
   case failed
@@ -91,75 +93,9 @@ class MainViewModel: MainViewModelType {
     current = currentMonth.asObservable()
     
     // Inputs
-    signInDone.subscribe(onNext: { _ in
-      KOSessionTask.userMeTask(completion: { [unowned self] (error, me) in
-        if let error = error {
-          fatalError(error.localizedDescription)
-        }
-        
-        let gender: String?
-        let ageRange: String?
-        let phoneNumber: String?
-        
-        if let genderCode = me?.account?.gender {
-          switch genderCode {
-          case .female:
-            gender = "여성"
-          case .male:
-            gender = "남성"
-          default:
-            gender = nil
-          }
-        } else {
-          gender = nil
-        }
-        
-        if let ageCode = me?.account?.ageRange {
-          switch ageCode {
-          case .type15:
-            ageRange = "15세 ~ 19세"
-          case .type20:
-            ageRange = "20세 ~ 29세"
-          case .type30:
-            ageRange = "30세 ~ 39세"
-          case .type40:
-            ageRange = "40세 ~ 49세"
-          case .type50:
-            ageRange = "50세 ~ 59세"
-          case .type60:
-            ageRange = "60세 ~ 69세"
-          case .type70:
-            ageRange = "70세 ~ 79세"
-          case .type80:
-            ageRange = "80세 ~ 89세"
-          case .type90:
-            ageRange = "90세 이상"
-          default:
-            ageRange = nil
-          }
-        } else {
-          ageRange = nil
-        }
-        
-        if let number = UserDefaults.standard.string(forKey: "phoneNumber") {
-          phoneNumber = number
-        } else if let number = me?.account?.phoneNumber {
-          phoneNumber = number
-        } else {
-          phoneNumber = nil
-        }
-        
-        self.userInfo.value = (
-          id: me?.id,
-          phone: phoneNumber,
-          email: me?.account?.email,
-          nickname: me?.nickname,
-          birthday: me?.account?.birthday,
-          profileImagePath: me?.profileImageURL?.absoluteString,
-          gender: gender,
-          ageRange: ageRange
-        )
-      })
+    signInDone.subscribe(onNext: { [weak self]  _ in
+      guard let strongSelf = self else { return }
+      strongSelf.getUserInfoFromKakaoSDK()
     }).disposed(by: disposeBag)
     
     phoneCertifyDone.subscribe(onNext: { [weak self] (phone) in
@@ -176,10 +112,87 @@ class MainViewModel: MainViewModelType {
     }).disposed(by: disposeBag)
   }
   
+  private func getUserInfoFromKakaoSDK() {
+    KOSessionTask.userMeTask(completion: { [unowned self] (error, me) in
+      if let error = error {
+        fatalError(error.localizedDescription)
+      }
+      
+      let gender: String?
+      let ageRange: String?
+      let phoneNumber: String?
+      
+      if let genderCode = me?.account?.gender {
+        switch genderCode {
+        case .female:
+          gender = "여성"
+        case .male:
+          gender = "남성"
+        default:
+          gender = nil
+        }
+      } else {
+        gender = nil
+      }
+      
+      if let ageCode = me?.account?.ageRange {
+        switch ageCode {
+        case .type15:
+          ageRange = "15세 ~ 19세"
+        case .type20:
+          ageRange = "20세 ~ 29세"
+        case .type30:
+          ageRange = "30세 ~ 39세"
+        case .type40:
+          ageRange = "40세 ~ 49세"
+        case .type50:
+          ageRange = "50세 ~ 59세"
+        case .type60:
+          ageRange = "60세 ~ 69세"
+        case .type70:
+          ageRange = "70세 ~ 79세"
+        case .type80:
+          ageRange = "80세 ~ 89세"
+        case .type90:
+          ageRange = "90세 이상"
+        default:
+          ageRange = nil
+        }
+      } else {
+        ageRange = nil
+      }
+      
+      if let number = UserDefaults.standard.string(forKey: "phoneNumber") {
+        phoneNumber = number
+      } else if let number = me?.account?.phoneNumber {
+        phoneNumber = number
+      } else {
+        phoneNumber = nil
+      }
+      
+      self.userInfo.value = (
+        id: me?.id,
+        phone: phoneNumber,
+        email: me?.account?.email,
+        nickname: me?.nickname,
+        birthday: me?.account?.birthday,
+        profileImagePath: me?.profileImageURL?.absoluteString,
+        gender: gender,
+        ageRange: ageRange
+      )
+    })
+  }
+  
   private func filterPromisesByMonth(month: Int, year: Int) {
     let calendar = Calendar(identifier:  .gregorian)
     if let start = calendar.date(from: DateComponents(year: year, month: month, day: 1)), let end = calendar.date(byAdding: .month, value: 1, to: start) {
-      filteredList.value = promiseList.value.filter {
+      let list = promiseList.value
+      let startTime = start.timeInMillis
+      let endTime = end.timeInMillis
+      
+      filteredList.value = list.filter {
+        let timestamp = $0.timestamp
+      
         let timeInMillis = (UInt64($0.timestamp ?? "0") ?? 0)
         return timeInMillis >= start.timeInMillis && timeInMillis < end.timeInMillis
       }
@@ -189,34 +202,66 @@ class MainViewModel: MainViewModelType {
   func configureUser() {
     let info = userInfo.value
     guard let id = info.id, let phone = info.phone else { return }
+
+    let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
     
-    apollo.perform(mutation: UpsertUserMutation(id: id, email: info.email, nickname: info.nickname, gender: info.gender, birthday: info.birthday, ageRange: info.ageRange, profileImagePath: info.profileImagePath, phone: phone)) { (result, error) in
+    rx_fetchContacts().map({ contacts in
+      return contacts.compactMap {
+        ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
+      }
+    }).subscribeOn(backgroundScheduler)
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { (contacts) in
+        contacts.forEach { contact in
+          if contact.0.starts(with: "010") {
+            let phone = contact.0
+              .components(separatedBy:CharacterSet.decimalDigits.inverted)
+              .joined(separator: "")
+            
+            let nickname = contact.1
+            
+            apollo.fetch(query: GetPocketQuery(phone: phone)) { result, error in
+              guard error != nil else {
+                ContactItem.create(phone, nickname: nickname)
+                return
+              }
+              
+              if let pocket = result?.data?.pocket {
+                ContactItem.create(pocket.phone, nickname: pocket.nickname ?? "", imagePath: pocket.profileImagePath ?? "", pushToken: pocket.pushToken ?? "")
+              }
+            }
+          }
+        }
+      })
+      .disposed(by: disposeBag)
+    
+    apollo.perform(mutation: UpsertUserMutation(id: id, email: info.email, nickname: info.nickname, gender: info.gender, birthday: info.birthday, ageRange: info.ageRange, profileImagePath: info.profileImagePath, phone: phone)) { [weak self] (result, error) in
+      guard let strongSelf = self else { return }
+      
       if let error = error {
         NSLog("Error while attempting to UpsertUserMutation: \(error.localizedDescription)")
       }
       
-      self.refreshUserPromises()
+      strongSelf.watcher = apollo.watch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in
+        
+        if let error = error {
+          NSLog("Error while GetUserWithPromisesQuery: \(error.localizedDescription)")
+          return
+        }
+        
+        if let list = result?.data?.user?.pocket.promiseList {
+          strongSelf.promiseList.value = list.compactMap { $0 }.sorted { Int($0.timestamp ?? "0") ?? 0 < Int($1.timestamp ?? "0") ?? 0 }
+          let current = strongSelf.currentMonth.value
+          strongSelf.filterPromisesByMonth(month: current.0, year: current.1)
+        }
+      })
     }
   }
   
+  var watcher: GraphQLQueryWatcher<GetUserWithPromisesQuery>?
+  
   func refreshUserPromises() {
-    guard let id = userInfo.value.id else { return }
-    
-    _ = apollo.watch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in
-      if let error = error {
-        NSLog("Error while GetUserWithPromisesQuery: \(error.localizedDescription)")
-        return
-      }
-      
-      if let list = result?.data?.user?.pocket.promiseList {
-        self.promiseList.value = list.compactMap { $0 }
-        
-        let calendar = Calendar(identifier:  .gregorian)
-        let month = calendar.component(.month, from: Date())
-        let year = calendar.component(.year, from: Date())
-        self.filterPromisesByMonth(month: month, year: year)
-      }
-    })
+    watcher?.refetch()
   }
   
   lazy var pushNewPromiseScene: CocoaAction = {

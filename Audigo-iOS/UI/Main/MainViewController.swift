@@ -23,6 +23,7 @@ class MainViewController: UIViewController, BindableType {
   var viewModel: MainViewModel!
   var needSignIn = false
   var isConfigured = false
+  var current: (month: Int, year: Int)?
   
   let disposeBag = DisposeBag()
   
@@ -51,6 +52,11 @@ class MainViewController: UIViewController, BindableType {
       return
     }
   }
+  
+//  override func viewWillAppear(_ animated: Bool) {
+//    super.viewWillAppear(animated)
+////    viewModel.refreshUserPromises()
+//  }
 
   func bindViewModel() {
     viewModel.state.subscribe(onNext: { [weak self] (state) in
@@ -61,8 +67,10 @@ class MainViewController: UIViewController, BindableType {
           if let vc = R.storyboard.main.permissionsViewController(), permissionSet.status != .authorized {
             strongSelf.present(vc, animated: true, completion: nil)
           }
+          
           strongSelf.viewModel.configureUser()
           strongSelf.isConfigured = true
+        
         case .phoneRequired:
           if let vc = R.storyboard.main.phoneCheckViewController() {
             vc.phoneCertifyDone = strongSelf.viewModel.phoneCertifyDone
@@ -73,8 +81,10 @@ class MainViewController: UIViewController, BindableType {
       }
     }).disposed(by: disposeBag)
     
+    let dataSource = RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)
+    
     viewModel.promiseItems
-      .bind(to: promiseListTableView.rx.items(dataSource: RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)))
+      .bind(to: promiseListTableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
     viewModel.promiseItems.subscribe(onNext: { sectionModel in
@@ -85,7 +95,11 @@ class MainViewController: UIViewController, BindableType {
       }
     }).disposed(by: disposeBag)
     
-    viewModel.outputs.current.map { (month, year) in
+    viewModel.outputs.current.map { [weak self] (month, year) in
+      if let strongSelf = self {
+        strongSelf.current = (month: month, year: year)
+      }
+      
       let calendar = Calendar(identifier: .gregorian)
       let timeFormat = DateFormatter()
       timeFormat.dateFormat = "yyyy.MM"
@@ -108,6 +122,8 @@ class MainViewController: UIViewController, BindableType {
       }
     } else if !isConfigured {
       viewModel.signInDone.onNext(())
+    } else {
+      viewModel.refreshUserPromises()
     }
   }
   

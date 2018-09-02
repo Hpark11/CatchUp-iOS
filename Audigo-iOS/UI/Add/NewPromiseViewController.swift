@@ -161,7 +161,6 @@ class NewPromiseViewController: UIViewController, BindableType {
     confirmDone.subscribe(onNext: { [weak self] _ in
       guard let strongSelf = self else { return }
       strongSelf.viewModel.actions.popScene.execute(())
-//      strongSelf.dismiss(animated: true, completion: nil)
     }).disposed(by: disposeBag)
   }
 }

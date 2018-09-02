@@ -124,7 +124,6 @@ extension AppCoordinator {
     
     
     fileprivate func popToVC(_ viewController: UIViewController, animated: Bool) -> PublishSubject<Void> {
-        
         let subject = PublishSubject<Void>()
         
         if let navigationController = currentViewController?.navigationController {

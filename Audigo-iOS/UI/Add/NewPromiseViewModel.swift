@@ -187,9 +187,13 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   lazy var popScene: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
-      let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator)
-      viewModel.refreshUserPromises()
-      strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
+      if strongSelf.isEditMode.value, let promiseId = strongSelf.promiseId.value {
+        let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, promiseId: promiseId)
+        strongSelf.sceneCoordinator.transition(to: PromiseDetailScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
+      } else {
+        let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator)
+        strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
+      }
       return .empty()
     }
   }()
@@ -238,7 +242,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
             }
           }
         }
-
       } else {
         apollo.perform(mutation: AddPromiseMutation(
           owner: strongSelf.owner.value,
