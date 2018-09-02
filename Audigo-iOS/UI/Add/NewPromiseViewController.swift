@@ -44,6 +44,11 @@ class NewPromiseViewController: UIViewController, BindableType {
     promiseMembersInputView.inputState = .search(title: "누구랑", input: "구성원을 검색해주세요")
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    UIApplication.shared.statusBarView?.backgroundColor = .white
+  }
+  
   func bindViewModel() {
     popButton.rx.action = viewModel.actions.popScene
     newPromiseButton.rx.action = viewModel.actions.newPromiseCompleted

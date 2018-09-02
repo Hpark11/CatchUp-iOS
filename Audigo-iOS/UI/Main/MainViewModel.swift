@@ -216,6 +216,8 @@ class MainViewModel: MainViewModelType {
         phoneNumber = number
       } else {
         phoneNumber = "01074372330"
+        UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
+        UserDefaults.standard.synchronize()
       }
       
       self.userInfo.value = (

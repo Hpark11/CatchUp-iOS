@@ -14,7 +14,7 @@ import RxDataSources
 typealias PocketSectionModel = AnimatableSectionModel<String, PromisePocket>
 
 protocol PromiseDetailViewModelInputsType {
-
+  var editPromiseDone: PublishSubject<Void> { get }
 }
 
 protocol PromiseDetailViewModelOutputsType {
@@ -47,6 +47,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   fileprivate let disposeBag: DisposeBag
   
   // MARK: Inputs
+  var editPromiseDone: PublishSubject<Void>
   
   // MARK: Outputs
   var pocketItems: Observable<[PocketSectionModel]>
@@ -65,7 +66,10 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   
   init(coordinator: SceneCoordinatorType, promiseId: String) {
     sceneCoordinator = coordinator
+    self.promiseId = promiseId
     disposeBag = DisposeBag()
+    
+    editPromiseDone = PublishSubject()
     
     pocketList = Variable([])
     promiseName = Variable("")
@@ -87,7 +91,11 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
         return [PocketSectionModel(model: "", items: pocketList)]
       })
     
-    self.promiseId = promiseId
+    editPromiseDone.subscribe(onNext: { [weak self] _ in
+      guard let strongSelf = self else { return }
+      strongSelf.loadSinglePromise()
+    }).disposed(by: disposeBag)
+    
     loadSinglePromise()
   }
   
@@ -144,6 +152,8 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
       guard let strongSelf = self, let phone = UserDefaults.standard.string(forKey: "phoneNumber") else { return .empty() }
       let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, ownerPhoneNumber: phone, editMode: true)
       let calendar = Calendar(identifier: .gregorian)
+      
+      viewModel.editPromiseDone = strongSelf.editPromiseDone
       
       viewModel.applyPreviousInfo(
         id: strongSelf.promiseId,
