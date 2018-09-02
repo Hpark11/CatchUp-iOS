@@ -134,7 +134,7 @@ class NewPromiseViewController: UIViewController, BindableType {
       
       self.membersCollectionView.reloadData()
     }).disposed(by: disposeBag)
-    
+  
     viewModel.outputs.state.subscribe(onNext: { [weak self] state in
       guard let strongSelf = self else { return }
       switch state {
@@ -145,10 +145,12 @@ class NewPromiseViewController: UIViewController, BindableType {
           break
         case .completed(let dateTime, let location, let members):
           if let vc = R.storyboard.main.promiseConfirmViewController() {
+            vc.contentTitle = strongSelf.promiseNameInputView.inputLabel.text ?? ""
             vc.confirmDone = strongSelf.confirmDone
             vc.dateTime = dateTime
             vc.location = location
             vc.members = members
+            vc.memberCount = strongSelf.selectedMembers.count + 1
             vc.isEditingPromise = strongSelf.isEditingPromise
             strongSelf.present(vc, animated: true, completion: nil)
           }
@@ -160,7 +162,7 @@ class NewPromiseViewController: UIViewController, BindableType {
     viewModel.outputs.editMode.subscribe(onNext: { isEditMode in
       self.titleLabel.text = isEditMode ? "약속 수정" : "약속 추가"
       self.isEditingPromise = isEditMode
-//      self.newPromiseButton.setImage(<#T##image: UIImage?##UIImage?#>, for: .normal)
+      self.newPromiseButton.setImage(isEditMode ? R.image.image_button_promise_edit() : R.image.image_button_promise_add(), for: .normal)
     }).disposed(by: disposeBag)
     
     confirmDone.subscribe(onNext: { [weak self] _ in
@@ -176,7 +178,6 @@ extension NewPromiseViewController: GMSAutocompleteViewControllerDelegate {
     promiseAddressInputView.inputState = .applied(input: place.formattedAddress ?? "")
     viewModel.inputs.addressSetDone.onNext(place.formattedAddress)
     viewModel.inputs.coordinateSetDone.onNext((latitude: place.coordinate.latitude, longitude: place.coordinate.longitude))
-    print("Place attributions: \(place.attributions)")
     dismiss(animated: true, completion: nil)
   }
   

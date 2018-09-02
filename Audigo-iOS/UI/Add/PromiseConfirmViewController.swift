@@ -22,6 +22,8 @@ class PromiseConfirmViewController: UIViewController {
   var dateTime = ""
   var location = ""
   var members = ""
+  var memberCount = 0
+  var contentTitle = ""
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -50,12 +52,13 @@ class PromiseConfirmViewController: UIViewController {
     alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
       let template = KMTLocationTemplate.init { builder in
         builder.address = self.location
-        builder.addressTitle = "테스트"
+        
+        builder.addressTitle = self.contentTitle
         builder.buttonTitle = "앱으로 보기"
         
         builder.content = KMTContentObject.init(builderBlock: { contentBuilder in
-          contentBuilder.title = "테스트"
-          contentBuilder.desc = "테스트"
+          contentBuilder.title = self.contentTitle
+          contentBuilder.desc = self.members
           contentBuilder.imageURL = URL.init(string: "www.naver.com")!
           contentBuilder.link = KMTLinkObject.init(builderBlock: { linkBuilder in
             linkBuilder.mobileWebURL = URL.init(string: "www.naver.com")!
@@ -63,9 +66,9 @@ class PromiseConfirmViewController: UIViewController {
         })
         
         builder.social = KMTSocialObject.init(builderBlock: { socialBuilder in
-          socialBuilder.likeCount = 100
-          socialBuilder.commnentCount = 100
-          socialBuilder.sharedCount = 100
+          socialBuilder.likeCount = self.memberCount as NSNumber
+//          socialBuilder.commnentCount = 100
+//          socialBuilder.sharedCount = 100
         })
       }
       

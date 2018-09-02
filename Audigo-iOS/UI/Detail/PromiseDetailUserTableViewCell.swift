@@ -65,6 +65,5 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
   }
   
   @IBAction func notifyPromise(_ sender: Any) {
-    
   }
 }
