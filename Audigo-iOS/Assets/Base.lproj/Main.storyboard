@@ -409,9 +409,9 @@
                                 <rect key="frame" x="25" y="114" width="270" height="340"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3LY-dW-SjX">
-                                        <rect key="frame" x="16" y="304" width="238" height="20"/>
+                                        <rect key="frame" x="16" y="296" width="238" height="36"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="mUB-k9-sWT"/>
+                                            <constraint firstAttribute="height" constant="36" id="mUB-k9-sWT"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <state key="normal" title="확인">
@@ -457,7 +457,7 @@
                                     <constraint firstItem="3LY-dW-SjX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="rzk-IY-MF5" secondAttribute="bottom" constant="8" id="5Fp-hR-SmV"/>
                                     <constraint firstAttribute="width" constant="270" id="7aM-84-hCc"/>
                                     <constraint firstAttribute="height" constant="340" id="9te-rl-aQz"/>
-                                    <constraint firstAttribute="bottom" secondItem="3LY-dW-SjX" secondAttribute="bottom" constant="16" id="JXs-1k-4Gk"/>
+                                    <constraint firstAttribute="bottom" secondItem="3LY-dW-SjX" secondAttribute="bottom" constant="8" id="JXs-1k-4Gk"/>
                                     <constraint firstItem="hPb-dI-hvi" firstAttribute="top" secondItem="OL3-5l-VXM" secondAttribute="bottom" constant="25" id="LNa-z6-wpQ"/>
                                     <constraint firstAttribute="trailing" secondItem="gpd-6Q-HRE" secondAttribute="trailing" constant="8" id="N6A-MG-zn0"/>
                                     <constraint firstItem="gpd-6Q-HRE" firstAttribute="leading" secondItem="css-32-Krf" secondAttribute="leading" constant="8" id="TA6-zG-AfU"/>

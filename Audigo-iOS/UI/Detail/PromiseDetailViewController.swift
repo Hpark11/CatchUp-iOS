@@ -22,6 +22,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
   
   var viewModel: PromiseDetailViewModel!
   let disposeBag = DisposeBag()
+  private var destMarker: GMSMarker?
   private var markers: [GMSMarker]? = []
   
   private lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, PromisePocket) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
@@ -73,16 +74,19 @@ class PromiseDetailViewController: UIViewController, BindableType {
       strongSelf.navigationItem.title = name
     }).disposed(by: disposeBag)
     
-    viewModel.outputs.location.subscribe(onNext: { (latitude, longitude) in
+    viewModel.outputs.location.subscribe(onNext: { [weak self] (latitude, longitude) in
       guard latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0 else { return }
+      guard let strongSelf = self else { return }
+      strongSelf.destMarker?.map = nil
       
-      self.membersMapView.animate(to: GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 14.0))
+      strongSelf.membersMapView.animate(to: GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 14.0))
       let marker = GMSMarker()
       marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
       marker.title = "목적지"
       marker.snippet = "도착 장소"
       
-      marker.map = self.membersMapView
+      marker.map = strongSelf.membersMapView
+      strongSelf.destMarker = marker
     }).disposed(by: disposeBag)
     
     viewModel.outputs.timestamp.subscribe(onNext: { (timestamp) in
