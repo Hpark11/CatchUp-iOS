@@ -33,9 +33,10 @@ class MainViewController: UIViewController, BindableType {
     
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseTableViewCell, for: indexPath)
     cell?.configure(promise: promise)
+    print(promise.id)
     
     cell?.itemView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
-      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise.id ?? "")
+      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(strongPromise.id ?? "")
       
       strongSelf.navigationController?.navigationBar.backgroundColor = .darkSkyBlue
       strongSelf.navigationController?.navigationBar.barStyle = .blackOpaque

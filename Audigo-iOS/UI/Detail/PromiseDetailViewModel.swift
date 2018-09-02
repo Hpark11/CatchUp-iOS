@@ -56,6 +56,8 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   var location: Observable<(latitude: Double, longitude: Double)>
   var timestamp: Observable<TimeInterval>
   var isOwner: Observable<Bool>
+
+  var hasPromiseBeenUpdated: PublishSubject<Bool>?
   
   private var watcher: GraphQLQueryWatcher<GetPromiseQuery>?
   private var promiseId: String
@@ -96,6 +98,11 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     
     editPromiseDone.subscribe(onNext: { [weak self] id in
       guard let strongSelf = self else { return }
+      
+      if id != strongSelf.promiseId {
+        strongSelf.hasPromiseBeenUpdated?.onNext(true)
+      }
+      
       strongSelf.promiseId = id
       strongSelf.loadSinglePromise()
     }).disposed(by: disposeBag)

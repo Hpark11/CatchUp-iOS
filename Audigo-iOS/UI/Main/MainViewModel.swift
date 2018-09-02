@@ -26,6 +26,7 @@ protocol MainViewModelInputsType {
   var monthSelectDone: PublishSubject<(Int, Int)> { get }
   var addPromiseDone: PublishSubject<Void> { get }
   var contactAuthorized: PublishSubject<Bool> { get }
+  var hasPromiseBeenUpdated: PublishSubject<Bool> { get }
 }
 
 protocol MainViewModelOutputsType {
@@ -59,6 +60,7 @@ class MainViewModel: MainViewModelType {
   var monthSelectDone: PublishSubject<(Int, Int)>
   var addPromiseDone: PublishSubject<Void>
   var contactAuthorized: PublishSubject<Bool>
+  var hasPromiseBeenUpdated: PublishSubject<Bool>
   
   // MARK: Outputs
   var state: Observable<SignInState>
@@ -81,6 +83,7 @@ class MainViewModel: MainViewModelType {
     monthSelectDone = PublishSubject()
     addPromiseDone = PublishSubject()
     contactAuthorized = PublishSubject()
+    hasPromiseBeenUpdated = PublishSubject()
     
     userInfo = Variable((id: nil, phone: nil, email: nil, nickname: nil, gender: nil, birthday: nil, ageRange: nil, profileImagePath: nil))
     promiseList = Variable([])
@@ -124,6 +127,11 @@ class MainViewModel: MainViewModelType {
       strongSelf.watcher?.refetch()
     }).disposed(by: disposeBag)
     
+    hasPromiseBeenUpdated.subscribe(onNext: { [weak self] hasUpdated in
+      guard let strongSelf = self else { return }
+      strongSelf.watcher?.refetch()
+    }).disposed(by: disposeBag)
+    
     contactAuthorized.subscribe(onNext: { [weak self] authorized in
       guard let strongSelf = self, authorized else { return }
       LocationTrackingService.shared.startUpdatingLocation()
@@ -157,8 +165,7 @@ class MainViewModel: MainViewModelType {
               }
             }
           }
-        })
-        .disposed(by: strongSelf.disposeBag)
+        }).disposed(by: strongSelf.disposeBag)
     }).disposed(by: disposeBag)
   }
   
@@ -270,6 +277,9 @@ class MainViewModel: MainViewModelType {
             let rhs = UInt64($1.timestamp ?? "") ?? Date().timeInMillis
             return (lhs > now ? lhs : lhs * 2) < (rhs > now ? rhs : rhs * 2)
           }
+          strongSelf.promiseList.value.forEach {
+            print($0.id)
+          }
           
           let current = strongSelf.currentMonth.value
           strongSelf.filterPromisesByMonth(month: current.0, year: current.1)
@@ -292,6 +302,7 @@ class MainViewModel: MainViewModelType {
     return Action { [weak self] promiseId in
       guard let strongSelf = self else { return .empty() }
       let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, promiseId: promiseId)
+      viewModel.hasPromiseBeenUpdated = strongSelf.hasPromiseBeenUpdated
       let scene = PromiseDetailScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .push(animated: true))
     }
