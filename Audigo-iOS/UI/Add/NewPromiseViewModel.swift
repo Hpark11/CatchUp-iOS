@@ -78,7 +78,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var editMode: Observable<Bool>
   
   var addPromiseDone: PublishSubject<Void>?
-  var editPromiseDone: PublishSubject<Void>?
+  var editPromiseDone: PublishSubject<String>?
   
   fileprivate var owner: Variable<String>
   fileprivate var dateComponents: Variable<DateComponents?>
@@ -191,7 +191,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
       if strongSelf.isEditMode.value, let promiseId = strongSelf.promiseId.value {
-        strongSelf.editPromiseDone?.onNext(())
+        strongSelf.editPromiseDone?.onNext(promiseId)
         let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, promiseId: promiseId)
         strongSelf.sceneCoordinator.transition(to: PromiseDetailScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       } else {
@@ -244,6 +244,10 @@ class NewPromiseViewModel: NewPromiseViewModelType {
               let dateTime = timeFormat.string(from: date)
               let members = "\(member) 외 \(strongSelf.pockets.value.count - 1)명"
               strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
+            }
+            
+            if let id = result?.data?.updatePromise?.id {
+              strongSelf.promiseId.value = id
             }
           }
         }

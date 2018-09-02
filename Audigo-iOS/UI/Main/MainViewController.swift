@@ -84,11 +84,12 @@ class MainViewController: UIViewController, BindableType {
       .bind(to: promiseListTableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
-    viewModel.promiseItems.subscribe(onNext: { sectionModel in
+    viewModel.promiseItems.subscribe(onNext: { [weak self] sectionModel in
+      guard let strongSelf = self else { return }
       if let items = sectionModel.first?.items, !items.isEmpty {
-        self.promiseGuide.isHidden = true
+        strongSelf.promiseGuide.isHidden = true
       } else {
-        self.promiseGuide.isHidden = false
+        strongSelf.promiseGuide.isHidden = false
       }
     }).disposed(by: disposeBag)
     

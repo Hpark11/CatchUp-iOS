@@ -68,7 +68,6 @@ class PermissionsViewController: UIViewController {
   }
   
   private func startServices() {
-    LocationTrackingService.shared.startUpdatingLocation()
     contactAuthorized?.onNext(true)
     self.dismiss(animated: true, completion: nil)
   }

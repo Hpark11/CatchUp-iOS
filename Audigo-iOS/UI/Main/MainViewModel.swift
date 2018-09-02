@@ -126,6 +126,8 @@ class MainViewModel: MainViewModelType {
     
     contactAuthorized.subscribe(onNext: { [weak self] authorized in
       guard let strongSelf = self, authorized else { return }
+      LocationTrackingService.shared.startUpdatingLocation()
+      
       let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
       
       rx_fetchContacts().map({ contacts in
@@ -261,7 +263,14 @@ class MainViewModel: MainViewModelType {
         }
         
         if let list = result?.data?.user?.pocket.promiseList {
-          strongSelf.promiseList.value = list.compactMap { $0 }.sorted { Int($0.timestamp ?? "0") ?? 0 < Int($1.timestamp ?? "0") ?? 0 }
+          let now = Date().timeInMillis
+          
+          strongSelf.promiseList.value = list.compactMap { $0 }.sorted {
+            let lhs = UInt64($0.timestamp ?? "") ?? Date().timeInMillis
+            let rhs = UInt64($1.timestamp ?? "") ?? Date().timeInMillis
+            return (lhs > now ? lhs : lhs * 2) < (rhs > now ? rhs : rhs * 2)
+          }
+          
           let current = strongSelf.currentMonth.value
           strongSelf.filterPromisesByMonth(month: current.0, year: current.1)
         }

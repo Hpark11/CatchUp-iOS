@@ -61,14 +61,16 @@ class PromiseDetailViewController: UIViewController, BindableType {
   
   @IBAction func changeMapVisibility(_ sender: Any) {
     membersMapView.isHidden = !membersMapView.isHidden
+    panelChangeButton.setImage(membersMapView.isHidden ? R.image.icon_map() : R.image.icon_list(), for: .normal)
   }
   
   func bindViewModel() {
     editPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
     refreshButton.rx.action = viewModel.actions.refresh
     
-    viewModel.outputs.name.subscribe(onNext: { name in
-      self.navigationItem.title = name
+    viewModel.outputs.name.subscribe(onNext: { [weak self] name in
+      guard let strongSelf = self else { return }
+      strongSelf.navigationItem.title = name
     }).disposed(by: disposeBag)
     
     viewModel.outputs.location.subscribe(onNext: { (latitude, longitude) in

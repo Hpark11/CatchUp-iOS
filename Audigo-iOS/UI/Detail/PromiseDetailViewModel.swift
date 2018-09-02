@@ -10,11 +10,12 @@ import Foundation
 import Action
 import RxSwift
 import RxDataSources
+import Apollo
 
 typealias PocketSectionModel = AnimatableSectionModel<String, PromisePocket>
 
 protocol PromiseDetailViewModelInputsType {
-  var editPromiseDone: PublishSubject<Void> { get }
+  var editPromiseDone: PublishSubject<String> { get }
 }
 
 protocol PromiseDetailViewModelOutputsType {
@@ -47,7 +48,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   fileprivate let disposeBag: DisposeBag
   
   // MARK: Inputs
-  var editPromiseDone: PublishSubject<Void>
+  var editPromiseDone: PublishSubject<String>
   
   // MARK: Outputs
   var pocketItems: Observable<[PocketSectionModel]>
@@ -56,11 +57,13 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   var timestamp: Observable<TimeInterval>
   var isOwner: Observable<Bool>
   
+  private var watcher: GraphQLQueryWatcher<GetPromiseQuery>?
+  private var promiseId: String
+  
   private let promiseName: Variable<String>
   private let promiseLocation: Variable<(latitude: Double, longitude: Double)>
   private let promiseTimestamp: Variable<TimeInterval>
   private let pocketList: Variable<[PromisePocket]>
-  private let promiseId: String
   private let owner: Variable<String>
   private let address: Variable<String>
   
@@ -91,8 +94,9 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
         return [PocketSectionModel(model: "", items: pocketList)]
       })
     
-    editPromiseDone.subscribe(onNext: { [weak self] _ in
+    editPromiseDone.subscribe(onNext: { [weak self] id in
       guard let strongSelf = self else { return }
+      strongSelf.promiseId = id
       strongSelf.loadSinglePromise()
     }).disposed(by: disposeBag)
     
@@ -100,7 +104,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   }
   
   private func loadSinglePromise() {
-    _ = apollo.watch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
+    apollo.fetch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
       if let error = error {
         NSLog("Error while GetPromiseQuery: \(error.localizedDescription)")
         return
