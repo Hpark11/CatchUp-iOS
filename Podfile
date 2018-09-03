@@ -17,6 +17,7 @@ target 'Audigo-iOS' do
   pod 'RxDataSources', '~> 3.0'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Messaging'
   pod 'Kingfisher'
   pod 'GoogleMaps'
   pod 'GooglePlaces'

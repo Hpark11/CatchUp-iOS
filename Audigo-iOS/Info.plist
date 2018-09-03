@@ -2,29 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-	</array>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>location-services</string>
-		<string>gps</string>
-		<string>armv7</string>
-	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This App Needs Location in order to view each other&apos;s locations when the group of users promised</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This App Needs Location in order to view each other&apos;s locations when the group of users promised</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This App Needs Location in order to view each other&apos;s locations when the group of users promised</string>
-	<key>NSContactsUsageDescription</key>
-	<string>This App Needs Contacts</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -75,10 +52,34 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSContactsUsageDescription</key>
+	<string>This App Needs Contacts</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This App Needs Location in order to view each other's locations when the group of users promised</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This App Needs Location in order to view each other's locations when the group of users promised</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This App Needs Location in order to view each other's locations when the group of users promised</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>location-services</string>
+		<string>gps</string>
+		<string>armv7</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

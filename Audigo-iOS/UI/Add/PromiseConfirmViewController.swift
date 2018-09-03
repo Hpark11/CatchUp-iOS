@@ -59,9 +59,9 @@ class PromiseConfirmViewController: UIViewController {
         builder.content = KMTContentObject.init(builderBlock: { contentBuilder in
           contentBuilder.title = self.contentTitle
           contentBuilder.desc = self.members
-          contentBuilder.imageURL = URL.init(string: "www.naver.com")!
+          contentBuilder.imageURL = URL.init(string: "https://itunes.apple.com/us/app/%EC%BA%90%EC%B9%98%EC%97%85/id1435071896?l=ko&ls=1&mt=8")!
           contentBuilder.link = KMTLinkObject.init(builderBlock: { linkBuilder in
-            linkBuilder.mobileWebURL = URL.init(string: "www.naver.com")!
+            linkBuilder.mobileWebURL = URL.init(string: "https://itunes.apple.com/us/app/%EC%BA%90%EC%B9%98%EC%97%85/id1435071896?l=ko&ls=1&mt=8")!
           })
         })
         

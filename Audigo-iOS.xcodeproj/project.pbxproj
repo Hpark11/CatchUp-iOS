@@ -28,9 +28,9 @@
 		CE34B4BF211E787100F92D50 /* AttachToken.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B3211E787100F92D50 /* AttachToken.graphql */; };
 		CE34B4C0211E787100F92D50 /* GetPocket.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B4211E787100F92D50 /* GetPocket.graphql */; };
 		CE34B4C1211E787100F92D50 /* schemaBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B5211E787100F92D50 /* schemaBackup.json */; };
-		CE34B4C3211E86A000F92D50 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */; };
 		CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */; };
 		CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */; };
+		CE3FF957213D6BE000C16338 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */; };
 		CE72ECFA2136B49F004BC9C6 /* CatchUpMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */; };
 		CE72ECFC2136B4AC004BC9C6 /* CatchUpMarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */; };
 		CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */; };
@@ -122,9 +122,10 @@
 		CE34B4B3211E787100F92D50 /* AttachToken.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AttachToken.graphql; sourceTree = "<group>"; };
 		CE34B4B4211E787100F92D50 /* GetPocket.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetPocket.graphql; sourceTree = "<group>"; };
 		CE34B4B5211E787100F92D50 /* schemaBackup.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schemaBackup.json; sourceTree = "<group>"; };
-		CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCheckViewController.swift; sourceTree = "<group>"; };
 		CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTableViewCell.swift; sourceTree = "<group>"; };
+		CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Audigo-iOS.entitlements"; sourceTree = "<group>"; };
 		CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpMarkerView.swift; sourceTree = "<group>"; };
 		CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatchUpMarkerView.xib; sourceTree = "<group>"; };
 		CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPromiseViewController.swift; sourceTree = "<group>"; };
@@ -362,9 +363,10 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */,
 				CED64949212B801E00C6BD6D /* Service */,
-				CE34B4C2211E86A000F92D50 /* GoogleService-Info.plist */,
 				CED4CCBC20C979060063D89F /* Info.plist */,
+				CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */,
 				CEB41EF52115C227006BC729 /* App */,
 				CEEE5DA1212814AB0023E2FC /* Assets */,
 				CEB41EF72115C3A4006BC729 /* Coordinator */,
@@ -531,6 +533,11 @@
 				TargetAttributes = {
 					CED4CCA920C979040063D89F = {
 						CreatedOnToolsVersion = 9.3.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					CED4CCC020C979060063D89F = {
 						CreatedOnToolsVersion = 9.3.1;
@@ -569,7 +576,6 @@
 			files = (
 				CED4CCBB20C979060063D89F /* LaunchScreen.storyboard in Resources */,
 				CE34B4BB211E787100F92D50 /* GetPromise.graphql in Resources */,
-				CE34B4C3211E86A000F92D50 /* GoogleService-Info.plist in Resources */,
 				CE34B4B9211E787100F92D50 /* UpdatePromise.graphql in Resources */,
 				CE72ECFC2136B4AC004BC9C6 /* CatchUpMarkerView.xib in Resources */,
 				CE34B4B8211E787100F92D50 /* GetUserWithPromises.graphql in Resources */,
@@ -580,6 +586,7 @@
 				CE34B4B7211E787100F92D50 /* DeletePromiseById.graphql in Resources */,
 				CE34B4C0211E787100F92D50 /* GetPocket.graphql in Resources */,
 				CE34B4BD211E787100F92D50 /* RelocatePocket.graphql in Resources */,
+				CE3FF957213D6BE000C16338 /* GoogleService-Info.plist in Resources */,
 				CED4CCB320C979040063D89F /* Main.storyboard in Resources */,
 				CE34B4BA211E787100F92D50 /* SendPush.graphql in Resources */,
 				CE34B4C1211E787100F92D50 /* schemaBackup.json in Resources */,
@@ -639,6 +646,7 @@
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
 				"${BUILT_PRODUCTS_DIR}/Permission/Permission.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -660,6 +668,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Permission.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -913,7 +922,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -967,7 +976,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -981,6 +990,8 @@
 			baseConfigurationReference = CA541320104F8C0FED8535D0 /* Pods-Audigo-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Audigo-iOS/Audigo-iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -989,10 +1000,7 @@
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -1015,8 +1023,9 @@
 					"\"RxSwift\"",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = blackburn.io.catchup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "KakaoOpenSDK-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1028,6 +1037,8 @@
 			baseConfigurationReference = E85035A84CDA31ECF6853A28 /* Pods-Audigo-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Audigo-iOS/Audigo-iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1036,10 +1047,7 @@
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -1062,8 +1070,9 @@
 					"\"RxSwift\"",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = blackburn.io.catchup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "KakaoOpenSDK-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1079,11 +1088,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1101,11 +1106,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1122,11 +1123,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1143,11 +1140,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

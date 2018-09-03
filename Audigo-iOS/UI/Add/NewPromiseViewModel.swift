@@ -216,6 +216,10 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       
       guard let dateTimeComponents = components else { return .empty() }
       
+//      strongSelf.pockets.value.compactMap { phone in
+//        return ContactItem.find(phone: phone)?.
+//      }
+      
       if strongSelf.isEditMode.value {
         if let id = strongSelf.promiseId.value, let prevTimestamp = strongSelf.prevTimestamp.value {
           apollo.perform(mutation: UpdatePromiseMutation(
@@ -244,6 +248,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
               let dateTime = timeFormat.string(from: date)
               let members = "\(member) 외 \(strongSelf.pockets.value.count - 1)명"
               strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
+              
+              
             }
             
             if let id = result?.data?.updatePromise?.id {
@@ -276,6 +282,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
             let dateTime = timeFormat.string(from: date)
             let members = "\(member) 외 \(strongSelf.pockets.value.count - 1)명"
             strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
+            
+            apollo.fetch(query: SendPushQuery(pushTokens: ["fHZdXR5f0j8:APA91bFxgDflSby-HorM9mz9hsNYj3ikq1X5XwEDEHk8gUaf035ixjljq_1r_ssH0FDmm5xVGnE9SgwfZstRKlni92VLvnzoeY-ZgfGNHUJVBZZKvHpN2sUg3LO5XeX31zyPAT0Y429P"], title: "새로운 약속 일정 알림", body: "일시: \(dateTime), 장소: \(location)", scheduledTime: "\(date.timeInMillis)"))
           }
         }
       }
