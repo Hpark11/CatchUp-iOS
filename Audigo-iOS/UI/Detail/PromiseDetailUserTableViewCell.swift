@@ -9,6 +9,7 @@
 import UIKit
 import Kingfisher
 import CoreLocation
+import RxSwift
 
 class PromiseDetailUserTableViewCell: UITableViewCell {
 
@@ -17,6 +18,8 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
   @IBOutlet weak var arrivalTimeLabel: UILabel!
   @IBOutlet weak var statusLabel: UILabel!
   @IBOutlet weak var itemView: UIView!
+  var sendPush: PublishSubject<String>?
+  var pushToken: String?
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -26,8 +29,10 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
     itemView.layer.shadowRadius = 4
   }
   
-  func configure(promisePocket: PromisePocket) {
+  func configure(promisePocket: PromisePocket, sendPush: PublishSubject<String>) {
     let pocket = promisePocket.pocket
+    self.sendPush = sendPush
+    self.pushToken = pocket.pushToken
     
     if let latitude = pocket.latitude, let longitude = pocket.longitude {
       let fromCoordinate = CLLocation(latitude: latitude, longitude: longitude)
@@ -65,5 +70,8 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
   }
   
   @IBAction func notifyPromise(_ sender: Any) {
+    if let token = pushToken {
+      sendPush?.onNext(token)
+    }
   }
 }

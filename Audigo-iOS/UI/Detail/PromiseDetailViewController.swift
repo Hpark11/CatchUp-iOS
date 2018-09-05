@@ -24,12 +24,13 @@ class PromiseDetailViewController: UIViewController, BindableType {
   let disposeBag = DisposeBag()
   private var destMarker: GMSMarker?
   private var markers: [GMSMarker]? = []
+  private let sendPush = PublishSubject<String>()
   
   private lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, PromisePocket) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
     guard let strongSelf = self else { return PromiseDetailUserTableViewCell(frame: .zero) }
     
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseDetailUserTableViewCell, for: indexPath)
-    cell?.configure(promisePocket: pocket)
+    cell?.configure(promisePocket: pocket, sendPush: strongSelf.sendPush)
   
     return cell!
   }
@@ -43,6 +44,24 @@ class PromiseDetailViewController: UIViewController, BindableType {
     navigationItem.leftBarButtonItem?.image = UIImage(named: R.image.icon_back.name)
     navigationItem.leftBarButtonItem?.tintColor = .white
     navigationItem.leftBarButtonItem?.rx.action = viewModel.actions.popScene
+    
+    sendPush.subscribe(onNext: { [weak self] (pushToken) in
+      guard let strongSelf = self else { return }
+      let alert = UIAlertController(title: "알림", message: "알림 메세지를 입력하세요", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+  
+      alert.addTextField(configurationHandler: { textField in
+        textField.placeholder = "메세지 입력"
+      })
+  
+      alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+        if let text = alert.textFields?.first?.text {
+          apollo.fetch(query: SendPushQuery(pushTokens: [pushToken], title: "약속으로부터 알림", body: "\(text)", scheduledTime: "\(Date().timeInMillis)"))
+        }
+      }))
+
+      strongSelf.present(alert, animated: true)
+    }).disposed(by: disposeBag)
   }
   
   override func viewWillAppear(_ animated: Bool) {

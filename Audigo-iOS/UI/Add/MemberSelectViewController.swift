@@ -70,7 +70,6 @@ extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource
     } else {
       cell.accessoryType = .none
       tableView.deselectRow(at: indexPath, animated: true)
-//      tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
       cell.setSelected(false, animated: true)
     }
     

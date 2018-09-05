@@ -224,9 +224,7 @@ class MainViewModel: MainViewModelType {
       } else if let number = me?.account?.phoneNumber {
         phoneNumber = number
       } else {
-        phoneNumber = "01074372330"
-        UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
-        UserDefaults.standard.synchronize()
+        phoneNumber = nil
       }
       
       self.userInfo.value = (
@@ -289,21 +287,12 @@ class MainViewModel: MainViewModelType {
     }
   }
   
-  
-  
   lazy var pushNewPromiseScene: CocoaAction = {
     return Action { [weak self] in
       guard let strongSelf = self else { return .empty() }
       let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, ownerPhoneNumber: strongSelf.userInfo.value.phone ?? "")
       viewModel.addPromiseDone = strongSelf.addPromiseDone
       let scene = NewPromiseScene(viewModel: viewModel)
-      
-      apollo.fetch(query: SendPushQuery(pushTokens: ["fHZdXR5f0j8:APA91bFxgDflSby-HorM9mz9hsNYj3ikq1X5XwEDEHk8gUaf035ixjljq_1r_ssH0FDmm5xVGnE9SgwfZstRKlni92VLvnzoeY-ZgfGNHUJVBZZKvHpN2sUg3LO5XeX31zyPAT0Y429P"], title: "새로운 약속 일정 알림", body: "일시: 1, 장소: 1", scheduledTime: "qqweqweqweweqw"))
-      
-      
-//      apollo.clearCache()
-      
-      
       return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
     }
   }()
