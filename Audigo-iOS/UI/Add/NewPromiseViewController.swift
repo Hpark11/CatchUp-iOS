@@ -42,6 +42,10 @@ class NewPromiseViewController: UIViewController, BindableType {
     promiseTimeInputView.inputState = .choice(title: "몇시", input: "오후 00시 00분")
     promiseAddressInputView.inputState = .search(title: "어디서", input: "장소를 검색해주세요")
     promiseMembersInputView.inputState = .search(title: "누구랑", input: "구성원을 검색해주세요")
+    
+    if promiseAddressInputView.frame.minY >= newPromiseButton.frame.minY {
+      membersCollectionView.isHidden = true
+    }
   }
   
   override func viewWillAppear(_ animated: Bool) {

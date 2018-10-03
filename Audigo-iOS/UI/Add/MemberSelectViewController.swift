@@ -15,6 +15,7 @@ class MemberSelectViewController: UIViewController {
   @IBOutlet weak var selectButton: UIButton!
   @IBOutlet weak var searchItemTextField: UITextField!
   @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var noContactsLabel: UILabel!
   
   private var originalItems: Results<ContactItem>?
   private var items = [ContactItem]()
@@ -29,6 +30,8 @@ class MemberSelectViewController: UIViewController {
     if let items = originalItems {
       self.items = items.map { $0 }
     }
+    
+    noContactsLabel.isHidden = items.count > 0
     selectButton.setTitle("\(selectedSet.count) 확인", for: .normal)
   }
   
