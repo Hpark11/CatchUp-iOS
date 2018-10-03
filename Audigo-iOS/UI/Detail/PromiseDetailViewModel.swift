@@ -10,7 +10,6 @@ import Foundation
 import Action
 import RxSwift
 import RxDataSources
-import Apollo
 
 typealias PocketSectionModel = AnimatableSectionModel<String, PromisePocket>
 
@@ -59,7 +58,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
 
   var hasPromiseBeenUpdated: PublishSubject<Bool>?
   
-  private var watcher: GraphQLQueryWatcher<GetPromiseQuery>?
+//  private var watcher: GraphQLQueryWatcher<GetPromiseQuery>?
   private var promiseId: String
   
   private let promiseName: Variable<String>
@@ -111,7 +110,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   }
   
   private func loadSinglePromise() {
-    apollo.fetch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
+    apollo?.fetch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
       if let error = error {
         NSLog("Error while GetPromiseQuery: \(error.localizedDescription)")
         return

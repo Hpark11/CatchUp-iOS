@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import Permission
-import Apollo
+//import Apollo
 import RealmSwift
 import SwiftyContacts
 

@@ -10,7 +10,6 @@ import RxSwift
 import RxDataSources
 import Action
 import SwiftyContacts
-import Apollo
 
 enum SignInState {
   case failed
@@ -67,7 +66,7 @@ class MainViewModel: MainViewModelType {
   var promiseItems: Observable<[PromiseSectionModel]>
   var current: Observable<(Int, Int)>
   
-  private var watcher: GraphQLQueryWatcher<GetUserWithPromisesQuery>?
+//  private var watcher: GraphQLQueryWatcher<GetUserWithPromisesQuery>?
   
   private let userInfo: Variable<(id: String?, phone: String?, email: String?, nickname: String?, gender: String?, birthday: String?, ageRange: String?, profileImagePath: String?)>
   private let promiseList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
@@ -124,12 +123,12 @@ class MainViewModel: MainViewModelType {
     
     addPromiseDone.subscribe(onNext: { [weak self] _ in
       guard let strongSelf = self else { return }
-      strongSelf.watcher?.refetch()
+//      strongSelf.watcher?.refetch()
     }).disposed(by: disposeBag)
     
     hasPromiseBeenUpdated.subscribe(onNext: { [weak self] hasUpdated in
       guard let strongSelf = self else { return }
-      strongSelf.watcher?.refetch()
+//      strongSelf.watcher?.refetch()
     }).disposed(by: disposeBag)
     
     contactAuthorized.subscribe(onNext: { [weak self] authorized in
@@ -153,7 +152,7 @@ class MainViewModel: MainViewModelType {
               
               let nickname = contact.1
               
-              apollo.fetch(query: GetPocketQuery(phone: phone)) { result, error in
+              apollo?.fetch(query: GetPocketQuery(phone: phone)) { result, error in
                 guard error != nil else {
                   ContactItem.create(phone, nickname: nickname)
                   return
@@ -254,7 +253,7 @@ class MainViewModel: MainViewModelType {
     let info = userInfo.value
     guard let id = info.id, let phone = info.phone else { return }
     
-    apollo.perform(mutation: UpsertUserMutation(id: id, email: info.email, nickname: info.nickname, gender: info.gender, birthday: info.birthday, ageRange: info.ageRange, profileImagePath: info.profileImagePath, phone: phone)) { [weak self] (result, error) in
+    apollo?.perform(mutation: UpsertUserMutation(id: id, email: info.email, nickname: info.nickname, gender: info.gender, birthday: info.birthday, ageRange: info.ageRange, profileImagePath: info.profileImagePath, phone: phone)) { [weak self] (result, error) in
       guard let strongSelf = self else { return }
       
       if let error = error {
@@ -262,10 +261,10 @@ class MainViewModel: MainViewModelType {
       }
       
       if let token = registerToken {
-        apollo.perform(mutation: AttachTokenMutation(phone: phone, pushToken: token, osType: "ios"))
+        apollo?.perform(mutation: AttachTokenMutation(phone: phone, pushToken: token, osType: "ios"))
       }
       
-      strongSelf.watcher = apollo.watch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in
+      apollo?.fetch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in
         if let error = error {
           NSLog("Error while GetUserWithPromisesQuery: \(error.localizedDescription)")
           return

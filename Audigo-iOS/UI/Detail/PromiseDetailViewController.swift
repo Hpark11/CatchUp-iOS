@@ -56,7 +56,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
   
       alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
         if let text = alert.textFields?.first?.text {
-          apollo.fetch(query: SendPushQuery(pushTokens: [pushToken], title: "약속으로부터 알림", body: "\(text)", scheduledTime: "\(Date().timeInMillis)"))
+          apollo?.fetch(query: SendPushQuery(pushTokens: [pushToken], title: "약속으로부터 알림", body: "\(text)", scheduledTime: "\(Date().timeInMillis)"))
         }
       }))
 

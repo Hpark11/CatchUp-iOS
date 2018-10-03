@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2D21762642317F57372FC052 /* Pods_Audigo_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C23B93B7ECC5C9C81403950 /* Pods_Audigo_iOSTests.framework */; };
 		A0481508A224CCDA166030F8 /* Pods_Audigo_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */; };
+		CE038B0321650602001D140B /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0221650602001D140B /* Define.swift */; };
+		CE038B0521650784001D140B /* APIKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0421650784001D140B /* APIKeyProvider.swift */; };
+		CE038B07216508E8001D140B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B06216508E8001D140B /* API.swift */; };
 		CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */; };
 		CE22AEF121311A03004477E8 /* MonthPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */; };
 		CE22AEF321313C72004477E8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF221313C72004477E8 /* UIColor+Ext.swift */; };
@@ -103,6 +106,9 @@
 		A15A740631A4179D9F919E4F /* Pods-Audigo-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSTests/Pods-Audigo-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B5DF70456DCA29CA99440351 /* Pods-Audigo-iOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSUITests/Pods-Audigo-iOSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CA541320104F8C0FED8535D0 /* Pods-Audigo-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		CE038B0221650602001D140B /* Define.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
+		CE038B0421650784001D140B /* APIKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyProvider.swift; sourceTree = "<group>"; };
+		CE038B06216508E8001D140B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = SOURCE_ROOT; };
 		CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelectPickerView.swift; sourceTree = "<group>"; };
 		CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPopupViewController.swift; sourceTree = "<group>"; };
 		CE22AEF221313C72004477E8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
@@ -281,10 +287,12 @@
 		CEB41EF52115C227006BC729 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				CE038B06216508E8001D140B /* API.swift */,
 				CE22C76D213A558900878BB1 /* ApolloAPIService.swift */,
 				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
 				CE825F8F21205BF800697F52 /* Util.swift */,
 				CE2801942125A55D0066B344 /* RxApollo.swift */,
+				CE038B0221650602001D140B /* Define.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -410,6 +418,7 @@
 				CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */,
 				CE22AEF221313C72004477E8 /* UIColor+Ext.swift */,
 				CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */,
+				CE038B0421650784001D140B /* APIKeyProvider.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -467,7 +476,6 @@
 			buildPhases = (
 				4998EC94FBBA764A6C27DB0C /* [CP] Check Pods Manifest.lock */,
 				CE7D369220DA8504003E8823 /* Run R.Swift Phase */,
-				CE7D369520DA8A3F003E8823 /* Generate Apollo GraphQL API */,
 				CED4CCA620C979040063D89F /* Sources */,
 				CED4CCA720C979040063D89F /* Frameworks */,
 				CED4CCA820C979040063D89F /* Resources */,
@@ -638,8 +646,9 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSAppSync/AWSAppSync.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/Action/Action.framework",
-				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -648,6 +657,7 @@
 				"${BUILT_PRODUCTS_DIR}/Permission/Permission.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -655,13 +665,15 @@
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxKeyboard/RxKeyboard.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyContacts/SwiftyContacts.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAppSync.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -670,6 +682,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Permission.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -677,6 +690,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxKeyboard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyContacts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -716,20 +730,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"";
-		};
-		CE7D369520DA8A3F003E8823 /* Generate Apollo GraphQL API */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Apollo GraphQL API";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output ApolloAPIService.swift";
 		};
 		D02596870FAEDD9BABFE5494 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -786,6 +786,7 @@
 				CEB41F012115C3FF006BC729 /* AppCoordinator.swift in Sources */,
 				CE77EDCC21207204007A6BF6 /* NewPromiseViewModel.swift in Sources */,
 				CE22AEF321313C72004477E8 /* UIColor+Ext.swift in Sources */,
+				CE038B0521650784001D140B /* APIKeyProvider.swift in Sources */,
 				CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */,
 				CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */,
 				CEEE5D9C212717090023E2FC /* UITableView+Ext.swift in Sources */,
@@ -800,6 +801,7 @@
 				CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */,
 				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
 				CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */,
+				CE038B0321650602001D140B /* Define.swift in Sources */,
 				CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */,
 				CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */,
 				CED6494B212B803100C6BD6D /* LocationTrackingService.swift in Sources */,
@@ -810,6 +812,7 @@
 				CE22AEF121311A03004477E8 /* MonthPopupViewController.swift in Sources */,
 				CEEE5DA7212843400023E2FC /* R.generated.swift in Sources */,
 				CEEE5DA02127D6540023E2FC /* PromiseDetailViewModel.swift in Sources */,
+				CE038B07216508E8001D140B /* API.swift in Sources */,
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
 				CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */,
 				CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */,
@@ -1009,10 +1012,6 @@
 					"-framework",
 					"\"Action\"",
 					"-framework",
-					"\"Apollo\"",
-					"-framework",
-					"\"Differentiator\"",
-					"-framework",
 					"\"NSObject_Rx\"",
 					"-framework",
 					"\"Rswift\"",
@@ -1058,10 +1057,6 @@
 					"$(inherited)",
 					"-framework",
 					"\"Action\"",
-					"-framework",
-					"\"Apollo\"",
-					"-framework",
-					"\"Differentiator\"",
 					"-framework",
 					"\"NSObject_Rx\"",
 					"-framework",

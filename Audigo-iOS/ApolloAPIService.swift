@@ -1,6 +1,6 @@
 //  This file was automatically generated and should not be edited.
 
-import Apollo
+import AWSAppSync
 
 public final class AddPromiseMutation: GraphQLMutation {
   public static let operationString =

@@ -40,7 +40,7 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate {
       print("(\(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude))")
       guard let phone = UserDefaults.standard.string(forKey: "phoneNumber") else { return }
       
-      apollo.perform(mutation: RelocatePocketMutation(phone: phone, latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)) { (result, error) in
+      apollo?.perform(mutation: RelocatePocketMutation(phone: phone, latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)) { (result, error) in
         if let error = error {
           NSLog("Error while attempting to RelocatePocketMutation: \(error.localizedDescription)")
         }

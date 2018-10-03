@@ -13,7 +13,7 @@ target 'Audigo-iOS' do
   pod 'R.swift'
   pod 'RxKeyboard'
   pod 'RxGesture'
-  pod 'Apollo'
+
   pod 'RxDataSources', '~> 3.0'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
@@ -26,6 +26,7 @@ target 'Audigo-iOS' do
   pod 'Permission/Contacts'
   pod 'Permission/Location'
   pod 'Permission/Notifications'
+  pod 'AWSAppSync'
 
   target 'Audigo-iOSTests' do
     inherit! :search_paths

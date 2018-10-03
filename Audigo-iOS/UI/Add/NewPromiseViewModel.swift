@@ -222,7 +222,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       
       if strongSelf.isEditMode.value {
         if let id = strongSelf.promiseId.value, let prevTimestamp = strongSelf.prevTimestamp.value {
-          apollo.perform(mutation: UpdatePromiseMutation(
+          apollo?.perform(mutation: UpdatePromiseMutation(
             id: id,
             prevTimestamp: String(prevTimestamp),
             owner: strongSelf.owner.value,
@@ -249,7 +249,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
               let members = "\(member) 외 \(strongSelf.pockets.value.count - 1)명"
               strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
               
-              apollo.fetch(query: SendPushQuery(pushTokens: tokens, title: "새로운 약속 일정 알림", body: "일시: \(dateTime), 장소: \(location)", scheduledTime: "\(Date().timeInMillis)"))
+              apollo?.fetch(query: SendPushQuery(pushTokens: tokens, title: "새로운 약속 일정 알림", body: "일시: \(dateTime), 장소: \(location)", scheduledTime: "\(Date().timeInMillis)"))
             }
             
             if let id = result?.data?.updatePromise?.id {
@@ -258,7 +258,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
           }
         }
       } else {
-        apollo.perform(mutation: AddPromiseMutation(
+        apollo?.perform(mutation: AddPromiseMutation(
           owner: strongSelf.owner.value,
           name: strongSelf.promiseName.value,
           address: strongSelf.address.value,
@@ -283,7 +283,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
             let members = "\(member) 외 \(strongSelf.pockets.value.count - 1)명"
             strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
             
-            apollo.fetch(query: SendPushQuery(pushTokens: tokens, title: "새로운 약속 일정 알림", body: "일시: \(dateTime), 장소: \(location)", scheduledTime: "\(Date().timeInMillis)"))
+            apollo?.fetch(query: SendPushQuery(pushTokens: tokens, title: "새로운 약속 일정 알림", body: "일시: \(dateTime), 장소: \(location)", scheduledTime: "\(Date().timeInMillis)"))
           }
         }
       }
