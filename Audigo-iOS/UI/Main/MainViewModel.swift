@@ -11,12 +11,6 @@ import RxDataSources
 import Action
 import SwiftyContacts
 
-enum SignInState {
-  case failed
-  case phoneRequired
-  case completed
-}
-
 typealias PromiseSectionModel = AnimatableSectionModel<String, GetUserWithPromisesQuery.Data.User.Pocket.PromiseList>
 
 protocol MainViewModelInputsType {
@@ -74,7 +68,7 @@ class MainViewModel: MainViewModelType {
   private let currentMonth: Variable<(Int, Int)>
   private let disposeBag = DisposeBag()
   
-  init(coordinator: SceneCoordinatorType) {
+  init(coordinator: SceneCoordinatorType, phone: String) {
     let calendar = Calendar(identifier: .gregorian)
     sceneCoordinator = coordinator
     signInDone = PublishSubject()

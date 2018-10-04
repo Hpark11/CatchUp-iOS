@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import Permission
-//import Apollo
 import RealmSwift
 import SwiftyContacts
 
@@ -39,12 +38,6 @@ class MainViewController: UIViewController, BindableType {
   override func viewDidLoad() {
     super.viewDidLoad()
     UIApplication.shared.statusBarView?.backgroundColor = .white
-    
-    let session = KOSession.shared()
-    guard let s = session, s.isOpen() else {
-      needSignIn = true
-      return
-    }
   }
   
   func bindViewModel() {

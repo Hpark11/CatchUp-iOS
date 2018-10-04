@@ -16,33 +16,28 @@ import FirebaseMessaging
 import AWSAppSync
 
 var apollo: ApolloClient? // = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
+var appSyncClient: AWSAppSyncClient!
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   let gcmMessageIDKey = "gcm.message_id"
-  var appSyncClient: AWSAppSyncClient?
-  
+
   fileprivate var coordinator: SceneCoordinatorType?
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    // You can chose your database location accessible by SDK
     let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent(Define.appsyncLocalDB)
     
     do {
-      // initialize the AppSync client configuration configuration
-      
       let appSyncConfig = try AWSAppSyncClientConfiguration(url: Define.appsyncEndpointURL, serviceRegion: .APNortheast2, apiKeyAuthProvider: Define.appsyncKeyAPI, databaseURL: databaseURL)
       
       appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
-      // set id as the cache key for objects
-      appSyncClient?.apolloClient?.cacheKeyForObject = { $0["id"] }
+      appSyncClient.apolloClient?.cacheKeyForObject = { $0["id"] }
       apollo = appSyncClient?.apolloClient
     } catch {
       print("Error initializing AppSync client. \(error)")
     }
-    
     
     FirebaseApp.configure()
     GMSServices.provideAPIKey("AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE")
@@ -56,8 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     coordinator = AppCoordinator(window: uWindow)
-    let viewModel = MainViewModel(coordinator: coordinator!)
-    let scene = MainScene(viewModel: viewModel)
+    let viewModel = EntranceViewModel(coordinator: coordinator!)
+    let scene = EntranceScene(viewModel: viewModel)
     coordinator?.transition(to: scene, type: .root)
     
     UINavigationBar.appearance().shadowImage = UIImage()

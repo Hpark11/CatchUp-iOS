@@ -11,64 +11,28 @@ import Permission
 import RxSwift
 
 class PermissionsViewController: UIViewController {
-  
   let contacts: Permission = .contacts
   let location: Permission = .locationAlways
   let notifications: Permission = .notifications
-  let disposeBag = DisposeBag()
-  
-  var contactAuthorized: PublishSubject<Bool>?
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
   
   @IBAction func allowPermissions(_ sender: Any) {
-    contacts.request { status in
-      switch status {
-      case .authorized:    print("authorized")
-      case .denied:        print("denied")
-      case .disabled:      print("disabled")
-      case .notDetermined: print("not determined")
-      }
-      
-      let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
-      if permissionSet.status == .authorized {
-        self.startServices()
-      }
+    contacts.request { _ in
+      self.startServices()
     }
     
-    location.request { status in
-      switch status {
-      case .authorized:    print("authorized")
-      case .denied:        print("denied")
-      case .disabled:      print("disabled")
-      case .notDetermined: print("not determined")
-      }
-      
-      let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
-      if permissionSet.status == .authorized {
-        self.startServices()
-      }
+    location.request { _ in
+      self.startServices()
     }
     
-    notifications.request { status in
-      switch status {
-      case .authorized:    print("authorized")
-      case .denied:        print("denied")
-      case .disabled:      print("disabled")
-      case .notDetermined: print("not determined")
-      }
-      
-      let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
-      if permissionSet.status == .authorized {
-        self.startServices()
-      }
+    notifications.request { _ in
+      self.startServices()
     }
   }
   
   private func startServices() {
-    contactAuthorized?.onNext(true)
-    self.dismiss(animated: true, completion: nil)
+    let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
+    if permissionSet.status == .authorized {
+      dismiss(animated: true, completion: nil)
+    }
   }
 }

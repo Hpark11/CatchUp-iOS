@@ -54,7 +54,7 @@ class PhoneCheckViewController: UIViewController {
                   return
                 }
                 
-                UserDefaults.standard.set(phone, forKey: "phoneNumber")
+                UserDefaults.standard.set(phone, forKey: Define.keyPhoneNumber)
                 UserDefaults.standard.synchronize()
                 
                 self.phoneCertifyDone?.onNext(phone)

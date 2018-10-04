@@ -8,30 +8,66 @@
 
 import UIKit
 import RxSwift
+import Permission
 
-class EntranceViewController: UIViewController {
+class EntranceViewController: UIViewController, BindableType {
   @IBOutlet weak var loginButton: UIButton!
-  
-  var signInDone: PublishSubject<Void>?
 
+  var viewModel: EntranceViewModel!
+  var signInDone: Bool = false
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    let session = KOSession.shared()
+    if let s = session, s.isOpen()  {
+      signInDone = true
+      return
+    }
   }
   
   @IBAction func login(_ sender: Any) {
     let session = KOSession.shared()
     
     session?.open { (error) in
-      if error == nil {
-        if let s = session, s.isOpen() {
-          self.signInDone?.onNext(())
-          self.dismiss(animated: true, completion: nil)
-        } else {
-          print("Fail")
-        }
+      if let error = error {
+        print("Error Sign In: \(error)")
       } else {
-        print("Error Login: \(error)")
+        if let s = session, s.isOpen() {
+          
+        } else {
+          print("SessionFail")
+        }
       }
+    }
+  }
+  
+  func bindViewModel() {
+    loginButton.rx.bind(to: viewModel.actions.pushMainScene, input: "")
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
+    guard permissionSet.status != .authorized else {
+      if let vc = R.storyboard.main.permissionsViewController() {
+        present(vc, animated: true, completion: nil)
+      }
+      return
+    }
+    
+    guard let phoneNumber = UserDefaults.standard.string(forKey: Define.keyPhoneNumber), !phoneNumber.isEmpty else {
+      if let vc = R.storyboard.main.phoneCheckViewController() {
+        present(vc, animated: true, completion: nil)
+      }
+      return
+    }
+
+    if signInDone {
+      viewModel.actions.pushMainScene.execute(phoneNumber)
+    } else {
+      loginButton.isHidden = false
     }
   }
 }
