@@ -16,4 +16,5 @@ struct Define {
   static let appsyncKeyAPI: String = "da2-gp5jgpzvkfdnhfcjp3amglzbee"
   
   static let keyPhoneNumber: String = "phoneNumber"
+  static let initCredit: Int = 25
 }

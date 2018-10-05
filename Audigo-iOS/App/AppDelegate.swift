@@ -34,12 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
       appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
       appSyncClient.apolloClient?.cacheKeyForObject = { $0["id"] }
-      appSyncClient.fetch(query: GetCatchUpUserQuery(id: "12345")) { result, error in
-        if error != nil {
-          fatalError(error?.localizedDescription ?? "")
-        }
-        print(result)
-      }
       apollo = appSyncClient?.apolloClient
     } catch {
       print("Error initializing AppSync client. \(error)")

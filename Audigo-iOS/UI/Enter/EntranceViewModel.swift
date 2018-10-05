@@ -13,6 +13,7 @@ import AWSAppSync
 
 protocol EntranceViewModelInputsType {
   var sessionOpened: PublishSubject<String> { get }
+  var creditCheck: PublishSubject<UserInfo> { get }
 }
 
 protocol EntranceViewModelOutputsType {}
@@ -38,20 +39,25 @@ class EntranceViewModel: EntranceViewModelType {
   
   // MARK: Inputs
   var sessionOpened: PublishSubject<String>
+  var creditCheck: PublishSubject<UserInfo>
   
   // MARK: Outputs
-
+  
   init(coordinator: SceneCoordinatorType) {
     sceneCoordinator = coordinator
     disposeBag = DisposeBag()
     
     sessionOpened = PublishSubject()
+    creditCheck = PublishSubject()
     
     sessionOpened
       .flatMap { [unowned self] (phone) -> PrimitiveSequence<MaybeTrait, UserInfo> in
         return self.loadCatchUpUser(phone: phone)
         
-      }.flatMap { (userInfo) -> PrimitiveSequence<MaybeTrait, UpdateCatchUpUserMutation.Data> in
+      }.do(onNext: { [unowned self] (userInfo) in
+        self.userCreditCheck(userInfo: userInfo)
+        
+      }).flatMap { (userInfo) -> PrimitiveSequence<MaybeTrait, UpdateCatchUpUserMutation.Data> in
         return appSyncClient.rx.perform(mutation: UpdateCatchUpUserMutation(
           id: userInfo.id,
           data: CatchUpUserInput(
@@ -67,7 +73,7 @@ class EntranceViewModel: EntranceViewModelType {
         if let phone = data.updateCatchUpUser?.phone {
           self.pushMainScene.execute(phone)
         }
-      }, onError: { error in
+        }, onError: { error in
           fatalError(error.localizedDescription)
       }).disposed(by: disposeBag)
   }
@@ -123,6 +129,13 @@ class EntranceViewModel: EntranceViewModelType {
       
       return Disposables.create()
     }
+  }
+  
+  private func userCreditCheck(userInfo: UserInfo) {
+    appSyncClient.rx.fetch(query: GetCatchUpUserQuery(id: userInfo.id))
+      .flatMap{ (data) -> PrimitiveSequence<MaybeTrait, UpdateCatchUpUserMutation.Data> in
+      return appSyncClient.rx.perform(mutation: UpdateCatchUpUserMutation(id: userInfo.id, data: CatchUpUserInput(credit: data.getCatchUpUser?.credit ?? Define.initCredit)))
+    }.subscribe().disposed(by: disposeBag)
   }
   
   lazy var pushMainScene: Action<String, Void> = {
