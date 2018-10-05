@@ -37,7 +37,6 @@ final class AppCoordinator: SceneCoordinatorType, HasDisposeBag {
             guard let navigationController = currentViewController?.navigationController else {
                 fatalError("Can't push a view controller without a current navigation controller")
             }
-            // one-off subscription to be notified when push complete
             navigationController.rx.delegate
                 .sentMessage(#selector(UINavigationControllerDelegate.navigationController(_:didShow:animated:)))
                 .map { _ in }
@@ -68,21 +67,16 @@ final class AppCoordinator: SceneCoordinatorType, HasDisposeBag {
     }
 }
 
-// MARK: Pop logic
-
 extension AppCoordinator {
     fileprivate func pop(animated: Bool) -> PublishSubject<Void> {
         let subject = PublishSubject<Void>()
       
         if let presenter = currentViewController?.presentingViewController {
-            // dismiss a modal controller
             currentViewController?.dismiss(animated: animated) {
                 self.currentViewController = AppCoordinator.actualViewController(for: presenter)
                 subject.onCompleted()
             }
         } else if let navigationController = currentViewController?.navigationController {
-            // navigate up the stack
-            // one-off subscription to be notified when pop complete
             navigationController.rx.delegate
                 .sentMessage(#selector(UINavigationControllerDelegate.navigationController(_:didShow:animated:)))
                 .take(1) // To delete if already in return at bottom
@@ -121,7 +115,6 @@ extension AppCoordinator {
         
         return subject
     }
-    
     
     fileprivate func popToVC(_ viewController: UIViewController, animated: Bool) -> PublishSubject<Void> {
         let subject = PublishSubject<Void>()

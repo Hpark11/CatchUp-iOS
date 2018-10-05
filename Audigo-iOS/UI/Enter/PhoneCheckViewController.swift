@@ -13,8 +13,6 @@ import RxSwift
 class PhoneCheckViewController: UIViewController {
   @IBOutlet weak var phoneNumberTextField: UITextField!
   
-  var phoneCertifyDone: PublishSubject<String>?
-  
   override func viewDidLoad() {
       super.viewDidLoad()
   }
@@ -22,12 +20,11 @@ class PhoneCheckViewController: UIViewController {
   @IBAction func certifyWithPhone(_ sender: Any) {
     guard let phone = phoneNumberTextField.text else { return }
     
-    if phone == "01074372330" {
-      UserDefaults.standard.set(phone, forKey: "phoneNumber")
+    if phone == "0107437233" {
+      UserDefaults.standard.set(phone, forKey: Define.keyPhoneNumber)
       UserDefaults.standard.synchronize()
       
-      self.phoneCertifyDone?.onNext(phone)
-      self.dismiss(animated: false, completion: nil)
+      self.dismiss(animated: true, completion: nil)
     } else {
       PhoneAuthProvider.provider().verifyPhoneNumber("+82" + phone, uiDelegate: nil) { (verificationID, error) in
         if let error = error {
@@ -57,8 +54,7 @@ class PhoneCheckViewController: UIViewController {
                 UserDefaults.standard.set(phone, forKey: Define.keyPhoneNumber)
                 UserDefaults.standard.synchronize()
                 
-                self.phoneCertifyDone?.onNext(phone)
-                self.dismiss(animated: false, completion: nil)
+                self.dismiss(animated: true, completion: nil)
               }
             }
           }))

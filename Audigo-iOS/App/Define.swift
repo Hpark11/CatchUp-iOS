@@ -13,7 +13,7 @@ struct Define {
   static let appsyncRegion: AWSRegionType = .APNortheast2
   static let appsyncEndpointURL: URL = URL(string: "https://f3auk6pacreq7fpn7wpky2rvhm.appsync-api.ap-northeast-2.amazonaws.com/graphql")!
   static let appsyncLocalDB: String = "appsync-catchup-db"
-  static let appsyncKeyAPI: String = "da2-36apfe4xbzhjfjpz4iwim47ezi"
+  static let appsyncKeyAPI: String = "da2-gp5jgpzvkfdnhfcjp3amglzbee"
   
   static let keyPhoneNumber: String = "phoneNumber"
 }

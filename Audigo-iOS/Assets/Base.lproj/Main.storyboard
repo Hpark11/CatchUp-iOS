@@ -96,7 +96,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d59-dM-L8h">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d59-dM-L8h">
                                 <rect key="frame" x="22.5" y="409" width="275" height="46"/>
                                 <state key="normal" image="image_kakao_login"/>
                                 <connections>
@@ -1229,7 +1229,7 @@
         <!--Navigation Controller-->
         <scene sceneID="oVu-n1-0Pp">
             <objects>
-                <navigationController storyboardIdentifier="MainNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="ZFW-yJ-n3d" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MainNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="ZFW-yJ-n3d" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ani-kn-Rao">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>

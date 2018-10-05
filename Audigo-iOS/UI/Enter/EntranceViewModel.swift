@@ -47,7 +47,7 @@ class EntranceViewModel: EntranceViewModelType {
     
     sessionOpened = PublishSubject()
     
-    sessionOpened.asMaybe()
+    sessionOpened
       .flatMap { [unowned self] (phone) -> PrimitiveSequence<MaybeTrait, UserInfo> in
         return self.loadCatchUpUser(phone: phone)
         
@@ -63,12 +63,12 @@ class EntranceViewModel: EntranceViewModelType {
             ageRange: userInfo.ageRange,
             phone: userInfo.phone)
         ))
-      }.subscribe(onSuccess: { [unowned self] data in
+      }.subscribe(onNext: { [unowned self] data in
         if let phone = data.updateCatchUpUser?.phone {
           self.pushMainScene.execute(phone)
         }
-      }, onError: { (error) in
-        fatalError(error.localizedDescription)
+      }, onError: { error in
+          fatalError(error.localizedDescription)
       }).disposed(by: disposeBag)
   }
   
@@ -131,7 +131,7 @@ class EntranceViewModel: EntranceViewModelType {
       let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator)
       viewModel.phone = phone
       let scene = MainScene(viewModel: viewModel)
-      return strongSelf.sceneCoordinator.transition(to: scene, type: .push(animated: true))
+      return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
     }
   }()
   
