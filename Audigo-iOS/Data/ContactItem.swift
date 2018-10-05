@@ -15,7 +15,6 @@ import RealmSwift
   }
   
   dynamic var phone: String = ""
-  
   dynamic var nickname: String = ""
   dynamic var imagePath: String = ""
   dynamic var pushToken: String = ""

@@ -69,11 +69,21 @@ class EntranceViewModel: EntranceViewModelType {
             ageRange: userInfo.ageRange,
             phone: userInfo.phone)
         ))
-      }.subscribe(onNext: { [unowned self] data in
-        if let phone = data.updateCatchUpUser?.phone {
+      }.flatMap({ data -> PrimitiveSequence<MaybeTrait, UpdateCatchUpContactMutation.Data> in
+        guard let user = data.updateCatchUpUser, let phone = user.phone else { throw SignInError.phoneNotFoundError("NO CELL PHONE NUMBER") }
+        let pushToken = UserDefaults.standard.string(forKey: Define.keyPushToken)
+        
+        return appSyncClient.rx.perform(mutation: UpdateCatchUpContactMutation(phone: phone, contact: ContactUpdateInput(
+          nickname: user.nickname,
+          profileImagePath: user.profileImagePath,
+          pushToken: pushToken,
+          osType: Define.platform)
+        ))
+      }).subscribe(onNext: { [unowned self] data in
+        if let phone = data.updateCatchUpContact?.phone {
           self.pushMainScene.execute(phone)
         }
-        }, onError: { error in
+      }, onError: { error in
           fatalError(error.localizedDescription)
       }).disposed(by: disposeBag)
   }
@@ -150,6 +160,7 @@ class EntranceViewModel: EntranceViewModelType {
   
   public enum SignInError: Error {
     case userIdNotFoundError(String)
+    case phoneNotFoundError(String)
   }
 }
 

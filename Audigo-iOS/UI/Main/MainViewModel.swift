@@ -14,11 +14,8 @@ import SwiftyContacts
 typealias PromiseSectionModel = AnimatableSectionModel<String, GetUserWithPromisesQuery.Data.User.Pocket.PromiseList>
 
 protocol MainViewModelInputsType {
-  var signInDone: PublishSubject<Void> { get }
-  var phoneCertifyDone: PublishSubject<String> { get }
   var monthSelectDone: PublishSubject<(Int, Int)> { get }
   var addPromiseDone: PublishSubject<Void> { get }
-  var contactAuthorized: PublishSubject<Bool> { get }
   var hasPromiseBeenUpdated: PublishSubject<Bool> { get }
 }
 
@@ -47,18 +44,13 @@ class MainViewModel: MainViewModelType {
   fileprivate var sceneCoordinator: SceneCoordinatorType
   
   // MARK: Inputs
-  var signInDone: PublishSubject<Void>
-  var phoneCertifyDone: PublishSubject<String>
   var monthSelectDone: PublishSubject<(Int, Int)>
   var addPromiseDone: PublishSubject<Void>
-  var contactAuthorized: PublishSubject<Bool>
   var hasPromiseBeenUpdated: PublishSubject<Bool>
   
   // MARK: Outputs
   var promiseItems: Observable<[PromiseSectionModel]>
   var current: Observable<(Int, Int)>
-  
-//  private var watcher: GraphQLQueryWatcher<GetUserWithPromisesQuery>?
   
   private let userInfo: Variable<(id: String?, phone: String?, email: String?, nickname: String?, gender: String?, birthday: String?, ageRange: String?, profileImagePath: String?)>
   private let promiseList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
@@ -71,11 +63,8 @@ class MainViewModel: MainViewModelType {
   init(coordinator: SceneCoordinatorType) {
     let calendar = Calendar(identifier: .gregorian)
     sceneCoordinator = coordinator
-    signInDone = PublishSubject()
-    phoneCertifyDone = PublishSubject()
     monthSelectDone = PublishSubject()
     addPromiseDone = PublishSubject()
-    contactAuthorized = PublishSubject()
     hasPromiseBeenUpdated = PublishSubject()
     
     userInfo = Variable((id: nil, phone: nil, email: nil, nickname: nil, gender: nil, birthday: nil, ageRange: nil, profileImagePath: nil))
@@ -91,17 +80,6 @@ class MainViewModel: MainViewModelType {
     current = currentMonth.asObservable()
     
     // Inputs
-    signInDone.subscribe(onNext: { [weak self]  _ in
-      guard let strongSelf = self else { return }
-      strongSelf.getUserInfoFromKakaoSDK()
-    }).disposed(by: disposeBag)
-    
-    phoneCertifyDone.subscribe(onNext: { [weak self] (phone) in
-      guard let strongSelf = self else { return }
-      var userInfoValue = strongSelf.userInfo.value
-      userInfoValue.phone = phone
-      strongSelf.userInfo.value = userInfoValue
-    }).disposed(by: disposeBag)
     
     monthSelectDone.subscribe(onNext: { [weak self] (month, year) in
       guard let strongSelf = self else { return }
@@ -119,112 +97,49 @@ class MainViewModel: MainViewModelType {
 //      strongSelf.watcher?.refetch()
     }).disposed(by: disposeBag)
     
-    contactAuthorized.subscribe(onNext: { [weak self] authorized in
-      guard let strongSelf = self, authorized else { return }
-      LocationTrackingService.shared.startUpdatingLocation()
-      
-      let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
-      
-      rx_fetchContacts().map({ contacts in
-        return contacts.compactMap {
-          ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
-        }
-      }).subscribeOn(backgroundScheduler)
-        .observeOn(MainScheduler.instance)
-        .subscribe(onNext: { (contacts) in
-          contacts.forEach { contact in
-            if contact.0.starts(with: "010") {
-              let phone = contact.0
-                .components(separatedBy:CharacterSet.decimalDigits.inverted)
-                .joined(separator: "")
+    LocationTrackingService.shared.startUpdatingLocation()
+    let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
+    
+    rx_fetchContacts().map({ contacts in
+      return contacts.compactMap {
+        ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
+      }
+    }).subscribeOn(backgroundScheduler)
+      .flatMap({ contacts in
+        
+        contacts.filter({ contact in
+          return contact.0.starts(with: Define.koreanNormalCellPhonePrefix)
+        }).map({ contact in
+          return contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+        })
+        
+        _ = contacts.chunked(into: Define.dynamoDbBatchLimit).compactMap({ chunk in
+          
+        })
+//        val ops = list.chunked(Define.DYNAMODB_BATCHGET_LIMIT).map { chunk ->
+//          data.requestContacts(chunk.map { it.phone })
+//        }
+      })
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { (contacts) in
+        contacts.forEach { contact in
+          if contact.0.starts(with: Define.koreanNormalCellPhonePrefix) {
+            let phone = contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+            let nickname = contact.1
+            
+            apollo?.fetch(query: GetPocketQuery(phone: phone)) { result, error in
+              guard error != nil else {
+                ContactItem.create(phone, nickname: nickname)
+                return
+              }
               
-              let nickname = contact.1
-              
-              apollo?.fetch(query: GetPocketQuery(phone: phone)) { result, error in
-                guard error != nil else {
-                  ContactItem.create(phone, nickname: nickname)
-                  return
-                }
-                
-                if let pocket = result?.data?.pocket {
-                  ContactItem.create(pocket.phone, nickname: pocket.nickname ?? "", imagePath: pocket.profileImagePath ?? "", pushToken: pocket.pushToken ?? "")
-                }
+              if let pocket = result?.data?.pocket {
+                ContactItem.create(pocket.phone, nickname: pocket.nickname ?? "", imagePath: pocket.profileImagePath ?? "", pushToken: pocket.pushToken ?? "")
               }
             }
           }
-        }).disposed(by: strongSelf.disposeBag)
-    }).disposed(by: disposeBag)
-  }
-  
-  private func getUserInfoFromKakaoSDK() {
-    KOSessionTask.userMeTask(completion: { [unowned self] (error, me) in
-      if let error = error {
-        fatalError(error.localizedDescription)
-      }
-      
-      let gender: String?
-      let ageRange: String?
-      let phoneNumber: String?
-      
-      if let genderCode = me?.account?.gender {
-        switch genderCode {
-        case .female:
-          gender = "여성"
-        case .male:
-          gender = "남성"
-        default:
-          gender = nil
         }
-      } else {
-        gender = nil
-      }
-      
-      if let ageCode = me?.account?.ageRange {
-        switch ageCode {
-        case .type15:
-          ageRange = "15세 ~ 19세"
-        case .type20:
-          ageRange = "20세 ~ 29세"
-        case .type30:
-          ageRange = "30세 ~ 39세"
-        case .type40:
-          ageRange = "40세 ~ 49세"
-        case .type50:
-          ageRange = "50세 ~ 59세"
-        case .type60:
-          ageRange = "60세 ~ 69세"
-        case .type70:
-          ageRange = "70세 ~ 79세"
-        case .type80:
-          ageRange = "80세 ~ 89세"
-        case .type90:
-          ageRange = "90세 이상"
-        default:
-          ageRange = nil
-        }
-      } else {
-        ageRange = nil
-      }
-      
-      if let number = UserDefaults.standard.string(forKey: "phoneNumber") {
-        phoneNumber = number
-      } else if let number = me?.account?.phoneNumber {
-        phoneNumber = number
-      } else {
-        phoneNumber = nil
-      }
-      
-      self.userInfo.value = (
-        id: me?.id,
-        phone: phoneNumber,
-        email: me?.account?.email,
-        nickname: me?.nickname,
-        birthday: me?.account?.birthday,
-        profileImagePath: me?.profileImageURL?.absoluteString,
-        gender: gender,
-        ageRange: ageRange
-      )
-    })
+      }).disposed(by: disposeBag)
   }
   
   private func filterPromisesByMonth(month: Int, year: Int) {
@@ -246,10 +161,6 @@ class MainViewModel: MainViewModelType {
       
       if let error = error {
         NSLog("Error while attempting to UpsertUserMutation: \(error.localizedDescription)")
-      }
-      
-      if let token = registerToken {
-        apollo?.perform(mutation: AttachTokenMutation(phone: phone, pushToken: token, osType: "ios"))
       }
       
       apollo?.fetch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in

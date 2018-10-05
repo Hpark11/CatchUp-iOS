@@ -265,7 +265,7 @@ extension AppDelegate : MessagingDelegate {
     
     // TODO: If necessary send token to application server.
     // Note: This callback is fired at each app startup and whenever a new token is generated.
-    registerToken = fcmToken
+    UserDefaults.standard.set(fcmToken, forKey: Define.keyPushToken)
   }
   // [END refresh_token]
   // [START ios_10_data_message]
@@ -276,7 +276,5 @@ extension AppDelegate : MessagingDelegate {
   }
   // [END ios_10_data_message]
 }
-
-var registerToken: String?
 
 

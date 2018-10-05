@@ -16,5 +16,12 @@ struct Define {
   static let appsyncKeyAPI: String = "da2-gp5jgpzvkfdnhfcjp3amglzbee"
   
   static let keyPhoneNumber: String = "phoneNumber"
+  static let keyPushToken: String = "pushToken"
+  
   static let initCredit: Int = 25
+  static let dynamoDbBatchLimit: Int = 100
+  
+  static let koreanNormalCellPhonePrefix: String = "010"
+  static let ko_KR: String = "+82"
+  static let platform: String = "ios"
 }

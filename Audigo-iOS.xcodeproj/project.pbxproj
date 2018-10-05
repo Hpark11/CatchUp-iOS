@@ -44,6 +44,7 @@
 		CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */; };
 		CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */; };
 		CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */; };
+		CE7B0DC52167969F007DAA2A /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DC42167969F007DAA2A /* Array+Ext.swift */; };
 		CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */; };
 		CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */; };
 		CE825F9021205BF800697F52 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE825F8F21205BF800697F52 /* Util.swift */; };
@@ -145,6 +146,7 @@
 		CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailViewController.swift; sourceTree = "<group>"; };
 		CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopupViewController.swift; sourceTree = "<group>"; };
 		CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePopupViewController.swift; sourceTree = "<group>"; };
+		CE7B0DC42167969F007DAA2A /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
 		CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KakaoOpenSDK-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */,
 				CE038B0421650784001D140B /* APIKeyProvider.swift */,
 				CE038B0C2166329B001D140B /* RxAppSync.swift */,
+				CE7B0DC42167969F007DAA2A /* Array+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -810,6 +813,7 @@
 				CE038B0D2166329B001D140B /* RxAppSync.swift in Sources */,
 				CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */,
 				CED88AA5216656BD0045E2E5 /* UserInfo.swift in Sources */,
+				CE7B0DC52167969F007DAA2A /* Array+Ext.swift in Sources */,
 				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
 				CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */,
 				CE038B0321650602001D140B /* Define.swift in Sources */,
