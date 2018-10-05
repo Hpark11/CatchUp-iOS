@@ -14,7 +14,8 @@ class EntranceViewController: UIViewController, BindableType {
   @IBOutlet weak var loginButton: UIButton!
 
   var viewModel: EntranceViewModel!
-  var signInDone: Bool = false
+  private var signInDone: Bool = false
+  private var phone: String?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -22,29 +23,26 @@ class EntranceViewController: UIViewController, BindableType {
     let session = KOSession.shared()
     if let s = session, s.isOpen()  {
       signInDone = true
-      return
     }
   }
   
   @IBAction func login(_ sender: Any) {
     let session = KOSession.shared()
     
-    session?.open { (error) in
+    session?.open { [unowned self] (error) in
       if let error = error {
         print("Error Sign In: \(error)")
       } else {
-        if let s = session, s.isOpen() {
-          
+        if let s = session, let phone = self.phone, s.isOpen() {
+          self.viewModel.inputs.sessionOpened.onNext(phone)
         } else {
-          print("SessionFail")
+          print("Open Session Failed")
         }
       }
     }
   }
   
-  func bindViewModel() {
-    loginButton.rx.bind(to: viewModel.actions.pushMainScene, input: "")
-  }
+  func bindViewModel() {}
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
@@ -57,15 +55,16 @@ class EntranceViewController: UIViewController, BindableType {
       return
     }
     
-    guard let phoneNumber = UserDefaults.standard.string(forKey: Define.keyPhoneNumber), !phoneNumber.isEmpty else {
+    guard let phone = UserDefaults.standard.string(forKey: Define.keyPhoneNumber), !phone.isEmpty else {
       if let vc = R.storyboard.main.phoneCheckViewController() {
         present(vc, animated: true, completion: nil)
       }
       return
     }
 
+    self.phone = phone
     if signInDone {
-      viewModel.actions.pushMainScene.execute(phoneNumber)
+      viewModel.inputs.sessionOpened.onNext(phone)
     } else {
       loginButton.isHidden = false
     }

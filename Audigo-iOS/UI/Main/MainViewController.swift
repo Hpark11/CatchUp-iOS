@@ -41,29 +41,6 @@ class MainViewController: UIViewController, BindableType {
   }
   
   func bindViewModel() {
-    viewModel.state.subscribe(onNext: { [weak self] (state) in
-      guard let strongSelf = self else { return }
-      switch state {
-      case .completed:
-        let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
-        if let vc = R.storyboard.main.permissionsViewController(), permissionSet.status != .authorized {
-          vc.contactAuthorized = strongSelf.viewModel.contactAuthorized
-          strongSelf.present(vc, animated: true, completion: nil)
-        } else {
-          strongSelf.viewModel.contactAuthorized.onNext(true)
-        }
-        strongSelf.viewModel.configureUser()
-        strongSelf.isConfigured = true
-      case .phoneRequired:
-        if let vc = R.storyboard.main.phoneCheckViewController() {
-          vc.phoneCertifyDone = strongSelf.viewModel.phoneCertifyDone
-          strongSelf.present(vc, animated: true, completion: nil)
-        }
-      case .failed:
-        break
-      }
-    }).disposed(by: disposeBag)
-    
     let dataSource = RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)
     
     viewModel.promiseItems
@@ -103,19 +80,6 @@ class MainViewController: UIViewController, BindableType {
       .disposed(by: disposeBag)
     
     newPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    if needSignIn {
-      if let vc = R.storyboard.main.entranceViewController() {
-        vc.signInDone = viewModel.signInDone
-        present(vc, animated: true, completion: nil)
-        needSignIn = false
-      }
-    } else if !isConfigured {
-      viewModel.signInDone.onNext(())
-    }
   }
   
   @IBAction func selectMonth(_ sender: Any) {

@@ -99,6 +99,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d59-dM-L8h">
                                 <rect key="frame" x="22.5" y="409" width="275" height="46"/>
                                 <state key="normal" image="image_kakao_login"/>
+                                <connections>
+                                    <action selector="login:" destination="2YO-Ok-DZe" eventType="touchUpInside" id="VRc-O1-bem"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_logo_symbol" translatesAutoresizingMaskIntoConstraints="NO" id="dD7-5A-rfp">
                                 <rect key="frame" x="124" y="167" width="72" height="66"/>

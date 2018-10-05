@@ -23,7 +23,6 @@ protocol MainViewModelInputsType {
 }
 
 protocol MainViewModelOutputsType {
-  var state: Observable<SignInState> { get }
   var promiseItems: Observable<[PromiseSectionModel]> { get }
   var current: Observable<(Int, Int)> { get }
 }
@@ -56,7 +55,6 @@ class MainViewModel: MainViewModelType {
   var hasPromiseBeenUpdated: PublishSubject<Bool>
   
   // MARK: Outputs
-  var state: Observable<SignInState>
   var promiseItems: Observable<[PromiseSectionModel]>
   var current: Observable<(Int, Int)>
   
@@ -68,7 +66,9 @@ class MainViewModel: MainViewModelType {
   private let currentMonth: Variable<(Int, Int)>
   private let disposeBag = DisposeBag()
   
-  init(coordinator: SceneCoordinatorType, phone: String) {
+  var phone: String = ""
+  
+  init(coordinator: SceneCoordinatorType) {
     let calendar = Calendar(identifier: .gregorian)
     sceneCoordinator = coordinator
     signInDone = PublishSubject()
@@ -82,12 +82,6 @@ class MainViewModel: MainViewModelType {
     promiseList = Variable([])
     filteredList = Variable([])
     currentMonth = Variable((calendar.component(.month, from: Date()), calendar.component(.year, from: Date())))
-    
-    state = userInfo.asObservable().map({ userInfo in
-      guard let _ = userInfo.id else { return .failed }
-      guard let _ = userInfo.phone else { return .phoneRequired }
-      return .completed
-    })
     
     promiseItems = filteredList.asObservable()
       .map({ (promiseList) in
