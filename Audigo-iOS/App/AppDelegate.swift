@@ -14,6 +14,7 @@ import GooglePlaces
 import UserNotifications
 import FirebaseMessaging
 import AWSAppSync
+import RealmSwift
 
 var apollo: ApolloClient? // = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
 var appSyncClient: AWSAppSyncClient!
@@ -27,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   fileprivate var coordinator: SceneCoordinatorType?
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    
+    // AWS AppSync --------------------------------------------------------------------------------------------]
     let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent(Define.appsyncLocalDB)
     
     do {
@@ -39,35 +42,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       print("Error initializing AppSync client. \(error)")
     }
     
+    // Firebase And Google Services ---------------------------------------------------------------------------]
     FirebaseApp.configure()
     GMSServices.provideAPIKey("AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE")
     GMSPlacesClient.provideAPIKey("AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE")
     
+    // Window Config ------------------------------------------------------------------------------------------]
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
-    
     guard let uWindow = window else {
       fatalError("Unable to create application window")
     }
     
+    UINavigationBar.appearance().shadowImage = UIImage()
+    UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+    
+    // App Coordinator  ---------------------------------------------------------------------------------------]
     coordinator = AppCoordinator(window: uWindow)
     let viewModel = EntranceViewModel(coordinator: coordinator!)
     let scene = EntranceScene(viewModel: viewModel)
     coordinator?.transition(to: scene, type: .root)
     
-    UINavigationBar.appearance().shadowImage = UIImage()
-    UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+    // Realm Config  ------------------------------------------------------------------------------------------]
+    Realm.Configuration.defaultConfiguration = Realm.Configuration(
+      schemaVersion: 1,
+      migrationBlock: { migration, oldVersion in
+        if (oldVersion < 1) {
+          
+        }
+    })
     
-    // [START set_messaging_delegate]
+    // Push Messaging  ----------------------------------------------------------------------------------------]
     Messaging.messaging().delegate = self
-    // [END set_messaging_delegate]
-    // Register for remote notifications. This shows a permission dialog on first run, to
-    // show the dialog at a more appropriate time move this registration accordingly.
-    // [START register_for_notifications]
+  
     if #available(iOS 10.0, *) {
-      // For iOS 10 display notification (sent via APNS)
       UNUserNotificationCenter.current().delegate = self
-      
       let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
       UNUserNotificationCenter.current().requestAuthorization(
         options: authOptions,
@@ -79,9 +88,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     application.registerForRemoteNotifications()
-    
-    // [END register_for_notifications]
-    
     return true
   }
   

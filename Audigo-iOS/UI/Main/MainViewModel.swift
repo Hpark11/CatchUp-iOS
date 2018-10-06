@@ -80,7 +80,6 @@ class MainViewModel: MainViewModelType {
     current = currentMonth.asObservable()
     
     // Inputs
-    
     monthSelectDone.subscribe(onNext: { [weak self] (month, year) in
       guard let strongSelf = self else { return }
       strongSelf.filterPromisesByMonth(month: month, year: year)
@@ -97,49 +96,50 @@ class MainViewModel: MainViewModelType {
 //      strongSelf.watcher?.refetch()
     }).disposed(by: disposeBag)
     
+    // Location Tracking ---------------------------------------------------------------------------------------]
     LocationTrackingService.shared.startUpdatingLocation()
-    let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
     
+    // Contact Update ------------------------------------------------------------------------------------------]
+    let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
     rx_fetchContacts().map({ contacts in
       return contacts.compactMap {
         ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
       }
     }).subscribeOn(backgroundScheduler)
-      .flatMap({ contacts in
-        
-        contacts.filter({ contact in
+      .map { contacts in
+        return contacts.filter { contact in
           return contact.0.starts(with: Define.koreanNormalCellPhonePrefix)
-        }).map({ contact in
-          return contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
-        })
+        }.map { contact in
+          return (
+            contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: ""),
+            contact.1
+          )
+        }
         
-        _ = contacts.chunked(into: Define.dynamoDbBatchLimit).compactMap({ chunk in
-          
+      }.do(onNext: { contacts in
+        contacts.forEach { (phone, nickname) in
+          ContactItem.add(phone, nickname: nickname)
+        }
+        
+      }).flatMap({ contacts -> Observable<BatchGetCatchUpContactsQuery.Data> in
+        let ops = contacts.map { contact in
+          return contact.0
+        }.chunked(into: Define.dynamoDbBatchLimit).compactMap({ chunk in
+          return appSyncClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: chunk)).asObservable()
         })
-//        val ops = list.chunked(Define.DYNAMODB_BATCHGET_LIMIT).map { chunk ->
-//          data.requestContacts(chunk.map { it.phone })
-//        }
+  
+        return Observable.merge(ops)
       })
       .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { (contacts) in
-        contacts.forEach { contact in
-          if contact.0.starts(with: Define.koreanNormalCellPhonePrefix) {
-            let phone = contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
-            let nickname = contact.1
-            
-            apollo?.fetch(query: GetPocketQuery(phone: phone)) { result, error in
-              guard error != nil else {
-                ContactItem.create(phone, nickname: nickname)
-                return
-              }
-              
-              if let pocket = result?.data?.pocket {
-                ContactItem.create(pocket.phone, nickname: pocket.nickname ?? "", imagePath: pocket.profileImagePath ?? "", pushToken: pocket.pushToken ?? "")
-              }
+      .subscribe{ (data) in
+        if let contacts = data.element?.batchGetCatchUpContacts {
+          contacts.forEach { contactData in
+            if let contact = contactData {
+              ContactItem.create(contact.phone, imagePath: contact.profileImagePath ?? "", pushToken: contact.pushToken ?? "")
             }
           }
         }
-      }).disposed(by: disposeBag)
+      }.disposed(by: disposeBag)
   }
   
   private func filterPromisesByMonth(month: Int, year: Int) {

@@ -23,17 +23,17 @@ import RealmSwift
     return ContactItem.Property.phone.rawValue
   }
   
-  convenience init(_ phone: String, nickname: String, imagePath: String, pushToken: String) {
+  convenience init(_ phone: String, imagePath: String, pushToken: String) {
     self.init()
     self.phone = phone
-    self.nickname = nickname
     self.imagePath = imagePath
     self.pushToken = pushToken
   }
   
-  convenience init(_ phone: String) {
+  convenience init(_ phone: String, nickname: String) {
     self.init()
     self.phone = phone
+    self.nickname = nickname
   }
 }
 
@@ -47,11 +47,10 @@ extension ContactItem {
     return realm.object(ofType: ContactItem.self, forPrimaryKey: phone)
   }
   
-  static func create(_ phone: String, nickname: String, imagePath: String, pushToken: String, in realm: Realm = try! Realm()) {
+  static func create(_ phone: String, imagePath: String, pushToken: String, in realm: Realm = try! Realm()) {
     try! realm.write {
       realm.create(ContactItem.self, value: [
         ContactItem.Property.phone.rawValue: phone,
-        ContactItem.Property.nickname.rawValue: nickname,
         ContactItem.Property.imagePath.rawValue: imagePath,
         ContactItem.Property.pushToken.rawValue: pushToken
         ], update: true)
@@ -66,19 +65,19 @@ extension ContactItem {
   }
   
   @discardableResult
-  static func add(_ phone: String, nickname: String, imagePath: String, pushToken: String, in realm: Realm = try! Realm())-> ContactItem {
-    let item = ContactItem(phone, nickname: nickname, imagePath: imagePath, pushToken: pushToken)
+  static func add(_ phone: String, imagePath: String, pushToken: String, in realm: Realm = try! Realm(), update: Bool = true)-> ContactItem {
+    let item = ContactItem(phone, imagePath: imagePath, pushToken: pushToken)
     try! realm.write {
-      realm.add(item)
+      realm.add(item, update: update)
     }
     return item
   }
   
   @discardableResult
-  static func add(_ phone: String, in realm: Realm = try! Realm())-> ContactItem {
-    let item = ContactItem(phone)
+  static func add(_ phone: String, nickname: String, in realm: Realm = try! Realm(), update: Bool = true)-> ContactItem {
+    let item = ContactItem(phone, nickname: nickname)
     try! realm.write {
-      realm.add(item)
+      realm.add(item, update: update)
     }
     return item
   }
