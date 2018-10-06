@@ -46,7 +46,7 @@ public final class AppSyncReactiveExtensions {
 
   public func watch<Query: GraphQLQuery>(
     query: Query,
-    cachePolicy: CachePolicy = .returnCacheDataElseFetch,
+    cachePolicy: CachePolicy = .returnCacheDataAndFetch,
     queue: DispatchQueue = DispatchQueue.main) -> Observable<Query.Data> {
     return Observable.create { observer in
       let watcher = self.client.watch(query: query, cachePolicy: cachePolicy, queue: queue) { result, error in

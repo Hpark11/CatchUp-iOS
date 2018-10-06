@@ -12,7 +12,7 @@ import Action
 import SwiftyContacts
 import AWSAppSync
 
-typealias PromiseSectionModel = AnimatableSectionModel<String, GetUserWithPromisesQuery.Data.User.Pocket.PromiseList>
+typealias PromiseSectionModel = AnimatableSectionModel<String, CatchUpPromise>
 
 protocol MainViewModelInputsType {
   var monthSelectDone: PublishSubject<(Int, Int)> { get }
@@ -56,11 +56,17 @@ class MainViewModel: MainViewModelType {
   var current: Observable<(Int, Int)>
   
   private let userInfo: Variable<(id: String?, phone: String?, email: String?, nickname: String?, gender: String?, birthday: String?, ageRange: String?, profileImagePath: String?)>
-  private let promiseList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
-  private let filteredList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
+  private let promiseList: Variable<[CatchUpPromise]>
+  private let filteredList: Variable<[CatchUpPromise]>
   private let currentMonth: Variable<(Int, Int)>
   
-  var phone: String = ""
+  var phone: String = "" {
+    didSet {
+      if !phone.isEmpty {
+        refreshPromiseList()
+      }
+    }
+  }
   
   init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient) {
     let calendar = Calendar(identifier: .gregorian)
@@ -92,12 +98,12 @@ class MainViewModel: MainViewModelType {
     
     addPromiseDone.subscribe(onNext: { [weak self] _ in
       guard let strongSelf = self else { return }
-//      strongSelf.watcher?.refetch()
+      strongSelf.refreshPromiseList()
     }).disposed(by: disposeBag)
     
     hasPromiseBeenUpdated.subscribe(onNext: { [weak self] hasUpdated in
       guard let strongSelf = self else { return }
-//      strongSelf.watcher?.refetch()
+      strongSelf.refreshPromiseList()
     }).disposed(by: disposeBag)
     
     // Location Tracking ---------------------------------------------------------------------------------------]
@@ -113,11 +119,11 @@ class MainViewModel: MainViewModelType {
       .map { contacts in
         return contacts.filter { contact in
           return contact.0.starts(with: Define.koreanNormalCellPhonePrefix)
-        }.map { contact in
-          return (
-            contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: ""),
-            contact.1
-          )
+          }.map { contact in
+            return (
+              contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: ""),
+              contact.1
+            )
         }
         
       }.do(onNext: { contacts in
@@ -128,10 +134,10 @@ class MainViewModel: MainViewModelType {
       }).flatMap({ contacts -> Observable<BatchGetCatchUpContactsQuery.Data> in
         let ops = contacts.map { contact in
           return contact.0
-        }.chunked(into: Define.dynamoDbBatchLimit).compactMap({ chunk in
-          return client.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: chunk)).asObservable()
-        })
-  
+          }.chunked(into: Define.dynamoDbBatchLimit).compactMap({ chunk in
+            return client.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: chunk)).asObservable()
+          })
+        
         return Observable.merge(ops)
       })
       .observeOn(MainScheduler.instance)
@@ -147,46 +153,31 @@ class MainViewModel: MainViewModelType {
   }
   
   private func filterPromisesByMonth(month: Int, year: Int) {
-    let calendar = Calendar(identifier:  .gregorian)
+    let calendar = Calendar(identifier: .gregorian)
     if let start = calendar.date(from: DateComponents(year: year, month: month, day: 1)), let end = calendar.date(byAdding: .month, value: 1, to: start) {
       filteredList.value = promiseList.value.filter {
-        let timeInMillis = (UInt64($0.timestamp ?? "0") ?? 0)
+        let timeInMillis = $0.dateTime.timeInMillis
         return timeInMillis >= start.timeInMillis && timeInMillis < end.timeInMillis
       }
     }
   }
   
-  func configureUser() {
-    let info = userInfo.value
-    guard let id = info.id, let phone = info.phone else { return }
-    
-    apollo?.perform(mutation: UpsertUserMutation(id: id, email: info.email, nickname: info.nickname, gender: info.gender, birthday: info.birthday, ageRange: info.ageRange, profileImagePath: info.profileImagePath, phone: phone)) { [weak self] (result, error) in
-      guard let strongSelf = self else { return }
-      
-      if let error = error {
-        NSLog("Error while attempting to UpsertUserMutation: \(error.localizedDescription)")
-      }
-      
-      apollo?.fetch(query: GetUserWithPromisesQuery(id: id), resultHandler: { (result, error) in
-        if let error = error {
-          NSLog("Error while GetUserWithPromisesQuery: \(error.localizedDescription)")
-          return
-        }
+  private func refreshPromiseList() {
+    apiClient.rx.watch(query: ListCatchUpPromisesByContactQuery(contact: phone))
+      .subscribe(onNext: { [weak self] data in
+        guard let strongSelf = self else { return }
+        let now = Date().timeInMillis
         
-        if let list = result?.data?.user?.pocket.promiseList {
-          let now = Date().timeInMillis
-          
-          strongSelf.promiseList.value = list.compactMap { $0 }.sorted {
-            let lhs = UInt64($0.timestamp ?? "") ?? Date().timeInMillis
-            let rhs = UInt64($1.timestamp ?? "") ?? Date().timeInMillis
-            return (lhs > now ? lhs : lhs * 2) < (rhs > now ? rhs : rhs * 2)
-          }
-          
-          let current = strongSelf.currentMonth.value
-          strongSelf.filterPromisesByMonth(month: current.0, year: current.1)
-        }
-      })
-    }
+        strongSelf.promiseList.value = data.listCatchUpPromisesByContact?.compactMap(CatchUpPromise.init).sorted {
+          let lhs = $0.dateTime.timeInMillis
+          let rhs = $1.dateTime.timeInMillis
+          return (lhs > now ? lhs : lhs * 2) < (rhs > now ? rhs : rhs * 2)
+          } ?? []
+        
+        print(strongSelf.promiseList.value)
+        let current = strongSelf.currentMonth.value
+        strongSelf.filterPromisesByMonth(month: current.0, year: current.1)
+      }).disposed(by: disposeBag)
   }
   
   lazy var pushNewPromiseScene: CocoaAction = {
@@ -217,13 +208,4 @@ class MainViewModel: MainViewModelType {
 
 extension MainViewModel: MainViewModelInputsType, MainViewModelOutputsType, MainViewModelActionsType {}
 
-extension GetUserWithPromisesQuery.Data.User.Pocket.PromiseList: IdentifiableType, Equatable {
-  public var identity: String {
-    return id!
-  }
-  
-  public static func ==(lhs: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList,
-                        rhs: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) -> Bool {
-    return lhs.id == rhs.id
-  }
-}
+

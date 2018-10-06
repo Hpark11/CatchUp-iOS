@@ -40,9 +40,9 @@ class PromiseTableViewCell: UITableViewCell {
     promiseMembersCollectionView.dataSource = self
   }
   
-  func configure(promise: GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) {
+  func configure(promise: CatchUpPromise) {
     let calendar = Calendar(identifier: .gregorian)
-    let timestamp = UInt64(promise.timestamp ?? "1000")!
+    let timestamp = promise.dateTime.timeInMillis
     let now = Date()
     
     itemView.alpha = timestamp >= now.timeInMillis ? 1 : 0.4
@@ -92,10 +92,7 @@ class PromiseTableViewCell: UITableViewCell {
       }
     }
     
-    memberList = promise.pockets?.compactMap { pocket in
-      return pocket?.profileImagePath ?? ""
-    } ?? []
-    
+    memberList = promise.contacts
     promiseMembersCollectionView.reloadData()
   }
   

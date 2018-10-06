@@ -27,7 +27,7 @@ class MainViewController: UIViewController, BindableType {
   
   let disposeBag = DisposeBag()
   
-  lazy var configureCell: (TableViewSectionedDataSource<PromiseSectionModel>, UITableView, IndexPath, GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) -> UITableViewCell = { [weak self] data, tableView, indexPath, promise in
+  lazy var configureCell: (TableViewSectionedDataSource<PromiseSectionModel>, UITableView, IndexPath, CatchUpPromise) -> UITableViewCell = { [weak self] data, tableView, indexPath, promise in
     guard let strongSelf = self else { return PromiseTableViewCell(frame: .zero) }
     
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseTableViewCell, for: indexPath)

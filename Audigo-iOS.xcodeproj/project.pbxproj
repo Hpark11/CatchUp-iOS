@@ -49,6 +49,7 @@
 		CE7B0DC921686763007DAA2A /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DC821686763007DAA2A /* UserDefaultService.swift */; };
 		CE7B0DCB21686E32007DAA2A /* Formatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */; };
 		CE7B0DCD21687C10007DAA2A /* PushMessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DCC21687C10007DAA2A /* PushMessageService.swift */; };
+		CE7B0DCF21688DC4007DAA2A /* CatchUpPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DCE21688DC4007DAA2A /* CatchUpPromise.swift */; };
 		CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */; };
 		CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */; };
 		CE825F9021205BF800697F52 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE825F8F21205BF800697F52 /* Util.swift */; };
@@ -155,6 +156,7 @@
 		CE7B0DC821686763007DAA2A /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
 		CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Ext.swift"; sourceTree = "<group>"; };
 		CE7B0DCC21687C10007DAA2A /* PushMessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushMessageService.swift; sourceTree = "<group>"; };
+		CE7B0DCE21688DC4007DAA2A /* CatchUpPromise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpPromise.swift; sourceTree = "<group>"; };
 		CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KakaoOpenSDK-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				CE280192212575E20066B344 /* ContactItem.swift */,
 				CE22C76F213AA6CC00878BB1 /* PromisePocket.swift */,
 				CED88AA4216656BD0045E2E5 /* UserInfo.swift */,
+				CE7B0DCE21688DC4007DAA2A /* CatchUpPromise.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -844,6 +847,7 @@
 				CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */,
 				CE038B0321650602001D140B /* Define.swift in Sources */,
 				CE7B0DC721685B6D007DAA2A /* ContextError.swift in Sources */,
+				CE7B0DCF21688DC4007DAA2A /* CatchUpPromise.swift in Sources */,
 				CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */,
 				CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */,
 				CED6494B212B803100C6BD6D /* LocationTrackingService.swift in Sources */,

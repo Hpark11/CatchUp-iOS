@@ -29,4 +29,5 @@ struct Define {
   static let platform: String = "ios"
   
   static let queueLabelCreatePromise = "queue.create.promise"
+  static let queueLabelListPromises = "queue.list.promises"
 }
