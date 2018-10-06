@@ -15,7 +15,7 @@ import AWSAppSync
 typealias PocketSectionModel = AnimatableSectionModel<String, CatchUpContact>
 
 protocol PromiseDetailViewModelInputsType {
-  var editPromiseDone: PublishSubject<String> { get }
+  var editPromiseDone: PublishSubject<CatchUpPromise> { get }
 }
 
 protocol PromiseDetailViewModelOutputsType {
@@ -49,7 +49,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   fileprivate let disposeBag: DisposeBag
   
   // MARK: Inputs
-  var editPromiseDone: PublishSubject<String>
+  var editPromiseDone: PublishSubject<CatchUpPromise>
   
   // MARK: Outputs
   var pocketItems: Observable<[PocketSectionModel]>
@@ -98,9 +98,9 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
         return [PocketSectionModel(model: "", items: pocketList)]
       })
     
-    editPromiseDone.subscribe(onNext: { [weak self] id in
+    editPromiseDone.subscribe(onNext: { [weak self] promise in
       guard let strongSelf = self else { return }
-      strongSelf.loadSinglePromise()
+      strongSelf.promise = promise
     }).disposed(by: disposeBag)
   }
   
@@ -113,8 +113,6 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     promiseLocation.value = (latitude: promise.latitude, longitude: promise.longitude)
     
     apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: promise.contacts), cachePolicy: .fetchIgnoringCacheData)
-      .subscribeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
-      .observeOn(MainScheduler.instance)
       .subscribe(onSuccess: { [weak self] data in
         guard let strongSelf = self else { return }
         strongSelf.pocketList.value = data.batchGetCatchUpContacts?.compactMap {

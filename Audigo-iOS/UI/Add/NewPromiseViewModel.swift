@@ -80,7 +80,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var editMode: Observable<Bool>
   
   var addPromiseDone: PublishSubject<Void>?
-  var editPromiseDone: PublishSubject<String>?
+  var editPromiseDone: PublishSubject<CatchUpPromise>?
   
   fileprivate var owner: Variable<String>
   fileprivate var dateComponents: Variable<DateComponents?>
@@ -196,9 +196,10 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     return Action { [weak self] promiseData in
       guard let strongSelf = self else { return .empty() }
       if strongSelf.isEditMode.value {
+        
         let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
         if let promise = promiseData {
-          viewModel.promise = promise
+          strongSelf.editPromiseDone?.onNext(promise)
         }
         strongSelf.sceneCoordinator.transition(to: PromiseDetailScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       } else {
@@ -238,11 +239,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       )
       
       strongSelf.apiClient.rx.perform(
-        mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput),
-        queue: DispatchQueue(label: Define.queueLabelCreatePromise)
-      ).observeOn(MainScheduler.instance)
-        .subscribe(onSuccess: { data in
-          if let promise = CatchUpPromise(promiseData: data.updateCatchUpPromise) {
+        mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput)
+      ).subscribe(onSuccess: { data in
+        if let promise = CatchUpPromise(promiseData: data.updateCatchUpPromise) {
             strongSelf.confirmAndNotify(promise: promise)
           }
         }, onError: { error in
