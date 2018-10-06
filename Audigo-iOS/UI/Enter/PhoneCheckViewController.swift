@@ -17,8 +17,7 @@ class PhoneCheckViewController: UIViewController {
     guard let phone = phoneNumberTextField.text else { return }
     
     if phone == "0107437233" {
-      UserDefaults.standard.set(phone, forKey: Define.keyPhoneNumber)
-      UserDefaults.standard.synchronize()
+      UserDefaultService.phoneNumber = phone
       
       self.dismiss(animated: true, completion: nil)
     } else {
@@ -47,9 +46,7 @@ class PhoneCheckViewController: UIViewController {
                   return
                 }
                 
-                UserDefaults.standard.set(phone, forKey: Define.keyPhoneNumber)
-                UserDefaults.standard.synchronize()
-                
+                UserDefaultService.phoneNumber = phone
                 self.dismiss(animated: true, completion: nil)
               })
             }

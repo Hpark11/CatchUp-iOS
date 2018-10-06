@@ -35,6 +35,7 @@ class EntranceViewModel: EntranceViewModelType {
   
   // MARK: Setup
   fileprivate var sceneCoordinator: SceneCoordinatorType
+  fileprivate let apiClient: AWSAppSyncClient
   fileprivate let disposeBag: DisposeBag
   
   // MARK: Inputs
@@ -43,8 +44,9 @@ class EntranceViewModel: EntranceViewModelType {
   
   // MARK: Outputs
   
-  init(coordinator: SceneCoordinatorType) {
+  init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient) {
     sceneCoordinator = coordinator
+    apiClient = client
     disposeBag = DisposeBag()
     
     sessionOpened = PublishSubject()
@@ -58,7 +60,7 @@ class EntranceViewModel: EntranceViewModelType {
         self.userCreditCheck(userInfo: userInfo)
         
       }).flatMap { (userInfo) -> PrimitiveSequence<MaybeTrait, UpdateCatchUpUserMutation.Data> in
-        return appSyncClient.rx.perform(mutation: UpdateCatchUpUserMutation(
+        return client.rx.perform(mutation: UpdateCatchUpUserMutation(
           id: userInfo.id,
           data: CatchUpUserInput(
             email: userInfo.email,
@@ -70,20 +72,21 @@ class EntranceViewModel: EntranceViewModelType {
             phone: userInfo.phone)
         ))
       }.flatMap({ data -> PrimitiveSequence<MaybeTrait, UpdateCatchUpContactMutation.Data> in
-        guard let user = data.updateCatchUpUser, let phone = user.phone else { throw SignInError.phoneNotFoundError("NO CELL PHONE NUMBER") }
-        let pushToken = UserDefaults.standard.string(forKey: Define.keyPushToken)
+        guard let user = data.updateCatchUpUser, let phone = user.phone else {
+          throw SignInError.phoneNotFoundError("NO CELL PHONE NUMBER")
+        }
         
-        return appSyncClient.rx.perform(mutation: UpdateCatchUpContactMutation(phone: phone, contact: ContactUpdateInput(
+        return client.rx.perform(mutation: UpdateCatchUpContactMutation(phone: phone, contact: ContactUpdateInput(
           nickname: user.nickname,
           profileImagePath: user.profileImagePath,
-          pushToken: pushToken,
+          pushToken: UserDefaultService.pushToken,
           osType: Define.platform)
         ))
       }).subscribe(onNext: { [unowned self] data in
         if let phone = data.updateCatchUpContact?.phone {
           self.pushMainScene.execute(phone)
         }
-      }, onError: { error in
+        }, onError: { error in
           fatalError(error.localizedDescription)
       }).disposed(by: disposeBag)
   }
@@ -142,16 +145,26 @@ class EntranceViewModel: EntranceViewModelType {
   }
   
   private func userCreditCheck(userInfo: UserInfo) {
-    appSyncClient.rx.fetch(query: GetCatchUpUserQuery(id: userInfo.id))
-      .flatMap{ (data) -> PrimitiveSequence<MaybeTrait, UpdateCatchUpUserMutation.Data> in
-      return appSyncClient.rx.perform(mutation: UpdateCatchUpUserMutation(id: userInfo.id, data: CatchUpUserInput(credit: data.getCatchUpUser?.credit ?? Define.initCredit)))
-    }.subscribe().disposed(by: disposeBag)
+    let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
+    
+    apiClient.rx.fetch(query: GetCatchUpUserQuery(id: userInfo.id))
+      .subscribeOn(backgroundScheduler)
+      .flatMap{ [weak self] (data) -> PrimitiveSequence<MaybeTrait, UpdateCatchUpUserMutation.Data> in
+        guard let strongSelf = self else { return .empty() }
+        return strongSelf.apiClient.rx.perform(mutation: UpdateCatchUpUserMutation(id: userInfo.id, data: CatchUpUserInput(credit: data.getCatchUpUser?.credit ?? Define.initCredit)))
+      }.observeOn(MainScheduler.instance)
+      .subscribe(onSuccess: { data in
+        UserDefaultService.userId = data.updateCatchUpUser?.id
+        UserDefaultService.credit = data.updateCatchUpUser?.credit
+      }, onError: { error in
+        print(error.localizedDescription)
+      }).disposed(by: disposeBag)
   }
   
   lazy var pushMainScene: Action<String, Void> = {
     return Action { [weak self] phone in
       guard let strongSelf = self else { return .empty() }
-      let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator)
+      let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
       viewModel.phone = phone
       let scene = MainScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))

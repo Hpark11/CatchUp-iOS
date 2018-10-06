@@ -45,6 +45,10 @@
 		CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */; };
 		CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */; };
 		CE7B0DC52167969F007DAA2A /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DC42167969F007DAA2A /* Array+Ext.swift */; };
+		CE7B0DC721685B6D007DAA2A /* ContextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DC621685B6D007DAA2A /* ContextError.swift */; };
+		CE7B0DC921686763007DAA2A /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DC821686763007DAA2A /* UserDefaultService.swift */; };
+		CE7B0DCB21686E32007DAA2A /* Formatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */; };
+		CE7B0DCD21687C10007DAA2A /* PushMessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DCC21687C10007DAA2A /* PushMessageService.swift */; };
 		CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */; };
 		CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */; };
 		CE825F9021205BF800697F52 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE825F8F21205BF800697F52 /* Util.swift */; };
@@ -147,6 +151,10 @@
 		CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopupViewController.swift; sourceTree = "<group>"; };
 		CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePopupViewController.swift; sourceTree = "<group>"; };
 		CE7B0DC42167969F007DAA2A /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
+		CE7B0DC621685B6D007DAA2A /* ContextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextError.swift; sourceTree = "<group>"; };
+		CE7B0DC821686763007DAA2A /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
+		CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Ext.swift"; sourceTree = "<group>"; };
+		CE7B0DCC21687C10007DAA2A /* PushMessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushMessageService.swift; sourceTree = "<group>"; };
 		CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KakaoOpenSDK-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
@@ -381,17 +389,17 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */,
-				CED64949212B801E00C6BD6D /* Service */,
-				CED4CCBC20C979060063D89F /* Info.plist */,
-				CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */,
 				CEB41EF52115C227006BC729 /* App */,
 				CEEE5DA1212814AB0023E2FC /* Assets */,
+				CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */,
 				CEB41EF72115C3A4006BC729 /* Coordinator */,
 				CE280191212575B10066B344 /* Data */,
-				CEEF4B942117260B002BEF65 /* Resource */,
-				CEB41EF62115C2AF006BC729 /* UI */,
 				CEEE5D9A2127149B0023E2FC /* Extension */,
+				CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */,
+				CED4CCBC20C979060063D89F /* Info.plist */,
+				CEEF4B942117260B002BEF65 /* Resource */,
+				CED64949212B801E00C6BD6D /* Service */,
+				CEB41EF62115C2AF006BC729 /* UI */,
 			);
 			path = "Audigo-iOS";
 			sourceTree = "<group>";
@@ -418,6 +426,8 @@
 			isa = PBXGroup;
 			children = (
 				CED6494A212B803100C6BD6D /* LocationTrackingService.swift */,
+				CE7B0DC821686763007DAA2A /* UserDefaultService.swift */,
+				CE7B0DCC21687C10007DAA2A /* PushMessageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -431,6 +441,8 @@
 				CE038B0421650784001D140B /* APIKeyProvider.swift */,
 				CE038B0C2166329B001D140B /* RxAppSync.swift */,
 				CE7B0DC42167969F007DAA2A /* Array+Ext.swift */,
+				CE7B0DC621685B6D007DAA2A /* ContextError.swift */,
+				CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -661,6 +673,7 @@
 				"${BUILT_PRODUCTS_DIR}/AWSAppSync/AWSAppSync.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/Action/Action.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -679,6 +692,11 @@
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyContacts/SwiftyContacts.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -686,6 +704,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAppSync.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -704,6 +723,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyContacts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -787,6 +811,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB41F032115C41B006BC729 /* BindableTypes.swift in Sources */,
+				CE7B0DCD21687C10007DAA2A /* PushMessageService.swift in Sources */,
 				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
 				CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */,
 				CE038B0921662D6B001D140B /* EntranceViewModel.swift in Sources */,
@@ -806,6 +831,7 @@
 				CE22C770213AA6CC00878BB1 /* PromisePocket.swift in Sources */,
 				CE72ECFA2136B49F004BC9C6 /* CatchUpMarkerView.swift in Sources */,
 				CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */,
+				CE7B0DCB21686E32007DAA2A /* Formatter+Ext.swift in Sources */,
 				CE280193212575E20066B344 /* ContactItem.swift in Sources */,
 				CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */,
 				CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */,
@@ -817,6 +843,7 @@
 				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
 				CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */,
 				CE038B0321650602001D140B /* Define.swift in Sources */,
+				CE7B0DC721685B6D007DAA2A /* ContextError.swift in Sources */,
 				CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */,
 				CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */,
 				CED6494B212B803100C6BD6D /* LocationTrackingService.swift in Sources */,
@@ -833,6 +860,7 @@
 				CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */,
 				CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */,
 				CE038B0B21662DC4001D140B /* EntranceScene.swift in Sources */,
+				CE7B0DC921686763007DAA2A /* UserDefaultService.swift in Sources */,
 				CEB41F052115C484006BC729 /* MainScene.swift in Sources */,
 				CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */,
 				CE22C76E213A558900878BB1 /* ApolloAPIService.swift in Sources */,

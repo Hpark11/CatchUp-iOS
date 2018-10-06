@@ -17,6 +17,9 @@ struct Define {
   
   static let keyPhoneNumber: String = "phoneNumber"
   static let keyPushToken: String = "pushToken"
+  static let keyCredit: String = "credit"
+  static let keyUserId: String = "userId"
+  static let keyUserNickname: String = "userNickname"
   
   static let initCredit: Int = 25
   static let dynamoDbBatchLimit: Int = 100
@@ -24,4 +27,6 @@ struct Define {
   static let koreanNormalCellPhonePrefix: String = "010"
   static let ko_KR: String = "+82"
   static let platform: String = "ios"
+  
+  static let queueLabelCreatePromise = "queue.create.promise"
 }

@@ -10,6 +10,7 @@ import Foundation
 import Action
 import RxSwift
 import RxDataSources
+import AWSAppSync
 
 typealias PocketSectionModel = AnimatableSectionModel<String, PromisePocket>
 
@@ -44,6 +45,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   
   // MARK: Setup
   fileprivate var sceneCoordinator: SceneCoordinatorType
+  fileprivate let apiClient: AWSAppSyncClient
   fileprivate let disposeBag: DisposeBag
   
   // MARK: Inputs
@@ -68,9 +70,10 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   private let owner: Variable<String>
   private let address: Variable<String>
   
-  init(coordinator: SceneCoordinatorType, promiseId: String) {
+  init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient, promiseId: String) {
     sceneCoordinator = coordinator
     self.promiseId = promiseId
+    apiClient = client
     disposeBag = DisposeBag()
     
     editPromiseDone = PublishSubject()
@@ -144,7 +147,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   lazy var popScene: CocoaAction = {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
-      strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: MainViewModel(coordinator: strongSelf.sceneCoordinator)), type: .pop(animated: true, level: .parent))
+      strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: MainViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)), type: .pop(animated: true, level: .parent))
       return .empty()
     }
   }()
@@ -160,7 +163,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   lazy var pushNewPromiseScene: CocoaAction = {
     return Action { [weak self] in
       guard let strongSelf = self, let phone = UserDefaults.standard.string(forKey: "phoneNumber") else { return .empty() }
-      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, ownerPhoneNumber: phone, editMode: true)
+      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient, ownerPhoneNumber: phone, editMode: true)
       let calendar = Calendar(identifier: .gregorian)
       
       viewModel.editPromiseDone = strongSelf.editPromiseDone

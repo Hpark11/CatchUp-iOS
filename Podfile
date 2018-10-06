@@ -13,10 +13,10 @@ target 'Audigo-iOS' do
   pod 'R.swift'
   pod 'RxKeyboard'
   pod 'RxGesture'
-
   pod 'RxDataSources', '~> 3.0'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
   pod 'Firebase/Messaging'
   pod 'Kingfisher'
   pod 'GoogleMaps'

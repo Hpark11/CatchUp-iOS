@@ -9,6 +9,7 @@
 import Foundation
 import Action
 import RxSwift
+import AWSAppSync
 
 enum CreatePromiseState {
   case normal
@@ -56,6 +57,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   
   // MARK: Setup
   fileprivate var sceneCoordinator: SceneCoordinatorType
+  fileprivate let apiClient: AWSAppSyncClient
   fileprivate let disposeBag: DisposeBag
   
   // MARK: Inputs
@@ -92,9 +94,10 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   fileprivate var promiseId: Variable<String?>
   fileprivate var prevTimestamp: Variable<Int?>
   
-  init(coordinator: SceneCoordinatorType, ownerPhoneNumber: String, editMode: Bool = false) {
+  init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient, ownerPhoneNumber: String, editMode: Bool = false) {
     // Setup
     sceneCoordinator = coordinator
+    apiClient = client
     disposeBag = DisposeBag()
     
     dateComponents = Variable(nil)
@@ -192,11 +195,11 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       guard let strongSelf = self else { return .empty() }
       if strongSelf.isEditMode.value, let promiseId = strongSelf.promiseId.value {
         strongSelf.editPromiseDone?.onNext(promiseId)
-        let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, promiseId: promiseId)
+        let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient, promiseId: promiseId)
         strongSelf.sceneCoordinator.transition(to: PromiseDetailScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       } else {
         strongSelf.addPromiseDone?.onNext(())
-        let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator)
+        let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
         strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       }
       return .empty()
@@ -207,6 +210,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     return Action { [weak self] _ in
       guard let strongSelf = self else { return .empty() }
       strongSelf.createPromiseState.value = .pending
+      
+      let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
       let calendar = Calendar(identifier: .gregorian)
       
       var components = strongSelf.dateComponents.value
@@ -215,10 +220,25 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       components?.second = strongSelf.timeComponents.value?.second
       
       guard let dateTimeComponents = components else { return .empty() }
+      guard let owner = UserDefaultService.phoneNumber else { return .empty() }
       
       let tokens = strongSelf.pockets.value.compactMap { phone in
         return ContactItem.find(phone: phone)?.pushToken
       }
+      
+      let promiseInput = CatchUpPromiseInput(
+        owner: owner,
+        dateTime: Formatter.iso8601.string(from: calendar.date(from: dateTimeComponents) ?? Date()),
+        address: strongSelf.address.value,
+        latitude: strongSelf.coordinate.value?.latitude,
+        longitude: strongSelf.coordinate.value?.longitude,
+        name: strongSelf.promiseName.value,
+        contacts: strongSelf.pockets.value
+      )
+      
+      let timeFormat = DateFormatter()
+      timeFormat.dateFormat = "MM.dd (EEE) a hh시 mm분"
+      
       
       if strongSelf.isEditMode.value {
         if let id = strongSelf.promiseId.value, let prevTimestamp = strongSelf.prevTimestamp.value {
@@ -233,9 +253,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
             timestamp: String(calendar.date(from: dateTimeComponents)?.timeInMillis ?? 0),
             pockets: strongSelf.pockets.value
           )) { (result, error) in
-            
-            let timeFormat = DateFormatter()
-            timeFormat.dateFormat = "MM.dd (EEE) a hh시 mm분"
             
             if let error = error {
               strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
@@ -258,39 +275,43 @@ class NewPromiseViewModel: NewPromiseViewModelType {
           }
         }
       } else {
-        apollo?.perform(mutation: AddPromiseMutation(
-          owner: strongSelf.owner.value,
-          name: strongSelf.promiseName.value,
-          address: strongSelf.address.value,
-          latitude: strongSelf.coordinate.value?.latitude,
-          longitude: strongSelf.coordinate.value?.longitude,
-          timestamp: String(calendar.date(from: dateTimeComponents)?.timeInMillis ?? 0),
-          pockets: strongSelf.pockets.value
-        )) { (result, error) in
-          
-          let timeFormat = DateFormatter()
-          timeFormat.dateFormat = "MM.dd (EEE) a hh시 mm분"
-          
-          if let error = error {
+        strongSelf.apiClient.rx.perform(
+          mutation: UpdateCatchUpPromiseMutation(id: UUID().uuidString, data: promiseInput),
+          queue: DispatchQueue(label: Define.queueLabelCreatePromise)
+        ).subscribeOn(backgroundScheduler)
+          .observeOn(MainScheduler.instance)
+          .subscribe(onSuccess: { data in
+            if let promise = data.updateCatchUpPromise, let date = calendar.date(from: dateTimeComponents), let address = promise.address, let contacts = promise.contacts {
+              let dateTime = timeFormat.string(from: date)
+              strongSelf.formatPromiseConfirm(dateTime: dateTime, address: address, contacts: contacts)
+              PushMessageService.sendPush(title: "새로운 약속 알림", message: "일시: \(dateTime), 장소: \(address)", pushTokens: tokens)
+            }
+          }, onError: { error in
+            print(error)
+            print(error.localizedDescription)
             strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
-            return
-          }
-          
-          if let date = calendar.date(from: dateTimeComponents),
-            let location = strongSelf.address.value,
-            let member = ContactItem.find(phone: strongSelf.pockets.value.first ?? "")?.nickname {
-            let dateTime = timeFormat.string(from: date)
-            let members = "\(member) 외 \(strongSelf.pockets.value.count - 1)명"
-            strongSelf.createPromiseState.value = .completed(dateTime: dateTime, location: location, members: members)
-            
-            apollo?.fetch(query: SendPushQuery(pushTokens: tokens, title: "새로운 약속 일정 알림", body: "일시: \(dateTime), 장소: \(location)", scheduledTime: "\(Date().timeInMillis)"))
-          }
-        }
+          }).disposed(by: strongSelf.disposeBag)
       }
       
       return .empty()
     }
   }()
+  
+  private func formatPromiseConfirm(dateTime: String?, address: String?, contacts: [String?]?) {
+    if let dateTime = dateTime, let address = address, let contacts = contacts?.compactMap({ $0 }), !contacts.isEmpty {
+      var members: String = ""
+      
+      if let member = ContactItem.find(phone: contacts.first ?? "None")?.nickname {
+        if contacts.count > 1 {
+          members = "\(member) 외 \(contacts.count - 1)명"
+        } else {
+          members = member
+        }
+      }
+      
+      createPromiseState.value = .completed(dateTime: dateTime, location: address, members: members)
+    }
+  }
 }
 
 extension NewPromiseViewModel: NewPromiseViewModelInputsType, NewPromiseViewModelOutputsType, NewPromiseViewModelActionsType {}

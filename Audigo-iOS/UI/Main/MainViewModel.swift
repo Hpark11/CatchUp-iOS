@@ -10,6 +10,7 @@ import RxSwift
 import RxDataSources
 import Action
 import SwiftyContacts
+import AWSAppSync
 
 typealias PromiseSectionModel = AnimatableSectionModel<String, GetUserWithPromisesQuery.Data.User.Pocket.PromiseList>
 
@@ -42,6 +43,8 @@ class MainViewModel: MainViewModelType {
   
   // MARK: Setup
   fileprivate var sceneCoordinator: SceneCoordinatorType
+  fileprivate let apiClient: AWSAppSyncClient
+  fileprivate let disposeBag = DisposeBag()
   
   // MARK: Inputs
   var monthSelectDone: PublishSubject<(Int, Int)>
@@ -56,13 +59,14 @@ class MainViewModel: MainViewModelType {
   private let promiseList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
   private let filteredList: Variable<[GetUserWithPromisesQuery.Data.User.Pocket.PromiseList]>
   private let currentMonth: Variable<(Int, Int)>
-  private let disposeBag = DisposeBag()
   
   var phone: String = ""
   
-  init(coordinator: SceneCoordinatorType) {
+  init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient) {
     let calendar = Calendar(identifier: .gregorian)
     sceneCoordinator = coordinator
+    apiClient = client
+    
     monthSelectDone = PublishSubject()
     addPromiseDone = PublishSubject()
     hasPromiseBeenUpdated = PublishSubject()
@@ -125,7 +129,7 @@ class MainViewModel: MainViewModelType {
         let ops = contacts.map { contact in
           return contact.0
         }.chunked(into: Define.dynamoDbBatchLimit).compactMap({ chunk in
-          return appSyncClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: chunk)).asObservable()
+          return client.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: chunk)).asObservable()
         })
   
         return Observable.merge(ops)
@@ -188,7 +192,12 @@ class MainViewModel: MainViewModelType {
   lazy var pushNewPromiseScene: CocoaAction = {
     return Action { [weak self] in
       guard let strongSelf = self else { return .empty() }
-      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, ownerPhoneNumber: strongSelf.userInfo.value.phone ?? "")
+      
+      let viewModel = NewPromiseViewModel(
+        coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient,
+        ownerPhoneNumber: strongSelf.userInfo.value.phone ?? ""
+      )
+      
       viewModel.addPromiseDone = strongSelf.addPromiseDone
       let scene = NewPromiseScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
@@ -198,7 +207,7 @@ class MainViewModel: MainViewModelType {
   lazy var pushPromiseDetailScene: Action<String, Void> = {
     return Action { [weak self] promiseId in
       guard let strongSelf = self else { return .empty() }
-      let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, promiseId: promiseId)
+      let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient, promiseId: promiseId)
       viewModel.hasPromiseBeenUpdated = strongSelf.hasPromiseBeenUpdated
       let scene = PromiseDetailScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .push(animated: true))

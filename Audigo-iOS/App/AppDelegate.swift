@@ -17,13 +17,13 @@ import AWSAppSync
 import RealmSwift
 
 var apollo: ApolloClient? // = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
-var appSyncClient: AWSAppSyncClient!
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   let gcmMessageIDKey = "gcm.message_id"
+  var appSyncClient: AWSAppSyncClient?
 
   fileprivate var coordinator: SceneCoordinatorType?
   
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let appSyncConfig = try AWSAppSyncClientConfiguration(url: Define.appsyncEndpointURL, serviceRegion: .APNortheast2, apiKeyAuthProvider: Define.appsyncKeyAPI, databaseURL: databaseURL)
       
       appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
-      appSyncClient.apolloClient?.cacheKeyForObject = { $0["id"] }
+      appSyncClient?.apolloClient?.cacheKeyForObject = { $0["id"] }
       apollo = appSyncClient?.apolloClient
     } catch {
       print("Error initializing AppSync client. \(error)")
@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // App Coordinator  ---------------------------------------------------------------------------------------]
     coordinator = AppCoordinator(window: uWindow)
-    let viewModel = EntranceViewModel(coordinator: coordinator!)
+    let viewModel = EntranceViewModel(coordinator: coordinator!, client: appSyncClient!)
     let scene = EntranceScene(viewModel: viewModel)
     coordinator?.transition(to: scene, type: .root)
     
@@ -271,7 +271,7 @@ extension AppDelegate : MessagingDelegate {
     
     // TODO: If necessary send token to application server.
     // Note: This callback is fired at each app startup and whenever a new token is generated.
-    UserDefaults.standard.set(fcmToken, forKey: Define.keyPushToken)
+    UserDefaultService.pushToken = fcmToken
   }
   // [END refresh_token]
   // [START ios_10_data_message]

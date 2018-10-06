@@ -15,7 +15,6 @@ class EntranceViewController: UIViewController, BindableType {
 
   var viewModel: EntranceViewModel!
   private var signInDone: Bool = false
-  private var phone: String?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,7 +32,7 @@ class EntranceViewController: UIViewController, BindableType {
       if let error = error {
         print("Error Sign In: \(error)")
       } else {
-        if let s = session, let phone = self.phone, s.isOpen() {
+        if let s = session, let phone = UserDefaultService.phoneNumber, s.isOpen() {
           self.viewModel.inputs.sessionOpened.onNext(phone)
         } else {
           print("Open Session Failed")
@@ -55,14 +54,13 @@ class EntranceViewController: UIViewController, BindableType {
       return
     }
     
-    guard let phone = UserDefaults.standard.string(forKey: Define.keyPhoneNumber), !phone.isEmpty else {
+    guard let phone = UserDefaultService.phoneNumber, !phone.isEmpty else {
       if let vc = R.storyboard.main.phoneCheckViewController() {
         present(vc, animated: true, completion: nil)
       }
       return
     }
 
-    self.phone = phone
     if signInDone {
       viewModel.inputs.sessionOpened.onNext(phone)
     } else {
