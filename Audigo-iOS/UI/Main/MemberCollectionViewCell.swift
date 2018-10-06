@@ -16,8 +16,8 @@ class MemberCollectionViewCell: UICollectionViewCell {
     super.awakeFromNib()    
   }
   
-  func configure(imagePath: String) {
-    let url = URL(string: imagePath)
+  func configure(member: String) {
+    let url = URL(string: ContactItem.find(phone: member)?.imagePath ?? "")
     memberImageView.kf.setImage(with: url, placeholder: R.image.image_profile_default())
     memberImageView.layer.cornerRadius = 15
     memberImageView.layer.borderWidth = 1

@@ -109,7 +109,7 @@ extension PromiseTableViewCell: UICollectionViewDelegate, UICollectionViewDataSo
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.memberCollectionViewCell.identifier, for: indexPath) as! MemberCollectionViewCell
-    cell.configure(imagePath: memberList[indexPath.item])
+    cell.configure(member: memberList[indexPath.item])
     return cell
   }
 }

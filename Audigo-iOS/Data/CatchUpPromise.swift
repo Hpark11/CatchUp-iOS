@@ -41,6 +41,29 @@ struct CatchUpPromise {
     self.contacts = contacts
     self.owner = owner
   }
+  
+  init?(promiseData: UpdateCatchUpPromiseMutation.Data.UpdateCatchUpPromise?) {
+    guard let promise = promiseData,
+      let name = promise.name,
+      let address = promise.address,
+      let latitude = promise.latitude,
+      let longitude = promise.longitude,
+      let date = promise.dateTime,
+      let dateTime = Formatter.iso8601.date(from: date),
+      let contacts = promise.contacts?.compactMap({$0}),
+      let owner = promise.owner else {
+        return nil
+    }
+    
+    self.id = promise.id
+    self.name = name
+    self.address = address
+    self.latitude = latitude
+    self.longitude = longitude
+    self.dateTime = dateTime
+    self.contacts = contacts
+    self.owner = owner
+  }
 }
 
 extension CatchUpPromise: IdentifiableType, Equatable {

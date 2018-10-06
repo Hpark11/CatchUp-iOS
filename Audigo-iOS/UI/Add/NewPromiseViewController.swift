@@ -29,9 +29,8 @@ class NewPromiseViewController: UIViewController, BindableType {
   var isEditingPromise = false
   private var selectedMembers = [String]()
   
-  let disposeBag = DisposeBag()
-  
-  private let confirmDone = PublishSubject<Void>()
+  private let disposeBag = DisposeBag()
+  private let confirmDone = PublishSubject<CatchUpPromise?>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -54,7 +53,7 @@ class NewPromiseViewController: UIViewController, BindableType {
   }
   
   func bindViewModel() {
-    popButton.rx.action = viewModel.actions.popScene
+    popButton.rx.bind(to: viewModel.actions.popScene, input: nil)
     newPromiseButton.rx.action = viewModel.actions.newPromiseCompleted
     
     promiseNameInputView.rx.tapGesture().when(.recognized).subscribe { _ in
@@ -133,7 +132,7 @@ class NewPromiseViewController: UIViewController, BindableType {
     viewModel.outputs.members.subscribe(onNext: { members in
       self.selectedMembers = members
       if let member = members.first, let nickname = ContactItem.find(phone: member)?.nickname {
-        self.promiseMembersInputView.inputState = .applied(input: "\(nickname) 외 \(members.count)명")
+        self.promiseMembersInputView.inputState = .applied(input: "\(nickname) 외 \(members.count - 1)명")
       }
       
       self.membersCollectionView.reloadData()
@@ -147,14 +146,10 @@ class NewPromiseViewController: UIViewController, BindableType {
         case .pending:
           strongSelf.newPromiseButton.isEnabled = false
           break
-        case .completed(let dateTime, let location, let members):
+        case .completed(let promise):
           if let vc = R.storyboard.main.promiseConfirmViewController() {
-            vc.contentTitle = strongSelf.promiseNameInputView.inputLabel.text ?? ""
             vc.confirmDone = strongSelf.confirmDone
-            vc.dateTime = dateTime
-            vc.location = location
-            vc.members = members
-            vc.memberCount = strongSelf.selectedMembers.count + 1
+            vc.promise = promise
             vc.isEditingPromise = strongSelf.isEditingPromise
             strongSelf.present(vc, animated: true, completion: nil)
           }
@@ -169,9 +164,9 @@ class NewPromiseViewController: UIViewController, BindableType {
       self.newPromiseButton.setImage(isEditMode ? R.image.image_button_promise_edit() : R.image.image_button_promise_add(), for: .normal)
     }).disposed(by: disposeBag)
     
-    confirmDone.subscribe(onNext: { [weak self] _ in
+    confirmDone.subscribe(onNext: { [weak self] promise in
       guard let strongSelf = self else { return }
-      strongSelf.viewModel.actions.popScene.execute(())
+      strongSelf.viewModel.actions.popScene.execute(promise)
     }).disposed(by: disposeBag)
   }
 }

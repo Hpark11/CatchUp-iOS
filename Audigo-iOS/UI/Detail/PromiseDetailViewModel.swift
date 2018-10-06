@@ -12,7 +12,7 @@ import RxSwift
 import RxDataSources
 import AWSAppSync
 
-typealias PocketSectionModel = AnimatableSectionModel<String, PromisePocket>
+typealias PocketSectionModel = AnimatableSectionModel<String, CatchUpContact>
 
 protocol PromiseDetailViewModelInputsType {
   var editPromiseDone: PublishSubject<String> { get }
@@ -60,19 +60,21 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
 
   var hasPromiseBeenUpdated: PublishSubject<Bool>?
   
-//  private var watcher: GraphQLQueryWatcher<GetPromiseQuery>?
-  private var promiseId: String
+  var promise: CatchUpPromise? {
+    didSet {
+      loadSinglePromise()
+    }
+  }
   
   private let promiseName: Variable<String>
   private let promiseLocation: Variable<(latitude: Double, longitude: Double)>
   private let promiseTimestamp: Variable<TimeInterval>
-  private let pocketList: Variable<[PromisePocket]>
+  private let pocketList: Variable<[CatchUpContact]>
   private let owner: Variable<String>
   private let address: Variable<String>
   
-  init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient, promiseId: String) {
+  init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient) {
     sceneCoordinator = coordinator
-    self.promiseId = promiseId
     apiClient = client
     disposeBag = DisposeBag()
     
@@ -89,8 +91,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     location = promiseLocation.asObservable()
     timestamp = promiseTimestamp.asObservable()
     isOwner = owner.asObservable().map { owner in
-      guard let phone = UserDefaults.standard.string(forKey: "phoneNumber") else { return false }
-      return phone == owner
+      return UserDefaultService.phoneNumber == owner
     }
     
     pocketItems = pocketList.asObservable()
@@ -100,48 +101,27 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     
     editPromiseDone.subscribe(onNext: { [weak self] id in
       guard let strongSelf = self else { return }
-      
-      if id != strongSelf.promiseId {
-        strongSelf.hasPromiseBeenUpdated?.onNext(true)
-      }
-      
-      strongSelf.promiseId = id
       strongSelf.loadSinglePromise()
     }).disposed(by: disposeBag)
-    
-    loadSinglePromise()
   }
   
   private func loadSinglePromise() {
-    apollo?.fetch(query: GetPromiseQuery(id: promiseId)) { [weak self] (result, error) in
-      if let error = error {
-        NSLog("Error while GetPromiseQuery: \(error.localizedDescription)")
-        return
-      }
-      
-      guard let strongSelf = self else { return }
-      
-      if let owner = result?.data?.promise?.owner {
-        strongSelf.owner.value = owner
-      }
-      
-      if let address = result?.data?.promise?.address {
-        strongSelf.address.value = address
-      }
-      
-      if let name = result?.data?.promise?.name {
-        strongSelf.promiseName.value = name
-      }
-      
-      if let pockets = result?.data?.promise?.pockets as? [GetPromiseQuery.Data.Promise.Pocket], let latitude = result?.data?.promise?.latitude, let longitude = result?.data?.promise?.longitude {
-        strongSelf.promiseLocation.value = (latitude: latitude, longitude: longitude)
-        strongSelf.pocketList.value = pockets.map { PromisePocket(destLatitude: latitude, destLongitude: longitude, pocket: $0) }
-      }
-      
-      if let timestamp = UInt64(result?.data?.promise?.timestamp ?? "1") {
-        strongSelf.promiseTimestamp.value = TimeInterval(timestamp / 1000)
-      }
-    }
+    guard let promise = promise else { return }
+    owner.value = promise.owner
+    address.value = promise.address
+    promiseName.value = promise.name
+    promiseTimestamp.value = TimeInterval(promise.dateTime.timeInMillis / 1000)
+    promiseLocation.value = (latitude: promise.latitude, longitude: promise.longitude)
+    
+    apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: promise.contacts), cachePolicy: .fetchIgnoringCacheData)
+      .subscribeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
+      .observeOn(MainScheduler.instance)
+      .subscribe(onSuccess: { [weak self] data in
+        guard let strongSelf = self else { return }
+        strongSelf.pocketList.value = data.batchGetCatchUpContacts?.compactMap {
+          CatchUpContact(dstLat: promise.latitude, dstLng: promise.longitude, contactData: $0)
+          } ?? []
+      }).disposed(by: disposeBag)
   }
 
   lazy var popScene: CocoaAction = {
@@ -162,22 +142,12 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   
   lazy var pushNewPromiseScene: CocoaAction = {
     return Action { [weak self] in
-      guard let strongSelf = self, let phone = UserDefaults.standard.string(forKey: "phoneNumber") else { return .empty() }
+      guard let strongSelf = self, let phone = UserDefaultService.phoneNumber, let promise = strongSelf.promise else { return .empty() }
       let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient, ownerPhoneNumber: phone, editMode: true)
       let calendar = Calendar(identifier: .gregorian)
       
       viewModel.editPromiseDone = strongSelf.editPromiseDone
-      
-      viewModel.applyPreviousInfo(
-        id: strongSelf.promiseId,
-        prevTimestamp: Int(strongSelf.promiseTimestamp.value * 1000),
-        name: strongSelf.promiseName.value,
-        address: strongSelf.address.value,
-        datetime: calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date(timeIntervalSince1970: strongSelf.promiseTimestamp.value)),
-        latitude: strongSelf.promiseLocation.value.latitude,
-        longitude: strongSelf.promiseLocation.value.longitude,
-        pockets: strongSelf.pocketList.value.compactMap { promisePocket in phone == promisePocket.pocket.phone ? nil : promisePocket.pocket.phone }
-      )
+      viewModel.applyPreviousInfo(promise: promise)
       
       let scene = NewPromiseScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))

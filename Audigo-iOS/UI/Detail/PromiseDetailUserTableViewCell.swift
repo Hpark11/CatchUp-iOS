@@ -29,14 +29,13 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
     itemView.layer.shadowRadius = 4
   }
   
-  func configure(promisePocket: PromisePocket, sendPush: PublishSubject<String>) {
-    let pocket = promisePocket.pocket
+  func configure(contact: CatchUpContact, sendPush: PublishSubject<String>) {
     self.sendPush = sendPush
-    self.pushToken = pocket.pushToken
+    self.pushToken = contact.pushToken
     
-    if let latitude = pocket.latitude, let longitude = pocket.longitude {
+    if let latitude = contact.latitude, let longitude = contact.longitude {
       let fromCoordinate = CLLocation(latitude: latitude, longitude: longitude)
-      let destCoordinate = CLLocation(latitude: promisePocket.destLatitude, longitude: promisePocket.destLongitude)
+      let destCoordinate = CLLocation(latitude: contact.destLatitude, longitude: contact.destLongitude)
       let distanceInMeters = fromCoordinate.distance(from: destCoordinate) / 1000.0
       
       if distanceInMeters >= 700 {
@@ -53,15 +52,15 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
       }
     }
     
-    if let nickname = pocket.nickname {
+    if let nickname = contact.nickname {
       memberNameLabel.text = nickname
     } else {
-      let item = ContactItem.find(phone: pocket.phone)
+      let item = ContactItem.find(phone: contact.phone)
       memberNameLabel.text = item?.nickname
     }
     
     profileImageView.layer.cornerRadius = 20
-    let url = URL(string: pocket.profileImagePath ?? "")
+    let url = URL(string: contact.profileImagePath ?? "")
     profileImageView.kf.setImage(with: url, placeholder: R.image.image_profile_default())
     
     itemView.layer.borderWidth = 1

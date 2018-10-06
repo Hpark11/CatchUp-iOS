@@ -14,7 +14,7 @@ import AWSAppSync
 enum CreatePromiseState {
   case normal
   case pending
-  case completed(dateTime: String, location: String, members: String)
+  case completed(promise: CatchUpPromise)
   case error(description: String)
 }
 
@@ -40,7 +40,7 @@ protocol NewPromiseViewModelOutputsType {
 }
 
 protocol NewPromiseViewModelActionsType {
-  var popScene: CocoaAction { get }
+  var popScene: Action<CatchUpPromise?, Void> { get }
   var newPromiseCompleted: CocoaAction { get }
 }
 
@@ -179,26 +179,29 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }).disposed(by: disposeBag)
   }
   
-  func applyPreviousInfo(id: String, prevTimestamp: Int, name: String, address: String, datetime: DateComponents, latitude: Double, longitude: Double, pockets: [String]) {
-    self.promiseId.value = id
-    self.prevTimestamp.value = prevTimestamp
-    self.promiseName.value = name
-    self.address.value = address
-    self.dateComponents.value = datetime
-    self.timeComponents.value = datetime
-    self.coordinate.value = (latitude: latitude, longitude: longitude)
-    self.pockets.value = pockets
+  func applyPreviousInfo(promise: CatchUpPromise) {
+    let calendar = Calendar(identifier: .gregorian)
+    let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: promise.dateTime)
+    self.promiseId.value = promise.id
+    self.promiseName.value = promise.name
+    self.address.value = promise.address
+    self.dateComponents.value = components
+    self.timeComponents.value = components
+    self.coordinate.value = (latitude: promise.latitude, longitude: promise.longitude)
+    self.pockets.value = promise.contacts
   }
   
-  lazy var popScene: CocoaAction = {
-    return Action { [weak self] _ in
+  lazy var popScene: Action<CatchUpPromise?, Void> = {
+    return Action { [weak self] promiseData in
       guard let strongSelf = self else { return .empty() }
-      if strongSelf.isEditMode.value, let promiseId = strongSelf.promiseId.value {
-        strongSelf.editPromiseDone?.onNext(promiseId)
-        let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient, promiseId: promiseId)
+      if strongSelf.isEditMode.value {
+        let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
+        if let promise = promiseData {
+          viewModel.promise = promise
+        }
         strongSelf.sceneCoordinator.transition(to: PromiseDetailScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       } else {
-        strongSelf.addPromiseDone?.onNext(())
+        if promiseData != nil { strongSelf.addPromiseDone?.onNext(()) }
         let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
         strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       }
@@ -211,6 +214,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       guard let strongSelf = self else { return .empty() }
       strongSelf.createPromiseState.value = .pending
       
+      let isEdit = strongSelf.isEditMode.value
+      let promiseId = strongSelf.promiseId.value ?? UUID().uuidString
       let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
       let calendar = Calendar(identifier: .gregorian)
       
@@ -222,10 +227,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       guard let dateTimeComponents = components else { return .empty() }
       guard let owner = UserDefaultService.phoneNumber else { return .empty() }
       
-      let tokens = strongSelf.pockets.value.compactMap { phone in
-        return ContactItem.find(phone: phone)?.pushToken
-      }.filter { !$0.isEmpty }
-      
       let promiseInput = CatchUpPromiseInput(
         owner: owner,
         dateTime: Formatter.iso8601.string(from: calendar.date(from: dateTimeComponents) ?? Date()),
@@ -235,23 +236,15 @@ class NewPromiseViewModel: NewPromiseViewModelType {
         name: strongSelf.promiseName.value,
         contacts: strongSelf.pockets.value + [owner]
       )
-      
-      let timeFormat = DateFormatter()
-      timeFormat.dateFormat = "MM.dd (EEE) a hh시 mm분"
-      
-      let isEdit = strongSelf.isEditMode.value
-      let promiseId = strongSelf.promiseId.value ?? UUID().uuidString
-      
+    
       strongSelf.apiClient.rx.perform(
         mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput),
         queue: DispatchQueue(label: Define.queueLabelCreatePromise)
       ).subscribeOn(backgroundScheduler)
         .observeOn(MainScheduler.instance)
         .subscribe(onSuccess: { data in
-          if let promise = data.updateCatchUpPromise, let date = calendar.date(from: dateTimeComponents), let address = promise.address, let contacts = promise.contacts {
-            let dateTime = timeFormat.string(from: date)
-            strongSelf.formatPromiseConfirm(dateTime: dateTime, address: address, contacts: contacts)
-            PushMessageService.sendPush(title: isEdit ? "변경된 약속 알림" : "새로운 약속 알림", message: "일시: \(dateTime), 장소: \(address)", pushTokens: tokens)
+          if let promise = CatchUpPromise(promiseData: data.updateCatchUpPromise) {
+            strongSelf.confirmAndNotify(promise: promise)
           }
         }, onError: { error in
           strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
@@ -261,20 +254,19 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }
   }()
   
-  private func formatPromiseConfirm(dateTime: String?, address: String?, contacts: [String?]) {
-    if let dateTime = dateTime, let address = address, let firstMember = contacts.first, !contacts.isEmpty {
-      var members: String = ""
-
-      if let member = ContactItem.find(phone: firstMember ?? "None")?.nickname {
-        if contacts.count > 1 {
-          members = "\(member) 외 \(contacts.count - 1)명"
-        } else {
-          members = member
-        }
-      }
-      
-      createPromiseState.value = .completed(dateTime: dateTime, location: address, members: members)
-    }
+  private func confirmAndNotify(promise: CatchUpPromise) {
+    let timeFormat = DateFormatter()
+    timeFormat.dateFormat = "MM.dd (EEE) a hh시 mm분"
+    timeFormat.locale = Locale.current
+    let title = isEditMode.value ? "변경된 약속 알림" : "새로운 약속 알림"
+    let dateTime = timeFormat.string(from: promise.dateTime)
+    
+    let tokens = promise.contacts.compactMap { phone in
+      return ContactItem.find(phone: phone)?.pushToken
+      }.filter { !$0.isEmpty }
+    
+    createPromiseState.value = .completed(promise: promise)
+    PushMessageService.sendPush(title: title, message: "일시: \(dateTime), 장소: \(address)", pushTokens: tokens)
   }
 }
 

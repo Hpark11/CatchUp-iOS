@@ -27,7 +27,7 @@ protocol MainViewModelOutputsType {
 
 protocol MainViewModelActionsType {
   var pushNewPromiseScene: CocoaAction { get }
-  var pushPromiseDetailScene: Action<String, Void> { get }
+  var pushPromiseDetailScene: Action<CatchUpPromise, Void> { get }
 }
 
 protocol MainViewModelType {
@@ -174,7 +174,6 @@ class MainViewModel: MainViewModelType {
           return (lhs > now ? lhs : lhs * 2) < (rhs > now ? rhs : rhs * 2)
           } ?? []
         
-        print(strongSelf.promiseList.value)
         let current = strongSelf.currentMonth.value
         strongSelf.filterPromisesByMonth(month: current.0, year: current.1)
       }).disposed(by: disposeBag)
@@ -195,10 +194,11 @@ class MainViewModel: MainViewModelType {
     }
   }()
   
-  lazy var pushPromiseDetailScene: Action<String, Void> = {
-    return Action { [weak self] promiseId in
+  lazy var pushPromiseDetailScene: Action<CatchUpPromise, Void> = {
+    return Action { [weak self] promise in
       guard let strongSelf = self else { return .empty() }
-      let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient, promiseId: promiseId)
+      let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
+      viewModel.promise = promise
       viewModel.hasPromiseBeenUpdated = strongSelf.hasPromiseBeenUpdated
       let scene = PromiseDetailScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .push(animated: true))

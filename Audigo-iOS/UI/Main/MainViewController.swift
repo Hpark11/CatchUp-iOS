@@ -47,11 +47,10 @@ class MainViewController: UIViewController, BindableType {
       .bind(to: promiseListTableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
-    Observable.zip(promiseListTableView.rx.itemSelected, promiseListTableView.rx.modelSelected(GetUserWithPromisesQuery.Data.User.Pocket.PromiseList.self)).bind { [weak self] indexPath, promise in
+    Observable.zip(promiseListTableView.rx.itemSelected, promiseListTableView.rx.modelSelected(CatchUpPromise.self)).bind { [weak self] indexPath, promise in
       guard let strongSelf = self else { return }
       strongSelf.promiseListTableView.deselectRow(at: indexPath, animated: true)
-      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise.id ?? "")
-      
+      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise)
       strongSelf.navigationController?.navigationBar.backgroundColor = .darkSkyBlue
       strongSelf.navigationController?.navigationBar.barStyle = .blackOpaque
     }.disposed(by: disposeBag)

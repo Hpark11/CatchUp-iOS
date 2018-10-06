@@ -18,9 +18,6 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate {
     locationManager = CLLocationManager()
     locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
     locationManager.allowsBackgroundLocationUpdates = true
-    
-//    locationManager.pausesLocationUpdatesAutomatically = true
-//    locationManager.activityType = .otherNavigation
     locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
     locationManager.distanceFilter = 8
     locationManager.requestAlwaysAuthorization()
@@ -38,12 +35,10 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate {
   public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     if let newLocation = locations.last {
       print("(\(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude))")
-      guard let phone = UserDefaults.standard.string(forKey: "phoneNumber") else { return }
+      guard let phone = UserDefaultService.phoneNumber else { return }
       
-      apollo?.perform(mutation: RelocatePocketMutation(phone: phone, latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)) { (result, error) in
-        if let error = error {
-          NSLog("Error while attempting to RelocatePocketMutation: \(error.localizedDescription)")
-        }
+      if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+        appDelegate.appSyncClient?.perform(mutation: RelocateCatchUpContactMutation(phone: phone, latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude))
       }
     }
   }

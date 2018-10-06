@@ -26,11 +26,11 @@ class PromiseDetailViewController: UIViewController, BindableType {
   private var markers: [GMSMarker]? = []
   private let sendPush = PublishSubject<String>()
   
-  private lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, PromisePocket) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
+  private lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, CatchUpContact) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
     guard let strongSelf = self else { return PromiseDetailUserTableViewCell(frame: .zero) }
     
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseDetailUserTableViewCell, for: indexPath)
-    cell?.configure(promisePocket: pocket, sendPush: strongSelf.sendPush)
+    cell?.configure(contact: pocket, sendPush: strongSelf.sendPush)
   
     return cell!
   }
@@ -125,16 +125,15 @@ class PromiseDetailViewController: UIViewController, BindableType {
         return nil
       }
       
-      strongSelf.markers = sectionModel.first?.items.compactMap { promisePocket in
-        let pocket = promisePocket.pocket
-        guard let latitude = pocket.latitude, let longitude = pocket.longitude, latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0 else { return nil }
+      strongSelf.markers = sectionModel.first?.items.compactMap { contact in
+        guard let latitude = contact.latitude, let longitude = contact.longitude, latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0 else { return nil }
         
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        marker.title = pocket.nickname ?? ""
-        marker.snippet = pocket.phone
+        marker.title = contact.nickname ?? "아는 사람"
+        marker.snippet = contact.phone
         let markerView = CatchUpMarkerView(frame: CGRect(x: 0, y: 0, width: 48, height: 58))
-        markerView.markerState = .moving(imagePath: pocket.profileImagePath ?? "")
+        markerView.markerState = .moving(imagePath: contact.profileImagePath ?? "")
         marker.iconView = markerView
         marker.map = strongSelf.membersMapView
         return marker

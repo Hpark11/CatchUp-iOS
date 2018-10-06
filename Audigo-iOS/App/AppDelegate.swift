@@ -16,7 +16,7 @@ import FirebaseMessaging
 import AWSAppSync
 import RealmSwift
 
-var apollo: ApolloClient? // = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
+var apollo: ApolloClient? = nil// = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
       appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
       appSyncClient?.apolloClient?.cacheKeyForObject = { $0["id"] }
-      apollo = appSyncClient?.apolloClient
     } catch {
       print("Error initializing AppSync client. \(error)")
     }

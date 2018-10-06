@@ -16,7 +16,7 @@ class PhoneCheckViewController: UIViewController {
   @IBAction func certifyWithPhone(_ sender: Any) {
     guard let phone = phoneNumberTextField.text else { return }
     
-    if phone == "0107437233" {
+    if phone == "01074372330" {
       UserDefaultService.phoneNumber = phone
       
       self.dismiss(animated: true, completion: nil)
