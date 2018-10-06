@@ -182,13 +182,14 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   func applyPreviousInfo(promise: CatchUpPromise) {
     let calendar = Calendar(identifier: .gregorian)
     let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: promise.dateTime)
+    
     self.promiseId.value = promise.id
     self.promiseName.value = promise.name
     self.address.value = promise.address
     self.dateComponents.value = components
     self.timeComponents.value = components
     self.coordinate.value = (latitude: promise.latitude, longitude: promise.longitude)
-    self.pockets.value = promise.contacts
+    self.pockets.value = promise.contacts.filter { $0 != promise.owner }
   }
   
   lazy var popScene: Action<CatchUpPromise?, Void> = {
@@ -216,7 +217,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       
       let isEdit = strongSelf.isEditMode.value
       let promiseId = strongSelf.promiseId.value ?? UUID().uuidString
-      let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
       let calendar = Calendar(identifier: .gregorian)
       
       var components = strongSelf.dateComponents.value
@@ -236,12 +236,11 @@ class NewPromiseViewModel: NewPromiseViewModelType {
         name: strongSelf.promiseName.value,
         contacts: strongSelf.pockets.value + [owner]
       )
-    
+      
       strongSelf.apiClient.rx.perform(
         mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput),
         queue: DispatchQueue(label: Define.queueLabelCreatePromise)
-      ).subscribeOn(backgroundScheduler)
-        .observeOn(MainScheduler.instance)
+      ).observeOn(MainScheduler.instance)
         .subscribe(onSuccess: { data in
           if let promise = CatchUpPromise(promiseData: data.updateCatchUpPromise) {
             strongSelf.confirmAndNotify(promise: promise)

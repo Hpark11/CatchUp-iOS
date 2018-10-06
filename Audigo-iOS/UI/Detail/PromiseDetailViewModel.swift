@@ -59,7 +59,6 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   var isOwner: Observable<Bool>
 
   var hasPromiseBeenUpdated: PublishSubject<Bool>?
-  
   var promise: CatchUpPromise? {
     didSet {
       loadSinglePromise()
