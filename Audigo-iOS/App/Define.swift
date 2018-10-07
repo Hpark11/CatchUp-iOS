@@ -18,6 +18,7 @@ struct Define {
   static let keyGMSService: String = "AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE"
   static let keyGMSPlace: String = "AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE"
   static let idGADMobileAds: String = "ca-app-pub-1670879929355255~4408167733"
+  static let idGADMobileAdsCredit: String = "ca-app-pub-1670879929355255/1884030453"
   
   static let keyPhoneNumber: String = "phoneNumber"
   static let keyPushToken: String = "pushToken"

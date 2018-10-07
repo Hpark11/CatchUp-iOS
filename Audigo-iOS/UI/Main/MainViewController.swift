@@ -42,8 +42,8 @@ class MainViewController: UIViewController, BindableType {
     UIApplication.shared.statusBarView?.backgroundColor = .white
     
     GADRewardBasedVideoAd.sharedInstance().delegate = self
-    GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: "ca-app-pub-1670879929355255/1884030453")
-    GADRequest().testDevices = [ "4ee8d0026acfedbf7440a0750bce9c1b" ]
+    GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: Define.idGADMobileAdsCredit)
+//    GADRequest().testDevices = [ "4ee8d0026acfedbf7440a0750bce9c1b" ]
   }
   
   @IBAction func chargeCredit(_ sender: Any) {
@@ -137,7 +137,7 @@ extension MainViewController: GADRewardBasedVideoAdDelegate {
   }
   
   func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-    GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: "ca-app-pub-1670879929355255/1884030453")
+    GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: Define.idGADMobileAdsCredit)
   }
   
   func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
