@@ -22,7 +22,6 @@ class MemberSelectedCollectionViewCell: UICollectionViewCell {
       memberNameLabel.text = info.nickname
       let url = URL(string: info.imagePath)
       memberImageView.kf.setImage(with: url, placeholder: R.image.image_profile_default())
-      
     }
   }
 }

@@ -249,9 +249,9 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수요일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Tl-fX-7Cl">
-                                                            <rect key="frame" x="22" y="70.5" width="44.5" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수요일" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Tl-fX-7Cl">
+                                                            <rect key="frame" x="2" y="70.5" width="84" height="19.5"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -261,8 +261,10 @@
                                                         <constraint firstItem="0Tl-fX-7Cl" firstAttribute="centerX" secondItem="6X1-oM-GMu" secondAttribute="centerX" id="5OT-Kn-MTY"/>
                                                         <constraint firstItem="AYc-99-hK4" firstAttribute="centerX" secondItem="6X1-oM-GMu" secondAttribute="centerX" id="7in-tY-StL"/>
                                                         <constraint firstItem="0Tl-fX-7Cl" firstAttribute="top" secondItem="AYc-99-hK4" secondAttribute="bottom" constant="2" id="MgR-ad-1Pd"/>
+                                                        <constraint firstAttribute="trailing" secondItem="0Tl-fX-7Cl" secondAttribute="trailing" constant="2" id="WIQ-6h-Tr7"/>
                                                         <constraint firstItem="AYc-99-hK4" firstAttribute="centerY" secondItem="6X1-oM-GMu" secondAttribute="centerY" constant="-12" id="XcL-Gv-GbT"/>
                                                         <constraint firstAttribute="height" constant="100" id="f7h-bB-wQP"/>
+                                                        <constraint firstItem="0Tl-fX-7Cl" firstAttribute="leading" secondItem="6X1-oM-GMu" secondAttribute="leading" constant="2" id="nMK-Id-Z3N"/>
                                                         <constraint firstAttribute="width" constant="88" id="zUX-1W-iP1"/>
                                                     </constraints>
                                                 </view>
@@ -1100,14 +1102,14 @@
                                                             <color key="textColor" red="0.23529411764705882" green="0.31372549019607843" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오후 6시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Is0-aJ-u4H">
-                                                            <rect key="frame" x="75" y="40.5" width="46" height="16"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Is0-aJ-u4H">
+                                                            <rect key="frame" x="75" y="40.5" width="0.0" height="0.0"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="0.57647058823529407" green="0.61960784313725492" blue="0.6588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="도착" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VlO-gh-z1F">
-                                                            <rect key="frame" x="178" y="23.5" width="50" height="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VlO-gh-z1F">
+                                                            <rect key="frame" x="178" y="32" width="50" height="0.0"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="50" id="c74-yD-BYn"/>
                                                             </constraints>
@@ -1161,7 +1163,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="unb-AW-p6r" customClass="GMSMapView">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="unb-AW-p6r" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>

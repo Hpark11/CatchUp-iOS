@@ -102,11 +102,9 @@ extension AppCoordinator {
     let subject = PublishSubject<Void>()
     
     if let navigationController = currentViewController?.navigationController {
-      // navigate up the stack
-      // one-off subscription to be notified when pop complete
       navigationController.rx.delegate
         .sentMessage(#selector(UINavigationControllerDelegate.navigationController(_:didShow:animated:)))
-        .take(1) // To delete if already in return at bottom
+        .take(1)
         .map { _ in }
         .bind(to: subject)
         .disposed(by: disposeBag)
@@ -126,7 +124,7 @@ extension AppCoordinator {
     if let navigationController = currentViewController?.navigationController {
       navigationController.rx.delegate
         .sentMessage(#selector(UINavigationControllerDelegate.navigationController(_:didShow:animated:)))
-        .take(1) // To delete if already in return at bottom
+        .take(1) 
         .map { _ in }
         .bind(to: subject)
         .disposed(by: disposeBag)

@@ -47,7 +47,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
     
     sendPush.subscribe(onNext: { [weak self] (pushToken) in
       guard let strongSelf = self else { return }
-      let alert = UIAlertController(title: "알림", message: "알림 메세지를 입력하세요", preferredStyle: .alert)
+      let alert = UIAlertController(title: "메세지 보내기", message: "유저에게 보낼 메세지를 입력하세요", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
   
       alert.addTextField(configurationHandler: { textField in
@@ -55,8 +55,9 @@ class PromiseDetailViewController: UIViewController, BindableType {
       })
   
       alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-        if let text = alert.textFields?.first?.text {
-          apollo?.fetch(query: SendPushQuery(pushTokens: [pushToken], title: "약속으로부터 알림", body: "\(text)", scheduledTime: "\(Date().timeInMillis)"))
+        print(alert.textFields)
+        if let text = alert.textFields?.first?.text, let from = UserDefaultService.nickname {
+          PushMessageService.sendPush(title: "\(from)님의 메세지", message: text, pushTokens: [pushToken])
         }
       }))
 
@@ -102,7 +103,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
       let marker = GMSMarker()
       marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
       marker.title = "목적지"
-      marker.snippet = "도착 장소"
+      marker.snippet = strongSelf.viewModel.promise?.address
       
       marker.map = strongSelf.membersMapView
       strongSelf.destMarker = marker

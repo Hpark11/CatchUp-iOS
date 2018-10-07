@@ -33,23 +33,21 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
     self.sendPush = sendPush
     self.pushToken = contact.pushToken
     
-    if let latitude = contact.latitude, let longitude = contact.longitude {
-      let fromCoordinate = CLLocation(latitude: latitude, longitude: longitude)
-      let destCoordinate = CLLocation(latitude: contact.destLatitude, longitude: contact.destLongitude)
-      let distanceInMeters = fromCoordinate.distance(from: destCoordinate) / 1000.0
-      
-      if distanceInMeters >= 700 {
-        arrivalTimeLabel.text = "GPS 차단 중"
-        statusLabel.text = "행방불명"
-      } else if distanceInMeters <= 0.15 {
-        statusLabel.text = "도착"
-        statusLabel.textColor = .warmPink
-        arrivalTimeLabel.text = "약 \(round(distanceInMeters * 100) / 100) km"
-      } else {
-        statusLabel.text = "이동중"
-        statusLabel.textColor = .warmBlue
-        arrivalTimeLabel.text = "약 \(round(distanceInMeters * 100) / 100) km"
-      }
+    let fromCoordinate = CLLocation(latitude: contact.latitude ?? 0.0, longitude: contact.longitude ?? 0.0)
+    let destCoordinate = CLLocation(latitude: contact.destLatitude, longitude: contact.destLongitude)
+    let distanceInKMeters = fromCoordinate.distance(from: destCoordinate) / 1000.0
+    
+    if distanceInKMeters >= Define.distanceUpperBound {
+      arrivalTimeLabel.text = "좌표 로드 실패"
+      statusLabel.text = "행방불명"
+    } else if distanceInKMeters < Define.distanceLowerBound {
+      statusLabel.text = "도착"
+      statusLabel.textColor = .warmPink
+      arrivalTimeLabel.text = "약 \(round(distanceInKMeters * 100) / 100) km"
+    } else {
+      statusLabel.text = "이동중"
+      statusLabel.textColor = .warmBlue
+      arrivalTimeLabel.text = "약 \(round(distanceInKMeters * 100) / 100) km"
     }
     
     if let nickname = contact.nickname {

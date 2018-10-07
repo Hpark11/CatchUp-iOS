@@ -196,7 +196,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     return Action { [weak self] promiseData in
       guard let strongSelf = self else { return .empty() }
       if strongSelf.isEditMode.value {
-        
         let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
         if let promise = promiseData {
           strongSelf.editPromiseDone?.onNext(promise)
@@ -238,14 +237,29 @@ class NewPromiseViewModel: NewPromiseViewModelType {
         contacts: strongSelf.pockets.value + [owner]
       )
       
-      strongSelf.apiClient.rx.perform(
-        mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput)
-      ).subscribe(onSuccess: { data in
-        if let promise = CatchUpPromise(promiseData: data.updateCatchUpPromise) {
+      // 크레딧 확인
+      guard let userId = UserDefaultService.userId, let credit = UserDefaultService.credit, credit > 0 else {
+        return .empty()
+      }
+      
+      // 크레딧 사용
+      strongSelf.apiClient.rx.perform(mutation: UseCreditMutation(id: userId)).flatMap { _ -> PrimitiveSequence<MaybeTrait, BatchGetCatchUpContactsQuery.Data> in
+        let contacts: [String?] = strongSelf.pockets.value
+        return strongSelf.apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: contacts), cachePolicy: .fetchIgnoringCacheData)
+        }.map { data -> [String] in
+          let phoneList = data.batchGetCatchUpContacts?.compactMap { $0?.phone } ?? []
+          return strongSelf.pockets.value.filter { !phoneList.contains($0) }
+        }.flatMap { registered -> PrimitiveSequence<MaybeTrait, BatchCreateCatchUpContactMutation.Data> in
+          let contacts = registered.map { phone in return ContactCreateInput(phone: phone, nickname: "미가입자") }
+          return strongSelf.apiClient.rx.perform(mutation: BatchCreateCatchUpContactMutation(contacts: contacts))
+        }.flatMap { _ in
+          return strongSelf.apiClient.rx.perform(mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput))
+        }.subscribe(onSuccess: { data in
+          if let promise = CatchUpPromise(promiseData: data.updateCatchUpPromise) {
             strongSelf.confirmAndNotify(promise: promise)
           }
         }, onError: { error in
-          strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
+          strongSelf.createPromiseState.value = .error(description: "error.localizedDescription")
         }).disposed(by: strongSelf.disposeBag)
       
       return .empty()

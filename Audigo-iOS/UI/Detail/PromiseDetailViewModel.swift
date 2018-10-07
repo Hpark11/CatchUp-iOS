@@ -59,6 +59,8 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   var isOwner: Observable<Bool>
 
   var hasPromiseBeenUpdated: PublishSubject<Bool>?
+  var sendMessage: PublishSubject<String>
+  
   var promise: CatchUpPromise? {
     didSet {
       loadSinglePromise()
@@ -78,6 +80,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     disposeBag = DisposeBag()
     
     editPromiseDone = PublishSubject()
+    sendMessage = PublishSubject()
     
     pocketList = Variable([])
     promiseName = Variable("")

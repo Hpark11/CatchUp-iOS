@@ -156,6 +156,7 @@ class EntranceViewModel: EntranceViewModelType {
       .subscribe(onSuccess: { data in
         UserDefaultService.userId = data.updateCatchUpUser?.id
         UserDefaultService.credit = data.updateCatchUpUser?.credit
+        UserDefaultService.nickname = data.updateCatchUpUser?.nickname
       }, onError: { error in
         print(error.localizedDescription)
       }).disposed(by: disposeBag)
