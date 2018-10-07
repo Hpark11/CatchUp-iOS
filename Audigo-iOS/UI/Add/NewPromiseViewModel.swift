@@ -246,19 +246,24 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       strongSelf.apiClient.rx.perform(mutation: UseCreditMutation(id: userId)).flatMap { _ -> PrimitiveSequence<MaybeTrait, BatchGetCatchUpContactsQuery.Data> in
         let contacts: [String?] = strongSelf.pockets.value
         return strongSelf.apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: contacts), cachePolicy: .fetchIgnoringCacheData)
+        
         }.map { data -> [String] in
           let phoneList = data.batchGetCatchUpContacts?.compactMap { $0?.phone } ?? []
           return strongSelf.pockets.value.filter { !phoneList.contains($0) }
+          
         }.flatMap { registered -> PrimitiveSequence<MaybeTrait, BatchCreateCatchUpContactMutation.Data> in
-          let contacts = registered.map { phone in return ContactCreateInput(phone: phone, nickname: "미가입자") }
+          let contacts = (registered + ["0"]).map { phone in return ContactCreateInput(phone: phone, nickname: "미가입자") }
           return strongSelf.apiClient.rx.perform(mutation: BatchCreateCatchUpContactMutation(contacts: contacts))
+          
         }.flatMap { _ in
           return strongSelf.apiClient.rx.perform(mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput))
+          
         }.subscribe(onSuccess: { data in
           if let promise = CatchUpPromise(promiseData: data.updateCatchUpPromise) {
             strongSelf.confirmAndNotify(promise: promise)
           }
         }, onError: { error in
+          print(error)
           strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
         }).disposed(by: strongSelf.disposeBag)
       

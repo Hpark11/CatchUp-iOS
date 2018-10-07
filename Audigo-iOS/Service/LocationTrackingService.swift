@@ -34,7 +34,6 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate {
   
   public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     if let newLocation = locations.last {
-      print("(\(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude))")
       guard let phone = UserDefaultService.phoneNumber else { return }
       
       if let appDelegate = UIApplication.shared.delegate as? AppDelegate {

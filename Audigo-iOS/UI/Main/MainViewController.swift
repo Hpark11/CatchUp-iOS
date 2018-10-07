@@ -16,7 +16,7 @@ import SwiftyContacts
 import GoogleMobileAds
 
 class MainViewController: UIViewController, BindableType {
-  @IBOutlet weak var promiseListTableView: UITableView!
+  @IBOutlet weak var promiseCollectionView: UICollectionView!
   @IBOutlet weak var newPromiseButton: UIButton!
   @IBOutlet weak var monthSelectButton: UIButton!
   @IBOutlet weak var promiseGuide: UIImageView!
@@ -29,10 +29,18 @@ class MainViewController: UIViewController, BindableType {
   
   let disposeBag = DisposeBag()
   
-  lazy var configureCell: (TableViewSectionedDataSource<PromiseSectionModel>, UITableView, IndexPath, CatchUpPromise) -> UITableViewCell = { [weak self] data, tableView, indexPath, promise in
-    guard let strongSelf = self else { return PromiseTableViewCell(frame: .zero) }
+//  lazy var configureCell: (TableViewSectionedDataSource<PromiseSectionModel>, UITableView, IndexPath, CatchUpPromise) -> UITableViewCell = { [weak self] data, tableView, indexPath, promise in
+//    guard let strongSelf = self else { return PromiseTableViewCell(frame: .zero) }
+//
+//    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseTableViewCell, for: indexPath)
+//    cell?.configure(promise: promise)
+//    return cell!
+//  }
+  
+  lazy var configureCell: (CollectionViewSectionedDataSource<PromiseSectionModel>, UICollectionView, IndexPath, CatchUpPromise) -> UICollectionViewCell = { [weak self] data, collectionView, indexPath, promise in
+    guard let strongSelf = self else { return PromiseCollectionViewCell(frame: .zero) }
     
-    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseTableViewCell, for: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.promiseCollectionViewCell, for: indexPath)
     cell?.configure(promise: promise)
     return cell!
   }
@@ -53,10 +61,19 @@ class MainViewController: UIViewController, BindableType {
   }
   
   func bindViewModel() {
-    let dataSource = RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)
+//    let dataSource = RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)
+    if let layout = promiseCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+      layout.scrollDirection = .vertical
+      layout.minimumLineSpacing = 0
+      layout.itemSize = CGSize(width: view.frame.width, height: 160)
+    }
+    
+    let dataSource = RxCollectionViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell, configureSupplementaryView: {data, collectionView, text, indexPath in
+      return UICollectionReusableView()
+    })
     
     viewModel.promiseItems
-      .bind(to: promiseListTableView.rx.items(dataSource: dataSource))
+      .bind(to: promiseCollectionView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
     viewModel.creditCount.subscribe(onNext: { [weak self] count in
@@ -64,9 +81,9 @@ class MainViewController: UIViewController, BindableType {
       strongSelf.creditButton.setTitle("\(count) 크레딧", for: .normal)
     }).disposed(by: disposeBag)
     
-    Observable.zip(promiseListTableView.rx.itemSelected, promiseListTableView.rx.modelSelected(CatchUpPromise.self)).bind { [weak self] indexPath, promise in
+    Observable.zip(promiseCollectionView.rx.itemSelected, promiseCollectionView.rx.modelSelected(CatchUpPromise.self)).bind { [weak self] indexPath, promise in
       guard let strongSelf = self else { return }
-      strongSelf.promiseListTableView.deselectRow(at: indexPath, animated: true)
+      strongSelf.promiseCollectionView.deselectItem(at: indexPath, animated: true)
       strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise)
       strongSelf.navigationController?.navigationBar.backgroundColor = .darkSkyBlue
       strongSelf.navigationController?.navigationBar.barStyle = .blackOpaque

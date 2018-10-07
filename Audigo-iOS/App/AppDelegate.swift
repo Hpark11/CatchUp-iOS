@@ -108,6 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func applicationDidBecomeActive(_ application: UIApplication) {
     KOSession.handleDidBecomeActive()
+    UIApplication.shared.applicationIconBadgeNumber = 0
   }
   
   func applicationWillTerminate(_ application: UIApplication) {
@@ -127,7 +128,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if let messageID = userInfo[gcmMessageIDKey] {
       print("Message ID: \(messageID)")
     }
-    
     // Print full message.
     print(userInfo)
   }
