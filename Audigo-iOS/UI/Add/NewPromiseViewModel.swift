@@ -41,7 +41,7 @@ protocol NewPromiseViewModelOutputsType {
 
 protocol NewPromiseViewModelActionsType {
   var popScene: Action<CatchUpPromise?, Void> { get }
-  var newPromiseCompleted: CocoaAction { get }
+  var newPromiseCompleted: Action<Void, String> { get }
 }
 
 protocol NewPromiseViewModelType {
@@ -210,9 +210,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }
   }()
   
-  lazy var newPromiseCompleted: CocoaAction = {
+  lazy var newPromiseCompleted: Action<Void, String> = {
     return Action { [weak self] _ in
-      guard let strongSelf = self else { return .empty() }
+      guard let strongSelf = self else { return .just("") }
       strongSelf.createPromiseState.value = .pending
       
       let isEdit = strongSelf.isEditMode.value
@@ -224,8 +224,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       components?.minute = strongSelf.timeComponents.value?.minute
       components?.second = strongSelf.timeComponents.value?.second
       
-      guard let dateTimeComponents = components else { return .empty() }
-      guard let owner = UserDefaultService.phoneNumber else { return .empty() }
+      guard let dateTimeComponents = components else { return .just("일자 선정 오류") }
+      guard let owner = UserDefaultService.phoneNumber else { return .just("핸드폰 번호 오류") }
       
       let promiseInput = CatchUpPromiseInput(
         owner: owner,
@@ -239,7 +239,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       
       // 크레딧 확인
       guard let userId = UserDefaultService.userId, let credit = UserDefaultService.credit, credit > 0 else {
-        return .empty()
+        return .just("크레딧이 부족합니다")
       }
       
       // 크레딧 사용
@@ -259,10 +259,10 @@ class NewPromiseViewModel: NewPromiseViewModelType {
             strongSelf.confirmAndNotify(promise: promise)
           }
         }, onError: { error in
-          strongSelf.createPromiseState.value = .error(description: "error.localizedDescription")
+          strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
         }).disposed(by: strongSelf.disposeBag)
       
-      return .empty()
+      return .just("")
     }
   }()
   

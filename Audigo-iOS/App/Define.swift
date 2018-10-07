@@ -15,6 +15,10 @@ struct Define {
   static let appsyncLocalDB: String = "appsync-catchup-db"
   static let appsyncKeyAPI: String = "da2-gp5jgpzvkfdnhfcjp3amglzbee"
   
+  static let keyGMSService: String = "AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE"
+  static let keyGMSPlace: String = "AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE"
+  static let idGADMobileAds: String = "ca-app-pub-1670879929355255~4408167733"
+  
   static let keyPhoneNumber: String = "phoneNumber"
   static let keyPushToken: String = "pushToken"
   static let keyCredit: String = "credit"

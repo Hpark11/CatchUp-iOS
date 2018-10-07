@@ -329,8 +329,23 @@
                                 <action selector="selectMonth:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CB8-oA-uBO"/>
                             </connections>
                         </button>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="aij-jr-u2k">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AwH-f8-UeY">
+                                <rect key="frame" x="233" y="7" width="71" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-20" maxY="0.0"/>
+                                <state key="normal" title="00 크레딧">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="chargeCredit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kOL-Se-h5c"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="creditButton" destination="AwH-f8-UeY" id="5VM-KV-982"/>
                         <outlet property="monthSelectButton" destination="JsE-lu-ykR" id="eMZ-NV-5fk"/>
                         <outlet property="newPromiseButton" destination="Ek5-lI-khR" id="IKh-hI-NxN"/>
                         <outlet property="promiseGuide" destination="JoB-si-dUx" id="0da-LM-8GK"/>
@@ -727,6 +742,9 @@
                                 <state key="normal" image="image_button_promise_add">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="addNewPromise:" destination="0sL-c7-ubZ" eventType="touchUpInside" id="cOy-xY-AAo"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

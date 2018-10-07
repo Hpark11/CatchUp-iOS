@@ -15,6 +15,7 @@ import UserNotifications
 import FirebaseMessaging
 import AWSAppSync
 import RealmSwift
+import GoogleMobileAds
 
 var apollo: ApolloClient? = nil// = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
 
@@ -43,8 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Firebase And Google Services ---------------------------------------------------------------------------]
     FirebaseApp.configure()
-    GMSServices.provideAPIKey("AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE")
-    GMSPlacesClient.provideAPIKey("AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE")
+    GMSServices.provideAPIKey(Define.keyGMSService)
+    GMSPlacesClient.provideAPIKey(Define.keyGMSPlace)
+    GADMobileAds.configure(withApplicationID: Define.idGADMobileAds)
     
     // Window Config ------------------------------------------------------------------------------------------]
     window = UIWindow(frame: UIScreen.main.bounds)
@@ -222,7 +224,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
-// [START ios_10_message_handling]
 @available(iOS 10, *)
 extension AppDelegate : UNUserNotificationCenterDelegate {
   
@@ -230,56 +231,27 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: UNUserNotificationCenter,
                               willPresent notification: UNNotification,
                               withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-    let userInfo = notification.request.content.userInfo
-    
-    // With swizzling disabled you must let Messaging know about the message, for Analytics
-    // Messaging.messaging().appDidReceiveMessage(userInfo)
-    // Print message ID.
-    if let messageID = userInfo[gcmMessageIDKey] {
-      print("Message ID: \(messageID)")
-    }
-    
-    // Print full message.
-    print(userInfo)
-    
-    // Change this to your preferred presentation option
-    completionHandler([])
+    let _ = notification.request.content.userInfo
+    completionHandler([.alert, .sound])
   }
   
   func userNotificationCenter(_ center: UNUserNotificationCenter,
                               didReceive response: UNNotificationResponse,
                               withCompletionHandler completionHandler: @escaping () -> Void) {
-    let userInfo = response.notification.request.content.userInfo
-    // Print message ID.
-    if let messageID = userInfo[gcmMessageIDKey] {
-      print("Message ID: \(messageID)")
-    }
-    
-    // Print full message.
-    print(userInfo)
-    
+    let _ = response.notification.request.content.userInfo
     completionHandler()
   }
 }
-// [END ios_10_message_handling]
 
 extension AppDelegate : MessagingDelegate {
-  // [START refresh_token]
   func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
     print("Firebase registration token: \(fcmToken)")
-    
-    // TODO: If necessary send token to application server.
-    // Note: This callback is fired at each app startup and whenever a new token is generated.
     UserDefaultService.pushToken = fcmToken
   }
-  // [END refresh_token]
-  // [START ios_10_data_message]
-  // Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
-  // To enable direct data messages, you can set Messaging.messaging().shouldEstablishDirectChannel to true.
+
   func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
     print("Received data message: \(remoteMessage.appData)")
   }
-  // [END ios_10_data_message]
 }
 
 

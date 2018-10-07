@@ -27,6 +27,7 @@ target 'Audigo-iOS' do
   pod 'Permission/Location'
   pod 'Permission/Notifications'
   pod 'AWSAppSync', '~> 2.6.22'
+  pod 'Google-Mobile-Ads-SDK'
 
   target 'Audigo-iOSTests' do
     inherit! :search_paths

@@ -58,6 +58,7 @@ PODS:
     - FirebaseInstanceID (~> 3.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
+  - Google-Mobile-Ads-SDK (7.34.0)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
@@ -144,6 +145,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Firestore
   - Firebase/Messaging
+  - Google-Mobile-Ads-SDK
   - GoogleMaps
   - GooglePlaces
   - Kingfisher
@@ -174,6 +176,7 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseInstanceID
     - FirebaseMessaging
+    - Google-Mobile-Ads-SDK
     - GoogleMaps
     - GooglePlaces
     - GoogleToolboxForMac
@@ -214,6 +217,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: d4a3a7787624e612298a320da95935b8dc036c1d
   FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
   FirebaseMessaging: f43eb0c0e1da096e659de6f713038e74862a62cd
+  Google-Mobile-Ads-SDK: a1cbce28c0c78ca1fb0b6c4f213485f55527c99f
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
@@ -241,6 +245,6 @@ SPEC CHECKSUMS:
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
   SwiftyContacts: 3b38d400d2480e8a2323194f3f8fcf6b317d8147
 
-PODFILE CHECKSUM: 005fe289bffdb04a06a16a64a5b436414aa054e2
+PODFILE CHECKSUM: 26ca159a9783890d68b9286e3afbdb1d94457882
 
 COCOAPODS: 1.5.0

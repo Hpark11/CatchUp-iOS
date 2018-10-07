@@ -51,11 +51,20 @@ class NewPromiseViewController: UIViewController, BindableType {
     super.viewWillAppear(animated)
     UIApplication.shared.statusBarView?.backgroundColor = .white
   }
+  @IBAction func addNewPromise(_ sender: Any) {
+    _ = viewModel.actions.newPromiseCompleted.execute(()).subscribe(onNext: { [weak self] errorMessage in
+      guard let strongSelf = self else { return }
+      if !errorMessage.isEmpty {
+        let alert = UIAlertController(title: "약속 에러 발생", message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+        strongSelf.present(alert, animated: true)
+      }
+    })
+  }
   
   func bindViewModel() {
     popButton.rx.bind(to: viewModel.actions.popScene, input: nil)
-    newPromiseButton.rx.action = viewModel.actions.newPromiseCompleted
-    
+  
     promiseNameInputView.rx.tapGesture().when(.recognized).subscribe { _ in
       let alert = UIAlertController(title: "이름 짓기", message: "생성할 약속의 이름을 입력해주세요", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))

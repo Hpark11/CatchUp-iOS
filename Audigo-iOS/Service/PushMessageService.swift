@@ -17,7 +17,11 @@ class PushMessageService {
   static let collectionMessages = "messages"
   
   static private var database: Firestore {
-    return Firestore.firestore()
+    let db = Firestore.firestore()
+    let settings = db.settings
+    settings.areTimestampsInSnapshotsEnabled = true
+    db.settings = settings
+    return db
   }
   
   static func sendPush(title: String, message: String, pushTokens: [String]) {

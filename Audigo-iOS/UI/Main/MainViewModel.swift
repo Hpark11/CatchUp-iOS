@@ -23,11 +23,13 @@ protocol MainViewModelInputsType {
 protocol MainViewModelOutputsType {
   var promiseItems: Observable<[PromiseSectionModel]> { get }
   var current: Observable<(Int, Int)> { get }
+  var creditCount: Observable<Int> { get }
 }
 
 protocol MainViewModelActionsType {
   var pushNewPromiseScene: CocoaAction { get }
   var pushPromiseDetailScene: Action<CatchUpPromise, Void> { get }
+  var chargeCredit: Action<Int, Void> { get }
 }
 
 protocol MainViewModelType {
@@ -54,11 +56,13 @@ class MainViewModel: MainViewModelType {
   // MARK: Outputs
   var promiseItems: Observable<[PromiseSectionModel]>
   var current: Observable<(Int, Int)>
+  var creditCount: Observable<Int>
   
   private let userInfo: Variable<(id: String?, phone: String?, email: String?, nickname: String?, gender: String?, birthday: String?, ageRange: String?, profileImagePath: String?)>
   private let promiseList: Variable<[CatchUpPromise]>
   private let filteredList: Variable<[CatchUpPromise]>
   private let currentMonth: Variable<(Int, Int)>
+  private let credit: Variable<Int>
   
   var phone: String = "" {
     didSet {
@@ -80,6 +84,7 @@ class MainViewModel: MainViewModelType {
     userInfo = Variable((id: nil, phone: nil, email: nil, nickname: nil, gender: nil, birthday: nil, ageRange: nil, profileImagePath: nil))
     promiseList = Variable([])
     filteredList = Variable([])
+    credit = Variable(UserDefaultService.credit ?? 0)
     currentMonth = Variable((calendar.component(.month, from: Date()), calendar.component(.year, from: Date())))
     
     promiseItems = filteredList.asObservable()
@@ -88,6 +93,7 @@ class MainViewModel: MainViewModelType {
       })
     
     current = currentMonth.asObservable()
+    creditCount = credit.asObservable()
     
     // Inputs
     monthSelectDone.subscribe(onNext: { [weak self] (month, year) in
@@ -202,6 +208,23 @@ class MainViewModel: MainViewModelType {
       viewModel.hasPromiseBeenUpdated = strongSelf.hasPromiseBeenUpdated
       let scene = PromiseDetailScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .push(animated: true))
+    }
+  }()
+  
+  lazy var chargeCredit: Action<Int, Void> = {
+    return Action { [weak self] credit in
+      guard let strongSelf = self, let userId = UserDefaultService.userId else { return .empty() }
+      strongSelf.apiClient.perform(mutation: ChargeCreditMutation(id: userId, credit: credit)) { (result, error) in
+        if let error = error {
+          print(error.localizedDescription)
+          return
+        }
+        
+        if let count = result?.data?.chargeCredit.credit {
+          strongSelf.credit.value += count
+        }
+      }
+      return .empty()
     }
   }()
 }
