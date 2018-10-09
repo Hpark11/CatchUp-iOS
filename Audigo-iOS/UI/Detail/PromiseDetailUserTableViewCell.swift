@@ -50,11 +50,9 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
       arrivalTimeLabel.text = "약 \(round(distanceInKMeters * 100) / 100) km"
     }
     
-    if let nickname = contact.nickname {
-      memberNameLabel.text = nickname
-    } else {
-      let item = ContactItem.find(phone: contact.phone)
-      memberNameLabel.text = item?.nickname
+    memberNameLabel.text = contact.nickname
+    if let item = ContactItem.find(phone: contact.phone) {
+      memberNameLabel.text = item.nickname
     }
     
     profileImageView.layer.cornerRadius = 20

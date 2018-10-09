@@ -154,8 +154,10 @@ class EntranceViewModel: EntranceViewModelType {
         return strongSelf.apiClient.rx.perform(mutation: UpdateCatchUpUserMutation(id: userInfo.id, data: CatchUpUserInput(credit: data.getCatchUpUser?.credit ?? Define.initCredit)))
       }.observeOn(MainScheduler.instance)
       .subscribe(onSuccess: { data in
+        if let phone = data.updateCatchUpUser?.phone {
+          ContactItem.create(phone, imagePath: data.updateCatchUpUser?.profileImagePath ?? "", pushToken: "")
+        }
         UserDefaultService.userId = data.updateCatchUpUser?.id
-        UserDefaultService.credit = data.updateCatchUpUser?.credit
         UserDefaultService.nickname = data.updateCatchUpUser?.nickname
       }, onError: { error in
         print(error.localizedDescription)

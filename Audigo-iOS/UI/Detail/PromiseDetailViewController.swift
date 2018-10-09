@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 import GoogleMaps
 
-class PromiseDetailViewController: UIViewController, BindableType {
+class PromiseDetailViewController: UIViewController, BindableType, GMSMapViewDelegate {
   @IBOutlet weak var pocketListTableView: UITableView!
   @IBOutlet weak var promisedDateLabel: UILabel!
   @IBOutlet weak var membersMapView: GMSMapView!
@@ -47,15 +47,11 @@ class PromiseDetailViewController: UIViewController, BindableType {
     
     sendPush.subscribe(onNext: { [weak self] (pushToken) in
       guard let strongSelf = self else { return }
+      
       let alert = UIAlertController(title: "메세지 보내기", message: "유저에게 보낼 메세지를 입력하세요", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-  
-      alert.addTextField(configurationHandler: { textField in
-        textField.placeholder = "메세지 입력"
-      })
-  
+      alert.addTextField(configurationHandler: { textField in textField.placeholder = "메세지 입력" })
       alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-        print(alert.textFields)
         if let text = alert.textFields?.first?.text, let from = UserDefaultService.nickname {
           PushMessageService.sendPush(title: "\(from)님의 메세지", message: text, pushTokens: [pushToken])
         }
@@ -74,7 +70,6 @@ class PromiseDetailViewController: UIViewController, BindableType {
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    
     UIApplication.shared.statusBarView?.backgroundColor = .white
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barStyle = .default
@@ -99,7 +94,10 @@ class PromiseDetailViewController: UIViewController, BindableType {
       guard let strongSelf = self else { return }
       strongSelf.destMarker?.map = nil
       
-      strongSelf.membersMapView.animate(to: GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 14.0))
+      if strongSelf.destMarker == nil {
+        strongSelf.membersMapView.animate(to: GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 14.0))
+      }
+      
       let marker = GMSMarker()
       marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
       marker.title = "목적지"
@@ -126,12 +124,23 @@ class PromiseDetailViewController: UIViewController, BindableType {
         return nil
       }
       
+      let promiseDateTime = strongSelf.viewModel.promise?.dateTime.timeInMillis ?? Date().timeInMillis
+      let current = Date().timeInMillis
+      
+      guard promiseDateTime > current, (promiseDateTime - current) <= 7200000 else {
+        guard let strongSelf = self else { return }
+        let alert = UIAlertController(title: "알림", message: "약속 활성화 시간(2시간 전)이 아니어서 위치정보는 볼 수 없어요", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+        strongSelf.present(alert, animated: true)
+        return
+      }
+      
       strongSelf.markers = sectionModel.first?.items.compactMap { contact in
         guard let latitude = contact.latitude, let longitude = contact.longitude, latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0 else { return nil }
         
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        marker.title = contact.nickname ?? "아는 사람"
+        marker.title = contact.nickname ?? "미가입자"
         marker.snippet = contact.phone
         let markerView = CatchUpMarkerView(frame: CGRect(x: 0, y: 0, width: 48, height: 58))
         markerView.markerState = .moving(imagePath: contact.profileImagePath ?? "")
@@ -153,5 +162,6 @@ class PromiseDetailViewController: UIViewController, BindableType {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
+
 }
 

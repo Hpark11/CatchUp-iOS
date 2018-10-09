@@ -237,17 +237,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
         contacts: strongSelf.pockets.value + [owner]
       )
       
-      // 크레딧 확인
-      guard let userId = UserDefaultService.userId, let credit = UserDefaultService.credit, credit > 0 else {
-        return .just("크레딧이 부족합니다")
-      }
-      
-      // 크레딧 사용
-      strongSelf.apiClient.rx.perform(mutation: UseCreditMutation(id: userId)).flatMap { _ -> PrimitiveSequence<MaybeTrait, BatchGetCatchUpContactsQuery.Data> in
-        let contacts: [String?] = strongSelf.pockets.value
-        return strongSelf.apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: contacts), cachePolicy: .fetchIgnoringCacheData)
-        
-        }.map { data -> [String] in
+      let contacts: [String?] = strongSelf.pockets.value
+      strongSelf.apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: contacts), cachePolicy: .fetchIgnoringCacheData)
+        .map { data -> [String] in
           let phoneList = data.batchGetCatchUpContacts?.compactMap { $0?.phone } ?? []
           return strongSelf.pockets.value.filter { !phoneList.contains($0) }
           

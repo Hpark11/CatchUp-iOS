@@ -20,7 +20,6 @@ class MainViewController: UIViewController, BindableType {
   @IBOutlet weak var newPromiseButton: UIButton!
   @IBOutlet weak var monthSelectButton: UIButton!
   @IBOutlet weak var promiseGuide: UIImageView!
-  @IBOutlet weak var creditButton: UIButton!
   
   var viewModel: MainViewModel!
   var needSignIn = false
@@ -28,14 +27,6 @@ class MainViewController: UIViewController, BindableType {
   var current: (month: Int, year: Int)?
   
   let disposeBag = DisposeBag()
-  
-//  lazy var configureCell: (TableViewSectionedDataSource<PromiseSectionModel>, UITableView, IndexPath, CatchUpPromise) -> UITableViewCell = { [weak self] data, tableView, indexPath, promise in
-//    guard let strongSelf = self else { return PromiseTableViewCell(frame: .zero) }
-//
-//    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseTableViewCell, for: indexPath)
-//    cell?.configure(promise: promise)
-//    return cell!
-//  }
   
   lazy var configureCell: (CollectionViewSectionedDataSource<PromiseSectionModel>, UICollectionView, IndexPath, CatchUpPromise) -> UICollectionViewCell = { [weak self] data, collectionView, indexPath, promise in
     guard let strongSelf = self else { return PromiseCollectionViewCell(frame: .zero) }
@@ -51,7 +42,11 @@ class MainViewController: UIViewController, BindableType {
     
     GADRewardBasedVideoAd.sharedInstance().delegate = self
     GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: Define.idGADMobileAdsCredit)
-//    GADRequest().testDevices = [ "4ee8d0026acfedbf7440a0750bce9c1b" ]
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
   }
   
   @IBAction func chargeCredit(_ sender: Any) {
@@ -61,7 +56,6 @@ class MainViewController: UIViewController, BindableType {
   }
   
   func bindViewModel() {
-//    let dataSource = RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)
     if let layout = promiseCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
       layout.scrollDirection = .vertical
       layout.minimumLineSpacing = 0
@@ -72,14 +66,26 @@ class MainViewController: UIViewController, BindableType {
       return UICollectionReusableView()
     })
     
+    viewModel.appVersion.subscribe(onSuccess: { [weak self] version in
+      guard let strongSelf = self else { return }
+      
+      if version.major > Define.majorVersion || version.minor > Define.minorVersion || version.revision > Define.revision {
+        let alert = UIAlertController(title: "최신 버전 업데이트", message: "새로운 버전(\(version.major).\(version.minor).\(version.revision))이 출시되었습니다. 업데이트 하시겠습니까?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+          if UIApplication.shared.canOpenURL(Define.appStoreUrl) {
+            UIApplication.shared.open(Define.appStoreUrl, options: [:], completionHandler: nil)
+          }
+        }))
+        
+        strongSelf.present(alert, animated: true)
+      }
+      
+    }).disposed(by: disposeBag)
+    
     viewModel.promiseItems
       .bind(to: promiseCollectionView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
-    
-    viewModel.creditCount.subscribe(onNext: { [weak self] count in
-      guard let strongSelf = self else { return }
-      strongSelf.creditButton.setTitle("\(count) 크레딧", for: .normal)
-    }).disposed(by: disposeBag)
     
     Observable.zip(promiseCollectionView.rx.itemSelected, promiseCollectionView.rx.modelSelected(CatchUpPromise.self)).bind { [weak self] indexPath, promise in
       guard let strongSelf = self else { return }

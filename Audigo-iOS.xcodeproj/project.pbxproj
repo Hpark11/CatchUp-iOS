@@ -22,6 +22,7 @@
 		CE22C770213AA6CC00878BB1 /* CatchUpContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */; };
 		CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */; };
 		CE280193212575E20066B344 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE280192212575E20066B344 /* ContactItem.swift */; };
+		CE290561216B8A5A0061D984 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE290560216B8A5A0061D984 /* AppVersion.swift */; };
 		CE34B4B6211E787100F92D50 /* UpsertUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AA211E787000F92D50 /* UpsertUser.graphql */; };
 		CE34B4B7211E787100F92D50 /* DeletePromiseById.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */; };
 		CE34B4B8211E787100F92D50 /* GetUserWithPromises.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */; };
@@ -70,6 +71,7 @@
 		CEBD21F121344F570039A457 /* KakaoLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD21F021344F570039A457 /* KakaoLink.framework */; };
 		CEBD21F321344F900039A457 /* KakaoCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD21F221344F900039A457 /* KakaoCommon.framework */; };
 		CEBD21F521344FAE0039A457 /* KakaoMessageTemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD21F421344FAE0039A457 /* KakaoMessageTemplate.framework */; };
+		CEC9A415216D04D600DC322B /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9A414216D04D600DC322B /* MapSearchViewController.swift */; };
 		CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */; };
 		CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */; };
 		CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */; };
@@ -129,6 +131,7 @@
 		CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpContact.swift; sourceTree = "<group>"; };
 		CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
 		CE280192212575E20066B344 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
+		CE290560216B8A5A0061D984 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		CE34B4AA211E787000F92D50 /* UpsertUser.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UpsertUser.graphql; sourceTree = "<group>"; };
 		CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeletePromiseById.graphql; sourceTree = "<group>"; };
 		CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetUserWithPromises.graphql; sourceTree = "<group>"; };
@@ -179,6 +182,7 @@
 		CEBD21F021344F570039A457 /* KakaoLink.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoLink.framework; sourceTree = "<group>"; };
 		CEBD21F221344F900039A457 /* KakaoCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoCommon.framework; sourceTree = "<group>"; };
 		CEBD21F421344FAE0039A457 /* KakaoMessageTemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoMessageTemplate.framework; sourceTree = "<group>"; };
+		CEC9A414216D04D600DC322B /* MapSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
 		CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectedCollectionViewCell.swift; sourceTree = "<group>"; };
 		CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseConfirmViewController.swift; sourceTree = "<group>"; };
 		CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -262,6 +266,7 @@
 				CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */,
 				CED88AA4216656BD0045E2E5 /* UserInfo.swift */,
 				CE7B0DCE21688DC4007DAA2A /* CatchUpPromise.swift */,
+				CE290560216B8A5A0061D984 /* AppVersion.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 				CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */,
 				CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */,
 				CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */,
+				CEC9A414216D04D600DC322B /* MapSearchViewController.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -841,11 +847,13 @@
 				CE280193212575E20066B344 /* ContactItem.swift in Sources */,
 				CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */,
 				CE914BF0216A39BE00B80121 /* PromiseCollectionViewCell.swift in Sources */,
+				CEC9A415216D04D600DC322B /* MapSearchViewController.swift in Sources */,
 				CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */,
 				CE825F9021205BF800697F52 /* Util.swift in Sources */,
 				CE038B0D2166329B001D140B /* RxAppSync.swift in Sources */,
 				CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */,
 				CED88AA5216656BD0045E2E5 /* UserInfo.swift in Sources */,
+				CE290561216B8A5A0061D984 /* AppVersion.swift in Sources */,
 				CE7B0DC52167969F007DAA2A /* Array+Ext.swift in Sources */,
 				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
 				CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */,

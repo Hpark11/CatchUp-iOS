@@ -18,12 +18,14 @@ protocol MainViewModelInputsType {
   var monthSelectDone: PublishSubject<(Int, Int)> { get }
   var addPromiseDone: PublishSubject<Void> { get }
   var hasPromiseBeenUpdated: PublishSubject<Bool> { get }
+  var checkCredit: PublishSubject<Void> { get }
 }
 
 protocol MainViewModelOutputsType {
   var promiseItems: Observable<[PromiseSectionModel]> { get }
   var current: Observable<(Int, Int)> { get }
   var creditCount: Observable<Int> { get }
+  var appVersion: Maybe<AppVersion> { get }
 }
 
 protocol MainViewModelActionsType {
@@ -52,11 +54,13 @@ class MainViewModel: MainViewModelType {
   var monthSelectDone: PublishSubject<(Int, Int)>
   var addPromiseDone: PublishSubject<Void>
   var hasPromiseBeenUpdated: PublishSubject<Bool>
+  var checkCredit: PublishSubject<Void>
   
   // MARK: Outputs
   var promiseItems: Observable<[PromiseSectionModel]>
   var current: Observable<(Int, Int)>
   var creditCount: Observable<Int>
+  var appVersion: Maybe<AppVersion>
   
   private let userInfo: Variable<(id: String?, phone: String?, email: String?, nickname: String?, gender: String?, birthday: String?, ageRange: String?, profileImagePath: String?)>
   private let promiseList: Variable<[CatchUpPromise]>
@@ -80,6 +84,7 @@ class MainViewModel: MainViewModelType {
     monthSelectDone = PublishSubject()
     addPromiseDone = PublishSubject()
     hasPromiseBeenUpdated = PublishSubject()
+    checkCredit = PublishSubject()
     
     userInfo = Variable((id: nil, phone: nil, email: nil, nickname: nil, gender: nil, birthday: nil, ageRange: nil, profileImagePath: nil))
     promiseList = Variable([])
@@ -94,6 +99,15 @@ class MainViewModel: MainViewModelType {
     
     current = currentMonth.asObservable()
     creditCount = credit.asObservable()
+    
+    appVersion = apiClient.rx.fetch(query: CheckAppVersionQuery(platform: Define.platform), cachePolicy: .fetchIgnoringCacheData)
+      .map { data -> AppVersion in
+        return AppVersion(
+          major: data.checkAppVersion.major ?? Define.majorVersion,
+          minor: data.checkAppVersion.minor ?? Define.minorVersion,
+          revision: data.checkAppVersion.revision ?? Define.revision
+        )
+    }
     
     // Inputs
     monthSelectDone.subscribe(onNext: { [weak self] (month, year) in
@@ -110,6 +124,17 @@ class MainViewModel: MainViewModelType {
     hasPromiseBeenUpdated.subscribe(onNext: { [weak self] hasUpdated in
       guard let strongSelf = self else { return }
       strongSelf.refreshPromiseList()
+    }).disposed(by: disposeBag)
+    
+    checkCredit.flatMapLatest { [weak self] _ -> PrimitiveSequence<MaybeTrait, GetCatchUpUserQuery.Data> in
+      guard let strongSelf = self else { return .empty() }
+      return strongSelf.apiClient.rx.fetch(query: GetCatchUpUserQuery(id: UserDefaultService.userId ?? ""))
+    }.subscribe(onNext: { [weak self] data in
+      guard let strongSelf = self else { return }
+      if let credit = data.getCatchUpUser?.credit {
+        UserDefaultService.credit = credit
+        strongSelf.credit.value = credit
+      }
     }).disposed(by: disposeBag)
     
     // Location Tracking ---------------------------------------------------------------------------------------]
@@ -140,22 +165,24 @@ class MainViewModel: MainViewModelType {
       }).flatMap({ contacts -> Observable<BatchGetCatchUpContactsQuery.Data> in
         let ops = contacts.map { contact in
           return contact.0
-          }.chunked(into: Define.dynamoDbBatchLimit).compactMap({ chunk in
-            return client.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: chunk)).asObservable()
-          })
+        }.chunked(into: Define.dynamoDbBatchLimit).compactMap({ chunk in
+          return client.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: chunk), cachePolicy: .returnCacheDataAndFetch).asObservable()
+        })
         
         return Observable.merge(ops)
       })
       .observeOn(MainScheduler.instance)
-      .subscribe{ (data) in
-        if let contacts = data.element?.batchGetCatchUpContacts {
+      .subscribe(onNext: { data in
+        if let contacts = data.batchGetCatchUpContacts {
           contacts.forEach { contactData in
             if let contact = contactData {
               ContactItem.create(contact.phone, imagePath: contact.profileImagePath ?? "", pushToken: contact.pushToken ?? "")
             }
           }
         }
-      }.disposed(by: disposeBag)
+      }, onError: { (error) in
+        print(error.localizedDescription)
+      }).disposed(by: disposeBag)
   }
   
   private func filterPromisesByMonth(month: Int, year: Int) {
@@ -220,9 +247,7 @@ class MainViewModel: MainViewModelType {
           return
         }
         
-        if let count = result?.data?.chargeCredit.credit {
-          strongSelf.credit.value += count
-        }
+        strongSelf.checkCredit.onNext(())
       }
       return .empty()
     }
