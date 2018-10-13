@@ -97,9 +97,13 @@ class NewPromiseViewController: UIViewController, BindableType {
     }).disposed(by: disposeBag)
     
     promiseAddressInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
-      let autocompleteController = GMSAutocompleteViewController()
-      autocompleteController.delegate = self
-      self.present(autocompleteController, animated: true, completion: nil)
+//      let autocompleteController = GMSAutocompleteViewController()
+//      autocompleteController.delegate = self
+//      self.present(autocompleteController, animated: true, completion: nil)
+      
+      if let vc = R.storyboard.main.mapSearchViewController() {
+        self.present(vc, animated: true, completion: nil)
+      }
     }).disposed(by: disposeBag)
     
     promiseMembersInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in

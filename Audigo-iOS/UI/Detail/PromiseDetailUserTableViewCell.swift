@@ -51,7 +51,7 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
     }
     
     memberNameLabel.text = contact.nickname
-    if let item = ContactItem.find(phone: contact.phone) {
+    if let item = ContactItem.find(phone: contact.phone), !item.nickname.isEmpty {
       memberNameLabel.text = item.nickname
     }
     

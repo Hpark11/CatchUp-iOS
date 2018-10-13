@@ -23,6 +23,7 @@
 		CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */; };
 		CE280193212575E20066B344 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE280192212575E20066B344 /* ContactItem.swift */; };
 		CE290561216B8A5A0061D984 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE290560216B8A5A0061D984 /* AppVersion.swift */; };
+		CE2BB5B62172477600BB05D7 /* PlaceSearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2BB5B52172477600BB05D7 /* PlaceSearchListViewController.swift */; };
 		CE34B4B6211E787100F92D50 /* UpsertUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AA211E787000F92D50 /* UpsertUser.graphql */; };
 		CE34B4B7211E787100F92D50 /* DeletePromiseById.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */; };
 		CE34B4B8211E787100F92D50 /* GetUserWithPromises.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */; };
@@ -132,6 +133,7 @@
 		CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
 		CE280192212575E20066B344 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
 		CE290560216B8A5A0061D984 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		CE2BB5B52172477600BB05D7 /* PlaceSearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchListViewController.swift; sourceTree = "<group>"; };
 		CE34B4AA211E787000F92D50 /* UpsertUser.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UpsertUser.graphql; sourceTree = "<group>"; };
 		CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeletePromiseById.graphql; sourceTree = "<group>"; };
 		CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetUserWithPromises.graphql; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */,
 				CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */,
 				CEC9A414216D04D600DC322B /* MapSearchViewController.swift */,
+				CE2BB5B52172477600BB05D7 /* PlaceSearchListViewController.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -824,6 +827,7 @@
 			files = (
 				CEB41F032115C41B006BC729 /* BindableTypes.swift in Sources */,
 				CE7B0DCD21687C10007DAA2A /* PushMessageService.swift in Sources */,
+				CE2BB5B62172477600BB05D7 /* PlaceSearchListViewController.swift in Sources */,
 				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
 				CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */,
 				CE038B0921662D6B001D140B /* EntranceViewModel.swift in Sources */,

@@ -27,8 +27,8 @@ class MemberSelectViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     originalItems = ContactItem.all()
-    if let items = originalItems {
-      self.items = items.map { $0 }
+    if let items = originalItems, let phone = UserDefaultService.phoneNumber {
+      self.items = items.map { $0 }.filter { $0.phone != phone }
     }
     
     noContactsLabel.isHidden = items.count > 0
@@ -96,6 +96,6 @@ extension MemberSelectViewController: UITableViewDelegate, UITableViewDataSource
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 56
+    return 46
   }
 }

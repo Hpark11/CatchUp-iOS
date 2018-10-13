@@ -17,8 +17,8 @@ class MemberSelectTableViewCell: UITableViewCell {
   @IBOutlet weak var itemView: UIView!
   
   func configure(item: ContactItem) {
-    profileImageView.layer.cornerRadius = 21
-    profileImageView.layer.borderWidth = 1
+    profileImageView.layer.cornerRadius = 18
+    profileImageView.layer.borderWidth = 0.2
     profileImageView.layer.borderColor = UIColor.paleGray.cgColor
     
     profileImageView.kf.setImage(with: URL(string: item.imagePath), placeholder: R.image.image_profile_default())
