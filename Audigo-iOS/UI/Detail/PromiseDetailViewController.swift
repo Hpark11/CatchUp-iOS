@@ -162,6 +162,5 @@ class PromiseDetailViewController: UIViewController, BindableType, GMSMapViewDel
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
-
 }
 

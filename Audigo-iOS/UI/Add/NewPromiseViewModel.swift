@@ -255,7 +255,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
             strongSelf.confirmAndNotify(promise: promise)
           }
         }, onError: { error in
-          print(error)
           strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
         }).disposed(by: strongSelf.disposeBag)
       

@@ -38,6 +38,8 @@
 		CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */; };
 		CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */; };
 		CE3FF957213D6BE000C16338 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */; };
+		CE5AAADC21737081009D96F4 /* PlaceSearchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */; };
+		CE5AAADE2173AB46009D96F4 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AAADD2173AB46009D96F4 /* Destination.swift */; };
 		CE72ECFA2136B49F004BC9C6 /* CatchUpMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */; };
 		CE72ECFC2136B4AC004BC9C6 /* CatchUpMarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */; };
 		CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */; };
@@ -149,6 +151,8 @@
 		CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTableViewCell.swift; sourceTree = "<group>"; };
 		CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Audigo-iOS.entitlements"; sourceTree = "<group>"; };
+		CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchListTableViewCell.swift; sourceTree = "<group>"; };
+		CE5AAADD2173AB46009D96F4 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
 		CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpMarkerView.swift; sourceTree = "<group>"; };
 		CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatchUpMarkerView.xib; sourceTree = "<group>"; };
 		CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPromiseViewController.swift; sourceTree = "<group>"; };
@@ -264,6 +268,7 @@
 		CE280191212575B10066B344 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				CE5AAADF2173AB4B009D96F4 /* Annotation */,
 				CE280192212575E20066B344 /* ContactItem.swift */,
 				CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */,
 				CED88AA4216656BD0045E2E5 /* UserInfo.swift */,
@@ -271,6 +276,14 @@
 				CE290560216B8A5A0061D984 /* AppVersion.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		CE5AAADF2173AB4B009D96F4 /* Annotation */ = {
+			isa = PBXGroup;
+			children = (
+				CE5AAADD2173AB46009D96F4 /* Destination.swift */,
+			);
+			path = Annotation;
 			sourceTree = "<group>";
 		};
 		CE77EDC521206AE4007A6BF6 /* Detail */ = {
@@ -296,6 +309,7 @@
 				CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */,
 				CEC9A414216D04D600DC322B /* MapSearchViewController.swift */,
 				CE2BB5B52172477600BB05D7 /* PlaceSearchListViewController.swift */,
+				CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -835,6 +849,7 @@
 				CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */,
 				CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */,
 				CEEE5DA5212817F50023E2FC /* PromiseDetailUserTableViewCell.swift in Sources */,
+				CE5AAADE2173AB46009D96F4 /* Destination.swift in Sources */,
 				CEAD38B321230B63009B0A5A /* MemberSelectTableViewCell.swift in Sources */,
 				CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */,
 				CEB41F012115C3FF006BC729 /* AppCoordinator.swift in Sources */,
@@ -880,6 +895,7 @@
 				CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */,
 				CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */,
 				CE038B0B21662DC4001D140B /* EntranceScene.swift in Sources */,
+				CE5AAADC21737081009D96F4 /* PlaceSearchListTableViewCell.swift in Sources */,
 				CE7B0DC921686763007DAA2A /* UserDefaultService.swift in Sources */,
 				CEB41F052115C484006BC729 /* MainScene.swift in Sources */,
 				CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */,

@@ -80,6 +80,8 @@ class PromiseConfirmViewController: UIViewController {
           contentBuilder.imageURL = Define.appStoreUrl
           contentBuilder.link = KMTLinkObject.init(builderBlock: { linkBuilder in
             linkBuilder.mobileWebURL = Define.appStoreUrl
+            linkBuilder.androidExecutionParams = "param1=\(promise.id)"
+            linkBuilder.iosExecutionParams = "param1=\(promise.id)"
           })
         })
         
