@@ -137,6 +137,7 @@ PODS:
   - SQLite.swift/standard (0.11.4)
   - SwiftyContacts/RxSwift (3.0.11):
     - RxSwift (~> 4.0)
+  - ToastKit (0.1.0)
 
 DEPENDENCIES:
   - Action
@@ -161,6 +162,7 @@ DEPENDENCIES:
   - RxKeyboard
   - RxSwift (~> 4.0)
   - SwiftyContacts/RxSwift
+  - ToastKit
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -203,6 +205,7 @@ SPEC REPOS:
     - RxSwift
     - SQLite.swift
     - SwiftyContacts
+    - ToastKit
 
 SPEC CHECKSUMS:
   Action: d60087ebce41b969d1afdad01e2fa1372a82f26e
@@ -244,7 +247,8 @@ SPEC CHECKSUMS:
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
   SwiftyContacts: 3b38d400d2480e8a2323194f3f8fcf6b317d8147
+  ToastKit: 7363d72f171315ddd2a115b9876a07e52ec125ca
 
-PODFILE CHECKSUM: 26ca159a9783890d68b9286e3afbdb1d94457882
+PODFILE CHECKSUM: b4b8098a4c42a14846c69130ed8bfc74f25f3a0d
 
 COCOAPODS: 1.5.0

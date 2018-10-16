@@ -15,12 +15,14 @@ class MapSearchViewController: UIViewController {
   @IBOutlet weak var searchBarButton: UIButton!
   
   var placeConfirmed: PublishSubject<CLLocationCoordinate2D>?
+  var addressConfirmed: PublishSubject<String>?
   
   private let placeSearchDone = PublishSubject<MKLocalSearchCompletion>()
   private let regionRadius: CLLocationDistance = 1000
   private let disposeBag = DisposeBag()
-
-//  private var coordinate = CLLocationCoordinate2D(latitude: <#T##CLLocationDegrees#>, longitude: <#T##CLLocationDegrees#>)
+  
+  private var address: String = ""
+  private var coordinate = CLLocationCoordinate2D(latitude: 37.498095, longitude: 127.07610)
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -38,20 +40,29 @@ class MapSearchViewController: UIViewController {
       let searchRequest = MKLocalSearchRequest(completion: result)
       let search = MKLocalSearch(request: searchRequest)
       search.start { (response, error) in
-//        print(response?.mapItems)
         if let placemark = response?.mapItems[0].placemark, let coordinate = placemark.location?.coordinate {
-          let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, self.regionRadius, self.regionRadius)
-          self.mapView.setRegion(coordinateRegion, animated: true)
-          self.mapView.removeAnnotations(self.mapView.annotations)
-          
-          self.mapView.addAnnotation(Destination(title: result.title, address: result.subtitle, discipline: "", coordinate: coordinate))
+          self.coordinate = coordinate
+          self.address = result.subtitle.isEmpty ? result.title : result.subtitle
+          self.setNewLocation(title: result.title)
         }
       }
     }).disposed(by: disposeBag)
   }
   
+  private func setNewLocation(title: String) {
+    let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius, regionRadius)
+    mapView.setRegion(coordinateRegion, animated: true)
+    mapView.removeAnnotations(self.mapView.annotations)
+    mapView.addAnnotation(Destination(title: title, address: address, discipline: "", coordinate: coordinate))
+  }
+  
   @IBAction func comfirmPlace(_ sender: Any) {
-    
+    if !address.isEmpty {
+      dismiss(animated: true) {
+        self.placeConfirmed?.onNext(self.coordinate)
+        self.addressConfirmed?.onNext(self.address)
+      }
+    }
   }
   
   @IBAction func searchPlace(_ sender: Any) {

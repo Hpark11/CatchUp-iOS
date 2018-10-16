@@ -10,6 +10,7 @@ import Foundation
 import Action
 import RxSwift
 import AWSAppSync
+import CoreLocation
 
 enum CreatePromiseState {
   case normal
@@ -20,9 +21,9 @@ enum CreatePromiseState {
 
 protocol NewPromiseViewModelInputsType {
   var nameSetDone: PublishSubject<String> { get }
-  var addressSetDone: PublishSubject<String?> { get }
+  var addressSetDone: PublishSubject<String> { get }
   var pocketSelectDone: PublishSubject<[String]> { get }
-  var coordinateSetDone: PublishSubject<(latitude: Double, longitude: Double)> { get }
+  var coordinateSetDone: PublishSubject<CLLocationCoordinate2D> { get }
   var dateSelectDone: PublishSubject<DateComponents> { get }
   var timeSelectDone: PublishSubject<DateComponents> { get }
   var memberSelectDone: PublishSubject<Set<String>> { get }
@@ -64,9 +65,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var dateSelectDone: PublishSubject<DateComponents>
   var timeSelectDone: PublishSubject<DateComponents>
   var nameSetDone: PublishSubject<String>
-  var addressSetDone: PublishSubject<String?>
+  var addressSetDone: PublishSubject<String>
   var pocketSelectDone: PublishSubject<[String]>
-  var coordinateSetDone: PublishSubject<(latitude: Double, longitude: Double)>
+  var coordinateSetDone: PublishSubject<CLLocationCoordinate2D>
   var memberSelectDone: PublishSubject<Set<String>>
   
   // MARK: Outputs
@@ -88,7 +89,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   fileprivate var promiseName: Variable<String?>
   fileprivate var address: Variable<String?>
   fileprivate var pockets: Variable<[String]>
-  fileprivate var coordinate: Variable<(latitude: Double, longitude: Double)?>
+  fileprivate var coordinate: Variable<CLLocationCoordinate2D?>
   fileprivate var createPromiseState: Variable<CreatePromiseState>
   fileprivate var isEditMode: Variable<Bool>
   fileprivate var promiseId: Variable<String?>
@@ -188,7 +189,8 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     self.address.value = promise.address
     self.dateComponents.value = components
     self.timeComponents.value = components
-    self.coordinate.value = (latitude: promise.latitude, longitude: promise.longitude)
+    
+    self.coordinate.value = CLLocationCoordinate2D(latitude: promise.latitude, longitude: promise.longitude)
     self.pockets.value = promise.contacts.filter { $0 != promise.owner }
   }
   

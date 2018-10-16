@@ -45,7 +45,9 @@ class PlaceSearchListViewController: UIViewController {
 
 extension PlaceSearchListViewController: MKLocalSearchCompleterDelegate {
   func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-    searchResults = completer.results
+    searchResults = completer.results.filter { result in
+      return result.subtitle != "주변 검색"
+    }
     searchResultsTableView.reloadData()
   }
   

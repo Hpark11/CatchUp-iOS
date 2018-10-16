@@ -96,8 +96,11 @@ class NewPromiseViewController: UIViewController, BindableType {
       }
     }).disposed(by: disposeBag)
     
-    promiseAddressInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
+    promiseAddressInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { [weak self] _ in
+      guard let `self` = self else { return }
       if let vc = R.storyboard.main.mapSearchViewController() {
+        vc.addressConfirmed = self.viewModel.inputs.addressSetDone
+        vc.placeConfirmed = self.viewModel.inputs.coordinateSetDone
         self.present(vc, animated: true, completion: nil)
       }
     }).disposed(by: disposeBag)
@@ -183,9 +186,9 @@ class NewPromiseViewController: UIViewController, BindableType {
 extension NewPromiseViewController: GMSAutocompleteViewControllerDelegate {
 
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-    promiseAddressInputView.inputState = .applied(input: place.formattedAddress ?? "")
-    viewModel.inputs.addressSetDone.onNext(place.formattedAddress)
-    viewModel.inputs.coordinateSetDone.onNext((latitude: place.coordinate.latitude, longitude: place.coordinate.longitude))
+//    promiseAddressInputView.inputState = .applied(input: place.formattedAddress ?? "")
+//    viewModel.inputs.addressSetDone.onNext(place.formattedAddress)
+//    viewModel.inputs.coordinateSetDone.onNext((latitude: place.coordinate.latitude, longitude: place.coordinate.longitude))
     dismiss(animated: true, completion: nil)
   }
   
