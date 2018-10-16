@@ -9,11 +9,6 @@
 import UIKit
 import Kingfisher
 
-enum MarkerState {
-  case arrived(imagePath: String)
-  case moving(imagePath: String)
-}
-
 class CatchUpMarkerView: UIView {
 
   @IBOutlet var contentView: UIView!

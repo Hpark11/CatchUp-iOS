@@ -111,15 +111,15 @@ class EntranceViewModel: EntranceViewModelType {
         
         if let ageCode = me?.account?.ageRange {
           switch ageCode {
-          case .type15: ageRange = "15세 ~ 19세"
-          case .type20: ageRange = "20세 ~ 29세"
-          case .type30: ageRange = "30세 ~ 39세"
-          case .type40: ageRange = "40세 ~ 49세"
-          case .type50: ageRange = "50세 ~ 59세"
-          case .type60: ageRange = "60세 ~ 69세"
-          case .type70: ageRange = "70세 ~ 79세"
-          case .type80: ageRange = "80세 ~ 89세"
-          case .type90: ageRange = "90세 이상"
+          case .type15: ageRange = "15~19"
+          case .type20: ageRange = "20~29"
+          case .type30: ageRange = "30~39"
+          case .type40: ageRange = "40~49"
+          case .type50: ageRange = "50~59"
+          case .type60: ageRange = "60~69"
+          case .type70: ageRange = "70~79"
+          case .type80: ageRange = "80~89"
+          case .type90: ageRange = "90~"
           default: break
           }
         }

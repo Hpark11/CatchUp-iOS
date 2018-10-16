@@ -10,20 +10,20 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
-import GoogleMaps
+import MapKit
 
-class PromiseDetailViewController: UIViewController, BindableType, GMSMapViewDelegate {
+class PromiseDetailViewController: UIViewController, BindableType {
   @IBOutlet weak var pocketListTableView: UITableView!
   @IBOutlet weak var promisedDateLabel: UILabel!
-  @IBOutlet weak var membersMapView: GMSMapView!
+  @IBOutlet weak var detailMapView: MKMapView!
   @IBOutlet weak var panelChangeButton: UIButton!
   @IBOutlet weak var refreshButton: UIButton!
   @IBOutlet weak var editPromiseButton: UIButton!
   
   var viewModel: PromiseDetailViewModel!
   let disposeBag = DisposeBag()
-  private var destMarker: GMSMarker?
-  private var markers: [GMSMarker]? = []
+  private var destMarker: Destination?
+  private var markers: [Member]? = []
   private let sendPush = PublishSubject<String>()
   
   private lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, CatchUpContact) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
@@ -76,8 +76,8 @@ class PromiseDetailViewController: UIViewController, BindableType, GMSMapViewDel
   }
   
   @IBAction func changeMapVisibility(_ sender: Any) {
-    membersMapView.isHidden = !membersMapView.isHidden
-    panelChangeButton.setImage(membersMapView.isHidden ? R.image.icon_map() : R.image.icon_list(), for: .normal)
+    detailMapView.isHidden = !detailMapView.isHidden
+    panelChangeButton.setImage(detailMapView.isHidden ? R.image.icon_map() : R.image.icon_list(), for: .normal)
   }
   
   func bindViewModel() {
@@ -92,6 +92,8 @@ class PromiseDetailViewController: UIViewController, BindableType, GMSMapViewDel
     viewModel.outputs.location.subscribe(onNext: { [weak self] (latitude, longitude) in
       guard latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0 else { return }
       guard let strongSelf = self else { return }
+      
+      detailMapView.removeAnnotation(<#T##annotation: MKAnnotation##MKAnnotation#>)
       strongSelf.destMarker?.map = nil
       
       if strongSelf.destMarker == nil {
@@ -164,3 +166,8 @@ class PromiseDetailViewController: UIViewController, BindableType, GMSMapViewDel
   }
 }
 
+extension PromiseDetailViewController: MKMapViewDelegate {
+  func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
+  }
+}

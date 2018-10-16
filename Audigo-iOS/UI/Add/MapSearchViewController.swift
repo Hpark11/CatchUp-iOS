@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import RxSwift
+import ToastKit
 
 class MapSearchViewController: UIViewController {
   @IBOutlet weak var mapView: MKMapView!
@@ -62,6 +63,8 @@ class MapSearchViewController: UIViewController {
         self.placeConfirmed?.onNext(self.coordinate)
         self.addressConfirmed?.onNext(self.address)
       }
+    } else {
+      Toast.makeText(self, text: "위치를 설정해주세요")
     }
   }
   
@@ -70,6 +73,26 @@ class MapSearchViewController: UIViewController {
       vc.searchDone = placeSearchDone
       present(vc, animated: true, completion: nil)
     }
+  }
+}
+
+extension MapSearchViewController: MKMapViewDelegate {
+  func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    var annotationView: MKAnnotationView?
+    if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CatchUpAnnotationView.reuseIdentifier) as? CatchUpAnnotationView {
+      annotationView = dequeuedAnnotationView
+      annotationView?.annotation = annotation
+    } else {
+      annotationView = CatchUpAnnotationView(annotation: annotation, reuseIdentifier: CatchUpAnnotationView.reuseIdentifier)
+      annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+    }
+    
+    if let annotationView = annotationView {
+      annotationView.canShowCallout = true
+      annotationView.image = UIImage(named: "yourImage")
+    }
+    
+    return annotationView
   }
 }
 

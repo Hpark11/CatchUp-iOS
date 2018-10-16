@@ -1182,10 +1182,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="unb-AW-p6r" customClass="GMSMapView">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bZ7-qh-Ydb">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                                <connections>
+                                    <outlet property="delegate" destination="3fI-9P-lsb" id="9EL-Ou-OSL"/>
+                                </connections>
+                            </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xu6-tY-G6N">
                                 <rect key="frame" x="309" y="598" width="46" height="54"/>
                                 <state key="normal" image="icon_list"/>
@@ -1216,27 +1218,27 @@
                         <constraints>
                             <constraint firstItem="n3h-jh-NqN" firstAttribute="trailing" secondItem="6K4-xa-M49" secondAttribute="trailing" constant="20" id="08y-yw-fPK"/>
                             <constraint firstItem="hpr-BH-jvI" firstAttribute="centerY" secondItem="ebK-O2-z3q" secondAttribute="centerY" id="0px-e9-bYf"/>
-                            <constraint firstItem="unb-AW-p6r" firstAttribute="top" secondItem="n3h-jh-NqN" secondAttribute="top" id="2cf-7A-HyT"/>
                             <constraint firstItem="n3h-jh-NqN" firstAttribute="bottom" secondItem="I5h-GV-WgS" secondAttribute="bottom" id="4O8-0V-dFx"/>
-                            <constraint firstItem="n3h-jh-NqN" firstAttribute="trailing" secondItem="unb-AW-p6r" secondAttribute="trailing" id="7R3-tu-H1m"/>
+                            <constraint firstAttribute="bottom" secondItem="bZ7-qh-Ydb" secondAttribute="bottom" id="Da8-GC-h8T"/>
                             <constraint firstItem="n3h-jh-NqN" firstAttribute="trailing" secondItem="hpr-BH-jvI" secondAttribute="trailing" constant="12" id="Rk2-vD-GLK"/>
                             <constraint firstItem="n3h-jh-NqN" firstAttribute="trailing" secondItem="I5h-GV-WgS" secondAttribute="trailing" id="TNy-iI-LhK"/>
                             <constraint firstItem="n3h-jh-NqN" firstAttribute="trailing" secondItem="ebK-O2-z3q" secondAttribute="trailing" id="W6y-25-L88"/>
                             <constraint firstItem="I5h-GV-WgS" firstAttribute="leading" secondItem="n3h-jh-NqN" secondAttribute="leading" id="XBq-pX-44i"/>
-                            <constraint firstItem="unb-AW-p6r" firstAttribute="leading" secondItem="n3h-jh-NqN" secondAttribute="leading" id="YvS-sa-ali"/>
                             <constraint firstItem="ebK-O2-z3q" firstAttribute="top" secondItem="n3h-jh-NqN" secondAttribute="top" id="b9C-y1-rq2"/>
                             <constraint firstItem="I5h-GV-WgS" firstAttribute="top" secondItem="ebK-O2-z3q" secondAttribute="bottom" id="bfI-jP-P2S"/>
+                            <constraint firstItem="n3h-jh-NqN" firstAttribute="trailing" secondItem="bZ7-qh-Ydb" secondAttribute="trailing" id="cfE-in-Joe"/>
                             <constraint firstItem="ebK-O2-z3q" firstAttribute="leading" secondItem="n3h-jh-NqN" secondAttribute="leading" id="fyo-EP-I8T"/>
-                            <constraint firstItem="n3h-jh-NqN" firstAttribute="bottom" secondItem="unb-AW-p6r" secondAttribute="bottom" id="gmy-zb-Y03"/>
+                            <constraint firstItem="bZ7-qh-Ydb" firstAttribute="top" secondItem="n3h-jh-NqN" secondAttribute="top" id="n9d-HK-oxe"/>
                             <constraint firstItem="xu6-tY-G6N" firstAttribute="top" secondItem="6K4-xa-M49" secondAttribute="bottom" constant="5" id="rcH-4B-MUo"/>
                             <constraint firstAttribute="trailing" secondItem="xu6-tY-G6N" secondAttribute="trailing" constant="20" id="wRO-DZ-Uqb"/>
+                            <constraint firstItem="bZ7-qh-Ydb" firstAttribute="leading" secondItem="n3h-jh-NqN" secondAttribute="leading" id="y2u-l6-biB"/>
                             <constraint firstItem="n3h-jh-NqN" firstAttribute="bottom" secondItem="xu6-tY-G6N" secondAttribute="bottom" constant="15" id="zHQ-pm-vYd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="n3h-jh-NqN"/>
                     </view>
                     <connections>
+                        <outlet property="detailMapView" destination="bZ7-qh-Ydb" id="xR4-F3-Syu"/>
                         <outlet property="editPromiseButton" destination="hpr-BH-jvI" id="eee-yo-S8g"/>
-                        <outlet property="membersMapView" destination="unb-AW-p6r" id="SQV-na-W3k"/>
                         <outlet property="panelChangeButton" destination="xu6-tY-G6N" id="Dmh-no-MZs"/>
                         <outlet property="pocketListTableView" destination="I5h-GV-WgS" id="2TK-2l-xPO"/>
                         <outlet property="promisedDateLabel" destination="ebK-O2-z3q" id="ycU-k2-kzJ"/>
@@ -1245,7 +1247,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJ8-vR-Qm5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="307.5" y="858.80281690140851"/>
+            <point key="canvasLocation" x="306.39999999999998" y="858.62068965517244"/>
         </scene>
         <!--Map Search View Controller-->
         <scene sceneID="59w-kT-vB7">
@@ -1257,6 +1259,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" showsUserLocation="YES" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mW3-xy-CiL">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <connections>
+                                    <outlet property="delegate" destination="2mj-LK-ope" id="CaN-cm-pv5"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2zP-y2-oRN">
                                 <rect key="frame" x="16" y="32" width="343" height="42"/>

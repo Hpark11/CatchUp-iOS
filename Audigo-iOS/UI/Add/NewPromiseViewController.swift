@@ -183,32 +183,6 @@ class NewPromiseViewController: UIViewController, BindableType {
   }
 }
 
-extension NewPromiseViewController: GMSAutocompleteViewControllerDelegate {
-
-  func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-//    promiseAddressInputView.inputState = .applied(input: place.formattedAddress ?? "")
-//    viewModel.inputs.addressSetDone.onNext(place.formattedAddress)
-//    viewModel.inputs.coordinateSetDone.onNext((latitude: place.coordinate.latitude, longitude: place.coordinate.longitude))
-    dismiss(animated: true, completion: nil)
-  }
-  
-  func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-    print("Error: ", error.localizedDescription)
-  }
-  
-  func wasCancelled(_ viewController: GMSAutocompleteViewController) {
-    dismiss(animated: true, completion: nil)
-  }
-  
-  func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = true
-  }
-  
-  func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-  }
-}
-
 extension NewPromiseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
