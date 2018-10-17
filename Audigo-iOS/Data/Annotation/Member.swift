@@ -13,13 +13,15 @@ class Member: NSObject, MKAnnotation {
   let name: String
   let phone: String
   let discipline: String
+  let imagePath: String
   let coordinate: CLLocationCoordinate2D
   
-  init(name: String, phone: String, discipline: String, coordinate: CLLocationCoordinate2D) {
+  init(name: String, phone: String, imagePath: String, discipline: String, coordinate: CLLocationCoordinate2D) {
     self.name = name
     self.phone = phone
     self.discipline = discipline
     self.coordinate = coordinate
+    self.imagePath = imagePath
     super.init()
   }
   

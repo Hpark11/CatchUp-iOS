@@ -24,6 +24,8 @@ class PromiseDetailViewController: UIViewController, BindableType {
   let disposeBag = DisposeBag()
   private var destMarker: Destination?
   private var markers: [Member]? = []
+  private var currentMarker: Member?
+  private var imagePath: String = ""
   private let sendPush = PublishSubject<String>()
   
   private lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, CatchUpContact) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
@@ -59,6 +61,23 @@ class PromiseDetailViewController: UIViewController, BindableType {
 
       strongSelf.present(alert, animated: true)
     }).disposed(by: disposeBag)
+    
+    if let phone = UserDefaultService.phoneNumber {
+      imagePath = ContactItem.find(phone: phone)?.imagePath ?? ""
+    }
+  }
+  
+  @objc func updateSelfLocation(_ notification: Notification) {
+    if let data = notification.userInfo as? [String: Any], let location = data["location"] as? CLLocation, let nickname = UserDefaultService.nickname, let phone = UserDefaultService.phoneNumber {
+      if let current = currentMarker {
+        detailMapView.removeAnnotation(current)
+      }
+      
+      let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+      let current = Member(name: nickname, phone: phone, imagePath: imagePath, discipline: "Member", coordinate: coordinate)
+      currentMarker = current
+      detailMapView.addAnnotation(current)
+    }
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +85,8 @@ class PromiseDetailViewController: UIViewController, BindableType {
     UIApplication.shared.statusBarView?.backgroundColor = .darkSkyBlue
     navigationController?.navigationBar.backgroundColor = .darkSkyBlue
     navigationController?.navigationBar.barStyle = .blackOpaque
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(updateSelfLocation(_:)), name: NSNotification.Name(rawValue: "didUpdateLocation"), object: nil)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -73,6 +94,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
     UIApplication.shared.statusBarView?.backgroundColor = .white
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barStyle = .default
+    NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "didUpdateLocation"), object: nil)
   }
   
   @IBAction func changeMapVisibility(_ sender: Any) {
@@ -91,22 +113,20 @@ class PromiseDetailViewController: UIViewController, BindableType {
     
     viewModel.outputs.location.subscribe(onNext: { [weak self] (latitude, longitude) in
       guard latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0 else { return }
-      guard let strongSelf = self else { return }
+      guard let `self` = self else { return }
+      let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
       
-      detailMapView.removeAnnotation(<#T##annotation: MKAnnotation##MKAnnotation#>)
-      strongSelf.destMarker?.map = nil
-      
-      if strongSelf.destMarker == nil {
-        strongSelf.membersMapView.animate(to: GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 14.0))
+      if let destination = self.destMarker {
+        self.detailMapView.removeAnnotation(destination)
+        self.destMarker = nil
+      } else {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
+        self.detailMapView.setRegion(coordinateRegion, animated: true)
       }
       
-      let marker = GMSMarker()
-      marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-      marker.title = "목적지"
-      marker.snippet = strongSelf.viewModel.promise?.address
-      
-      marker.map = strongSelf.membersMapView
-      strongSelf.destMarker = marker
+      let annotation = Destination(title: "목적지", address: self.viewModel.promise?.address ?? "", discipline: "", coordinate: coordinate)
+      self.detailMapView.addAnnotation(annotation)
+      self.destMarker = annotation
     }).disposed(by: disposeBag)
     
     viewModel.outputs.timestamp.subscribe(onNext: { (timestamp) in
@@ -120,35 +140,36 @@ class PromiseDetailViewController: UIViewController, BindableType {
     let dataSource = RxTableViewSectionedAnimatedDataSource<PocketSectionModel>(configureCell: configureCell)
     
     viewModel.outputs.pocketItems.subscribe(onNext: { [weak self] sectionModel in
-      guard let strongSelf = self else { return }
-      strongSelf.markers = strongSelf.markers?.compactMap { marker in
-        marker.map = nil
-        return nil
-      }
+      guard let `self` = self else { return }
+      self.detailMapView.removeAnnotations(self.markers ?? [])
       
-      let promiseDateTime = strongSelf.viewModel.promise?.dateTime.timeInMillis ?? Date().timeInMillis
+      let promiseDateTime = self.viewModel.promise?.dateTime.timeInMillis ?? Date().timeInMillis
       let current = Date().timeInMillis
       
       guard promiseDateTime > current, (promiseDateTime - current) <= 7200000 else {
-        guard let strongSelf = self else { return }
         let alert = UIAlertController(title: "알림", message: "약속 활성화 시간(2시간 전)이 아니어서 위치정보는 볼 수 없어요", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-        strongSelf.present(alert, animated: true)
+        self.present(alert, animated: true)
         return
       }
       
-      strongSelf.markers = sectionModel.first?.items.compactMap { contact in
-        guard let latitude = contact.latitude, let longitude = contact.longitude, latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0 else { return nil }
+      let userNumber = UserDefaultService.phoneNumber ?? ""
+    
+      sectionModel.first?.items.forEach { contact in
+        guard let latitude = contact.latitude,
+          let longitude = contact.longitude,
+          latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0
+          else { return }
         
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        marker.title = contact.nickname ?? "미가입자"
-        marker.snippet = contact.phone
-        let markerView = CatchUpMarkerView(frame: CGRect(x: 0, y: 0, width: 48, height: 58))
-        markerView.markerState = .moving(imagePath: contact.profileImagePath ?? "")
-        marker.iconView = markerView
-        marker.map = strongSelf.membersMapView
-        return marker
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let annotation = Member(name: contact.nickname ?? "미가입자", phone: contact.phone, imagePath: contact.profileImagePath ?? "", discipline: "Member", coordinate: coordinate)
+        if contact.phone == userNumber {
+          self.currentMarker = annotation
+        } else {
+          self.markers?.append(annotation)
+        }
+        
+        self.detailMapView.addAnnotation(annotation)
       }
     }).disposed(by: disposeBag)
     
@@ -168,6 +189,23 @@ class PromiseDetailViewController: UIViewController, BindableType {
 
 extension PromiseDetailViewController: MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-
+    var annotationView: CatchUpAnnotationView?
+    guard let annotation = annotation as? Member else { return nil }
+    
+    if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CatchUpAnnotationView.reuseIdentifier) as? CatchUpAnnotationView {
+      annotationView = dequeuedAnnotationView
+      annotationView?.annotation = annotation
+    } else {
+      annotationView = CatchUpAnnotationView(annotation: annotation, reuseIdentifier: CatchUpAnnotationView.reuseIdentifier)
+      annotationView?.rightCalloutAccessoryView = UIButton(type: .infoLight)
+    }
+    
+    annotationView?.markerState = .moving(imagePath: annotation.imagePath)
+    if let annotationView = annotationView {
+      annotationView.canShowCallout = true
+      annotationView.image = nil
+    }
+    
+    return annotationView
   }
 }

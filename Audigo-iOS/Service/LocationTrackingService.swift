@@ -39,6 +39,8 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate {
       if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
         appDelegate.appSyncClient?.perform(mutation: RelocateCatchUpContactMutation(phone: phone, latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude))
       }
+      
+      notifiyDidUpdateLocation(newLocation: newLocation)
     }
   }
 
@@ -57,7 +59,7 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate {
 //    NotificationCenter.default.post(name: Notification.Name(rawValue:"showTurnOnLocationServiceAlert"), object: nil)
 //  }
 //
-//  func notifiyDidUpdateLocation(newLocation:CLLocation){
-//    NotificationCenter.default.post(name: Notification.Name(rawValue:"didUpdateLocation"), object: nil, userInfo: ["location" : newLocation])
-//  }
+  func notifiyDidUpdateLocation(newLocation: CLLocation) {
+    NotificationCenter.default.post(name: Notification.Name(rawValue:"didUpdateLocation"), object: nil, userInfo: ["location" : newLocation])
+  }
 }

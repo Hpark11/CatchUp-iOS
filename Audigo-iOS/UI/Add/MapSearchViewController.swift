@@ -19,11 +19,10 @@ class MapSearchViewController: UIViewController {
   var addressConfirmed: PublishSubject<String>?
   
   private let placeSearchDone = PublishSubject<MKLocalSearchCompletion>()
-  private let regionRadius: CLLocationDistance = 1000
   private let disposeBag = DisposeBag()
   
-  private var address: String = ""
-  private var coordinate = CLLocationCoordinate2D(latitude: 37.498095, longitude: 127.07610)
+  var address: String = "대한민국 서울"
+  var coordinate = CLLocationCoordinate2D(latitude: 37.498095, longitude: 127.07610)
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -48,9 +47,11 @@ class MapSearchViewController: UIViewController {
         }
       }
     }).disposed(by: disposeBag)
+    
+    setNewLocation(title: address, regionRadius: 100000)
   }
   
-  private func setNewLocation(title: String) {
+  private func setNewLocation(title: String, regionRadius: CLLocationDistance = 1000) {
     let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius, regionRadius)
     mapView.setRegion(coordinateRegion, animated: true)
     mapView.removeAnnotations(self.mapView.annotations)
@@ -73,26 +74,6 @@ class MapSearchViewController: UIViewController {
       vc.searchDone = placeSearchDone
       present(vc, animated: true, completion: nil)
     }
-  }
-}
-
-extension MapSearchViewController: MKMapViewDelegate {
-  func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-    var annotationView: MKAnnotationView?
-    if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CatchUpAnnotationView.reuseIdentifier) as? CatchUpAnnotationView {
-      annotationView = dequeuedAnnotationView
-      annotationView?.annotation = annotation
-    } else {
-      annotationView = CatchUpAnnotationView(annotation: annotation, reuseIdentifier: CatchUpAnnotationView.reuseIdentifier)
-      annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-    }
-    
-    if let annotationView = annotationView {
-      annotationView.canShowCallout = true
-      annotationView.image = UIImage(named: "yourImage")
-    }
-    
-    return annotationView
   }
 }
 
