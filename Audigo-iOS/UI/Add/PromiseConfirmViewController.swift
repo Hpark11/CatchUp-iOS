@@ -24,8 +24,6 @@ class PromiseConfirmViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    UIApplication.shared.statusBarView?.backgroundColor = .darkSkyBlue
-    
     contentView.layer.cornerRadius = 10
     confirmationLabel.text = "약속 \(isEditingPromise ? "수정" : "추가") 완료"
     

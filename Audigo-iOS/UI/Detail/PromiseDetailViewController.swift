@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import MapKit
+import ToastKit
 
 class PromiseDetailViewController: UIViewController, BindableType {
   @IBOutlet weak var pocketListTableView: UITableView!
@@ -40,8 +41,6 @@ class PromiseDetailViewController: UIViewController, BindableType {
   override func viewDidLoad() {
     super.viewDidLoad()
     pocketListTableView.rowHeight = 85
-    
-    navigationController?.navigationBar.barStyle = .blackOpaque
     navigationItem.leftBarButtonItems = [UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)]
     navigationItem.leftBarButtonItem?.image = UIImage(named: R.image.icon_back.name)
     navigationItem.leftBarButtonItem?.tintColor = .white
@@ -49,17 +48,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
     
     sendPush.subscribe(onNext: { [weak self] (pushToken) in
       guard let strongSelf = self else { return }
-      
-      let alert = UIAlertController(title: "메세지 보내기", message: "유저에게 보낼 메세지를 입력하세요", preferredStyle: .alert)
-      alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-      alert.addTextField(configurationHandler: { textField in textField.placeholder = "메세지 입력" })
-      alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-        if let text = alert.textFields?.first?.text, let from = UserDefaultService.nickname {
-          PushMessageService.sendPush(title: "\(from)님의 메세지", message: text, pushTokens: [pushToken])
-        }
-      }))
-
-      strongSelf.present(alert, animated: true)
+      strongSelf.openPushDialog(pushToken: pushToken)
     }).disposed(by: disposeBag)
     
     if let phone = UserDefaultService.phoneNumber {
@@ -82,17 +71,12 @@ class PromiseDetailViewController: UIViewController, BindableType {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    UIApplication.shared.statusBarView?.backgroundColor = .darkSkyBlue
-    navigationController?.navigationBar.backgroundColor = .darkSkyBlue
     navigationController?.navigationBar.barStyle = .blackOpaque
-    
     NotificationCenter.default.addObserver(self, selector: #selector(updateSelfLocation(_:)), name: NSNotification.Name(rawValue: "didUpdateLocation"), object: nil)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    UIApplication.shared.statusBarView?.backgroundColor = .white
-    navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barStyle = .default
     NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "didUpdateLocation"), object: nil)
   }
@@ -100,6 +84,20 @@ class PromiseDetailViewController: UIViewController, BindableType {
   @IBAction func changeMapVisibility(_ sender: Any) {
     detailMapView.isHidden = !detailMapView.isHidden
     panelChangeButton.setImage(detailMapView.isHidden ? R.image.icon_map() : R.image.icon_list(), for: .normal)
+  }
+  
+  private func openPushDialog(pushToken: String) {
+    let alert = UIAlertController(title: "메세지 보내기", message: "유저에게 보낼 메세지를 입력하세요", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+    alert.addTextField(configurationHandler: { textField in textField.placeholder = "메세지 입력" })
+    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+      if let text = alert.textFields?.first?.text, let from = UserDefaultService.nickname {
+        PushMessageService.sendPush(title: "\(from)님의 메세지", message: text, pushTokens: [pushToken])
+        Toast.makeText(self, text: "알림 메세지를 보냈어요")
+      }
+    }))
+    
+    present(alert, animated: true)
   }
   
   func bindViewModel() {
@@ -162,7 +160,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
           else { return }
         
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let annotation = Member(name: contact.nickname ?? "미가입자", phone: contact.phone, imagePath: contact.profileImagePath ?? "", discipline: "Member", coordinate: coordinate)
+        let annotation = Member(name: contact.nickname ?? "미가입자", phone: contact.phone, imagePath: contact.profileImagePath ?? "", discipline: "Member", coordinate: coordinate, pushToken: contact.pushToken ?? "")
         if contact.phone == userNumber {
           self.currentMarker = annotation
         } else {
@@ -197,7 +195,7 @@ extension PromiseDetailViewController: MKMapViewDelegate {
       annotationView?.annotation = annotation
     } else {
       annotationView = CatchUpAnnotationView(annotation: annotation, reuseIdentifier: CatchUpAnnotationView.reuseIdentifier)
-      annotationView?.rightCalloutAccessoryView = UIButton(type: .infoLight)
+      annotationView?.rightCalloutAccessoryView = UIButton(type: .contactAdd)
     }
     
     annotationView?.markerState = .moving(imagePath: annotation.imagePath)
@@ -207,5 +205,11 @@ extension PromiseDetailViewController: MKMapViewDelegate {
     }
     
     return annotationView
+  }
+  
+  func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    if let member = view.annotation as? Member {
+      openPushDialog(pushToken: member.pushToken)
+    }
   }
 }

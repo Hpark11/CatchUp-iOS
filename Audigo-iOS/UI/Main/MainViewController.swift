@@ -38,15 +38,8 @@ class MainViewController: UIViewController, BindableType {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    UIApplication.shared.statusBarView?.backgroundColor = .white
-    
     GADRewardBasedVideoAd.sharedInstance().delegate = self
     GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: Define.idGADMobileAdsCredit)
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    
   }
   
   @IBAction func chargeCredit(_ sender: Any) {
@@ -77,7 +70,7 @@ class MainViewController: UIViewController, BindableType {
             UIApplication.shared.open(Define.appStoreUrl, options: [:], completionHandler: nil)
           }
         }))
-        
+    
         strongSelf.present(alert, animated: true)
       }
       
@@ -91,8 +84,6 @@ class MainViewController: UIViewController, BindableType {
       guard let strongSelf = self else { return }
       strongSelf.promiseCollectionView.deselectItem(at: indexPath, animated: true)
       strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise)
-      strongSelf.navigationController?.navigationBar.backgroundColor = .darkSkyBlue
-      strongSelf.navigationController?.navigationBar.barStyle = .blackOpaque
     }.disposed(by: disposeBag)
     
     viewModel.promiseItems.subscribe(onNext: { [weak self] sectionModel in
