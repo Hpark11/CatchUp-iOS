@@ -43,7 +43,6 @@ class EntranceViewModel: EntranceViewModelType {
   var creditCheck: PublishSubject<UserInfo>
   
   // MARK: Outputs
-  
   init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient) {
     sceneCoordinator = coordinator
     apiClient = client

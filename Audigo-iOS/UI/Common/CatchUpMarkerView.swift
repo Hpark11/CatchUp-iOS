@@ -38,10 +38,10 @@ class CatchUpMarkerView: UIView {
       switch markerState {
       case .arrived(let path):
         profileImageView.image = R.image.image_marker_arrived()
-        profileImageView.kf.setImage(with: URL(string: path ?? ""))
+        profileImageView.kf.setImage(with: URL(string: path))
       case .moving(let path):
         profileImageView.image = R.image.image_marker_moving()
-        profileImageView.kf.setImage(with: URL(string: path ?? ""))
+        profileImageView.kf.setImage(with: URL(string: path))
       }
     }
   }

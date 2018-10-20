@@ -28,7 +28,7 @@ class MemberSelectViewController: UIViewController {
     super.viewDidLoad()
     originalItems = ContactItem.all()
     if let items = originalItems, let phone = UserDefaultService.phoneNumber {
-      self.items = items.map { $0 }.filter { $0.phone != phone }
+      self.items = items.map { $0 }.filter { $0.phone != phone && !phone.isEmpty }
     }
     
     noContactsLabel.isHidden = items.count > 0

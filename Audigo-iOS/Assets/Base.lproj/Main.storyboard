@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="핸드폰 번호 인증" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPO-is-HeA">
-                                <rect key="frame" x="8" y="80" width="359" height="21"/>
+                                <rect key="frame" x="132" y="80" width="111.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <color key="textColor" red="0.23529411764705882" green="0.31372549019607843" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -62,16 +62,13 @@
                         <constraints>
                             <constraint firstItem="dED-pf-kFZ" firstAttribute="top" secondItem="T9Z-YR-jBw" secondAttribute="bottom" constant="4" id="2tC-XI-g6I"/>
                             <constraint firstItem="AMc-O8-ZT9" firstAttribute="centerX" secondItem="kWY-9T-Cbv" secondAttribute="centerX" id="2ul-xh-PQ2"/>
-                            <constraint firstItem="hER-SV-bo5" firstAttribute="trailing" secondItem="cPO-is-HeA" secondAttribute="trailing" constant="8" id="8Rx-6A-ggS"/>
                             <constraint firstItem="T9Z-YR-jBw" firstAttribute="centerX" secondItem="kWY-9T-Cbv" secondAttribute="centerX" id="FfI-FX-W23"/>
                             <constraint firstItem="cPO-is-HeA" firstAttribute="top" secondItem="hER-SV-bo5" secondAttribute="top" constant="60" id="IAT-Lw-N7a"/>
                             <constraint firstItem="t3d-lV-5qm" firstAttribute="top" secondItem="cPO-is-HeA" secondAttribute="bottom" constant="8" id="O5K-la-0VP"/>
-                            <constraint firstItem="cPO-is-HeA" firstAttribute="leading" secondItem="hER-SV-bo5" secondAttribute="leading" constant="8" id="UF9-TT-cAH"/>
-                            <constraint firstItem="AMc-O8-ZT9" firstAttribute="trailing" secondItem="T9Z-YR-jBw" secondAttribute="trailing" id="Zmg-9K-Fuf"/>
                             <constraint firstItem="T9Z-YR-jBw" firstAttribute="top" secondItem="cPO-is-HeA" secondAttribute="bottom" constant="100" id="c9W-8p-rQt"/>
                             <constraint firstItem="dED-pf-kFZ" firstAttribute="leading" secondItem="T9Z-YR-jBw" secondAttribute="leading" id="dOq-AS-UQN"/>
                             <constraint firstItem="t3d-lV-5qm" firstAttribute="centerX" secondItem="cPO-is-HeA" secondAttribute="centerX" id="epS-r1-Vt0"/>
-                            <constraint firstItem="AMc-O8-ZT9" firstAttribute="leading" secondItem="T9Z-YR-jBw" secondAttribute="leading" id="gGF-1T-fbY"/>
+                            <constraint firstItem="AMc-O8-ZT9" firstAttribute="width" secondItem="T9Z-YR-jBw" secondAttribute="width" id="fa7-dP-4D9"/>
                             <constraint firstItem="AMc-O8-ZT9" firstAttribute="top" secondItem="T9Z-YR-jBw" secondAttribute="bottom" constant="32" id="lAj-hY-PxG"/>
                             <constraint firstItem="dED-pf-kFZ" firstAttribute="centerX" secondItem="T9Z-YR-jBw" secondAttribute="centerX" id="nce-rj-LWe"/>
                             <constraint firstItem="cPO-is-HeA" firstAttribute="centerX" secondItem="kWY-9T-Cbv" secondAttribute="centerX" id="woN-zc-jCq"/>

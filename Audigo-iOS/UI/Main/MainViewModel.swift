@@ -129,13 +129,13 @@ class MainViewModel: MainViewModelType {
     checkCredit.flatMapLatest { [weak self] _ -> PrimitiveSequence<MaybeTrait, GetCatchUpUserQuery.Data> in
       guard let strongSelf = self else { return .empty() }
       return strongSelf.apiClient.rx.fetch(query: GetCatchUpUserQuery(id: UserDefaultService.userId ?? ""))
-    }.subscribe(onNext: { [weak self] data in
-      guard let strongSelf = self else { return }
-      if let credit = data.getCatchUpUser?.credit {
-        UserDefaultService.credit = credit
-        strongSelf.credit.value = credit
-      }
-    }).disposed(by: disposeBag)
+      }.subscribe(onNext: { [weak self] data in
+        guard let strongSelf = self else { return }
+        if let credit = data.getCatchUpUser?.credit {
+          UserDefaultService.credit = credit
+          strongSelf.credit.value = credit
+        }
+      }).disposed(by: disposeBag)
     
     // Location Tracking ---------------------------------------------------------------------------------------]
     LocationTrackingService.shared.startUpdatingLocation()
@@ -146,17 +146,15 @@ class MainViewModel: MainViewModelType {
       return contacts.compactMap {
         ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
       }
-    }).subscribeOn(backgroundScheduler)
-      .map { contacts in
-        return contacts.filter { contact in
+    }).subscribeOn(backgroundScheduler).map { contacts in
+        return contacts.map { contact in
+          return (
+            contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: ""),
+            contact.1
+          )
+        }.filter { contact in
           return contact.0.starts(with: Define.koreanNormalCellPhonePrefix)
-          }.map { contact in
-            return (
-              contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: ""),
-              contact.1
-            )
         }
-        
       }.do(onNext: { contacts in
         contacts.forEach { (phone, nickname) in
           ContactItem.add(phone, nickname: nickname)
@@ -165,9 +163,9 @@ class MainViewModel: MainViewModelType {
       }).flatMap({ contacts -> Observable<BatchGetCatchUpContactsQuery.Data> in
         let ops = contacts.map { contact in
           return contact.0
-        }.chunked(into: Define.dynamoDbBatchLimit).compactMap({ chunk in
+        }.chunked(into: Define.dynamoDbBatchLimit).compactMap { chunk in
           return client.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: chunk), cachePolicy: .returnCacheDataAndFetch).asObservable()
-        })
+        }
         
         return Observable.merge(ops)
       })
