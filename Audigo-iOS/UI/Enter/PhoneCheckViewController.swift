@@ -38,7 +38,7 @@ class PhoneCheckViewController: UIViewController {
           
           alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
             if let code = alert.textFields?.first?.text {
-              let credential = PhoneAuthProvider.provider().credential(withVerificationID: id, verificationCode: code)
+              let credential = PhoneAuthProvider.provider().credential(withVerificationID: id, verificationCode: code.trimmingCharacters(in: .whitespacesAndNewlines))
               
               Auth.auth().signInAndRetrieveData(with: credential, completion: { (result, error) in
                 if let error = error {

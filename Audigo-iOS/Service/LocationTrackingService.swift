@@ -60,6 +60,6 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate {
 //  }
 //
   func notifiyDidUpdateLocation(newLocation: CLLocation) {
-    NotificationCenter.default.post(name: Notification.Name(rawValue:"didUpdateLocation"), object: nil, userInfo: ["location" : newLocation])
+    NotificationCenter.default.post(name: Define.NotificationName.didUpdateLocation, object: nil, userInfo: ["location" : newLocation])
   }
 }

@@ -15,6 +15,7 @@
 		CE038B0921662D6B001D140B /* EntranceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0821662D6B001D140B /* EntranceViewModel.swift */; };
 		CE038B0B21662DC4001D140B /* EntranceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0A21662DC4001D140B /* EntranceScene.swift */; };
 		CE038B0D2166329B001D140B /* RxAppSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0C2166329B001D140B /* RxAppSync.swift */; };
+		CE1EF0BC217B0A0200E80E70 /* PromiseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */; };
 		CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */; };
 		CE22AEF121311A03004477E8 /* MonthPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */; };
 		CE22AEF321313C72004477E8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF221313C72004477E8 /* UIColor+Ext.swift */; };
@@ -130,6 +131,7 @@
 		CE038B0821662D6B001D140B /* EntranceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewModel.swift; sourceTree = "<group>"; };
 		CE038B0A21662DC4001D140B /* EntranceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceScene.swift; sourceTree = "<group>"; };
 		CE038B0C2166329B001D140B /* RxAppSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxAppSync.swift; sourceTree = "<group>"; };
+		CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseItem.swift; sourceTree = "<group>"; };
 		CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelectPickerView.swift; sourceTree = "<group>"; };
 		CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPopupViewController.swift; sourceTree = "<group>"; };
 		CE22AEF221313C72004477E8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
@@ -271,11 +273,20 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CE1EF0BA217B09C800E80E70 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				CE280192212575E20066B344 /* ContactItem.swift */,
+				CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
 		CE280191212575B10066B344 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				CE1EF0BA217B09C800E80E70 /* Local */,
 				CE5AAADF2173AB4B009D96F4 /* Annotation */,
-				CE280192212575E20066B344 /* ContactItem.swift */,
 				CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */,
 				CED88AA4216656BD0045E2E5 /* UserInfo.swift */,
 				CE7B0DCE21688DC4007DAA2A /* CatchUpPromise.swift */,
@@ -877,6 +888,7 @@
 				CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */,
 				CE7B0DCB21686E32007DAA2A /* Formatter+Ext.swift in Sources */,
 				CE280193212575E20066B344 /* ContactItem.swift in Sources */,
+				CE1EF0BC217B0A0200E80E70 /* PromiseItem.swift in Sources */,
 				CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */,
 				CE914BF0216A39BE00B80121 /* PromiseCollectionViewCell.swift in Sources */,
 				CEC9A415216D04D600DC322B /* MapSearchViewController.swift in Sources */,
