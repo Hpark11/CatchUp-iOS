@@ -202,7 +202,7 @@ class MainViewModel: MainViewModelType {
         strongSelf.promiseList.value = data.listCatchUpPromisesByContact?.compactMap(CatchUpPromise.init).sorted {
           let lhs = $0.dateTime.timeInMillis
           let rhs = $1.dateTime.timeInMillis
-          return (lhs > now ? lhs : lhs * 2) < (rhs > now ? rhs : rhs * 2)
+          return (lhs + 3600000 > now ? lhs : lhs * 2) < (rhs + 3600000 > now ? rhs : rhs * 2)
           } ?? []
         
         let current = strongSelf.currentMonth.value

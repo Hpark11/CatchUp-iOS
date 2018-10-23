@@ -38,8 +38,8 @@ class MainViewController: UIViewController, BindableType {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    GADRewardBasedVideoAd.sharedInstance().delegate = self
-    GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: Define.idGADMobileAdsCredit)
+//    GADRewardBasedVideoAd.sharedInstance().delegate = self
+//    GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: Define.idGADMobileAdsCredit)
   }
   
   @IBAction func chargeCredit(_ sender: Any) {

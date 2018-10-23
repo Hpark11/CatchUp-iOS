@@ -143,11 +143,9 @@ class PromiseDetailViewController: UIViewController, BindableType {
       
       let promiseDateTime = self.viewModel.promise?.dateTime.timeInMillis ?? Date().timeInMillis
       let current = Date().timeInMillis
-      
-      guard promiseDateTime > current, (promiseDateTime - current) <= 7200000 else {
-        let alert = UIAlertController(title: "알림", message: "약속 활성화 시간(2시간 전)이 아니어서 위치정보는 볼 수 없어요", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-        self.present(alert, animated: true)
+
+      guard promiseDateTime + 3600000 >= current && current >= promiseDateTime - 7200000 else {
+        UIAlertController.simpleAlert(self, title: "알림", message: "약속 활성화 시간(2시간 전)이 아니어서 위치정보는 볼 수 없어요")
         return
       }
       
@@ -197,7 +195,7 @@ extension PromiseDetailViewController: MKMapViewDelegate {
       annotationView = CatchUpAnnotationView(annotation: annotation, reuseIdentifier: CatchUpAnnotationView.reuseIdentifier)
       annotationView?.rightCalloutAccessoryView = UIButton(type: .contactAdd)
     }
-    
+//    annotation.coordinate
     annotationView?.markerState = .moving(imagePath: annotation.imagePath)
     if let annotationView = annotationView {
       annotationView.canShowCallout = true

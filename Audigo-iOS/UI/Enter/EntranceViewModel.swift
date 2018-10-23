@@ -151,7 +151,8 @@ class EntranceViewModel: EntranceViewModelType {
       .flatMap{ [weak self] (data) -> PrimitiveSequence<MaybeTrait, UpdateCatchUpUserMutation.Data> in
         guard let strongSelf = self else { return .empty() }
         return strongSelf.apiClient.rx.perform(mutation: UpdateCatchUpUserMutation(id: userInfo.id, data: CatchUpUserInput(credit: data.getCatchUpUser?.credit ?? Define.initCredit)))
-      }.observeOn(MainScheduler.instance)
+      }
+      .observeOn(MainScheduler.instance)
       .subscribe(onSuccess: { data in
         if let phone = data.updateCatchUpUser?.phone {
           ContactItem.create(phone, imagePath: data.updateCatchUpUser?.profileImagePath ?? "", pushToken: "")

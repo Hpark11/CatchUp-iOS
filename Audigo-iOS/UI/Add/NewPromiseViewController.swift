@@ -50,9 +50,7 @@ class NewPromiseViewController: UIViewController, BindableType {
     _ = viewModel.actions.newPromiseCompleted.execute(()).subscribe(onNext: { [weak self] errorMessage in
       guard let strongSelf = self else { return }
       if !errorMessage.isEmpty {
-        let alert = UIAlertController(title: "약속 에러 발생", message: errorMessage, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-        strongSelf.present(alert, animated: true)
+        UIAlertController.simpleAlert(strongSelf, title: "약속 에러 발생", message: errorMessage)
       }
     })
   }
@@ -61,20 +59,9 @@ class NewPromiseViewController: UIViewController, BindableType {
     popButton.rx.bind(to: viewModel.actions.popScene, input: nil)
   
     promiseNameInputView.rx.tapGesture().when(.recognized).subscribe { _ in
-      let alert = UIAlertController(title: "이름 짓기", message: "생성할 약속의 이름을 입력해주세요", preferredStyle: .alert)
-      alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-      
-      alert.addTextField(configurationHandler: { textField in
-        textField.placeholder = "이름 입력"
-      })
-      
-      alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-        if let name = alert.textFields?.first?.text {
-          self.viewModel.inputs.nameSetDone.onNext(name)
-        }
-      }))
-      
-      self.present(alert, animated: true)
+      UIAlertController.inputAlert(self, title: "이름 짓기", message: "생성할 약속의 이름을 입력해주세요", placeholder: "이름 입력") { name in
+        self.viewModel.inputs.nameSetDone.onNext(name)
+      }
     }.disposed(by: disposeBag)
     
     promiseDateInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { (_) in
@@ -139,7 +126,7 @@ class NewPromiseViewController: UIViewController, BindableType {
     viewModel.outputs.members.subscribe(onNext: { members in
       self.selectedMembers = members
       if let member = members.first, let nickname = ContactItem.find(phone: member)?.nickname {
-        self.promiseMembersInputView.inputState = .applied(input: "\(nickname) 외 \(members.count - 1)명")
+        self.promiseMembersInputView.inputState = .applied(input: "\(nickname) \(members.count > 1 ? "외 \(members.count - 1)명" : "")")
       }
       
       self.membersCollectionView.reloadData()

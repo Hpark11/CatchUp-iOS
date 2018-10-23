@@ -1322,145 +1322,6 @@ public final class UpdateCatchUpContactMutation: GraphQLMutation {
   }
 }
 
-public final class BatchCreateCatchUpContactMutation: GraphQLMutation {
-  public static let operationString =
-    "mutation BatchCreateCatchUpContact($contacts: [ContactCreateInput]) {\n  batchCreateCatchUpContact(contacts: $contacts) {\n    __typename\n    phone\n    nickname\n    profileImagePath\n    latitude\n    longitude\n    pushToken\n    osType\n  }\n}"
-
-  public var contacts: [ContactCreateInput?]?
-
-  public init(contacts: [ContactCreateInput?]? = nil) {
-    self.contacts = contacts
-  }
-
-  public var variables: GraphQLMap? {
-    return ["contacts": contacts]
-  }
-
-  public struct Data: GraphQLSelectionSet {
-    public static let possibleTypes = ["Mutation"]
-
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("batchCreateCatchUpContact", arguments: ["contacts": GraphQLVariable("contacts")], type: .list(.object(BatchCreateCatchUpContact.selections))),
-    ]
-
-    public var snapshot: Snapshot
-
-    public init(snapshot: Snapshot) {
-      self.snapshot = snapshot
-    }
-
-    public init(batchCreateCatchUpContact: [BatchCreateCatchUpContact?]? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "batchCreateCatchUpContact": batchCreateCatchUpContact.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
-    }
-
-    public var batchCreateCatchUpContact: [BatchCreateCatchUpContact?]? {
-      get {
-        return (snapshot["batchCreateCatchUpContact"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { BatchCreateCatchUpContact(snapshot: $0) } } }
-      }
-      set {
-        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "batchCreateCatchUpContact")
-      }
-    }
-
-    public struct BatchCreateCatchUpContact: GraphQLSelectionSet {
-      public static let possibleTypes = ["CatchUpContact"]
-
-      public static let selections: [GraphQLSelection] = [
-        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
-        GraphQLField("nickname", type: .scalar(String.self)),
-        GraphQLField("profileImagePath", type: .scalar(String.self)),
-        GraphQLField("latitude", type: .scalar(Double.self)),
-        GraphQLField("longitude", type: .scalar(Double.self)),
-        GraphQLField("pushToken", type: .scalar(String.self)),
-        GraphQLField("osType", type: .scalar(String.self)),
-      ]
-
-      public var snapshot: Snapshot
-
-      public init(snapshot: Snapshot) {
-        self.snapshot = snapshot
-      }
-
-      public init(phone: GraphQLID, nickname: String? = nil, profileImagePath: String? = nil, latitude: Double? = nil, longitude: Double? = nil, pushToken: String? = nil, osType: String? = nil) {
-        self.init(snapshot: ["__typename": "CatchUpContact", "phone": phone, "nickname": nickname, "profileImagePath": profileImagePath, "latitude": latitude, "longitude": longitude, "pushToken": pushToken, "osType": osType])
-      }
-
-      public var __typename: String {
-        get {
-          return snapshot["__typename"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "__typename")
-        }
-      }
-
-      public var phone: GraphQLID {
-        get {
-          return snapshot["phone"]! as! GraphQLID
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "phone")
-        }
-      }
-
-      public var nickname: String? {
-        get {
-          return snapshot["nickname"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "nickname")
-        }
-      }
-
-      public var profileImagePath: String? {
-        get {
-          return snapshot["profileImagePath"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "profileImagePath")
-        }
-      }
-
-      public var latitude: Double? {
-        get {
-          return snapshot["latitude"] as? Double
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "latitude")
-        }
-      }
-
-      public var longitude: Double? {
-        get {
-          return snapshot["longitude"] as? Double
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "longitude")
-        }
-      }
-
-      public var pushToken: String? {
-        get {
-          return snapshot["pushToken"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "pushToken")
-        }
-      }
-
-      public var osType: String? {
-        get {
-          return snapshot["osType"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "osType")
-        }
-      }
-    }
-  }
-}
-
 public final class RelocateCatchUpContactMutation: GraphQLMutation {
   public static let operationString =
     "mutation RelocateCatchUpContact($phone: ID!, $latitude: Float!, $longitude: Float!) {\n  relocateCatchUpContact(phone: $phone, latitude: $latitude, longitude: $longitude) {\n    __typename\n    phone\n    nickname\n    profileImagePath\n    latitude\n    longitude\n    pushToken\n    osType\n  }\n}"
@@ -1896,6 +1757,294 @@ public final class CreateCatchUpPromiseMutation: GraphQLMutation {
   }
 }
 
+public final class DeleteCatchUpPromiseMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation DeleteCatchUpPromise($id: ID!) {\n  deleteCatchUpPromise(id: $id) {\n    __typename\n    id\n    owner\n    dateTime\n    address\n    latitude\n    longitude\n    name\n    contacts\n  }\n}"
+
+  public var id: GraphQLID
+
+  public init(id: GraphQLID) {
+    self.id = id
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("deleteCatchUpPromise", arguments: ["id": GraphQLVariable("id")], type: .object(DeleteCatchUpPromise.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(deleteCatchUpPromise: DeleteCatchUpPromise? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "deleteCatchUpPromise": deleteCatchUpPromise.flatMap { $0.snapshot }])
+    }
+
+    public var deleteCatchUpPromise: DeleteCatchUpPromise? {
+      get {
+        return (snapshot["deleteCatchUpPromise"] as? Snapshot).flatMap { DeleteCatchUpPromise(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "deleteCatchUpPromise")
+      }
+    }
+
+    public struct DeleteCatchUpPromise: GraphQLSelectionSet {
+      public static let possibleTypes = ["CatchUpPromise"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("owner", type: .scalar(String.self)),
+        GraphQLField("dateTime", type: .scalar(String.self)),
+        GraphQLField("address", type: .scalar(String.self)),
+        GraphQLField("latitude", type: .scalar(Double.self)),
+        GraphQLField("longitude", type: .scalar(Double.self)),
+        GraphQLField("name", type: .scalar(String.self)),
+        GraphQLField("contacts", type: .list(.scalar(String.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, owner: String? = nil, dateTime: String? = nil, address: String? = nil, latitude: Double? = nil, longitude: Double? = nil, name: String? = nil, contacts: [String?]? = nil) {
+        self.init(snapshot: ["__typename": "CatchUpPromise", "id": id, "owner": owner, "dateTime": dateTime, "address": address, "latitude": latitude, "longitude": longitude, "name": name, "contacts": contacts])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var owner: String? {
+        get {
+          return snapshot["owner"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "owner")
+        }
+      }
+
+      public var dateTime: String? {
+        get {
+          return snapshot["dateTime"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "dateTime")
+        }
+      }
+
+      public var address: String? {
+        get {
+          return snapshot["address"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "address")
+        }
+      }
+
+      public var latitude: Double? {
+        get {
+          return snapshot["latitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "latitude")
+        }
+      }
+
+      public var longitude: Double? {
+        get {
+          return snapshot["longitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "longitude")
+        }
+      }
+
+      public var name: String? {
+        get {
+          return snapshot["name"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      public var contacts: [String?]? {
+        get {
+          return snapshot["contacts"] as? [String?]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contacts")
+        }
+      }
+    }
+  }
+}
+
+public final class BatchCreateCatchUpContactMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation BatchCreateCatchUpContact($contacts: [ContactCreateInput]) {\n  batchCreateCatchUpContact(contacts: $contacts) {\n    __typename\n    phone\n    nickname\n    profileImagePath\n    latitude\n    longitude\n    pushToken\n    osType\n  }\n}"
+
+  public var contacts: [ContactCreateInput?]?
+
+  public init(contacts: [ContactCreateInput?]? = nil) {
+    self.contacts = contacts
+  }
+
+  public var variables: GraphQLMap? {
+    return ["contacts": contacts]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("batchCreateCatchUpContact", arguments: ["contacts": GraphQLVariable("contacts")], type: .list(.object(BatchCreateCatchUpContact.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(batchCreateCatchUpContact: [BatchCreateCatchUpContact?]? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "batchCreateCatchUpContact": batchCreateCatchUpContact.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+    }
+
+    public var batchCreateCatchUpContact: [BatchCreateCatchUpContact?]? {
+      get {
+        return (snapshot["batchCreateCatchUpContact"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { BatchCreateCatchUpContact(snapshot: $0) } } }
+      }
+      set {
+        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "batchCreateCatchUpContact")
+      }
+    }
+
+    public struct BatchCreateCatchUpContact: GraphQLSelectionSet {
+      public static let possibleTypes = ["CatchUpContact"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("nickname", type: .scalar(String.self)),
+        GraphQLField("profileImagePath", type: .scalar(String.self)),
+        GraphQLField("latitude", type: .scalar(Double.self)),
+        GraphQLField("longitude", type: .scalar(Double.self)),
+        GraphQLField("pushToken", type: .scalar(String.self)),
+        GraphQLField("osType", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(phone: GraphQLID, nickname: String? = nil, profileImagePath: String? = nil, latitude: Double? = nil, longitude: Double? = nil, pushToken: String? = nil, osType: String? = nil) {
+        self.init(snapshot: ["__typename": "CatchUpContact", "phone": phone, "nickname": nickname, "profileImagePath": profileImagePath, "latitude": latitude, "longitude": longitude, "pushToken": pushToken, "osType": osType])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var phone: GraphQLID {
+        get {
+          return snapshot["phone"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "phone")
+        }
+      }
+
+      public var nickname: String? {
+        get {
+          return snapshot["nickname"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nickname")
+        }
+      }
+
+      public var profileImagePath: String? {
+        get {
+          return snapshot["profileImagePath"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "profileImagePath")
+        }
+      }
+
+      public var latitude: Double? {
+        get {
+          return snapshot["latitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "latitude")
+        }
+      }
+
+      public var longitude: Double? {
+        get {
+          return snapshot["longitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "longitude")
+        }
+      }
+
+      public var pushToken: String? {
+        get {
+          return snapshot["pushToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "pushToken")
+        }
+      }
+
+      public var osType: String? {
+        get {
+          return snapshot["osType"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "osType")
+        }
+      }
+    }
+  }
+}
+
 public final class UpdateCatchUpPromiseMutation: GraphQLMutation {
   public static let operationString =
     "mutation UpdateCatchUpPromise($id: ID!, $data: CatchUpPromiseInput) {\n  updateCatchUpPromise(id: $id, data: $data) {\n    __typename\n    id\n    owner\n    dateTime\n    address\n    latitude\n    longitude\n    name\n    contacts\n  }\n}"
@@ -2047,25 +2196,27 @@ public final class UpdateCatchUpPromiseMutation: GraphQLMutation {
   }
 }
 
-public final class DeleteCatchUpPromiseMutation: GraphQLMutation {
+public final class AddContactIntoPromiseMutation: GraphQLMutation {
   public static let operationString =
-    "mutation DeleteCatchUpPromise($id: ID!) {\n  deleteCatchUpPromise(id: $id) {\n    __typename\n    id\n    owner\n    dateTime\n    address\n    latitude\n    longitude\n    name\n    contacts\n  }\n}"
+    "mutation AddContactIntoPromise($id: ID!, $phone: String!) {\n  addContactIntoPromise(id: $id, phone: $phone) {\n    __typename\n    id\n    owner\n    dateTime\n    address\n    latitude\n    longitude\n    name\n    contacts\n  }\n}"
 
   public var id: GraphQLID
+  public var phone: String
 
-  public init(id: GraphQLID) {
+  public init(id: GraphQLID, phone: String) {
     self.id = id
+    self.phone = phone
   }
 
   public var variables: GraphQLMap? {
-    return ["id": id]
+    return ["id": id, "phone": phone]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Mutation"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("deleteCatchUpPromise", arguments: ["id": GraphQLVariable("id")], type: .object(DeleteCatchUpPromise.selections)),
+      GraphQLField("addContactIntoPromise", arguments: ["id": GraphQLVariable("id"), "phone": GraphQLVariable("phone")], type: .object(AddContactIntoPromise.selections)),
     ]
 
     public var snapshot: Snapshot
@@ -2074,20 +2225,171 @@ public final class DeleteCatchUpPromiseMutation: GraphQLMutation {
       self.snapshot = snapshot
     }
 
-    public init(deleteCatchUpPromise: DeleteCatchUpPromise? = nil) {
-      self.init(snapshot: ["__typename": "Mutation", "deleteCatchUpPromise": deleteCatchUpPromise.flatMap { $0.snapshot }])
+    public init(addContactIntoPromise: AddContactIntoPromise? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "addContactIntoPromise": addContactIntoPromise.flatMap { $0.snapshot }])
     }
 
-    public var deleteCatchUpPromise: DeleteCatchUpPromise? {
+    public var addContactIntoPromise: AddContactIntoPromise? {
       get {
-        return (snapshot["deleteCatchUpPromise"] as? Snapshot).flatMap { DeleteCatchUpPromise(snapshot: $0) }
+        return (snapshot["addContactIntoPromise"] as? Snapshot).flatMap { AddContactIntoPromise(snapshot: $0) }
       }
       set {
-        snapshot.updateValue(newValue?.snapshot, forKey: "deleteCatchUpPromise")
+        snapshot.updateValue(newValue?.snapshot, forKey: "addContactIntoPromise")
       }
     }
 
-    public struct DeleteCatchUpPromise: GraphQLSelectionSet {
+    public struct AddContactIntoPromise: GraphQLSelectionSet {
+      public static let possibleTypes = ["CatchUpPromise"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("owner", type: .scalar(String.self)),
+        GraphQLField("dateTime", type: .scalar(String.self)),
+        GraphQLField("address", type: .scalar(String.self)),
+        GraphQLField("latitude", type: .scalar(Double.self)),
+        GraphQLField("longitude", type: .scalar(Double.self)),
+        GraphQLField("name", type: .scalar(String.self)),
+        GraphQLField("contacts", type: .list(.scalar(String.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, owner: String? = nil, dateTime: String? = nil, address: String? = nil, latitude: Double? = nil, longitude: Double? = nil, name: String? = nil, contacts: [String?]? = nil) {
+        self.init(snapshot: ["__typename": "CatchUpPromise", "id": id, "owner": owner, "dateTime": dateTime, "address": address, "latitude": latitude, "longitude": longitude, "name": name, "contacts": contacts])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var owner: String? {
+        get {
+          return snapshot["owner"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "owner")
+        }
+      }
+
+      public var dateTime: String? {
+        get {
+          return snapshot["dateTime"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "dateTime")
+        }
+      }
+
+      public var address: String? {
+        get {
+          return snapshot["address"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "address")
+        }
+      }
+
+      public var latitude: Double? {
+        get {
+          return snapshot["latitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "latitude")
+        }
+      }
+
+      public var longitude: Double? {
+        get {
+          return snapshot["longitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "longitude")
+        }
+      }
+
+      public var name: String? {
+        get {
+          return snapshot["name"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      public var contacts: [String?]? {
+        get {
+          return snapshot["contacts"] as? [String?]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contacts")
+        }
+      }
+    }
+  }
+}
+
+public final class RemoveContactIntoPromiseMutation: GraphQLMutation {
+  public static let operationString =
+    "mutation RemoveContactIntoPromise($id: ID!, $phone: String!) {\n  removeContactIntoPromise(id: $id, phone: $phone) {\n    __typename\n    id\n    owner\n    dateTime\n    address\n    latitude\n    longitude\n    name\n    contacts\n  }\n}"
+
+  public var id: GraphQLID
+  public var phone: String
+
+  public init(id: GraphQLID, phone: String) {
+    self.id = id
+    self.phone = phone
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id, "phone": phone]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Mutation"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("removeContactIntoPromise", arguments: ["id": GraphQLVariable("id"), "phone": GraphQLVariable("phone")], type: .object(RemoveContactIntoPromise.selections)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(removeContactIntoPromise: RemoveContactIntoPromise? = nil) {
+      self.init(snapshot: ["__typename": "Mutation", "removeContactIntoPromise": removeContactIntoPromise.flatMap { $0.snapshot }])
+    }
+
+    public var removeContactIntoPromise: RemoveContactIntoPromise? {
+      get {
+        return (snapshot["removeContactIntoPromise"] as? Snapshot).flatMap { RemoveContactIntoPromise(snapshot: $0) }
+      }
+      set {
+        snapshot.updateValue(newValue?.snapshot, forKey: "removeContactIntoPromise")
+      }
+    }
+
+    public struct RemoveContactIntoPromise: GraphQLSelectionSet {
       public static let possibleTypes = ["CatchUpPromise"]
 
       public static let selections: [GraphQLSelection] = [
@@ -2404,155 +2706,6 @@ public final class ListCatchUpUserQuery: GraphQLQuery {
   }
 }
 
-public final class ListCatchUpPromisesByContactQuery: GraphQLQuery {
-  public static let operationString =
-    "query ListCatchUpPromisesByContact($contact: String!) {\n  listCatchUpPromisesByContact(contact: $contact) {\n    __typename\n    id\n    owner\n    dateTime\n    address\n    latitude\n    longitude\n    name\n    contacts\n  }\n}"
-
-  public var contact: String
-
-  public init(contact: String) {
-    self.contact = contact
-  }
-
-  public var variables: GraphQLMap? {
-    return ["contact": contact]
-  }
-
-  public struct Data: GraphQLSelectionSet {
-    public static let possibleTypes = ["Query"]
-
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("listCatchUpPromisesByContact", arguments: ["contact": GraphQLVariable("contact")], type: .list(.nonNull(.object(ListCatchUpPromisesByContact.selections)))),
-    ]
-
-    public var snapshot: Snapshot
-
-    public init(snapshot: Snapshot) {
-      self.snapshot = snapshot
-    }
-
-    public init(listCatchUpPromisesByContact: [ListCatchUpPromisesByContact]? = nil) {
-      self.init(snapshot: ["__typename": "Query", "listCatchUpPromisesByContact": listCatchUpPromisesByContact.flatMap { $0.map { $0.snapshot } }])
-    }
-
-    public var listCatchUpPromisesByContact: [ListCatchUpPromisesByContact]? {
-      get {
-        return (snapshot["listCatchUpPromisesByContact"] as? [Snapshot]).flatMap { $0.map { ListCatchUpPromisesByContact(snapshot: $0) } }
-      }
-      set {
-        snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "listCatchUpPromisesByContact")
-      }
-    }
-
-    public struct ListCatchUpPromisesByContact: GraphQLSelectionSet {
-      public static let possibleTypes = ["CatchUpPromise"]
-
-      public static let selections: [GraphQLSelection] = [
-        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-        GraphQLField("owner", type: .scalar(String.self)),
-        GraphQLField("dateTime", type: .scalar(String.self)),
-        GraphQLField("address", type: .scalar(String.self)),
-        GraphQLField("latitude", type: .scalar(Double.self)),
-        GraphQLField("longitude", type: .scalar(Double.self)),
-        GraphQLField("name", type: .scalar(String.self)),
-        GraphQLField("contacts", type: .list(.scalar(String.self))),
-      ]
-
-      public var snapshot: Snapshot
-
-      public init(snapshot: Snapshot) {
-        self.snapshot = snapshot
-      }
-
-      public init(id: GraphQLID, owner: String? = nil, dateTime: String? = nil, address: String? = nil, latitude: Double? = nil, longitude: Double? = nil, name: String? = nil, contacts: [String?]? = nil) {
-        self.init(snapshot: ["__typename": "CatchUpPromise", "id": id, "owner": owner, "dateTime": dateTime, "address": address, "latitude": latitude, "longitude": longitude, "name": name, "contacts": contacts])
-      }
-
-      public var __typename: String {
-        get {
-          return snapshot["__typename"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "__typename")
-        }
-      }
-
-      public var id: GraphQLID {
-        get {
-          return snapshot["id"]! as! GraphQLID
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "id")
-        }
-      }
-
-      public var owner: String? {
-        get {
-          return snapshot["owner"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "owner")
-        }
-      }
-
-      public var dateTime: String? {
-        get {
-          return snapshot["dateTime"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "dateTime")
-        }
-      }
-
-      public var address: String? {
-        get {
-          return snapshot["address"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "address")
-        }
-      }
-
-      public var latitude: Double? {
-        get {
-          return snapshot["latitude"] as? Double
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "latitude")
-        }
-      }
-
-      public var longitude: Double? {
-        get {
-          return snapshot["longitude"] as? Double
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "longitude")
-        }
-      }
-
-      public var name: String? {
-        get {
-          return snapshot["name"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "name")
-        }
-      }
-
-      public var contacts: [String?]? {
-        get {
-          return snapshot["contacts"] as? [String?]
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "contacts")
-        }
-      }
-    }
-  }
-}
-
 public final class GetCatchUpUserQuery: GraphQLQuery {
   public static let operationString =
     "query GetCatchUpUser($id: ID!) {\n  getCatchUpUser(id: $id) {\n    __typename\n    id\n    email\n    nickname\n    profileImagePath\n    gender\n    birthday\n    ageRange\n    phone\n    credit\n  }\n}"
@@ -2706,145 +2859,6 @@ public final class GetCatchUpUserQuery: GraphQLQuery {
         }
         set {
           snapshot.updateValue(newValue, forKey: "credit")
-        }
-      }
-    }
-  }
-}
-
-public final class BatchGetCatchUpContactsQuery: GraphQLQuery {
-  public static let operationString =
-    "query BatchGetCatchUpContacts($ids: [ID]) {\n  batchGetCatchUpContacts(ids: $ids) {\n    __typename\n    phone\n    nickname\n    profileImagePath\n    latitude\n    longitude\n    pushToken\n    osType\n  }\n}"
-
-  public var ids: [GraphQLID?]?
-
-  public init(ids: [GraphQLID?]? = nil) {
-    self.ids = ids
-  }
-
-  public var variables: GraphQLMap? {
-    return ["ids": ids]
-  }
-
-  public struct Data: GraphQLSelectionSet {
-    public static let possibleTypes = ["Query"]
-
-    public static let selections: [GraphQLSelection] = [
-      GraphQLField("batchGetCatchUpContacts", arguments: ["ids": GraphQLVariable("ids")], type: .list(.object(BatchGetCatchUpContact.selections))),
-    ]
-
-    public var snapshot: Snapshot
-
-    public init(snapshot: Snapshot) {
-      self.snapshot = snapshot
-    }
-
-    public init(batchGetCatchUpContacts: [BatchGetCatchUpContact?]? = nil) {
-      self.init(snapshot: ["__typename": "Query", "batchGetCatchUpContacts": batchGetCatchUpContacts.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
-    }
-
-    public var batchGetCatchUpContacts: [BatchGetCatchUpContact?]? {
-      get {
-        return (snapshot["batchGetCatchUpContacts"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { BatchGetCatchUpContact(snapshot: $0) } } }
-      }
-      set {
-        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "batchGetCatchUpContacts")
-      }
-    }
-
-    public struct BatchGetCatchUpContact: GraphQLSelectionSet {
-      public static let possibleTypes = ["CatchUpContact"]
-
-      public static let selections: [GraphQLSelection] = [
-        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
-        GraphQLField("nickname", type: .scalar(String.self)),
-        GraphQLField("profileImagePath", type: .scalar(String.self)),
-        GraphQLField("latitude", type: .scalar(Double.self)),
-        GraphQLField("longitude", type: .scalar(Double.self)),
-        GraphQLField("pushToken", type: .scalar(String.self)),
-        GraphQLField("osType", type: .scalar(String.self)),
-      ]
-
-      public var snapshot: Snapshot
-
-      public init(snapshot: Snapshot) {
-        self.snapshot = snapshot
-      }
-
-      public init(phone: GraphQLID, nickname: String? = nil, profileImagePath: String? = nil, latitude: Double? = nil, longitude: Double? = nil, pushToken: String? = nil, osType: String? = nil) {
-        self.init(snapshot: ["__typename": "CatchUpContact", "phone": phone, "nickname": nickname, "profileImagePath": profileImagePath, "latitude": latitude, "longitude": longitude, "pushToken": pushToken, "osType": osType])
-      }
-
-      public var __typename: String {
-        get {
-          return snapshot["__typename"]! as! String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "__typename")
-        }
-      }
-
-      public var phone: GraphQLID {
-        get {
-          return snapshot["phone"]! as! GraphQLID
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "phone")
-        }
-      }
-
-      public var nickname: String? {
-        get {
-          return snapshot["nickname"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "nickname")
-        }
-      }
-
-      public var profileImagePath: String? {
-        get {
-          return snapshot["profileImagePath"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "profileImagePath")
-        }
-      }
-
-      public var latitude: Double? {
-        get {
-          return snapshot["latitude"] as? Double
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "latitude")
-        }
-      }
-
-      public var longitude: Double? {
-        get {
-          return snapshot["longitude"] as? Double
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "longitude")
-        }
-      }
-
-      public var pushToken: String? {
-        get {
-          return snapshot["pushToken"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "pushToken")
-        }
-      }
-
-      public var osType: String? {
-        get {
-          return snapshot["osType"] as? String
-        }
-        set {
-          snapshot.updateValue(newValue, forKey: "osType")
         }
       }
     }
@@ -3242,6 +3256,336 @@ public final class CheckAppVersionQuery: GraphQLQuery {
         }
         set {
           snapshot.updateValue(newValue, forKey: "revision")
+        }
+      }
+    }
+  }
+}
+
+public final class SendPushQuery: GraphQLQuery {
+  public static let operationString =
+    "query SendPush($token: String!) {\n  sendPush(token: $token)\n}"
+
+  public var token: String
+
+  public init(token: String) {
+    self.token = token
+  }
+
+  public var variables: GraphQLMap? {
+    return ["token": token]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("sendPush", arguments: ["token": GraphQLVariable("token")], type: .scalar(String.self)),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(sendPush: String? = nil) {
+      self.init(snapshot: ["__typename": "Query", "sendPush": sendPush])
+    }
+
+    public var sendPush: String? {
+      get {
+        return snapshot["sendPush"] as? String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "sendPush")
+      }
+    }
+  }
+}
+
+public final class BatchGetCatchUpContactsQuery: GraphQLQuery {
+  public static let operationString =
+    "query BatchGetCatchUpContacts($ids: [ID]) {\n  batchGetCatchUpContacts(ids: $ids) {\n    __typename\n    phone\n    nickname\n    profileImagePath\n    latitude\n    longitude\n    pushToken\n    osType\n  }\n}"
+
+  public var ids: [GraphQLID?]?
+
+  public init(ids: [GraphQLID?]? = nil) {
+    self.ids = ids
+  }
+
+  public var variables: GraphQLMap? {
+    return ["ids": ids]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("batchGetCatchUpContacts", arguments: ["ids": GraphQLVariable("ids")], type: .list(.object(BatchGetCatchUpContact.selections))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(batchGetCatchUpContacts: [BatchGetCatchUpContact?]? = nil) {
+      self.init(snapshot: ["__typename": "Query", "batchGetCatchUpContacts": batchGetCatchUpContacts.flatMap { $0.map { $0.flatMap { $0.snapshot } } }])
+    }
+
+    public var batchGetCatchUpContacts: [BatchGetCatchUpContact?]? {
+      get {
+        return (snapshot["batchGetCatchUpContacts"] as? [Snapshot?]).flatMap { $0.map { $0.flatMap { BatchGetCatchUpContact(snapshot: $0) } } }
+      }
+      set {
+        snapshot.updateValue(newValue.flatMap { $0.map { $0.flatMap { $0.snapshot } } }, forKey: "batchGetCatchUpContacts")
+      }
+    }
+
+    public struct BatchGetCatchUpContact: GraphQLSelectionSet {
+      public static let possibleTypes = ["CatchUpContact"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("phone", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("nickname", type: .scalar(String.self)),
+        GraphQLField("profileImagePath", type: .scalar(String.self)),
+        GraphQLField("latitude", type: .scalar(Double.self)),
+        GraphQLField("longitude", type: .scalar(Double.self)),
+        GraphQLField("pushToken", type: .scalar(String.self)),
+        GraphQLField("osType", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(phone: GraphQLID, nickname: String? = nil, profileImagePath: String? = nil, latitude: Double? = nil, longitude: Double? = nil, pushToken: String? = nil, osType: String? = nil) {
+        self.init(snapshot: ["__typename": "CatchUpContact", "phone": phone, "nickname": nickname, "profileImagePath": profileImagePath, "latitude": latitude, "longitude": longitude, "pushToken": pushToken, "osType": osType])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var phone: GraphQLID {
+        get {
+          return snapshot["phone"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "phone")
+        }
+      }
+
+      public var nickname: String? {
+        get {
+          return snapshot["nickname"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "nickname")
+        }
+      }
+
+      public var profileImagePath: String? {
+        get {
+          return snapshot["profileImagePath"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "profileImagePath")
+        }
+      }
+
+      public var latitude: Double? {
+        get {
+          return snapshot["latitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "latitude")
+        }
+      }
+
+      public var longitude: Double? {
+        get {
+          return snapshot["longitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "longitude")
+        }
+      }
+
+      public var pushToken: String? {
+        get {
+          return snapshot["pushToken"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "pushToken")
+        }
+      }
+
+      public var osType: String? {
+        get {
+          return snapshot["osType"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "osType")
+        }
+      }
+    }
+  }
+}
+
+public final class ListCatchUpPromisesByContactQuery: GraphQLQuery {
+  public static let operationString =
+    "query ListCatchUpPromisesByContact($contact: String!) {\n  listCatchUpPromisesByContact(contact: $contact) {\n    __typename\n    id\n    owner\n    dateTime\n    address\n    latitude\n    longitude\n    name\n    contacts\n  }\n}"
+
+  public var contact: String
+
+  public init(contact: String) {
+    self.contact = contact
+  }
+
+  public var variables: GraphQLMap? {
+    return ["contact": contact]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("listCatchUpPromisesByContact", arguments: ["contact": GraphQLVariable("contact")], type: .list(.nonNull(.object(ListCatchUpPromisesByContact.selections)))),
+    ]
+
+    public var snapshot: Snapshot
+
+    public init(snapshot: Snapshot) {
+      self.snapshot = snapshot
+    }
+
+    public init(listCatchUpPromisesByContact: [ListCatchUpPromisesByContact]? = nil) {
+      self.init(snapshot: ["__typename": "Query", "listCatchUpPromisesByContact": listCatchUpPromisesByContact.flatMap { $0.map { $0.snapshot } }])
+    }
+
+    public var listCatchUpPromisesByContact: [ListCatchUpPromisesByContact]? {
+      get {
+        return (snapshot["listCatchUpPromisesByContact"] as? [Snapshot]).flatMap { $0.map { ListCatchUpPromisesByContact(snapshot: $0) } }
+      }
+      set {
+        snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "listCatchUpPromisesByContact")
+      }
+    }
+
+    public struct ListCatchUpPromisesByContact: GraphQLSelectionSet {
+      public static let possibleTypes = ["CatchUpPromise"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+        GraphQLField("owner", type: .scalar(String.self)),
+        GraphQLField("dateTime", type: .scalar(String.self)),
+        GraphQLField("address", type: .scalar(String.self)),
+        GraphQLField("latitude", type: .scalar(Double.self)),
+        GraphQLField("longitude", type: .scalar(Double.self)),
+        GraphQLField("name", type: .scalar(String.self)),
+        GraphQLField("contacts", type: .list(.scalar(String.self))),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(id: GraphQLID, owner: String? = nil, dateTime: String? = nil, address: String? = nil, latitude: Double? = nil, longitude: Double? = nil, name: String? = nil, contacts: [String?]? = nil) {
+        self.init(snapshot: ["__typename": "CatchUpPromise", "id": id, "owner": owner, "dateTime": dateTime, "address": address, "latitude": latitude, "longitude": longitude, "name": name, "contacts": contacts])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID {
+        get {
+          return snapshot["id"]! as! GraphQLID
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var owner: String? {
+        get {
+          return snapshot["owner"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "owner")
+        }
+      }
+
+      public var dateTime: String? {
+        get {
+          return snapshot["dateTime"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "dateTime")
+        }
+      }
+
+      public var address: String? {
+        get {
+          return snapshot["address"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "address")
+        }
+      }
+
+      public var latitude: Double? {
+        get {
+          return snapshot["latitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "latitude")
+        }
+      }
+
+      public var longitude: Double? {
+        get {
+          return snapshot["longitude"] as? Double
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "longitude")
+        }
+      }
+
+      public var name: String? {
+        get {
+          return snapshot["name"] as? String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "name")
+        }
+      }
+
+      public var contacts: [String?]? {
+        get {
+          return snapshot["contacts"] as? [String?]
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "contacts")
         }
       }
     }

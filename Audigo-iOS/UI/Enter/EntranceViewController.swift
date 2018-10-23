@@ -46,6 +46,8 @@ class EntranceViewController: UIViewController, BindableType {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
+    print("ENTRANCE ENTRANCE ENTRANCE")
+    
     let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
     guard permissionSet.status == .authorized else {
       if let vc = R.storyboard.main.permissionsViewController() {

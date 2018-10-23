@@ -17,8 +17,6 @@ import AWSAppSync
 import RealmSwift
 import GoogleMobileAds
 
-var apollo: ApolloClient? = nil// = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
@@ -168,10 +166,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if KOSession.isKakaoAccountLoginCallback(url) {
       return KOSession.handleOpen(url)
     }
+  
     return true
   }
   
   func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    
+    if KLKTalkLinkCenter.shared().isTalkLinkCallback(url) {
+      if let promiseId = url.query?.components(separatedBy: "=").last {
+        if let nc = app.windows.first?.rootViewController as? UINavigationController, let vc = nc.visibleViewController {
+          UIAlertController.simpleCancelAlert(vc, title: "약속 참가", message: "이 약속모임에 참여하시겠습니까?") { _ in
+            self.appSyncClient?.perform(mutation: AddContactIntoPromiseMutation(id: promiseId, phone: "")) { (result, error) in
+              
+            }
+          }
+        }
+      }
+      
+      return true
+    }
+    
     if KOSession.isKakaoAccountLoginCallback(url) {
       return KOSession.handleOpen(url)
     }

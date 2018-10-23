@@ -15,11 +15,11 @@
 		CE038B0921662D6B001D140B /* EntranceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0821662D6B001D140B /* EntranceViewModel.swift */; };
 		CE038B0B21662DC4001D140B /* EntranceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0A21662DC4001D140B /* EntranceScene.swift */; };
 		CE038B0D2166329B001D140B /* RxAppSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0C2166329B001D140B /* RxAppSync.swift */; };
+		CE1A3606217F57380025F64F /* UIAlert+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3605217F57380025F64F /* UIAlert+Ext.swift */; };
 		CE1EF0BC217B0A0200E80E70 /* PromiseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */; };
 		CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */; };
 		CE22AEF121311A03004477E8 /* MonthPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */; };
 		CE22AEF321313C72004477E8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF221313C72004477E8 /* UIColor+Ext.swift */; };
-		CE22C76E213A558900878BB1 /* ApolloAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22C76D213A558900878BB1 /* ApolloAPIService.swift */; };
 		CE22C770213AA6CC00878BB1 /* CatchUpContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */; };
 		CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */; };
 		CE280193212575E20066B344 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE280192212575E20066B344 /* ContactItem.swift */; };
@@ -131,11 +131,11 @@
 		CE038B0821662D6B001D140B /* EntranceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewModel.swift; sourceTree = "<group>"; };
 		CE038B0A21662DC4001D140B /* EntranceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceScene.swift; sourceTree = "<group>"; };
 		CE038B0C2166329B001D140B /* RxAppSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxAppSync.swift; sourceTree = "<group>"; };
+		CE1A3605217F57380025F64F /* UIAlert+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlert+Ext.swift"; sourceTree = "<group>"; };
 		CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseItem.swift; sourceTree = "<group>"; };
 		CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelectPickerView.swift; sourceTree = "<group>"; };
 		CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPopupViewController.swift; sourceTree = "<group>"; };
 		CE22AEF221313C72004477E8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
-		CE22C76D213A558900878BB1 /* ApolloAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApolloAPIService.swift; path = "Audigo-iOS/ApolloAPIService.swift"; sourceTree = SOURCE_ROOT; };
 		CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpContact.swift; sourceTree = "<group>"; };
 		CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
 		CE280192212575E20066B344 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
@@ -353,7 +353,6 @@
 			isa = PBXGroup;
 			children = (
 				CE038B06216508E8001D140B /* API.swift */,
-				CE22C76D213A558900878BB1 /* ApolloAPIService.swift */,
 				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
 				CE825F8F21205BF800697F52 /* Util.swift */,
 				CE038B0221650602001D140B /* Define.swift */,
@@ -492,6 +491,7 @@
 				CE7B0DC42167969F007DAA2A /* Array+Ext.swift */,
 				CE7B0DC621685B6D007DAA2A /* ContextError.swift */,
 				CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */,
+				CE1A3605217F57380025F64F /* UIAlert+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -892,6 +892,7 @@
 				CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */,
 				CE914BF0216A39BE00B80121 /* PromiseCollectionViewCell.swift in Sources */,
 				CEC9A415216D04D600DC322B /* MapSearchViewController.swift in Sources */,
+				CE1A3606217F57380025F64F /* UIAlert+Ext.swift in Sources */,
 				CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */,
 				CE825F9021205BF800697F52 /* Util.swift in Sources */,
 				CE038B0D2166329B001D140B /* RxAppSync.swift in Sources */,
@@ -925,7 +926,6 @@
 				CE7B0DC921686763007DAA2A /* UserDefaultService.swift in Sources */,
 				CEB41F052115C484006BC729 /* MainScene.swift in Sources */,
 				CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */,
-				CE22C76E213A558900878BB1 /* ApolloAPIService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
