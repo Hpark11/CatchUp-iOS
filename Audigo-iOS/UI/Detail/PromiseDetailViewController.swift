@@ -18,7 +18,6 @@ class PromiseDetailViewController: UIViewController, BindableType {
   @IBOutlet weak var promisedDateLabel: UILabel!
   @IBOutlet weak var detailMapView: MKMapView!
   @IBOutlet weak var panelChangeButton: UIButton!
-  @IBOutlet weak var refreshButton: UIButton!
   @IBOutlet weak var editPromiseButton: UIButton!
   
   var viewModel: PromiseDetailViewModel!
@@ -27,13 +26,22 @@ class PromiseDetailViewController: UIViewController, BindableType {
   private var markers: [Member]? = []
   private var currentMarker: Member?
   private var imagePath: String = ""
+  private var timer = Timer()
   private let sendPush = PublishSubject<String>()
   
-  private lazy var configureCell: (TableViewSectionedDataSource<PocketSectionModel>, UITableView, IndexPath, CatchUpContact) -> UITableViewCell = { [weak self] data, tableView, indexPath, pocket in
-    guard let strongSelf = self else { return PromiseDetailUserTableViewCell(frame: .zero) }
+  func runTimer() {
+    timer = Timer.scheduledTimer(timeInterval: 80, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+  }
+  
+  @objc func updateTimer() {
+    viewModel.actions.refresh.execute(())
+  }
+  
+  private lazy var configureCell: (TableViewSectionedDataSource<MemberSectionModel>, UITableView, IndexPath, PromiseDetailUserViewModel) -> UITableViewCell = { [weak self] data, tableView, indexPath, viewModel in
+    guard let `self` = self else { return PromiseDetailUserTableViewCell(frame: .zero) }
     
     let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseDetailUserTableViewCell, for: indexPath)
-    cell?.configure(contact: pocket, sendPush: strongSelf.sendPush)
+    cell?.configure(viewModel: viewModel)
   
     return cell!
   }
@@ -73,12 +81,14 @@ class PromiseDetailViewController: UIViewController, BindableType {
     super.viewWillAppear(animated)
     navigationController?.navigationBar.barStyle = .blackOpaque
     NotificationCenter.default.addObserver(self, selector: #selector(updateSelfLocation(_:)), name: NSNotification.Name(rawValue: "didUpdateLocation"), object: nil)
+    runTimer()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     navigationController?.navigationBar.barStyle = .default
     NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "didUpdateLocation"), object: nil)
+    timer.invalidate()
   }
   
   @IBAction func changeMapVisibility(_ sender: Any) {
@@ -102,7 +112,6 @@ class PromiseDetailViewController: UIViewController, BindableType {
   
   func bindViewModel() {
     editPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
-    refreshButton.rx.action = viewModel.actions.refresh
     
     viewModel.outputs.name.subscribe(onNext: { [weak self] name in
       guard let strongSelf = self else { return }
@@ -135,7 +144,7 @@ class PromiseDetailViewController: UIViewController, BindableType {
       self.promisedDateLabel.text = timeFormat.string(from: dateTime)
     }).disposed(by: disposeBag)
     
-    let dataSource = RxTableViewSectionedAnimatedDataSource<PocketSectionModel>(configureCell: configureCell)
+    let dataSource = RxTableViewSectionedAnimatedDataSource<MemberSectionModel>(configureCell: configureCell)
     
     viewModel.outputs.pocketItems.subscribe(onNext: { [weak self] sectionModel in
       guard let `self` = self else { return }
@@ -145,15 +154,15 @@ class PromiseDetailViewController: UIViewController, BindableType {
       let current = Date().timeInMillis
 
       guard promiseDateTime + 3600000 >= current && current >= promiseDateTime - 7200000 else {
-        UIAlertController.simpleAlert(self, title: "알림", message: "약속 활성화 시간(2시간 전)이 아니어서 위치정보는 볼 수 없어요")
+        Toast.makeText(self, text: "약속 활성화 시간전엔 위치정보는 볼 수 없어요")
         return
       }
       
       let userNumber = UserDefaultService.phoneNumber ?? ""
     
-      sectionModel.first?.items.forEach { contact in
-        guard let latitude = contact.latitude,
-          let longitude = contact.longitude,
+      sectionModel.first?.items.forEach { viewModel in
+        guard let latitude = viewModel.contact.latitude,
+          let longitude = viewModel.contact.longitude,
           latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0
           else { return }
         

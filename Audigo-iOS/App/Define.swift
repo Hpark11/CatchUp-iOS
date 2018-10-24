@@ -44,7 +44,7 @@ struct Define {
   
   static let majorVersion = 1
   static let minorVersion = 0
-  static let revision = 10
+  static let revision = 11
   
   struct NotificationName {
     static let didUpdateLocation = Notification.Name(rawValue: "didUpdateLocation")

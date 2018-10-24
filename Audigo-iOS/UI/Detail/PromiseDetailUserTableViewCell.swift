@@ -11,6 +11,7 @@ import Kingfisher
 import CoreLocation
 import RxSwift
 import MapKit
+import RxCocoa
 
 class PromiseDetailUserTableViewCell: UITableViewCell {
 
@@ -28,6 +29,10 @@ class PromiseDetailUserTableViewCell: UITableViewCell {
     itemView.layer.shadowOpacity = 1
     itemView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
     itemView.layer.shadowRadius = 4
+  }
+  
+  func configure(viewModel: PromiseDetailUserViewModel) {
+//    arrivalTimeLabel.rx.text
   }
   
   func configure(contact: CatchUpContact, sendPush: PublishSubject<String>) {

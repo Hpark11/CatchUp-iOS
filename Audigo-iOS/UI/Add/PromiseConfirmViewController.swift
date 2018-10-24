@@ -33,21 +33,7 @@ class PromiseConfirmViewController: UIViewController {
     
     if let promise = self.promise {
       let contacts = promise.contacts
-      
-      if !contacts.isEmpty {
-        var members: String = ""
-        
-        if let member = ContactItem.find(phone: contacts.first ?? "None")?.nickname {
-          if contacts.count > 1 {
-            members = "\(member) 외 \(contacts.count - 1)명"
-          } else {
-            members = member
-          }
-        }
-        
-        membersLabel.text = members
-      }
-      
+      membersLabel.text = "함께하는 인원: \(contacts.count)명"      
       dateTimeLabel.text = timeFormat.string(from: promise.dateTime)
       locationLabel.text = promise.address
     }

@@ -81,6 +81,7 @@
 		CEC9A415216D04D600DC322B /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9A414216D04D600DC322B /* MapSearchViewController.swift */; };
 		CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */; };
 		CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */; };
+		CECE30682180AE7C00BA150A /* PromiseDetailUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE30672180AE7C00BA150A /* PromiseDetailUserViewModel.swift */; };
 		CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */; };
 		CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAD20C979040063D89F /* AppDelegate.swift */; };
 		CED4CCB020C979040063D89F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* MainViewController.swift */; };
@@ -199,6 +200,7 @@
 		CEC9A414216D04D600DC322B /* MapSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
 		CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectedCollectionViewCell.swift; sourceTree = "<group>"; };
 		CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseConfirmViewController.swift; sourceTree = "<group>"; };
+		CECE30672180AE7C00BA150A /* PromiseDetailUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailUserViewModel.swift; sourceTree = "<group>"; };
 		CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		CED4CCAA20C979040063D89F /* Audigo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audigo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCAD20C979040063D89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */,
 				CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */,
 				CEEE5DA4212817F50023E2FC /* PromiseDetailUserTableViewCell.swift */,
+				CECE30672180AE7C00BA150A /* PromiseDetailUserViewModel.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -862,6 +865,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CECE30682180AE7C00BA150A /* PromiseDetailUserViewModel.swift in Sources */,
 				CEB41F032115C41B006BC729 /* BindableTypes.swift in Sources */,
 				CE7B0DCD21687C10007DAA2A /* PushMessageService.swift in Sources */,
 				CE2BB5B62172477600BB05D7 /* PlaceSearchListViewController.swift in Sources */,

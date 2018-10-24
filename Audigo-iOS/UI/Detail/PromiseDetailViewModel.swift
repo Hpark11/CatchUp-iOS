@@ -12,7 +12,7 @@ import RxSwift
 import RxDataSources
 import AWSAppSync
 
-typealias PocketSectionModel = AnimatableSectionModel<String, CatchUpContact>
+typealias MemberSectionModel = AnimatableSectionModel<String, PromiseDetailUserViewModel>
 
 protocol PromiseDetailViewModelInputsType {
   var editPromiseDone: PublishSubject<CatchUpPromise> { get }
@@ -22,7 +22,7 @@ protocol PromiseDetailViewModelOutputsType {
   var name: Observable<String> { get }
   var location: Observable<(latitude: Double, longitude: Double)> { get }
   var timestamp: Observable<TimeInterval> { get }
-  var pocketItems: Observable<[PocketSectionModel]> { get }
+  var pocketItems: Observable<[MemberSectionModel]> { get }
   var isOwner: Observable<Bool> { get }
 }
 
@@ -52,7 +52,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   var editPromiseDone: PublishSubject<CatchUpPromise>
   
   // MARK: Outputs
-  var pocketItems: Observable<[PocketSectionModel]>
+  var pocketItems: Observable<[MemberSectionModel]>
   var name: Observable<String>
   var location: Observable<(latitude: Double, longitude: Double)>
   var timestamp: Observable<TimeInterval>
@@ -70,9 +70,10 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   private let promiseName: Variable<String>
   private let promiseLocation: Variable<(latitude: Double, longitude: Double)>
   private let promiseTimestamp: Variable<TimeInterval>
-  private let pocketList: Variable<[CatchUpContact]>
+  private let memberInfoList: Variable<[PromiseDetailUserViewModel]>
   private let owner: Variable<String>
   private let address: Variable<String>
+  private let sendPush = PublishSubject<String>()
   
   init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient) {
     sceneCoordinator = coordinator
@@ -82,7 +83,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     editPromiseDone = PublishSubject()
     sendMessage = PublishSubject()
     
-    pocketList = Variable([])
+    memberInfoList = Variable([])
     promiseName = Variable("")
     promiseLocation = Variable((latitude: 0, longitude: 0))
     promiseTimestamp = Variable(0)
@@ -96,9 +97,9 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
       return UserDefaultService.phoneNumber == owner
     }
     
-    pocketItems = pocketList.asObservable()
+    pocketItems = memberInfoList.asObservable()
       .map({ (pocketList) in
-        return [PocketSectionModel(model: "", items: pocketList)]
+        return [MemberSectionModel(model: "", items: pocketList)]
       })
     
     editPromiseDone.subscribe(onNext: { [weak self] promise in
@@ -118,8 +119,10 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: promise.contacts), cachePolicy: .fetchIgnoringCacheData)
       .subscribe(onSuccess: { [weak self] data in
         guard let strongSelf = self else { return }
-        strongSelf.pocketList.value = data.batchGetCatchUpContacts?.compactMap {
+        strongSelf.memberInfoList.value = data.batchGetCatchUpContacts?.compactMap {
           CatchUpContact(dstLat: promise.latitude, dstLng: promise.longitude, contactData: $0)
+          }.map { contact in
+            return PromiseDetailUserViewModel(promise: promise, contact: contact, sendPush: sendPush)
           } ?? []
       }).disposed(by: disposeBag)
   }

@@ -127,6 +127,8 @@ class NewPromiseViewController: UIViewController, BindableType {
       self.selectedMembers = members
       if let member = members.first, let nickname = ContactItem.find(phone: member)?.nickname {
         self.promiseMembersInputView.inputState = .applied(input: "\(nickname) \(members.count > 1 ? "외 \(members.count - 1)명" : "")")
+      } else {
+        self.promiseMembersInputView.inputState = .search(title: "누구랑", input: "구성원을 검색해주세요")
       }
       
       self.membersCollectionView.reloadData()
