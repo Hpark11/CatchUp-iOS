@@ -24,6 +24,7 @@ protocol PromiseDetailViewModelOutputsType {
   var timestamp: Observable<TimeInterval> { get }
   var pocketItems: Observable<[MemberSectionModel]> { get }
   var isOwner: Observable<Bool> { get }
+  var push: Observable<String> { get }
 }
 
 protocol PromiseDetailViewModelActionsType {
@@ -57,6 +58,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   var location: Observable<(latitude: Double, longitude: Double)>
   var timestamp: Observable<TimeInterval>
   var isOwner: Observable<Bool>
+  var push: Observable<String>
 
   var hasPromiseBeenUpdated: PublishSubject<Bool>?
   var sendMessage: PublishSubject<String>
@@ -97,6 +99,8 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
       return UserDefaultService.phoneNumber == owner
     }
     
+    push = sendPush.asObservable()
+    
     pocketItems = memberInfoList.asObservable()
       .map({ (pocketList) in
         return [MemberSectionModel(model: "", items: pocketList)]
@@ -118,11 +122,11 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     
     apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: promise.contacts), cachePolicy: .fetchIgnoringCacheData)
       .subscribe(onSuccess: { [weak self] data in
-        guard let strongSelf = self else { return }
-        strongSelf.memberInfoList.value = data.batchGetCatchUpContacts?.compactMap {
+        guard let `self` = self else { return }
+        self.memberInfoList.value = data.batchGetCatchUpContacts?.compactMap {
           CatchUpContact(dstLat: promise.latitude, dstLng: promise.longitude, contactData: $0)
           }.map { contact in
-            return PromiseDetailUserViewModel(promise: promise, contact: contact, sendPush: sendPush)
+            return PromiseDetailUserViewModel(promise: promise, contact: contact, sendPush: self.sendPush)
           } ?? []
       }).disposed(by: disposeBag)
   }
@@ -159,5 +163,3 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
 }
 
 extension PromiseDetailViewModel: PromiseDetailViewModelInputsType, PromiseDetailViewModelOutputsType, PromiseDetailViewModelActionsType {}
-
-

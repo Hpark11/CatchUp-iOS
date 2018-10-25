@@ -72,6 +72,10 @@ class PromiseCollectionViewCell: UICollectionViewCell {
       itemPanelView.backgroundColor = .paleSoftGray
       promiseTimeLeftLabel.text = "지난 약속"
       promiseTimeLeftLabel.textColor = .stale
+      
+      if now.timeIntervalSince1970 <= dateTime.timeIntervalSince1970 + 3600 {
+        itemDateView.backgroundColor = .darkSkyBlue
+      }
     } else if let dayGap = gap.day, let hourGap = gap.hour, let minuteGap = gap.minute {
       switch dayGap {
       case 0:

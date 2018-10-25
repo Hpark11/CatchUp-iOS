@@ -113,6 +113,16 @@ class PromiseDetailViewController: UIViewController, BindableType {
   func bindViewModel() {
     editPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
     
+    viewModel.push.subscribe(onNext: { [weak self] (token) in
+      guard let `self` = self else { return }
+      UIAlertController.inputAlert(self, title: "메세지 보내기", message: "유저에게 보낼 메세지를 입력하세요", placeholder: "메세지 입력", callback: { (text) in
+        if let from = UserDefaultService.nickname {
+          PushMessageService.sendPush(title: "\(from)님의 메세지", message: text, pushTokens: [token])
+        }
+        Toast.makeText(self, text: "알림 메세지를 보냈어요")
+      })
+    }).disposed(by: disposeBag)
+    
     viewModel.outputs.name.subscribe(onNext: { [weak self] name in
       guard let strongSelf = self else { return }
       strongSelf.navigationItem.title = name
@@ -147,28 +157,23 @@ class PromiseDetailViewController: UIViewController, BindableType {
     let dataSource = RxTableViewSectionedAnimatedDataSource<MemberSectionModel>(configureCell: configureCell)
     
     viewModel.outputs.pocketItems.subscribe(onNext: { [weak self] sectionModel in
-      guard let `self` = self else { return }
+      guard let `self` = self, sectionModel.first?.items.count ?? 0 > 0 else { return }
       self.detailMapView.removeAnnotations(self.markers ?? [])
       
-      let promiseDateTime = self.viewModel.promise?.dateTime.timeInMillis ?? Date().timeInMillis
-      let current = Date().timeInMillis
-
-      guard promiseDateTime + 3600000 >= current && current >= promiseDateTime - 7200000 else {
-        Toast.makeText(self, text: "약속 활성화 시간전엔 위치정보는 볼 수 없어요")
+      guard let isActive = sectionModel.first?.items.first?.isActiveTime, isActive else {
+        Toast.makeText(self, text: "약속 활성화 시간밖엔 위치정보는 볼 수 없어요")
         return
       }
       
       let userNumber = UserDefaultService.phoneNumber ?? ""
     
       sectionModel.first?.items.forEach { viewModel in
-        guard let latitude = viewModel.contact.latitude,
-          let longitude = viewModel.contact.longitude,
-          latitude >= 33.0 && latitude <= 43.0 && longitude >= 124.0 && longitude <= 132.0
-          else { return }
+        if viewModel.distanceInKMeters > Define.distanceUpperBound {
+          return
+        }
         
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let annotation = Member(name: contact.nickname ?? "미가입자", phone: contact.phone, imagePath: contact.profileImagePath ?? "", discipline: "Member", coordinate: coordinate, pushToken: contact.pushToken ?? "")
-        if contact.phone == userNumber {
+        let annotation = viewModel.memberAnnotation
+        if annotation.phone == userNumber {
           self.currentMarker = annotation
         } else {
           self.markers?.append(annotation)
@@ -204,7 +209,7 @@ extension PromiseDetailViewController: MKMapViewDelegate {
       annotationView = CatchUpAnnotationView(annotation: annotation, reuseIdentifier: CatchUpAnnotationView.reuseIdentifier)
       annotationView?.rightCalloutAccessoryView = UIButton(type: .contactAdd)
     }
-//    annotation.coordinate
+    
     annotationView?.markerState = .moving(imagePath: annotation.imagePath)
     if let annotationView = annotationView {
       annotationView.canShowCallout = true

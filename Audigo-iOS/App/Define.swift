@@ -40,7 +40,7 @@ struct Define {
   static let appStoreUrl = URL(string: "https://itunes.apple.com/us/app/%EC%BA%90%EC%B9%98%EC%97%85/id1435071896?l=ko&ls=1&mt=8")!
   
   static let distanceUpperBound = 700.0
-  static let distanceLowerBound = 250.0
+  static let distanceLowerBound = 0.25
   
   static let majorVersion = 1
   static let minorVersion = 0
