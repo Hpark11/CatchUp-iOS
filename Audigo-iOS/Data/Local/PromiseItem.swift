@@ -11,7 +11,7 @@ import RealmSwift
 
 @objcMembers class PromiseItem: Object {
   enum Property: String {
-    case id, nickname, imagePath, pushToken
+    case id, name, address, latitude, longitude, owner
   }
   
   dynamic var id: String = UUID().uuidString
@@ -19,8 +19,10 @@ import RealmSwift
   dynamic var address: String = ""
   dynamic var latitude: Double = 0.0
   dynamic var longitude: Double = 0.0
-  dynamic var dateTime: Date = Date()
+  dynamic var dateTime: Date = Date.distantPast
   dynamic var owner: String = ""
+  dynamic var isAllowed: Bool = false
+  
   let contacts: List<String> = List<String>()
   
   override static func primaryKey() -> String? {
@@ -28,7 +30,6 @@ import RealmSwift
   }
   
   convenience init(promise: ListCatchUpPromisesByContactQuery.Data.ListCatchUpPromisesByContact?) {
-//    guard let id = promise?.id =
     self.init()
   }
   
@@ -44,6 +45,7 @@ import RealmSwift
       let contacts = promise.contacts else {
       return nil
     }
+    
     self.init()
     self.id = promise.id
     self.name = name
@@ -52,7 +54,14 @@ import RealmSwift
     self.longitude = longitude
     self.dateTime = dateTime
     self.owner = owner
+    self.isAllowed = true
     self.contacts.append(objectsIn: contacts.compactMap { $0 })
+  }
+  
+  convenience init(id: String, name: String) {
+    self.init()
+    self.id = id
+    self.name = name
   }
 }
 
@@ -64,6 +73,19 @@ extension PromiseItem {
     }
   }
   
+  static func add(id: String, name: String, in realm: Realm = try! Realm()) {
+    guard realm.object(ofType: PromiseItem.self, forPrimaryKey: id) == nil else { return }
+    let item = PromiseItem(id: id, name: name)
+    
+    try! realm.write {
+      realm.add(item)
+    }
+  }
+  
+  static func findNotAllowed() -> Results<PromiseItem> {
+    let realm = try! Realm()
+    return realm.objects(PromiseItem.self).filter("isAllowed = false")
+  }
 }
 
 

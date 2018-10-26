@@ -36,10 +36,36 @@ class MainViewController: UIViewController, BindableType {
     return cell!
   }
   
+  var token: NotificationToken?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 //    GADRewardBasedVideoAd.sharedInstance().delegate = self
 //    GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: Define.idGADMobileAdsCredit)
+    
+//    token = try! Realm().objects(PromiseItem.self).observe { (change) in
+//      switch change {
+//      case .initial(let items):
+//        print("Initial count: \(items)")
+//        items.filter { !$0.isAllowed }.forEach { item in
+//          UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(item.name.removingPercentEncoding ?? "약속")에 참여하시겠습니까? (약속 2시간 전부터는 위치가 공유됩니다)") { action in
+//            print("왔어왔어 \(item)")
+//          }
+//        }
+//        
+//      case .update(let items, let deletions, let insertions, let modifications):
+//        print("Current count: \(items.count)")
+//        print("Inserted \(insertions), Updated \(modifications), Deleted \(deletions)")
+//
+//        items.filter { !$0.isAllowed }.forEach { item in
+//          UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(item.name.removingPercentEncoding ?? "약속")에 참여하시겠습니까? (약속 2시간 전부터는 위치가 공유됩니다)") { action in
+//            print("왔어왔어 \(item)")
+//          }
+//        }
+//      case .error(let error):
+//        print("Error: \(error)")
+//      }
+//    }
   }
   
   @IBAction func chargeCredit(_ sender: Any) {

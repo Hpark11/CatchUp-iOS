@@ -64,9 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Realm Config  ------------------------------------------------------------------------------------------]
     Realm.Configuration.defaultConfiguration = Realm.Configuration(
-      schemaVersion: 1,
+      schemaVersion: 2,
       migrationBlock: { migration, oldVersion in
-        if (oldVersion < 1) {
+        if (oldVersion < 2) {
           
         }
     })
@@ -173,16 +173,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
     
     if KLKTalkLinkCenter.shared().isTalkLinkCallback(url) {
-      if let promiseId = url.query?.components(separatedBy: "=").last {
-        if let nc = app.windows.first?.rootViewController as? UINavigationController, let vc = nc.visibleViewController {
-          UIAlertController.simpleCancelAlert(vc, title: "약속 참가", message: "이 약속모임에 참여하시겠습니까?") { _ in
-            self.appSyncClient?.perform(mutation: AddContactIntoPromiseMutation(id: promiseId, phone: "")) { (result, error) in
-              
-            }
-          }
-        }
+      guard let params = url.query?.components(separatedBy: "&"), params.count >= 2 else { return true }
+      if let id = params[0].components(separatedBy: "=").last, let name = params[1].components(separatedBy: "=").last {
+        PromiseItem.add(id: id, name: name)
       }
-      
       return true
     }
     
