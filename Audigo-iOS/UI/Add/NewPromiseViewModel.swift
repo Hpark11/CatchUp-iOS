@@ -180,7 +180,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }).disposed(by: disposeBag)
   }
   
-  func applyPreviousInfo(promise: CatchUpPromise) {
+  func applyPreviousInfo(promise: PromiseItem) {
     let calendar = Calendar(identifier: .gregorian)
     let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: promise.dateTime)
     
@@ -264,7 +264,7 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     }
   }()
   
-  private func confirmAndNotify(promise: CatchUpPromise) {
+  private func confirmAndNotify(promise: PromiseItem) {
     let timeFormat = DateFormatter()
     timeFormat.dateFormat = "MM.dd (EEE) a hh시 mm분"
     timeFormat.locale = Locale.current

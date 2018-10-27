@@ -13,7 +13,6 @@ import RxDataSources
 import Permission
 import RealmSwift
 import SwiftyContacts
-import GoogleMobileAds
 
 class MainViewController: UIViewController, BindableType {
   @IBOutlet weak var promiseCollectionView: UICollectionView!
@@ -28,50 +27,16 @@ class MainViewController: UIViewController, BindableType {
   
   let disposeBag = DisposeBag()
   
-  lazy var configureCell: (CollectionViewSectionedDataSource<PromiseSectionModel>, UICollectionView, IndexPath, CatchUpPromise) -> UICollectionViewCell = { [weak self] data, collectionView, indexPath, promise in
-    guard let strongSelf = self else { return PromiseCollectionViewCell(frame: .zero) }
+  lazy var configureCell: (CollectionViewSectionedDataSource<PromiseSectionModel>, UICollectionView, IndexPath, PromiseItem) -> UICollectionViewCell = { [weak self] data, collectionView, indexPath, promise in
+    guard let `self` = self else { return PromiseCollectionViewCell(frame: .zero) }
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.promiseCollectionViewCell, for: indexPath)
-    cell?.configure(promise: promise)
+    cell?.configure(viewModel: PromiseItemViewModel(promise: promise))
     return cell!
   }
   
-  var token: NotificationToken?
-  
   override func viewDidLoad() {
     super.viewDidLoad()
-//    GADRewardBasedVideoAd.sharedInstance().delegate = self
-//    GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: Define.idGADMobileAdsCredit)
-    
-//    token = try! Realm().objects(PromiseItem.self).observe { (change) in
-//      switch change {
-//      case .initial(let items):
-//        print("Initial count: \(items)")
-//        items.filter { !$0.isAllowed }.forEach { item in
-//          UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(item.name.removingPercentEncoding ?? "약속")에 참여하시겠습니까? (약속 2시간 전부터는 위치가 공유됩니다)") { action in
-//            print("왔어왔어 \(item)")
-//          }
-//        }
-//        
-//      case .update(let items, let deletions, let insertions, let modifications):
-//        print("Current count: \(items.count)")
-//        print("Inserted \(insertions), Updated \(modifications), Deleted \(deletions)")
-//
-//        items.filter { !$0.isAllowed }.forEach { item in
-//          UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(item.name.removingPercentEncoding ?? "약속")에 참여하시겠습니까? (약속 2시간 전부터는 위치가 공유됩니다)") { action in
-//            print("왔어왔어 \(item)")
-//          }
-//        }
-//      case .error(let error):
-//        print("Error: \(error)")
-//      }
-//    }
-  }
-  
-  @IBAction func chargeCredit(_ sender: Any) {
-    if GADRewardBasedVideoAd.sharedInstance().isReady == true {
-      GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: self)
-    }
   }
   
   func bindViewModel() {
@@ -86,30 +51,33 @@ class MainViewController: UIViewController, BindableType {
     })
     
     viewModel.appVersion.subscribe(onSuccess: { [weak self] version in
-      guard let strongSelf = self else { return }
+      guard let `self` = self else { return }
       
       if version.major > Define.majorVersion || version.minor > Define.minorVersion || version.revision > Define.revision {
-        let alert = UIAlertController(title: "최신 버전 업데이트", message: "새로운 버전(\(version.major).\(version.minor).\(version.revision))이 출시되었습니다. 업데이트 하시겠습니까?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+        UIAlertController.simpleCancelAlert(self, title: "최신 버전 업데이트", message: "새로운 버전(\(version.major).\(version.minor).\(version.revision))이 출시되었습니다. 업데이트 하시겠습니까?") { action in
           if UIApplication.shared.canOpenURL(Define.appStoreUrl) {
             UIApplication.shared.open(Define.appStoreUrl, options: [:], completionHandler: nil)
           }
-        }))
-    
-        strongSelf.present(alert, animated: true)
+        }
       }
-      
     }).disposed(by: disposeBag)
     
     viewModel.promiseItems
       .bind(to: promiseCollectionView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
-    Observable.zip(promiseCollectionView.rx.itemSelected, promiseCollectionView.rx.modelSelected(CatchUpPromise.self)).bind { [weak self] indexPath, promise in
-      guard let strongSelf = self else { return }
-      strongSelf.promiseCollectionView.deselectItem(at: indexPath, animated: true)
-      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise)
+    Observable.zip(promiseCollectionView.rx.itemSelected, promiseCollectionView.rx.modelSelected(PromiseItem.self)).bind { [weak self] indexPath, promise in
+      guard let `self` = self else { return }
+      self.promiseCollectionView.deselectItem(at: indexPath, animated: true)
+      
+      if !promise.isAllowed, let name = promise.name.removingPercentEncoding {
+        UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(name)에 참여하시겠습니까? 단, 약속 2시간 전부터 서로의 위치가 공유됩니다") { action in
+          self.viewModel.actions.pushPromiseDetailScene.execute(promise)
+        }
+      } else {
+        self.viewModel.actions.pushPromiseDetailScene.execute(promise)
+      }
+      
     }.disposed(by: disposeBag)
     
     viewModel.promiseItems.subscribe(onNext: { [weak self] sectionModel in
@@ -130,7 +98,7 @@ class MainViewController: UIViewController, BindableType {
       let timeFormat = DateFormatter()
       timeFormat.dateFormat = "yyyy.MM"
       
-      let dateTime = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? Date()
+      let dateTime = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? Date.distantPast
       return timeFormat.string(from: dateTime)
       }.bind(to: monthSelectButton.rx.title())
       .disposed(by: disposeBag)
@@ -153,39 +121,3 @@ class MainViewController: UIViewController, BindableType {
     }
   }
 }
-
-extension MainViewController: GADRewardBasedVideoAdDelegate {
-  func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
-    print("Reward received with currency: \(reward.type), amount \(reward.amount).")
-    viewModel.actions.chargeCredit.execute(Int(truncating: reward.amount))
-  }
-  
-  func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-    print("Reward based video ad is received.")
-  }
-  
-  func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-    print("Opened reward based video ad.")
-  }
-  
-  func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-    print("Reward based video ad started playing.")
-  }
-  
-  func rewardBasedVideoAdDidCompletePlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-    print("Reward based video ad has completed.")
-  }
-  
-  func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-    GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: Define.idGADMobileAdsCredit)
-  }
-  
-  func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-    print("Reward based video ad will leave application.")
-  }
-  
-  func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error) {
-    print("Reward based video ad failed to load.")
-  }
-}
-

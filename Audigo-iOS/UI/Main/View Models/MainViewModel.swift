@@ -12,26 +12,23 @@ import Action
 import SwiftyContacts
 import AWSAppSync
 
-typealias PromiseSectionModel = AnimatableSectionModel<String, CatchUpPromise>
+typealias PromiseSectionModel = AnimatableSectionModel<String, PromiseItem>
 
 protocol MainViewModelInputsType {
   var monthSelectDone: PublishSubject<(Int, Int)> { get }
   var addPromiseDone: PublishSubject<Void> { get }
   var hasPromiseBeenUpdated: PublishSubject<Bool> { get }
-  var checkCredit: PublishSubject<Void> { get }
 }
 
 protocol MainViewModelOutputsType {
   var promiseItems: Observable<[PromiseSectionModel]> { get }
   var current: Observable<(Int, Int)> { get }
-  var creditCount: Observable<Int> { get }
   var appVersion: Maybe<AppVersion> { get }
 }
 
 protocol MainViewModelActionsType {
   var pushNewPromiseScene: CocoaAction { get }
-  var pushPromiseDetailScene: Action<CatchUpPromise, Void> { get }
-  var chargeCredit: Action<Int, Void> { get }
+  var pushPromiseDetailScene: Action<PromiseItem, Void> { get }
 }
 
 protocol MainViewModelType {
@@ -54,19 +51,16 @@ class MainViewModel: MainViewModelType {
   var monthSelectDone: PublishSubject<(Int, Int)>
   var addPromiseDone: PublishSubject<Void>
   var hasPromiseBeenUpdated: PublishSubject<Bool>
-  var checkCredit: PublishSubject<Void>
   
   // MARK: Outputs
   var promiseItems: Observable<[PromiseSectionModel]>
   var current: Observable<(Int, Int)>
-  var creditCount: Observable<Int>
   var appVersion: Maybe<AppVersion>
   
   private let userInfo: Variable<(id: String?, phone: String?, email: String?, nickname: String?, gender: String?, birthday: String?, ageRange: String?, profileImagePath: String?)>
-  private let promiseList: Variable<[CatchUpPromise]>
-  private let filteredList: Variable<[CatchUpPromise]>
+  private let promiseList: Variable<[PromiseItem]>
+  private let filteredList: Variable<[PromiseItem]>
   private let currentMonth: Variable<(Int, Int)>
-  private let credit: Variable<Int>
   
   var phone: String = "" {
     didSet {
@@ -84,12 +78,10 @@ class MainViewModel: MainViewModelType {
     monthSelectDone = PublishSubject()
     addPromiseDone = PublishSubject()
     hasPromiseBeenUpdated = PublishSubject()
-    checkCredit = PublishSubject()
     
     userInfo = Variable((id: nil, phone: nil, email: nil, nickname: nil, gender: nil, birthday: nil, ageRange: nil, profileImagePath: nil))
     promiseList = Variable([])
     filteredList = Variable([])
-    credit = Variable(UserDefaultService.credit ?? 0)
     currentMonth = Variable((calendar.component(.month, from: Date()), calendar.component(.year, from: Date())))
     
     promiseItems = filteredList.asObservable()
@@ -98,7 +90,6 @@ class MainViewModel: MainViewModelType {
       })
     
     current = currentMonth.asObservable()
-    creditCount = credit.asObservable()
     
     appVersion = apiClient.rx.fetch(query: CheckAppVersionQuery(platform: Define.platform), cachePolicy: .fetchIgnoringCacheData)
       .map { data -> AppVersion in
@@ -125,17 +116,6 @@ class MainViewModel: MainViewModelType {
       guard let strongSelf = self else { return }
       strongSelf.refreshPromiseList()
     }).disposed(by: disposeBag)
-    
-    checkCredit.flatMapLatest { [weak self] _ -> PrimitiveSequence<MaybeTrait, GetCatchUpUserQuery.Data> in
-      guard let strongSelf = self else { return .empty() }
-      return strongSelf.apiClient.rx.fetch(query: GetCatchUpUserQuery(id: UserDefaultService.userId ?? ""))
-      }.subscribe(onNext: { [weak self] data in
-        guard let strongSelf = self else { return }
-        if let credit = data.getCatchUpUser?.credit {
-          UserDefaultService.credit = credit
-          strongSelf.credit.value = credit
-        }
-      }).disposed(by: disposeBag)
     
     // Location Tracking ---------------------------------------------------------------------------------------]
     LocationTrackingService.shared.startUpdatingLocation()
@@ -199,7 +179,7 @@ class MainViewModel: MainViewModelType {
         guard let strongSelf = self else { return }
         let now = Date().timeInMillis
         
-        strongSelf.promiseList.value = data.listCatchUpPromisesByContact?.compactMap(CatchUpPromise.init).sorted {
+        strongSelf.promiseList.value = data.listCatchUpPromisesByContact?.compactMap(PromiseItem.init).sorted {
           let lhs = $0.dateTime.timeInMillis
           let rhs = $1.dateTime.timeInMillis
           return (lhs + 3600000 > now ? lhs : lhs * 2) < (rhs + 3600000 > now ? rhs : rhs * 2)
@@ -225,7 +205,7 @@ class MainViewModel: MainViewModelType {
     }
   }()
   
-  lazy var pushPromiseDetailScene: Action<CatchUpPromise, Void> = {
+  lazy var pushPromiseDetailScene: Action<PromiseItem, Void> = {
     return Action { [weak self] promise in
       guard let strongSelf = self else { return .empty() }
       let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
@@ -233,21 +213,6 @@ class MainViewModel: MainViewModelType {
       viewModel.hasPromiseBeenUpdated = strongSelf.hasPromiseBeenUpdated
       let scene = PromiseDetailScene(viewModel: viewModel)
       return strongSelf.sceneCoordinator.transition(to: scene, type: .push(animated: true))
-    }
-  }()
-  
-  lazy var chargeCredit: Action<Int, Void> = {
-    return Action { [weak self] credit in
-      guard let strongSelf = self, let userId = UserDefaultService.userId else { return .empty() }
-      strongSelf.apiClient.perform(mutation: ChargeCreditMutation(id: userId, credit: credit)) { (result, error) in
-        if let error = error {
-          print(error.localizedDescription)
-          return
-        }
-        
-        strongSelf.checkCredit.onNext(())
-      }
-      return .empty()
     }
   }()
 }

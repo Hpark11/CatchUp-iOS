@@ -37,10 +37,11 @@
 		CE34B4C0211E787100F92D50 /* GetPocket.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B4211E787100F92D50 /* GetPocket.graphql */; };
 		CE34B4C1211E787100F92D50 /* schemaBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B5211E787100F92D50 /* schemaBackup.json */; };
 		CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */; };
-		CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */; };
 		CE3FF957213D6BE000C16338 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */; };
 		CE5AAADC21737081009D96F4 /* PlaceSearchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */; };
 		CE5AAADE2173AB46009D96F4 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AAADD2173AB46009D96F4 /* Destination.swift */; };
+		CE5B023A21847ECC00900414 /* PromiseItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B023921847ECC00900414 /* PromiseItemViewModel.swift */; };
+		CE5B023E218490C100900414 /* PromiseRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B023D218490C100900414 /* PromiseRepresentable.swift */; };
 		CE63A7E2217636A400ED386F /* CatchUpAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A7E1217636A400ED386F /* CatchUpAnnotationView.swift */; };
 		CE63A7E4217636E500ED386F /* CatchUpAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE63A7E3217636E500ED386F /* CatchUpAnnotationView.xib */; };
 		CE63A7E621763F2F00ED386F /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A7E521763F2F00ED386F /* Member.swift */; };
@@ -154,11 +155,12 @@
 		CE34B4B4211E787100F92D50 /* GetPocket.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetPocket.graphql; sourceTree = "<group>"; };
 		CE34B4B5211E787100F92D50 /* schemaBackup.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schemaBackup.json; sourceTree = "<group>"; };
 		CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCheckViewController.swift; sourceTree = "<group>"; };
-		CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTableViewCell.swift; sourceTree = "<group>"; };
 		CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Audigo-iOS.entitlements"; sourceTree = "<group>"; };
 		CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchListTableViewCell.swift; sourceTree = "<group>"; };
 		CE5AAADD2173AB46009D96F4 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
+		CE5B023921847ECC00900414 /* PromiseItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseItemViewModel.swift; sourceTree = "<group>"; };
+		CE5B023D218490C100900414 /* PromiseRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseRepresentable.swift; sourceTree = "<group>"; };
 		CE63A7E1217636A400ED386F /* CatchUpAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpAnnotationView.swift; sourceTree = "<group>"; };
 		CE63A7E3217636E500ED386F /* CatchUpAnnotationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatchUpAnnotationView.xib; sourceTree = "<group>"; };
 		CE63A7E521763F2F00ED386F /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 		CE280191212575B10066B344 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				CE5B023C218490B400900414 /* Protocols */,
 				CE1EF0BA217B09C800E80E70 /* Local */,
 				CE5AAADF2173AB4B009D96F4 /* Annotation */,
 				CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */,
@@ -304,6 +307,39 @@
 				CE63A7E521763F2F00ED386F /* Member.swift */,
 			);
 			path = Annotation;
+			sourceTree = "<group>";
+		};
+		CE5B023721847E5900900414 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				CEB41F062115C4A6006BC729 /* MainViewModel.swift */,
+				CE5B023921847ECC00900414 /* PromiseItemViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		CE5B023821847E6200900414 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CE914BEF216A39BE00B80121 /* PromiseCollectionViewCell.swift */,
+				CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		CE5B023B218490A800900414 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CE5B023C218490B400900414 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CE5B023D218490C100900414 /* PromiseRepresentable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		CE77EDC521206AE4007A6BF6 /* Detail */ = {
@@ -391,12 +427,10 @@
 		CEB41F0C2115C541006BC729 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				CE5B023821847E6200900414 /* Cells */,
+				CE5B023721847E5900900414 /* View Models */,
 				CED4CCAF20C979040063D89F /* MainViewController.swift */,
 				CEB41F042115C484006BC729 /* MainScene.swift */,
-				CEB41F062115C4A6006BC729 /* MainViewModel.swift */,
-				CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */,
-				CE914BEF216A39BE00B80121 /* PromiseCollectionViewCell.swift */,
-				CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -440,6 +474,7 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				CE5B023B218490A800900414 /* Protocols */,
 				CEB41EF52115C227006BC729 /* App */,
 				CEEE5DA1212814AB0023E2FC /* Assets */,
 				CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */,
@@ -895,7 +930,9 @@
 				CE1EF0BC217B0A0200E80E70 /* PromiseItem.swift in Sources */,
 				CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */,
 				CE914BF0216A39BE00B80121 /* PromiseCollectionViewCell.swift in Sources */,
+				CE5B023E218490C100900414 /* PromiseRepresentable.swift in Sources */,
 				CEC9A415216D04D600DC322B /* MapSearchViewController.swift in Sources */,
+				CE5B023A21847ECC00900414 /* PromiseItemViewModel.swift in Sources */,
 				CE1A3606217F57380025F64F /* UIAlert+Ext.swift in Sources */,
 				CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */,
 				CE825F9021205BF800697F52 /* Util.swift in Sources */,
@@ -924,7 +961,6 @@
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
 				CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */,
 				CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */,
-				CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */,
 				CE038B0B21662DC4001D140B /* EntranceScene.swift in Sources */,
 				CE5AAADC21737081009D96F4 /* PlaceSearchListTableViewCell.swift in Sources */,
 				CE7B0DC921686763007DAA2A /* UserDefaultService.swift in Sources */,

@@ -15,7 +15,7 @@ import AWSAppSync
 typealias MemberSectionModel = AnimatableSectionModel<String, PromiseDetailUserViewModel>
 
 protocol PromiseDetailViewModelInputsType {
-  var editPromiseDone: PublishSubject<CatchUpPromise> { get }
+  var editPromiseDone: PublishSubject<PromiseItem> { get }
 }
 
 protocol PromiseDetailViewModelOutputsType {
@@ -50,7 +50,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   fileprivate let disposeBag: DisposeBag
   
   // MARK: Inputs
-  var editPromiseDone: PublishSubject<CatchUpPromise>
+  var editPromiseDone: PublishSubject<PromiseItem>
   
   // MARK: Outputs
   var pocketItems: Observable<[MemberSectionModel]>
@@ -63,7 +63,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
   var hasPromiseBeenUpdated: PublishSubject<Bool>?
   var sendMessage: PublishSubject<String>
   
-  var promise: CatchUpPromise? {
+  var promise: PromiseItem? {
     didSet {
       loadSinglePromise()
     }

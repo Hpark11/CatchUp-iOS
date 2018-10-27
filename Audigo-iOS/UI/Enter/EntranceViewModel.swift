@@ -85,8 +85,8 @@ class EntranceViewModel: EntranceViewModelType {
         if let phone = data.updateCatchUpContact?.phone {
           self.pushMainScene.execute(phone)
         }
-        }, onError: { error in
-          fatalError(error.localizedDescription)
+      }, onError: { error in
+        fatalError(error.localizedDescription)
       }).disposed(by: disposeBag)
   }
   

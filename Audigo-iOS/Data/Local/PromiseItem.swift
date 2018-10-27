@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import RxDataSources
 
 @objcMembers class PromiseItem: Object {
   enum Property: String {
@@ -29,11 +30,7 @@ import RealmSwift
     return PromiseItem.Property.id.rawValue
   }
   
-  convenience init(promise: ListCatchUpPromisesByContactQuery.Data.ListCatchUpPromisesByContact?) {
-    self.init()
-  }
-  
-  convenience init?(promise: AddContactIntoPromiseMutation.Data.AddContactIntoPromise?) {
+  convenience init?(promise: PromiseRepresentable?) {
     guard let promise = promise,
       let name = promise.name,
       let address = promise.address,
@@ -66,7 +63,7 @@ import RealmSwift
 }
 
 extension PromiseItem {
-  static func add(promise: AddContactIntoPromiseMutation.Data.AddContactIntoPromise?, in realm: Realm = try! Realm()) {
+  static func add(promise: PromiseRepresentable?, in realm: Realm = try! Realm()) {
     guard let item = PromiseItem(promise: promise) else { return }
     try! realm.write {
       realm.add(item)
@@ -82,10 +79,26 @@ extension PromiseItem {
     }
   }
   
+  static func participate(id: String) {
+    guard let realm = try? Realm(), let item = realm.object(ofType: self, forPrimaryKey: id) else { return }
+    try! realm.write {
+      item.isAllowed = true
+    }
+  }
+  
   static func findNotAllowed() -> Results<PromiseItem> {
     let realm = try! Realm()
     return realm.objects(PromiseItem.self).filter("isAllowed = false")
   }
 }
 
+extension PromiseItem: IdentifiableType {
+  public var identity: String { return id }
+}
+
+extension AddContactIntoPromiseMutation.Data.AddContactIntoPromise: PromiseRepresentable {}
+
+extension ListCatchUpPromisesByContactQuery.Data.ListCatchUpPromisesByContact: PromiseRepresentable {}
+
+extension UpdateCatchUpPromiseMutation.Data.UpdateCatchUpPromise: PromiseRepresentable {}
 

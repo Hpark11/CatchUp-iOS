@@ -46,6 +46,9 @@ struct Define {
   static let minorVersion = 0
   static let revision = 12
   
+  static let rlmFileUrlPathPromises = "promises.realm"
+  static let rlmManagePromises = "ManagePromises"
+  
   struct NotificationName {
     static let didUpdateLocation = Notification.Name(rawValue: "didUpdateLocation")
     static let didParticipate = Notification.Name(rawValue: "didParticipate")

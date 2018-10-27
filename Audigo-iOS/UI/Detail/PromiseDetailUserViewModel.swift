@@ -22,10 +22,10 @@ struct PromiseDetailUserViewModel {
   let toLocation: CLLocation
   let distanceInKMeters: CLLocationDistance
   
-  private let promise: CatchUpPromise
+  private let promise: PromiseItem
   private let contact: CatchUpContact
   
-  init(promise: CatchUpPromise, contact: CatchUpContact, sendPush: PublishSubject<String>) {
+  init(promise: PromiseItem, contact: CatchUpContact, sendPush: PublishSubject<String>) {
     self.promise = promise
     self.contact = contact
     self.sendPush = sendPush

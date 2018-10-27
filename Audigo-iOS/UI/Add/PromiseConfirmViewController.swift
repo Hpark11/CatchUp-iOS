@@ -71,8 +71,6 @@ class PromiseConfirmViewController: UIViewController {
         
         builder.social = KMTSocialObject.init(builderBlock: { socialBuilder in
           socialBuilder.likeCount = promise.contacts.count as NSNumber
-//          socialBuilder.commnentCount = 100
-//          socialBuilder.sharedCount = 100
         })
       }
       
