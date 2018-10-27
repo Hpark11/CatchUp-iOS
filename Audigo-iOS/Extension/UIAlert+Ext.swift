@@ -22,6 +22,13 @@ extension UIAlertController {
     vc.present(alert, animated: true, completion: nil)
   }
   
+  static func simpleCancelAlert<T: UIViewController>(_ vc: T, title: String, message: String, callback: ((UIAlertAction) -> ())? = nil, onCancel: ((UIAlertAction) -> ())? = nil) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: callback))
+    alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: onCancel))
+    vc.present(alert, animated: true, completion: nil)
+  }
+  
   static func inputAlert<T: UIViewController>(_ vc: T, title: String, message: String, placeholder: String, callback: @escaping (String) -> Void) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))

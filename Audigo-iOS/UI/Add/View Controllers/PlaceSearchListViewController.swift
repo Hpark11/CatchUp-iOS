@@ -51,16 +51,10 @@ extension PlaceSearchListViewController: MKLocalSearchCompleterDelegate {
     searchResultsTableView.reloadData()
   }
   
-  func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-  }
+  func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {}
 }
 
 extension PlaceSearchListViewController: UITableViewDataSource {
-  
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return searchResults.count
   }

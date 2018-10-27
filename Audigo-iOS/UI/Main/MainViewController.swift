@@ -71,9 +71,11 @@ class MainViewController: UIViewController, BindableType {
       self.promiseCollectionView.deselectItem(at: indexPath, animated: true)
       
       if !promise.isAllowed, let name = promise.name.removingPercentEncoding {
-        UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(name)에 참여하시겠습니까? 단, 약속 2시간 전부터 서로의 위치가 공유됩니다") { action in
+        UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(name)에 참여하시겠습니까? 단, 약속 2시간 전부터 서로의 위치가 공유됩니다", callback: { action in
           self.viewModel.actions.pushPromiseDetailScene.execute(promise)
-        }
+        }, onCancel: { action in
+          // Delete From Server and Local
+        })
       } else {
         self.viewModel.actions.pushPromiseDetailScene.execute(promise)
       }

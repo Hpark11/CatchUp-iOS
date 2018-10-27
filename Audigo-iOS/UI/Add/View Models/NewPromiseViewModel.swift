@@ -138,28 +138,28 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     
     // Inputs
     dateSelectDone.subscribe(onNext: { [weak self] components in
-      guard let strongSelf = self else { return }
-      strongSelf.dateComponents.value = components
+      guard let `self` = self else { return }
+      self.dateComponents.value = components
     }).disposed(by: disposeBag)
     
     timeSelectDone.subscribe(onNext: { [weak self] components in
-      guard let strongSelf = self else { return }
-      strongSelf.timeComponents.value = components
+      guard let `self` = self else { return }
+      self.timeComponents.value = components
     }).disposed(by: disposeBag)
     
     nameSetDone.subscribe(onNext: { [weak self] name in
-      guard let strongSelf = self else { return }
-      strongSelf.promiseName.value = name
+      guard let `self` = self else { return }
+      self.promiseName.value = name
     }).disposed(by: disposeBag)
     
     addressSetDone.subscribe(onNext: { [weak self] address in
-      guard let strongSelf = self else { return }
-      strongSelf.address.value = address
+      guard let `self` = self else { return }
+      self.address.value = address
     }).disposed(by: disposeBag)
     
     coordinateSetDone.subscribe(onNext: { [weak self] coordinate in
-      guard let strongSelf = self else { return }
-      strongSelf.coordinate.value = coordinate
+      guard let `self` = self else { return }
+      self.coordinate.value = coordinate
     }).disposed(by: disposeBag)
   }
   
@@ -177,17 +177,17 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   
   lazy var popScene: Action<PromiseItem?, Void> = {
     return Action { [weak self] promiseData in
-      guard let strongSelf = self else { return .empty() }
-      if strongSelf.isEditMode.value {
-        let viewModel = PromiseDetailViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
-        if let promise = promiseData {
-          strongSelf.editPromiseDone?.onNext(promise)
-        }
-        strongSelf.sceneCoordinator.transition(to: PromiseDetailScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
+      guard let `self` = self else { return .empty() }
+      
+      if self.isEditMode.value {
+        let viewModel = PromiseDetailViewModel(coordinator: self.sceneCoordinator, client: self.apiClient)
+        if let promise = promiseData { self.editPromiseDone?.onNext(promise) }
+        self.sceneCoordinator.transition(to: PromiseDetailScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
+        
       } else {
-        if promiseData != nil { strongSelf.addPromiseDone?.onNext(()) }
-        let viewModel = MainViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)
-        strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
+        if promiseData != nil { self.addPromiseDone?.onNext(()) }
+        let viewModel = MainViewModel(coordinator: self.sceneCoordinator, client: self.apiClient)
+        self.sceneCoordinator.transition(to: MainScene(viewModel: viewModel), type: .pop(animated: true, level: .parent))
       }
       return .empty()
     }
@@ -195,17 +195,17 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   
   lazy var newPromiseCompleted: Action<Void, String> = {
     return Action { [weak self] _ in
-      guard let strongSelf = self else { return .just("") }
-      strongSelf.createPromiseState.value = .pending
+      guard let `self` = self else { return .just("") }
+      self.createPromiseState.value = .pending
       
-      let isEdit = strongSelf.isEditMode.value
-      let promiseId = strongSelf.promiseId.value ?? UUID().uuidString
+      let isEdit = self.isEditMode.value
+      let promiseId = self.promiseId.value ?? UUID().uuidString
       let calendar = Calendar(identifier: .gregorian)
       
-      var components = strongSelf.dateComponents.value
-      components?.hour = strongSelf.timeComponents.value?.hour
-      components?.minute = strongSelf.timeComponents.value?.minute
-      components?.second = strongSelf.timeComponents.value?.second
+      var components = self.dateComponents.value
+      components?.hour = self.timeComponents.value?.hour
+      components?.minute = self.timeComponents.value?.minute
+      components?.second = self.timeComponents.value?.second
       
       guard let dateTimeComponents = components else { return .just("일자 선정 오류") }
       guard let owner = UserDefaultService.phoneNumber else { return .just("핸드폰 번호 오류") }
@@ -213,21 +213,21 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       let promiseInput = CatchUpPromiseInput(
         owner: owner,
         dateTime: Formatter.iso8601.string(from: calendar.date(from: dateTimeComponents) ?? Date()),
-        address: strongSelf.address.value,
-        latitude: strongSelf.coordinate.value?.latitude,
-        longitude: strongSelf.coordinate.value?.longitude,
-        name: strongSelf.promiseName.value,
+        address: self.address.value,
+        latitude: self.coordinate.value?.latitude,
+        longitude: self.coordinate.value?.longitude,
+        name: self.promiseName.value,
         contacts: [owner]
       )
       
-      strongSelf.apiClient.rx.perform(mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput))
+      self.apiClient.rx.perform(mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput))
         .subscribe(onSuccess: { data in
           if let promise = PromiseItem(promise: data.updateCatchUpPromise) {
-            strongSelf.confirmAndNotify(promise: promise)
+            self.confirmAndNotify(promise: promise)
           }
         }, onError: { error in
-          strongSelf.createPromiseState.value = .error(description: error.localizedDescription)
-        }).disposed(by: strongSelf.disposeBag)
+          self.createPromiseState.value = .error(description: error.localizedDescription)
+        }).disposed(by: self.disposeBag)
       
       return .just("")
     }

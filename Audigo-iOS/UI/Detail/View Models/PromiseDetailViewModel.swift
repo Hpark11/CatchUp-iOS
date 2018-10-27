@@ -133,31 +133,31 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
 
   lazy var popScene: CocoaAction = {
     return Action { [weak self] _ in
-      guard let strongSelf = self else { return .empty() }
-      strongSelf.sceneCoordinator.transition(to: MainScene(viewModel: MainViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient)), type: .pop(animated: true, level: .parent))
+      guard let `self` = self else { return .empty() }
+      self.sceneCoordinator.transition(to: MainScene(viewModel: MainViewModel(coordinator: self.sceneCoordinator, client: self.apiClient)), type: .pop(animated: true, level: .parent))
       return .empty()
     }
   }()
   
   lazy var refresh: CocoaAction = {
     return Action { [weak self] _ in
-      guard let strongSelf = self else { return .empty() }
-      strongSelf.loadSinglePromise()
+      guard let `self` = self else { return .empty() }
+      self.loadSinglePromise()
       return .empty()
     }
   }()
   
   lazy var pushNewPromiseScene: CocoaAction = {
     return Action { [weak self] in
-      guard let strongSelf = self, let phone = UserDefaultService.phoneNumber, let promise = strongSelf.promise else { return .empty() }
-      let viewModel = NewPromiseViewModel(coordinator: strongSelf.sceneCoordinator, client: strongSelf.apiClient, ownerPhoneNumber: phone, editMode: true)
+      guard let `self` = self, let phone = UserDefaultService.phoneNumber, let promise = self.promise else { return .empty() }
+      let viewModel = NewPromiseViewModel(coordinator: self.sceneCoordinator, client: self.apiClient, ownerPhoneNumber: phone, editMode: true)
       let calendar = Calendar(identifier: .gregorian)
       
-      viewModel.editPromiseDone = strongSelf.editPromiseDone
+      viewModel.editPromiseDone = self.editPromiseDone
       viewModel.applyPreviousInfo(promise: promise)
       
       let scene = NewPromiseScene(viewModel: viewModel)
-      return strongSelf.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
+      return self.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
     }
   }()
 }

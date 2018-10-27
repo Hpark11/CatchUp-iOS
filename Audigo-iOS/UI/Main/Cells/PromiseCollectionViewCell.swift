@@ -62,10 +62,12 @@ extension PromiseCollectionViewCell: UICollectionViewDelegate, UICollectionViewD
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.memberCollectionViewCell.identifier, for: indexPath) as! MemberCollectionViewCell
-    if let viewModel = viewModel {
-      cell.configure(member: viewModel.members[indexPath.item])
-    }
+    let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: R.reuseIdentifier.memberCollectionViewCell.identifier,
+      for: indexPath
+    ) as! MemberCollectionViewCell
+    
+    cell.configure(member: viewModel?.members[indexPath.item] ?? "")
     return cell
   }
 }

@@ -9,8 +9,8 @@
 import RxSwift
 import RxDataSources
 import Action
-import SwiftyContacts
 import AWSAppSync
+import RealmSwift
 
 typealias PromiseSectionModel = AnimatableSectionModel<String, PromiseItem>
 
@@ -70,6 +70,8 @@ class MainViewModel: MainViewModelType {
     }
   }
   
+  private var token: NotificationToken? = nil
+  
   init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient) {
     let calendar = Calendar(identifier: .gregorian)
     sceneCoordinator = coordinator
@@ -100,7 +102,21 @@ class MainViewModel: MainViewModelType {
         )
     }
     
-    // Inputs
+    token = PromiseItem.all().observe { [weak self] change in
+      guard let `self` = self else { return }
+      switch change {
+      case .initial(let items):
+        self.promiseList.value = self.sortedPromiseList(items: items)
+      case .update(let items, _, _, _):
+        self.promiseList.value = self.sortedPromiseList(items: items)
+      case .error(let error):
+        print(error.localizedDescription)
+      }
+      
+      let current = self.currentMonth.value
+      self.filterPromisesByMonth(month: current.0, year: current.1)
+    }
+    
     monthSelectDone.subscribe(onNext: { [weak self] (month, year) in
       guard let strongSelf = self else { return }
       strongSelf.filterPromisesByMonth(month: month, year: year)
@@ -119,53 +135,16 @@ class MainViewModel: MainViewModelType {
     
     // Location Tracking ---------------------------------------------------------------------------------------]
     LocationTrackingService.shared.startUpdatingLocation()
-    
-    // Contact Update ------------------------------------------------------------------------------------------]
-    let backgroundScheduler = SerialDispatchQueueScheduler(qos: .default)
-    rx_fetchContacts().map({ contacts in
-      return contacts.compactMap {
-        ($0.phoneNumbers.first?.value.stringValue ?? "", "\($0.familyName)\($0.givenName)")
-      }
-    }).subscribeOn(backgroundScheduler).map { contacts in
-        return contacts.map { contact in
-          return (
-            contact.0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: ""),
-            contact.1
-          )
-        }.filter { contact in
-          return contact.0.starts(with: Define.koreanNormalCellPhonePrefix)
-        }
-      }.do(onNext: { contacts in
-        contacts.forEach { (phone, nickname) in
-          ContactItem.add(phone, nickname: nickname)
-        }
-        
-      }).flatMap({ contacts -> Observable<BatchGetCatchUpContactsQuery.Data> in
-        let ops = contacts.map { contact in
-          return contact.0
-        }.chunked(into: Define.dynamoDbBatchLimit).compactMap { chunk in
-          return client.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: chunk), cachePolicy: .returnCacheDataAndFetch).asObservable()
-        }
-        
-        return Observable.merge(ops)
-      })
-      .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { data in
-        if let contacts = data.batchGetCatchUpContacts {
-          contacts.forEach { contactData in
-            if let contact = contactData {
-              ContactItem.create(contact.phone, imagePath: contact.profileImagePath ?? "", pushToken: contact.pushToken ?? "")
-            }
-          }
-        }
-      }, onError: { (error) in
-        print(error.localizedDescription)
-      }).disposed(by: disposeBag)
+  }
+  
+  deinit {
+    token?.invalidate()
   }
   
   private func filterPromisesByMonth(month: Int, year: Int) {
     let calendar = Calendar(identifier: .gregorian)
-    if let start = calendar.date(from: DateComponents(year: year, month: month, day: 1)), let end = calendar.date(byAdding: .month, value: 1, to: start) {
+    if let start = calendar.date(from: DateComponents(year: year, month: month, day: 1)),
+      let end = calendar.date(byAdding: .month, value: 1, to: start) {
       filteredList.value = promiseList.value.filter {
         let timeInMillis = $0.dateTime.timeInMillis
         return timeInMillis >= start.timeInMillis && timeInMillis < end.timeInMillis
@@ -173,20 +152,19 @@ class MainViewModel: MainViewModelType {
     }
   }
   
+  private func sortedPromiseList(items: Results<PromiseItem>) -> [PromiseItem] {
+    let now = Date().timeInMillis
+    return items.sorted {
+      let lhs = $0.dateTime.timeInMillis
+      let rhs = $1.dateTime.timeInMillis
+      return (lhs + 3600000 > now ? lhs : lhs * 2) < (rhs + 3600000 > now ? rhs : rhs * 2)
+    }
+  }
+  
   private func refreshPromiseList() {
     apiClient.rx.watch(query: ListCatchUpPromisesByContactQuery(contact: phone))
-      .subscribe(onNext: { [weak self] data in
-        guard let strongSelf = self else { return }
-        let now = Date().timeInMillis
-        
-        strongSelf.promiseList.value = data.listCatchUpPromisesByContact?.compactMap(PromiseItem.init).sorted {
-          let lhs = $0.dateTime.timeInMillis
-          let rhs = $1.dateTime.timeInMillis
-          return (lhs + 3600000 > now ? lhs : lhs * 2) < (rhs + 3600000 > now ? rhs : rhs * 2)
-          } ?? []
-        
-        let current = strongSelf.currentMonth.value
-        strongSelf.filterPromisesByMonth(month: current.0, year: current.1)
+      .subscribe(onNext: { data in
+        PromiseItem.addAll(promises: data.listCatchUpPromisesByContact ?? [])
       }).disposed(by: disposeBag)
   }
   

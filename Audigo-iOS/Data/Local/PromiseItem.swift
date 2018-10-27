@@ -63,8 +63,15 @@ import RxDataSources
 }
 
 extension PromiseItem {
-  static func add(promise: PromiseRepresentable?, in realm: Realm = try! Realm()) {
+  static func all() -> Results<PromiseItem> {
+    let realm = try! Realm()
+    return realm.objects(PromiseItem.self)
+  }
+  
+  static func add(promise: PromiseRepresentable?, isAllowed: Bool = true, in realm: Realm = try! Realm()) {
     guard let item = PromiseItem(promise: promise) else { return }
+    item.isAllowed = isAllowed
+    
     try! realm.write {
       realm.add(item)
     }
@@ -73,9 +80,15 @@ extension PromiseItem {
   static func add(id: String, name: String, in realm: Realm = try! Realm()) {
     guard realm.object(ofType: PromiseItem.self, forPrimaryKey: id) == nil else { return }
     let item = PromiseItem(id: id, name: name)
-    
     try! realm.write {
       realm.add(item)
+    }
+  }
+  
+  static func addAll(promises: [PromiseRepresentable?], update: Bool = true) {
+    guard let realm = try? Realm() else { return }
+    try! realm.write {
+      realm.add(promises.compactMap(PromiseItem.init), update: update)
     }
   }
   

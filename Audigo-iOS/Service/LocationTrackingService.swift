@@ -45,20 +45,13 @@ public class LocationTrackingService: NSObject, CLLocationManagerDelegate {
   }
 
   public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-    if (error as NSError).domain == kCLErrorDomain && (error as NSError).code == CLError.Code.denied.rawValue{
-//      showTurnOnLocationServiceAlert()
-    }
+    if (error as NSError).domain == kCLErrorDomain && (error as NSError).code == CLError.Code.denied.rawValue {}
   }
   
   public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-    if status == .authorizedWhenInUse {
-    }
+    if status == .authorizedWhenInUse {}
   }
   
-//  func showTurnOnLocationServiceAlert(){
-//    NotificationCenter.default.post(name: Notification.Name(rawValue:"showTurnOnLocationServiceAlert"), object: nil)
-//  }
-//
   func notifiyDidUpdateLocation(newLocation: CLLocation) {
     NotificationCenter.default.post(name: Define.NotificationName.didUpdateLocation, object: nil, userInfo: ["location" : newLocation])
   }

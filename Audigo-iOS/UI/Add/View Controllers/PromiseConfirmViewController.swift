@@ -14,7 +14,6 @@ class PromiseConfirmViewController: UIViewController {
   @IBOutlet weak var confirmationLabel: UILabel!
   @IBOutlet weak var dateTimeLabel: UILabel!
   @IBOutlet weak var locationLabel: UILabel!
-  @IBOutlet weak var membersLabel: UILabel!
   @IBOutlet weak var contentView: UIView!
   
   var confirmDone: PublishSubject<PromiseItem?>?
@@ -32,8 +31,6 @@ class PromiseConfirmViewController: UIViewController {
     timeFormat.locale = Locale.current
     
     if let promise = self.promise {
-      let contacts = promise.contacts
-      membersLabel.text = "함께하는 인원: \(contacts.count)명"      
       dateTimeLabel.text = timeFormat.string(from: promise.dateTime)
       locationLabel.text = promise.address
     }
@@ -56,11 +53,11 @@ class PromiseConfirmViewController: UIViewController {
       let template = KMTLocationTemplate.init { builder in
         builder.address = promise.address
         builder.addressTitle = promise.name
-        builder.buttonTitle = "앱으로 보기"
+        builder.buttonTitle = "참여하기"
         
         builder.content = KMTContentObject.init(builderBlock: { contentBuilder in
           contentBuilder.title = promise.name
-          contentBuilder.desc = "일시: \(self.dateTimeLabel.text ?? "") \n장소: \(self.locationLabel.text ?? "") \n인원: \(self.membersLabel.text ?? "")"
+          contentBuilder.desc = "일시: \(self.dateTimeLabel.text ?? "") \n장소: \(self.locationLabel.text ?? "")"
           contentBuilder.imageURL = Define.appStoreUrl
           contentBuilder.link = KMTLinkObject.init(builderBlock: { linkBuilder in
             linkBuilder.mobileWebURL = Define.appStoreUrl
