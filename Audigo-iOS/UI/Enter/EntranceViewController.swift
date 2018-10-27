@@ -32,8 +32,8 @@ class EntranceViewController: UIViewController, BindableType {
       if let error = error {
         print("Error Sign In: \(error)")
       } else {
-        if let s = session, let phone = UserDefaultService.phoneNumber, s.isOpen() {
-          self.viewModel.inputs.sessionOpened.onNext(phone)
+        if let s = session, s.isOpen() {
+          self.viewModel.inputs.sessionOpened.onNext(Void())
         } else {
           print("Open Session Failed")
         }
@@ -46,25 +46,16 @@ class EntranceViewController: UIViewController, BindableType {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    print("ENTRANCE ENTRANCE ENTRANCE")
-    
-    let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
+    let permissionSet = PermissionSet([.notifications, .locationAlways])
     guard permissionSet.status == .authorized else {
       if let vc = R.storyboard.main.permissionsViewController() {
         present(vc, animated: true, completion: nil)
       }
       return
     }
-    
-    guard let phone = UserDefaultService.phoneNumber, !phone.isEmpty else {
-      if let vc = R.storyboard.main.phoneCheckViewController() {
-        present(vc, animated: true, completion: nil)
-      }
-      return
-    }
 
     if signInDone {
-      viewModel.inputs.sessionOpened.onNext(phone)
+      viewModel.inputs.sessionOpened.onNext(Void())
     } else {
       loginButton.isHidden = false
     }

@@ -10,27 +10,23 @@ import UIKit
 import RxSwift
 import RxGesture
 import GooglePlaces
-import GoogleMaps
 
 class NewPromiseViewController: UIViewController, BindableType {
   
   @IBOutlet weak var newPromiseButton: UIButton!
   @IBOutlet weak var popButton: UIButton!
-  @IBOutlet weak var membersCollectionView: UICollectionView!
   @IBOutlet weak var titleLabel: UILabel!
   
   @IBOutlet weak var promiseNameInputView: PromiseInputView!
   @IBOutlet weak var promiseDateInputView: PromiseInputView!
   @IBOutlet weak var promiseTimeInputView: PromiseInputView!
   @IBOutlet weak var promiseAddressInputView: PromiseInputView!
-  @IBOutlet weak var promiseMembersInputView: PromiseInputView!
   
   var viewModel: NewPromiseViewModel!
   var isEditingPromise = false
-  private var selectedMembers = [String]()
   
   private let disposeBag = DisposeBag()
-  private let confirmDone = PublishSubject<CatchUpPromise?>()
+  private let confirmDone = PublishSubject<PromiseItem?>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -39,11 +35,6 @@ class NewPromiseViewController: UIViewController, BindableType {
     promiseDateInputView.inputState = .choice(title: "언제", input: "0000월 00월 00일")
     promiseTimeInputView.inputState = .choice(title: "몇시", input: "오후 00시 00분")
     promiseAddressInputView.inputState = .search(title: "어디서", input: "장소를 검색해주세요")
-    promiseMembersInputView.inputState = .search(title: "누구랑", input: "구성원을 검색해주세요")
-    
-    if promiseAddressInputView.frame.minY >= newPromiseButton.frame.minY {
-      membersCollectionView.isHidden = true
-    }
   }
   
   @IBAction func addNewPromise(_ sender: Any) {
@@ -87,14 +78,6 @@ class NewPromiseViewController: UIViewController, BindableType {
       }
     }).disposed(by: disposeBag)
     
-    promiseMembersInputView.rx.tapGesture().when(.recognized).subscribe(onNext: { _ in
-      if let vc = R.storyboard.main.memberSelectViewController() {
-        vc.memberSelectDone = self.viewModel.inputs.memberSelectDone
-        vc.selectedSet = Set(self.selectedMembers)
-        self.present(vc, animated: true, completion: nil)
-      }
-    }).disposed(by: disposeBag)
-    
     viewModel.outputs.name.subscribe(onNext: { promiseName in
       guard let name = promiseName, !name.isEmpty else { return }
       self.promiseNameInputView.inputState = .applied(input: name)
@@ -121,17 +104,6 @@ class NewPromiseViewController: UIViewController, BindableType {
     
     viewModel.outputs.isEnabled.subscribe(onNext: { isEnabled in
       self.newPromiseButton.isEnabled = isEnabled
-    }).disposed(by: disposeBag)
-    
-    viewModel.outputs.members.subscribe(onNext: { members in
-      self.selectedMembers = members
-      if let member = members.first, let nickname = ContactItem.find(phone: member)?.nickname {
-        self.promiseMembersInputView.inputState = .applied(input: "\(nickname) \(members.count > 1 ? "외 \(members.count - 1)명" : "")")
-      } else {
-        self.promiseMembersInputView.inputState = .search(title: "누구랑", input: "구성원을 검색해주세요")
-      }
-      
-      self.membersCollectionView.reloadData()
     }).disposed(by: disposeBag)
   
     viewModel.outputs.state.subscribe(onNext: { [weak self] state in
@@ -164,19 +136,6 @@ class NewPromiseViewController: UIViewController, BindableType {
       guard let strongSelf = self else { return }
       strongSelf.viewModel.actions.popScene.execute(promise)
     }).disposed(by: disposeBag)
-  }
-}
-
-extension NewPromiseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return selectedMembers.count
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.memberSelectedCollectionViewCell.identifier, for: indexPath) as! MemberSelectedCollectionViewCell
-    cell.configure(phone: selectedMembers[indexPath.item])
-    return cell
   }
 }
 

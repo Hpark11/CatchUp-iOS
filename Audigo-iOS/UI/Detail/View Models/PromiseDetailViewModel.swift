@@ -120,7 +120,7 @@ class PromiseDetailViewModel: PromiseDetailViewModelType {
     promiseTimestamp.value = TimeInterval(promise.dateTime.timeInMillis / 1000)
     promiseLocation.value = (latitude: promise.latitude, longitude: promise.longitude)
     
-    apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: promise.contacts), cachePolicy: .fetchIgnoringCacheData)
+    apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: Array(promise.contacts)), cachePolicy: .fetchIgnoringCacheData)
       .subscribe(onSuccess: { [weak self] data in
         guard let `self` = self else { return }
         self.memberInfoList.value = data.batchGetCatchUpContacts?.compactMap {

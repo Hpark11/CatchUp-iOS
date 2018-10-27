@@ -17,10 +17,10 @@ class PromiseConfirmViewController: UIViewController {
   @IBOutlet weak var membersLabel: UILabel!
   @IBOutlet weak var contentView: UIView!
   
-  var confirmDone: PublishSubject<CatchUpPromise?>?
+  var confirmDone: PublishSubject<PromiseItem?>?
   
   var isEditingPromise = false
-  var promise: CatchUpPromise?
+  var promise: PromiseItem?
   
   override func viewDidLoad() {
     super.viewDidLoad()

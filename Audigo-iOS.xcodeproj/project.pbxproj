@@ -36,7 +36,6 @@
 		CE34B4BF211E787100F92D50 /* AttachToken.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B3211E787100F92D50 /* AttachToken.graphql */; };
 		CE34B4C0211E787100F92D50 /* GetPocket.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B4211E787100F92D50 /* GetPocket.graphql */; };
 		CE34B4C1211E787100F92D50 /* schemaBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B5211E787100F92D50 /* schemaBackup.json */; };
-		CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */; };
 		CE3FF957213D6BE000C16338 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */; };
 		CE5AAADC21737081009D96F4 /* PlaceSearchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */; };
 		CE5AAADE2173AB46009D96F4 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AAADD2173AB46009D96F4 /* Destination.swift */; };
@@ -154,7 +153,6 @@
 		CE34B4B3211E787100F92D50 /* AttachToken.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AttachToken.graphql; sourceTree = "<group>"; };
 		CE34B4B4211E787100F92D50 /* GetPocket.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetPocket.graphql; sourceTree = "<group>"; };
 		CE34B4B5211E787100F92D50 /* schemaBackup.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schemaBackup.json; sourceTree = "<group>"; };
-		CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCheckViewController.swift; sourceTree = "<group>"; };
 		CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Audigo-iOS.entitlements"; sourceTree = "<group>"; };
 		CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchListTableViewCell.swift; sourceTree = "<group>"; };
@@ -342,14 +340,37 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		CE5B023F2184A0C500900414 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */,
+				CECE30672180AE7C00BA150A /* PromiseDetailUserViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		CE5B02402184B24400900414 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CEEE5DA4212817F50023E2FC /* PromiseDetailUserTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		CE5B02412184B25600900414 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		CE77EDC521206AE4007A6BF6 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				CE5B02402184B24400900414 /* Cells */,
+				CE5B023F2184A0C500900414 /* View Models */,
 				CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */,
 				CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */,
-				CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */,
-				CEEE5DA4212817F50023E2FC /* PromiseDetailUserTableViewCell.swift */,
-				CECE30672180AE7C00BA150A /* PromiseDetailUserViewModel.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -357,6 +378,7 @@
 		CE77EDC621206AF4007A6BF6 /* Add */ = {
 			isa = PBXGroup;
 			children = (
+				CE5B02412184B25600900414 /* Cells */,
 				CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */,
 				CE77EDC9212071F9007A6BF6 /* NewPromiseScene.swift */,
 				CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */,
@@ -442,7 +464,6 @@
 				CEB41F082115C4F4006BC729 /* EntranceViewController.swift */,
 				CE038B0821662D6B001D140B /* EntranceViewModel.swift */,
 				CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */,
-				CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */,
 			);
 			path = Enter;
 			sourceTree = "<group>";
@@ -474,7 +495,6 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				CE5B023B218490A800900414 /* Protocols */,
 				CEB41EF52115C227006BC729 /* App */,
 				CEEE5DA1212814AB0023E2FC /* Assets */,
 				CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */,
@@ -483,6 +503,7 @@
 				CEEE5D9A2127149B0023E2FC /* Extension */,
 				CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */,
 				CED4CCBC20C979060063D89F /* Info.plist */,
+				CE5B023B218490A800900414 /* Protocols */,
 				CEEF4B942117260B002BEF65 /* Resource */,
 				CED64949212B801E00C6BD6D /* Service */,
 				CEB41EF62115C2AF006BC729 /* UI */,
@@ -763,8 +784,7 @@
 				"${BUILT_PRODUCTS_DIR}/Action/Action.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
 				"${BUILT_PRODUCTS_DIR}/Permission/Permission.framework",
@@ -782,6 +802,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyContacts/SwiftyContacts.framework",
 				"${BUILT_PRODUCTS_DIR}/ToastKit/ToastKit.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
@@ -795,8 +816,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Permission.framework",
@@ -814,6 +834,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyContacts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ToastKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
@@ -908,7 +929,6 @@
 				CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */,
 				CE038B0921662D6B001D140B /* EntranceViewModel.swift in Sources */,
 				CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */,
-				CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */,
 				CE63A7E2217636A400ED386F /* CatchUpAnnotationView.swift in Sources */,
 				CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */,
 				CEEE5DA5212817F50023E2FC /* PromiseDetailUserTableViewCell.swift in Sources */,

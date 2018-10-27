@@ -15,7 +15,7 @@ import CoreLocation
 enum CreatePromiseState {
   case normal
   case pending
-  case completed(promise: CatchUpPromise)
+  case completed(promise: PromiseItem)
   case error(description: String)
 }
 
@@ -26,14 +26,12 @@ protocol NewPromiseViewModelInputsType {
   var coordinateSetDone: PublishSubject<CLLocationCoordinate2D> { get }
   var dateSelectDone: PublishSubject<DateComponents> { get }
   var timeSelectDone: PublishSubject<DateComponents> { get }
-  var memberSelectDone: PublishSubject<Set<String>> { get }
 }
 
 protocol NewPromiseViewModelOutputsType {
   var dateItems: Observable<DateComponents?> { get }
   var timeItems: Observable<DateComponents?> { get }
   var isEnabled: Observable<Bool> { get }
-  var members: Observable<[String]> { get }
   var name: Observable<String?> { get }
   var place: Observable<String?> { get }
   var state: Observable<CreatePromiseState> { get }
@@ -41,7 +39,7 @@ protocol NewPromiseViewModelOutputsType {
 }
 
 protocol NewPromiseViewModelActionsType {
-  var popScene: Action<CatchUpPromise?, Void> { get }
+  var popScene: Action<PromiseItem?, Void> { get }
   var newPromiseCompleted: Action<Void, String> { get }
 }
 
@@ -74,21 +72,19 @@ class NewPromiseViewModel: NewPromiseViewModelType {
   var dateItems: Observable<DateComponents?>
   var timeItems: Observable<DateComponents?>
   var isEnabled: Observable<Bool>
-  var members: Observable<[String]>
   var state: Observable<CreatePromiseState>
   var name: Observable<String?>
   var place: Observable<String?>
   var editMode: Observable<Bool>
   
   var addPromiseDone: PublishSubject<Void>?
-  var editPromiseDone: PublishSubject<CatchUpPromise>?
+  var editPromiseDone: PublishSubject<PromiseItem>?
   
   fileprivate var owner: Variable<String>
   fileprivate var dateComponents: Variable<DateComponents?>
   fileprivate var timeComponents: Variable<DateComponents?>
   fileprivate var promiseName: Variable<String?>
   fileprivate var address: Variable<String?>
-  fileprivate var pockets: Variable<[String]>
   fileprivate var coordinate: Variable<CLLocationCoordinate2D?>
   fileprivate var createPromiseState: Variable<CreatePromiseState>
   fileprivate var isEditMode: Variable<Bool>
@@ -105,7 +101,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     timeComponents = Variable(nil)
     promiseName = Variable(nil)
     address = Variable(nil)
-    pockets = Variable([])
     coordinate = Variable(nil)
     promiseId = Variable(nil)
     prevTimestamp = Variable(nil)
@@ -123,7 +118,6 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     
     dateItems = dateComponents.asObservable()
     timeItems = timeComponents.asObservable()
-    members = pockets.asObservable()
     name = promiseName.asObservable()
     place = address.asObservable()
     self.editMode = isEditMode.asObservable()
@@ -133,11 +127,10 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       timeComponents.asObservable(),
       promiseName.asObservable(),
       address.asObservable(),
-      pockets.asObservable(),
       coordinate.asObservable()
       ).map { (arg) -> Bool in
-        let (dateComponents, timeComponents, name, address, pockets, coordinate) = arg
-        guard let _ = dateComponents, let _ = timeComponents, let _ = coordinate, let _ = name, let _ = address, !pockets.isEmpty else { return false }
+        let (dateComponents, timeComponents, name, address, coordinate) = arg
+        guard let _ = dateComponents, let _ = timeComponents, let _ = coordinate, let _ = name, let _ = address else { return false }
         return true
     }
     
@@ -164,19 +157,9 @@ class NewPromiseViewModel: NewPromiseViewModelType {
       strongSelf.address.value = address
     }).disposed(by: disposeBag)
     
-    pocketSelectDone.subscribe(onNext: { [weak self] pockets in
-      guard let strongSelf = self else { return }
-      strongSelf.pockets.value = pockets
-    }).disposed(by: disposeBag)
-    
     coordinateSetDone.subscribe(onNext: { [weak self] coordinate in
       guard let strongSelf = self else { return }
       strongSelf.coordinate.value = coordinate
-    }).disposed(by: disposeBag)
-    
-    memberSelectDone.subscribe(onNext: { [weak self] memberSet in
-      guard let strongSelf = self else { return }
-      strongSelf.pockets.value = memberSet.map { $0 }
     }).disposed(by: disposeBag)
   }
   
@@ -189,12 +172,10 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     self.address.value = promise.address
     self.dateComponents.value = components
     self.timeComponents.value = components
-    
     self.coordinate.value = CLLocationCoordinate2D(latitude: promise.latitude, longitude: promise.longitude)
-    self.pockets.value = promise.contacts.filter { $0 != promise.owner }
   }
   
-  lazy var popScene: Action<CatchUpPromise?, Void> = {
+  lazy var popScene: Action<PromiseItem?, Void> = {
     return Action { [weak self] promiseData in
       guard let strongSelf = self else { return .empty() }
       if strongSelf.isEditMode.value {
@@ -236,24 +217,12 @@ class NewPromiseViewModel: NewPromiseViewModelType {
         latitude: strongSelf.coordinate.value?.latitude,
         longitude: strongSelf.coordinate.value?.longitude,
         name: strongSelf.promiseName.value,
-        contacts: strongSelf.pockets.value + [owner]
+        contacts: [owner]
       )
       
-      let contacts: [String?] = strongSelf.pockets.value
-      strongSelf.apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: contacts), cachePolicy: .fetchIgnoringCacheData)
-        .map { data -> [String] in
-          let phoneList = data.batchGetCatchUpContacts?.compactMap { $0?.phone } ?? []
-          return strongSelf.pockets.value.filter { !phoneList.contains($0) }
-          
-        }.flatMap { registered -> PrimitiveSequence<MaybeTrait, BatchCreateCatchUpContactMutation.Data> in
-          let contacts = (registered + ["0"]).map { phone in return ContactCreateInput(phone: phone, nickname: "미가입자") }
-          return strongSelf.apiClient.rx.perform(mutation: BatchCreateCatchUpContactMutation(contacts: contacts))
-          
-        }.flatMap { _ in
-          return strongSelf.apiClient.rx.perform(mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput))
-          
-        }.subscribe(onSuccess: { data in
-          if let promise = CatchUpPromise(promiseData: data.updateCatchUpPromise) {
+      strongSelf.apiClient.rx.perform(mutation: UpdateCatchUpPromiseMutation(id: promiseId, data: promiseInput))
+        .subscribe(onSuccess: { data in
+          if let promise = PromiseItem(promise: data.updateCatchUpPromise) {
             strongSelf.confirmAndNotify(promise: promise)
           }
         }, onError: { error in
@@ -273,10 +242,10 @@ class NewPromiseViewModel: NewPromiseViewModelType {
     
     let tokens = promise.contacts.compactMap { phone in
       return ContactItem.find(phone: phone)?.pushToken
-      }.filter { !$0.isEmpty }
+    }.filter { !$0.isEmpty }
     
     createPromiseState.value = .completed(promise: promise)
-    PushMessageService.sendPush(title: title, message: "일시: \(dateTime), 장소: \(address)", pushTokens: tokens)
+    PushMessageService.sendPush(title: title, message: "일시: \(dateTime), 장소: \(address)", pushTokens: Array(tokens))
   }
 }
 

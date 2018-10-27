@@ -54,10 +54,6 @@ class PromiseCollectionViewCell: UICollectionViewCell {
     itemDateView.backgroundColor = viewModel.dateColor
     itemPanelView.backgroundColor = viewModel.panelColor
   }
-  
-  func configure(promise: CatchUpPromise) {
-    promiseMembersCollectionView.reloadData()
-  }
 }
 
 extension PromiseCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource {

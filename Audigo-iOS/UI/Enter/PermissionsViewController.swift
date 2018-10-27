@@ -16,10 +16,6 @@ class PermissionsViewController: UIViewController {
   let notifications: Permission = .notifications
   
   @IBAction func allowPermissions(_ sender: Any) {
-    contacts.request { _ in
-      self.startServices()
-    }
-    
     location.request { _ in
       self.startServices()
     }
@@ -30,7 +26,7 @@ class PermissionsViewController: UIViewController {
   }
   
   private func startServices() {
-    let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
+    let permissionSet = PermissionSet([.notifications, .locationAlways])
     if permissionSet.status == .authorized {
       dismiss(animated: true, completion: nil)
     }
