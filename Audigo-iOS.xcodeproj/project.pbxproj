@@ -16,6 +16,7 @@
 		CE038B0B21662DC4001D140B /* EntranceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0A21662DC4001D140B /* EntranceScene.swift */; };
 		CE038B0D2166329B001D140B /* RxAppSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0C2166329B001D140B /* RxAppSync.swift */; };
 		CE1A3606217F57380025F64F /* UIAlert+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3605217F57380025F64F /* UIAlert+Ext.swift */; };
+		CE1A7C152185AB2900B1F655 /* KMTLocationTemplate+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A7C142185AB2900B1F655 /* KMTLocationTemplate+Ext.swift */; };
 		CE1EF0BC217B0A0200E80E70 /* PromiseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */; };
 		CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */; };
 		CE22AEF121311A03004477E8 /* MonthPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */; };
@@ -132,6 +133,7 @@
 		CE038B0A21662DC4001D140B /* EntranceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceScene.swift; sourceTree = "<group>"; };
 		CE038B0C2166329B001D140B /* RxAppSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxAppSync.swift; sourceTree = "<group>"; };
 		CE1A3605217F57380025F64F /* UIAlert+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlert+Ext.swift"; sourceTree = "<group>"; };
+		CE1A7C142185AB2900B1F655 /* KMTLocationTemplate+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KMTLocationTemplate+Ext.swift"; sourceTree = "<group>"; };
 		CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseItem.swift; sourceTree = "<group>"; };
 		CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelectPickerView.swift; sourceTree = "<group>"; };
 		CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPopupViewController.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 				CE7B0DC621685B6D007DAA2A /* ContextError.swift */,
 				CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */,
 				CE1A3605217F57380025F64F /* UIAlert+Ext.swift */,
+				CE1A7C142185AB2900B1F655 /* KMTLocationTemplate+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -950,6 +953,7 @@
 				CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */,
 				CE038B0921662D6B001D140B /* EntranceViewModel.swift in Sources */,
 				CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */,
+				CE1A7C152185AB2900B1F655 /* KMTLocationTemplate+Ext.swift in Sources */,
 				CE63A7E2217636A400ED386F /* CatchUpAnnotationView.swift in Sources */,
 				CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */,
 				CEEE5DA5212817F50023E2FC /* PromiseDetailUserTableViewCell.swift in Sources */,

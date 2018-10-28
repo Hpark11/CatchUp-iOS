@@ -15,6 +15,7 @@ struct PromiseItemViewModel {
     case minutes(for: Int)
     case hours(for: Int)
     case days(for: Int)
+    case new
   }
   
   private let promise: PromiseItem
@@ -36,13 +37,17 @@ struct PromiseItemViewModel {
     if let dayGap = gap.day, let hourGap = gap.hour, let minuteGap = gap.minute {
       switch dayGap {
       case 0:
-        if hourGap >= 1 {
+        if !promise.isAllowed {
+          state = .new
+        } else if hourGap >= 1 {
           state = .hours(for: hourGap)
-        } else {
+        } else if hourGap > -1 {
           state = minuteGap > 0 ? .minutes(for: minuteGap) : .minutesLate(for: abs(minuteGap))
+        } else {
+          state = .passedAway
         }
       case 1...Int.max:
-        state = .days(for: dayGap)
+        state = promise.isAllowed ? .days(for: dayGap) : .new
       default:
         state = .passedAway
       }
@@ -53,6 +58,7 @@ struct PromiseItemViewModel {
   
   var timeLeftText: String {
     switch state {
+    case .new: return "NEW"
     case .passedAway: return "지난 약속"
     case .days(let gap): return "D - \(gap)"
     case .hours(let gap): return "\(gap)시간 전"
@@ -63,6 +69,7 @@ struct PromiseItemViewModel {
   
   var timeLeftColor: UIColor {
     switch state {
+    case .new: return UIColor.Flat.Red.valencia
     case .passedAway: return .stale
     case .days: return .stale
     case .hours: return .warmBlue

@@ -18,6 +18,7 @@ protocol MainViewModelInputsType {
   var monthSelectDone: PublishSubject<(Int, Int)> { get }
   var addPromiseDone: PublishSubject<Void> { get }
   var hasPromiseBeenUpdated: PublishSubject<Bool> { get }
+  var leftPromise: PublishSubject<PromiseItem> { get }
 }
 
 protocol MainViewModelOutputsType {
@@ -51,6 +52,7 @@ class MainViewModel: MainViewModelType {
   var monthSelectDone: PublishSubject<(Int, Int)>
   var addPromiseDone: PublishSubject<Void>
   var hasPromiseBeenUpdated: PublishSubject<Bool>
+  var leftPromise: PublishSubject<PromiseItem>
   
   // MARK: Outputs
   var promiseItems: Observable<[PromiseSectionModel]>
@@ -80,6 +82,7 @@ class MainViewModel: MainViewModelType {
     monthSelectDone = PublishSubject()
     addPromiseDone = PublishSubject()
     hasPromiseBeenUpdated = PublishSubject()
+    leftPromise = PublishSubject()
     
     userInfo = Variable((id: nil, phone: nil, email: nil, nickname: nil, gender: nil, birthday: nil, ageRange: nil, profileImagePath: nil))
     promiseList = Variable([])
@@ -132,6 +135,19 @@ class MainViewModel: MainViewModelType {
       guard let strongSelf = self else { return }
       strongSelf.refreshPromiseList()
     }).disposed(by: disposeBag)
+    
+    leftPromise
+      .flatMapLatest { promise -> PrimitiveSequence<MaybeTrait, RemoveContactIntoPromiseMutation.Data> in
+        guard let userId = UserDefaultService.userId else {
+          fatalError("There is No User Id")
+        }
+      
+        return self.apiClient.rx.perform(mutation: RemoveContactIntoPromiseMutation(id: promise.id, phone: userId))
+      }.subscribe (onNext: { data in
+        if let promiseId = data.removeContactIntoPromise?.id {
+          PromiseItem.leave(id: promiseId)
+        }
+      }).disposed(by: disposeBag)
     
     // Location Tracking ---------------------------------------------------------------------------------------]
     LocationTrackingService.shared.startUpdatingLocation()

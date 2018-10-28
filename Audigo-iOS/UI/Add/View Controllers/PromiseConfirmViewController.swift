@@ -50,26 +50,7 @@ class PromiseConfirmViewController: UIViewController {
     }))
     
     alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-      let template = KMTLocationTemplate.init { builder in
-        builder.address = promise.address
-        builder.addressTitle = promise.name
-        builder.buttonTitle = "참여하기"
-        
-        builder.content = KMTContentObject.init(builderBlock: { contentBuilder in
-          contentBuilder.title = promise.name
-          contentBuilder.desc = "일시: \(self.dateTimeLabel.text ?? "") \n장소: \(self.locationLabel.text ?? "")"
-          contentBuilder.imageURL = Define.appStoreUrl
-          contentBuilder.link = KMTLinkObject.init(builderBlock: { linkBuilder in
-            linkBuilder.mobileWebURL = Define.appStoreUrl
-            linkBuilder.androidExecutionParams = "param1=\(promise.id)&param2=\(promise.name)"
-            linkBuilder.iosExecutionParams = "param1=\(promise.id)&param2=\(promise.name)"
-          })
-        })
-        
-        builder.social = KMTSocialObject.init(builderBlock: { socialBuilder in
-          socialBuilder.likeCount = promise.contacts.count as NSNumber
-        })
-      }
+      let template = KMTLocationTemplate.sharePromiseTemplate(promise: promise)
       
       KLKTalkLinkCenter.shared().sendDefault(with: template, success: { (warning, args) in
         self.dismiss()

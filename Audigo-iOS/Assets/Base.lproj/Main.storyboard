@@ -182,7 +182,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수요일" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Tl-fX-7Cl">
-                                                                    <rect key="frame" x="2" y="70" width="84" height="19.5"/>
+                                                                    <rect key="frame" x="23" y="70" width="42" height="19.5"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -193,10 +193,8 @@
                                                                 <constraint firstItem="0Tl-fX-7Cl" firstAttribute="centerX" secondItem="6X1-oM-GMu" secondAttribute="centerX" id="5OT-Kn-MTY"/>
                                                                 <constraint firstItem="AYc-99-hK4" firstAttribute="centerX" secondItem="6X1-oM-GMu" secondAttribute="centerX" id="7in-tY-StL"/>
                                                                 <constraint firstItem="0Tl-fX-7Cl" firstAttribute="top" secondItem="AYc-99-hK4" secondAttribute="bottom" constant="2" id="MgR-ad-1Pd"/>
-                                                                <constraint firstAttribute="trailing" secondItem="0Tl-fX-7Cl" secondAttribute="trailing" constant="2" id="WIQ-6h-Tr7"/>
                                                                 <constraint firstItem="AYc-99-hK4" firstAttribute="centerY" secondItem="6X1-oM-GMu" secondAttribute="centerY" constant="-12" id="XcL-Gv-GbT"/>
                                                                 <constraint firstAttribute="height" constant="100" id="f7h-bB-wQP"/>
-                                                                <constraint firstItem="0Tl-fX-7Cl" firstAttribute="leading" secondItem="6X1-oM-GMu" secondAttribute="leading" constant="2" id="nMK-Id-Z3N"/>
                                                                 <constraint firstAttribute="width" constant="88" id="zUX-1W-iP1"/>
                                                             </constraints>
                                                         </view>
@@ -663,7 +661,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="박현수" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcA-Bt-ugN">
-                                                    <rect key="frame" x="51" y="18.5" width="42" height="19.5"/>
+                                                    <rect key="frame" x="51" y="18.5" width="233" height="19.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.23529411764705882" green="0.31372549019607843" blue="0.38823529411764707" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -679,6 +677,7 @@
                                             <constraints>
                                                 <constraint firstItem="rcA-Bt-ugN" firstAttribute="centerY" secondItem="byU-fb-2mK" secondAttribute="centerY" id="37s-g7-wy9"/>
                                                 <constraint firstItem="rcA-Bt-ugN" firstAttribute="leading" secondItem="VLZ-rQ-qMF" secondAttribute="trailing" constant="12" id="DEt-Xi-TL0"/>
+                                                <constraint firstItem="DTT-hw-VtG" firstAttribute="leading" secondItem="rcA-Bt-ugN" secondAttribute="trailing" constant="12" id="Qpl-9L-chL"/>
                                                 <constraint firstItem="VLZ-rQ-qMF" firstAttribute="leading" secondItem="byU-fb-2mK" secondAttribute="leading" constant="3" id="Usi-aa-R0W"/>
                                                 <constraint firstItem="VLZ-rQ-qMF" firstAttribute="centerY" secondItem="byU-fb-2mK" secondAttribute="centerY" id="Wvr-Ig-fFe"/>
                                                 <constraint firstItem="DTT-hw-VtG" firstAttribute="trailing" secondItem="byU-fb-2mK" secondAttribute="trailingMargin" constant="8" id="eCo-RK-yoH"/>
@@ -742,7 +741,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="주소록에 인원이 없습니다" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fn-cC-npw">
-                                <rect key="frame" x="30" y="323.5" width="315" height="20.5"/>
+                                <rect key="frame" x="102" y="323.5" width="171" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.23529411759999999" green="0.31372549020000001" blue="0.38823529410000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -754,6 +753,7 @@
                             <constraint firstItem="7X1-r6-Sov" firstAttribute="top" secondItem="who-Oe-5t5" secondAttribute="top" constant="12" id="4Rw-lJ-gNd"/>
                             <constraint firstItem="TVS-Rs-vbI" firstAttribute="leading" secondItem="Me4-oE-x6H" secondAttribute="trailing" constant="4" id="8mc-Zf-5wK"/>
                             <constraint firstItem="who-Oe-5t5" firstAttribute="bottom" secondItem="i6F-vu-b53" secondAttribute="bottom" id="9KK-9e-6JQ"/>
+                            <constraint firstItem="fbn-2B-w9N" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7X1-r6-Sov" secondAttribute="trailing" constant="8" symbolic="YES" id="C3m-Mt-gqi"/>
                             <constraint firstItem="uOO-YL-b1o" firstAttribute="trailing" secondItem="Me4-oE-x6H" secondAttribute="trailing" constant="30" id="CGR-8K-IIZ"/>
                             <constraint firstItem="i6F-vu-b53" firstAttribute="leading" secondItem="who-Oe-5t5" secondAttribute="leading" constant="22" id="D1H-Qu-lcH"/>
                             <constraint firstItem="2iK-dH-o0r" firstAttribute="centerY" secondItem="7X1-r6-Sov" secondAttribute="centerY" id="ECq-aL-dxW"/>
@@ -767,8 +767,6 @@
                             <constraint firstItem="uOO-YL-b1o" firstAttribute="leading" secondItem="Me4-oE-x6H" secondAttribute="leading" id="dDT-Xk-KSW"/>
                             <constraint firstItem="who-Oe-5t5" firstAttribute="trailing" secondItem="i6F-vu-b53" secondAttribute="trailing" constant="22" id="eUR-pR-FoF"/>
                             <constraint firstItem="8fn-cC-npw" firstAttribute="centerX" secondItem="lJm-Gi-r99" secondAttribute="centerX" id="eZg-Ha-HER"/>
-                            <constraint firstItem="8fn-cC-npw" firstAttribute="leading" secondItem="who-Oe-5t5" secondAttribute="leading" constant="30" id="g3z-ir-kEc"/>
-                            <constraint firstItem="who-Oe-5t5" firstAttribute="trailing" secondItem="8fn-cC-npw" secondAttribute="trailing" constant="30" id="j4m-gZ-kXD"/>
                             <constraint firstItem="7X1-r6-Sov" firstAttribute="centerX" secondItem="lJm-Gi-r99" secondAttribute="centerX" id="sJm-Yu-UKB"/>
                             <constraint firstItem="2iK-dH-o0r" firstAttribute="leading" secondItem="who-Oe-5t5" secondAttribute="leading" constant="12" id="zH3-Fs-JGj"/>
                             <constraint firstItem="who-Oe-5t5" firstAttribute="trailing" secondItem="Me4-oE-x6H" secondAttribute="trailing" constant="52" id="zXr-EV-bpx"/>
@@ -937,7 +935,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VlO-gh-z1F">
                                                             <rect key="frame" x="233" y="32.5" width="50" height="0.0"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="50" id="c74-yD-BYn"/>
+                                                                <constraint firstAttribute="width" priority="600" constant="50" id="c74-yD-BYn"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.97254901960784312" green="0.36862745098039218" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

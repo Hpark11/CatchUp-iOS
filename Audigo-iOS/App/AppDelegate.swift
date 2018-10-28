@@ -176,10 +176,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
     if KLKTalkLinkCenter.shared().isTalkLinkCallback(url) {
       guard let params = url.query?.components(separatedBy: "&"), params.count >= 2 else { return true }
-      if let id = params[0].components(separatedBy: "=").last?.dropLast() {
-        guard let phone = UserDefaultService.phoneNumber else { return true }
-        appSyncClient?.perform(mutation: AddContactIntoPromiseMutation(id: String(id), phone: phone)) { result, error in
-          print(result?.data?.addContactIntoPromise)
+      if let promiseId = params[0].components(separatedBy: "=").last?.dropLast(), promiseId.count == UUID().uuidString.count {
+        guard let userId = UserDefaultService.userId else { return true }
+        appSyncClient?.perform(mutation: AddContactIntoPromiseMutation(id: String(promiseId), phone: userId)) { result, error in
           PromiseItem.add(promise: result?.data?.addContactIntoPromise, isAllowed: false)
         }
       }

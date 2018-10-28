@@ -74,7 +74,7 @@ class MainViewController: UIViewController, BindableType {
         UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(name)에 참여하시겠습니까? 단, 약속 2시간 전부터 서로의 위치가 공유됩니다", callback: { action in
           self.viewModel.actions.pushPromiseDetailScene.execute(promise)
         }, onCancel: { action in
-          // Delete From Server and Local
+          self.viewModel.inputs.leftPromise.onNext(promise)
         })
       } else {
         self.viewModel.actions.pushPromiseDetailScene.execute(promise)

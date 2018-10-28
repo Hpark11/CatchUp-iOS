@@ -44,8 +44,10 @@ class PromiseCollectionViewCell: UICollectionViewCell {
   
   func configure(viewModel: PromiseItemViewModel) {
     self.viewModel = viewModel
+    itemView.alpha = viewModel.isPassedAway ? 0.4 : 1
     promiseTimeLabel.text = viewModel.timeText
     promiseTimeLeftLabel.text = viewModel.timeLeftText
+    promiseTimeLeftLabel.textColor = viewModel.timeLeftColor
     promiseDateLabel.text = viewModel.dateText
     promiseDayLabel.text = viewModel.dayText
     promiseNameLabel.text = viewModel.name

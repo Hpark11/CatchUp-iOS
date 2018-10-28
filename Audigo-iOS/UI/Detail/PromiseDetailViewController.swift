@@ -29,14 +29,6 @@ class PromiseDetailViewController: UIViewController, BindableType {
   private var timer = Timer()
   private let sendPush = PublishSubject<String>()
   
-  func runTimer() {
-    timer = Timer.scheduledTimer(timeInterval: 80, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-  }
-  
-  @objc func updateTimer() {
-    viewModel.actions.refresh.execute(())
-  }
-  
   private lazy var configureCell: (TableViewSectionedDataSource<MemberSectionModel>, UITableView, IndexPath, PromiseDetailUserViewModel) -> UITableViewCell = { [weak self] data, tableView, indexPath, viewModel in
     guard let `self` = self else { return PromiseDetailUserTableViewCell(frame: .zero) }
     
@@ -48,11 +40,16 @@ class PromiseDetailViewController: UIViewController, BindableType {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     pocketListTableView.rowHeight = 85
     navigationItem.leftBarButtonItems = [UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)]
     navigationItem.leftBarButtonItem?.image = UIImage(named: R.image.icon_back.name)
     navigationItem.leftBarButtonItem?.tintColor = .white
     navigationItem.leftBarButtonItem?.rx.action = viewModel.actions.popScene
+    
+    navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(sharePromise))]
+    navigationItem.rightBarButtonItem?.image = UIImage(named: R.image.icon_share.name)
+    navigationItem.rightBarButtonItem?.tintColor = .white
     
     sendPush.subscribe(onNext: { [weak self] (pushToken) in
       guard let strongSelf = self else { return }
@@ -62,6 +59,27 @@ class PromiseDetailViewController: UIViewController, BindableType {
     if let phone = UserDefaultService.phoneNumber {
       imagePath = ContactItem.find(phone: phone)?.imagePath ?? ""
     }
+  }
+  
+  func runTimer() {
+    timer = Timer.scheduledTimer(timeInterval: 80, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+  }
+  
+  @objc func sharePromise() {
+    UIAlertController.simpleCancelAlert(self, title: "약속 정보 공유", message: "이 약속을 카카오톡으로 공유하시겠어요?") { [weak self] action in
+      guard let `self` = self, let promise = self.viewModel.promise else { return }
+      let template = KMTLocationTemplate.sharePromiseTemplate(promise: promise)
+      
+      KLKTalkLinkCenter.shared().sendDefault(with: template, success: { (warning, args) in
+        print(args ?? "")
+      }) { (error) in
+        print(error.localizedDescription)
+      }
+    }
+  }
+  
+  @objc func updateTimer() {
+    viewModel.actions.refresh.execute(())
   }
   
   @objc func updateSelfLocation(_ notification: Notification) {

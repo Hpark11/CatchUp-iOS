@@ -99,6 +99,15 @@ extension PromiseItem {
     }
   }
   
+  static func leave(id: String) {
+    guard let realm = try? Realm() else { return }
+    if let item = realm.object(ofType: self, forPrimaryKey: "id") {
+      try! realm.write {
+        realm.delete(item)
+      }
+    }
+  }
+  
   static func findNotAllowed() -> Results<PromiseItem> {
     let realm = try! Realm()
     return realm.objects(PromiseItem.self).filter("isAllowed = false")
