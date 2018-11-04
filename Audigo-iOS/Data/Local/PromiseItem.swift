@@ -68,20 +68,19 @@ extension PromiseItem {
     return realm.objects(PromiseItem.self)
   }
   
-  static func add(promise: PromiseRepresentable?, isAllowed: Bool = true, in realm: Realm = try! Realm()) {
+  static func add(promise: PromiseRepresentable?, isAllowed: Bool = true, update: Bool = true, in realm: Realm = try! Realm()) {
     guard let item = PromiseItem(promise: promise) else { return }
     item.isAllowed = isAllowed
-    
     try! realm.write {
-      realm.add(item)
+      realm.add(item, update: true)
     }
   }
   
-  static func add(id: String, name: String, in realm: Realm = try! Realm()) {
+  static func add(id: String, name: String, update: Bool = true, in realm: Realm = try! Realm()) {
     guard realm.object(ofType: PromiseItem.self, forPrimaryKey: id) == nil else { return }
     let item = PromiseItem(id: id, name: name)
     try! realm.write {
-      realm.add(item)
+      realm.add(item, update: true)
     }
   }
   
@@ -100,11 +99,13 @@ extension PromiseItem {
   }
   
   static func leave(id: String) {
-    guard let realm = try? Realm() else { return }
-    if let item = realm.object(ofType: self, forPrimaryKey: "id") {
-      try! realm.write {
-        realm.delete(item)
-      }
+    guard let realm = try? Realm(), let item = realm.object(ofType: self, forPrimaryKey: id) else { return }
+    try! realm.write {
+      realm.delete(item)
+//      if let userId = UserDefaultService.userId, let index = item.contacts.firstIndex(where: { $0 == userId }) {
+//        item.contacts.remove(at: index)
+//      }
+//      item.isAllowed = false
     }
   }
   

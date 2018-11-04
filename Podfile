@@ -14,6 +14,7 @@ target 'Audigo-iOS' do
   pod 'RxKeyboard'
   pod 'RxGesture'
   pod 'RxDataSources', '~> 3.0'
+  pod 'RxRealm'
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Messaging'

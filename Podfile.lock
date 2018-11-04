@@ -163,6 +163,9 @@ PODS:
   - RxKeyboard (0.8.1):
     - RxCocoa (>= 4.0.0)
     - RxSwift (>= 4.0.0)
+  - RxRealm (0.7.5):
+    - RealmSwift (~> 3.0)
+    - RxSwift (~> 4.0)
   - RxSwift (4.1.2)
   - SQLite.swift (0.11.4):
     - SQLite.swift/standard (= 0.11.4)
@@ -191,6 +194,7 @@ DEPENDENCIES:
   - RxDataSources (~> 3.0)
   - RxGesture
   - RxKeyboard
+  - RxRealm
   - RxSwift (~> 4.0)
   - SwiftyContacts/RxSwift
   - ToastKit
@@ -234,6 +238,7 @@ SPEC REPOS:
     - RxDataSources
     - RxGesture
     - RxKeyboard
+    - RxRealm
     - RxSwift
     - SQLite.swift
     - SwiftyContacts
@@ -277,11 +282,12 @@ SPEC CHECKSUMS:
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
   RxKeyboard: 28d984440671becc75350b1dfae7ae08d31076df
+  RxRealm: a6c6c0a07cb61f34209969ca6657734edfdfff30
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
   SwiftyContacts: 3b38d400d2480e8a2323194f3f8fcf6b317d8147
   ToastKit: 7363d72f171315ddd2a115b9876a07e52ec125ca
 
-PODFILE CHECKSUM: 6843b831795aaa84695bdac3aea2aebaed593bc0
+PODFILE CHECKSUM: 7c6d24aa271417672c10796cb019b910109501f5
 
 COCOAPODS: 1.5.0

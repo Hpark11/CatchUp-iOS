@@ -14,7 +14,7 @@ struct Define {
   static let appsyncEndpointURL: URL = URL(string: "https://f3auk6pacreq7fpn7wpky2rvhm.appsync-api.ap-northeast-2.amazonaws.com/graphql")!
   static let appsyncLocalDB: String = "appsync-catchup-db"
   static let appsyncKeyAPI: String = "da2-gp5jgpzvkfdnhfcjp3amglzbee"
-  static let appUrl: URL = URL(string: "https://itunes.apple.com/us/app/%EC%BA%90%EC%B9%98%EC%97%85/id1435071896?l=ko&ls=1&mt=8")!
+  static let appStoreUrl = URL(string: "https://itunes.apple.com/us/app/%EC%BA%90%EC%B9%98%EC%97%85/id1435071896?l=ko&ls=1&mt=8")!
   
   static let keyGMSService: String = "AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE"
   static let keyGMSPlace: String = "AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE"
@@ -36,8 +36,6 @@ struct Define {
   
   static let queueLabelCreatePromise = "queue.create.promise"
   static let queueLabelListPromises = "queue.list.promises"
-  
-  static let appStoreUrl = URL(string: "https://itunes.apple.com/us/app/%EC%BA%90%EC%B9%98%EC%97%85/id1435071896?l=ko&ls=1&mt=8")!
   
   static let distanceUpperBound = 700.0
   static let distanceLowerBound = 0.25

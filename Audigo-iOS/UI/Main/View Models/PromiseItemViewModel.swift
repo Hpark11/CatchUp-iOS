@@ -37,10 +37,8 @@ struct PromiseItemViewModel {
     if let dayGap = gap.day, let hourGap = gap.hour, let minuteGap = gap.minute {
       switch dayGap {
       case 0:
-        if !promise.isAllowed {
-          state = .new
-        } else if hourGap >= 1 {
-          state = .hours(for: hourGap)
+        if hourGap >= 1 {
+          state = !promise.isAllowed ? .new : .hours(for: hourGap)
         } else if hourGap > -1 {
           state = minuteGap > 0 ? .minutes(for: minuteGap) : .minutesLate(for: abs(minuteGap))
         } else {

@@ -27,8 +27,8 @@ class MainViewController: UIViewController, BindableType {
   
   let disposeBag = DisposeBag()
   
-  lazy var configureCell: (CollectionViewSectionedDataSource<PromiseSectionModel>, UICollectionView, IndexPath, PromiseItem) -> UICollectionViewCell = { [weak self] data, collectionView, indexPath, promise in
-    guard let `self` = self else { return PromiseCollectionViewCell(frame: .zero) }
+  lazy var configureCell: (CollectionViewSectionedDataSource<PromiseSectionModel>, UICollectionView, IndexPath, PromiseItem?) -> UICollectionViewCell = { [weak self] data, collectionView, indexPath, promise in
+    guard let `self` = self, let promise = promise else { return PromiseCollectionViewCell(frame: .zero) }
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.promiseCollectionViewCell, for: indexPath)
     cell?.configure(viewModel: PromiseItemViewModel(promise: promise))
@@ -50,6 +50,10 @@ class MainViewController: UIViewController, BindableType {
       return UICollectionReusableView()
     })
     
+    viewModel.promiseItems
+      .bind(to: promiseCollectionView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
+    
     viewModel.appVersion.subscribe(onSuccess: { [weak self] version in
       guard let `self` = self else { return }
       
@@ -62,16 +66,13 @@ class MainViewController: UIViewController, BindableType {
       }
     }).disposed(by: disposeBag)
     
-    viewModel.promiseItems
-      .bind(to: promiseCollectionView.rx.items(dataSource: dataSource))
-      .disposed(by: disposeBag)
-    
     Observable.zip(promiseCollectionView.rx.itemSelected, promiseCollectionView.rx.modelSelected(PromiseItem.self)).bind { [weak self] indexPath, promise in
       guard let `self` = self else { return }
       self.promiseCollectionView.deselectItem(at: indexPath, animated: true)
       
       if !promise.isAllowed, let name = promise.name.removingPercentEncoding {
         UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(name)에 참여하시겠습니까? 단, 약속 2시간 전부터 서로의 위치가 공유됩니다", callback: { action in
+          PromiseItem.participate(id: promise.id)
           self.viewModel.actions.pushPromiseDetailScene.execute(promise)
         }, onCancel: { action in
           self.viewModel.inputs.leftPromise.onNext(promise)

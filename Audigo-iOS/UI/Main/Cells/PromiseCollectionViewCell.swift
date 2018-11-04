@@ -55,6 +55,8 @@ class PromiseCollectionViewCell: UICollectionViewCell {
     
     itemDateView.backgroundColor = viewModel.dateColor
     itemPanelView.backgroundColor = viewModel.panelColor
+    
+    promiseMembersCollectionView.reloadData()
   }
 }
 

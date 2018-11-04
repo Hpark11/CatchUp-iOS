@@ -11,6 +11,7 @@ import RxDataSources
 import Action
 import AWSAppSync
 import RealmSwift
+import RxRealm
 
 typealias PromiseSectionModel = AnimatableSectionModel<String, PromiseItem>
 
@@ -104,13 +105,13 @@ class MainViewModel: MainViewModelType {
           revision: data.checkAppVersion.revision ?? Define.revision
         )
     }
-    
+
     token = PromiseItem.all().observe { [weak self] change in
       guard let `self` = self else { return }
       switch change {
       case .initial(let items):
         self.promiseList.value = self.sortedPromiseList(items: items)
-      case .update(let items, _, _, _):
+      case .update(let items, let deletions, let insertions, let modifications):
         self.promiseList.value = self.sortedPromiseList(items: items)
       case .error(let error):
         print(error.localizedDescription)
