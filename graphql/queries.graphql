@@ -1,0 +1,87 @@
+# this is an auto generated file. This will be overwritten
+query ListCatchUpUser($count: Int, $nextToken: String) {
+  listCatchUpUser(count: $count, nextToken: $nextToken) {
+    users {
+      id
+      email
+      nickname
+      profileImagePath
+      gender
+      birthday
+      ageRange
+      phone
+      credit
+    }
+    nextToken
+  }
+}
+query GetCatchUpUser($id: ID!) {
+  getCatchUpUser(id: $id) {
+    id
+    email
+    nickname
+    profileImagePath
+    gender
+    birthday
+    ageRange
+    phone
+    credit
+  }
+}
+query GetCatchUpContact($phone: ID) {
+  getCatchUpContact(phone: $phone) {
+    phone
+    nickname
+    profileImagePath
+    latitude
+    longitude
+    pushToken
+    osType
+  }
+}
+query GetCatchUpPromise($id: ID!) {
+  getCatchUpPromise(id: $id) {
+    id
+    owner
+    dateTime
+    address
+    latitude
+    longitude
+    name
+    contacts
+  }
+}
+query CheckAppVersion($platform: ID!) {
+  checkAppVersion(platform: $platform) {
+    platform
+    major
+    minor
+    revision
+  }
+}
+query SendPush($token: String!) {
+  sendPush(token: $token)
+}
+query BatchGetCatchUpContacts($ids: [ID]) {
+  batchGetCatchUpContacts(ids: $ids) {
+    phone
+    nickname
+    profileImagePath
+    latitude
+    longitude
+    pushToken
+    osType
+  }
+}
+query ListCatchUpPromisesByContact($contact: String!) {
+  listCatchUpPromisesByContact(contact: $contact) {
+    id
+    owner
+    dateTime
+    address
+    latitude
+    longitude
+    name
+    contacts
+  }
+}

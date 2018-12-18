@@ -11,12 +11,11 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import Permission
-import Apollo
 import RealmSwift
 import SwiftyContacts
 
 class MainViewController: UIViewController, BindableType {
-  @IBOutlet weak var promiseListTableView: UITableView!
+  @IBOutlet weak var promiseCollectionView: UICollectionView!
   @IBOutlet weak var newPromiseButton: UIButton!
   @IBOutlet weak var monthSelectButton: UIButton!
   @IBOutlet weak var promiseGuide: UIImageView!
@@ -28,62 +27,60 @@ class MainViewController: UIViewController, BindableType {
   
   let disposeBag = DisposeBag()
   
-  lazy var configureCell: (TableViewSectionedDataSource<PromiseSectionModel>, UITableView, IndexPath, GetUserWithPromisesQuery.Data.User.Pocket.PromiseList) -> UITableViewCell = { [weak self] data, tableView, indexPath, promise in
-    guard let strongSelf = self else { return PromiseTableViewCell(frame: .zero) }
+  lazy var configureCell: (CollectionViewSectionedDataSource<PromiseSectionModel>, UICollectionView, IndexPath, PromiseItem?) -> UICollectionViewCell = { [weak self] data, collectionView, indexPath, promise in
+    guard let `self` = self, let promise = promise else { return PromiseCollectionViewCell(frame: .zero) }
     
-    let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.promiseTableViewCell, for: indexPath)
-    cell?.configure(promise: promise)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.promiseCollectionViewCell, for: indexPath)
+    cell?.configure(viewModel: PromiseItemViewModel(promise: promise))
     return cell!
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    UIApplication.shared.statusBarView?.backgroundColor = .white
-    
-    let session = KOSession.shared()
-    guard let s = session, s.isOpen() else {
-      needSignIn = true
-      return
-    }
   }
   
   func bindViewModel() {
-    viewModel.state.subscribe(onNext: { [weak self] (state) in
-      guard let strongSelf = self else { return }
-      switch state {
-      case .completed:
-        let permissionSet = PermissionSet([.notifications, .contacts, .locationAlways])
-        if let vc = R.storyboard.main.permissionsViewController(), permissionSet.status != .authorized {
-          vc.contactAuthorized = strongSelf.viewModel.contactAuthorized
-          strongSelf.present(vc, animated: true, completion: nil)
-        } else {
-          strongSelf.viewModel.contactAuthorized.onNext(true)
+    if let layout = promiseCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+      layout.scrollDirection = .vertical
+      layout.minimumLineSpacing = 0
+      layout.itemSize = CGSize(width: view.frame.width, height: 160)
+    }
+    
+    let dataSource = RxCollectionViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell, configureSupplementaryView: {data, collectionView, text, indexPath in
+      return UICollectionReusableView()
+    })
+    
+    viewModel.promiseItems
+      .bind(to: promiseCollectionView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
+    
+    viewModel.appVersion.subscribe(onSuccess: { [weak self] version in
+      guard let `self` = self else { return }
+      
+      if version.major > Define.majorVersion || version.minor > Define.minorVersion || version.revision > Define.revision {
+        UIAlertController.simpleCancelAlert(self, title: "최신 버전 업데이트", message: "새로운 버전(\(version.major).\(version.minor).\(version.revision))이 출시되었습니다. 업데이트 하시겠습니까?") { action in
+          if UIApplication.shared.canOpenURL(Define.appStoreUrl) {
+            UIApplication.shared.open(Define.appStoreUrl, options: [:], completionHandler: nil)
+          }
         }
-        strongSelf.viewModel.configureUser()
-        strongSelf.isConfigured = true
-      case .phoneRequired:
-        if let vc = R.storyboard.main.phoneCheckViewController() {
-          vc.phoneCertifyDone = strongSelf.viewModel.phoneCertifyDone
-          strongSelf.present(vc, animated: true, completion: nil)
-        }
-      case .failed:
-        break
       }
     }).disposed(by: disposeBag)
     
-    let dataSource = RxTableViewSectionedAnimatedDataSource<PromiseSectionModel>(configureCell: configureCell)
-    
-    viewModel.promiseItems
-      .bind(to: promiseListTableView.rx.items(dataSource: dataSource))
-      .disposed(by: disposeBag)
-    
-    Observable.zip(promiseListTableView.rx.itemSelected, promiseListTableView.rx.modelSelected(GetUserWithPromisesQuery.Data.User.Pocket.PromiseList.self)).bind { [weak self] indexPath, promise in
-      guard let strongSelf = self else { return }
-      strongSelf.promiseListTableView.deselectRow(at: indexPath, animated: true)
-      strongSelf.viewModel.actions.pushPromiseDetailScene.execute(promise.id ?? "")
+    Observable.zip(promiseCollectionView.rx.itemSelected, promiseCollectionView.rx.modelSelected(PromiseItem.self)).bind { [weak self] indexPath, promise in
+      guard let `self` = self else { return }
+      self.promiseCollectionView.deselectItem(at: indexPath, animated: true)
       
-      strongSelf.navigationController?.navigationBar.backgroundColor = .darkSkyBlue
-      strongSelf.navigationController?.navigationBar.barStyle = .blackOpaque
+      if !promise.isAllowed, let name = promise.name.removingPercentEncoding {
+        UIAlertController.simpleCancelAlert(self, title: "약속 참여", message: "\(name)에 참여하시겠습니까? 단, 약속 2시간 전부터 서로의 위치가 공유됩니다", callback: { action in
+          PromiseItem.participate(id: promise.id)
+          self.viewModel.actions.pushPromiseDetailScene.execute(promise)
+        }, onCancel: { action in
+          self.viewModel.inputs.leftPromise.onNext(promise)
+        })
+      } else {
+        self.viewModel.actions.pushPromiseDetailScene.execute(promise)
+      }
+      
     }.disposed(by: disposeBag)
     
     viewModel.promiseItems.subscribe(onNext: { [weak self] sectionModel in
@@ -104,25 +101,12 @@ class MainViewController: UIViewController, BindableType {
       let timeFormat = DateFormatter()
       timeFormat.dateFormat = "yyyy.MM"
       
-      let dateTime = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? Date()
+      let dateTime = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? Date.distantPast
       return timeFormat.string(from: dateTime)
       }.bind(to: monthSelectButton.rx.title())
       .disposed(by: disposeBag)
     
     newPromiseButton.rx.action = viewModel.actions.pushNewPromiseScene
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    if needSignIn {
-      if let vc = R.storyboard.main.entranceViewController() {
-        vc.signInDone = viewModel.signInDone
-        present(vc, animated: true, completion: nil)
-        needSignIn = false
-      }
-    } else if !isConfigured {
-      viewModel.signInDone.onNext(())
-    }
   }
   
   @IBAction func selectMonth(_ sender: Any) {
@@ -140,4 +124,3 @@ class MainViewController: UIViewController, BindableType {
     }
   }
 }
-

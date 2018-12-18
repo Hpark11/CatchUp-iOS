@@ -9,14 +9,23 @@
 /* Begin PBXBuildFile section */
 		2D21762642317F57372FC052 /* Pods_Audigo_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C23B93B7ECC5C9C81403950 /* Pods_Audigo_iOSTests.framework */; };
 		A0481508A224CCDA166030F8 /* Pods_Audigo_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF180CA1884787B3CEF28CED /* Pods_Audigo_iOSUITests.framework */; };
+		CE038B0321650602001D140B /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0221650602001D140B /* Define.swift */; };
+		CE038B0521650784001D140B /* APIKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0421650784001D140B /* APIKeyProvider.swift */; };
+		CE038B07216508E8001D140B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B06216508E8001D140B /* API.swift */; };
+		CE038B0921662D6B001D140B /* EntranceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0821662D6B001D140B /* EntranceViewModel.swift */; };
+		CE038B0B21662DC4001D140B /* EntranceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0A21662DC4001D140B /* EntranceScene.swift */; };
+		CE038B0D2166329B001D140B /* RxAppSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE038B0C2166329B001D140B /* RxAppSync.swift */; };
+		CE1A3606217F57380025F64F /* UIAlert+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A3605217F57380025F64F /* UIAlert+Ext.swift */; };
+		CE1A7C152185AB2900B1F655 /* KMTLocationTemplate+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A7C142185AB2900B1F655 /* KMTLocationTemplate+Ext.swift */; };
+		CE1EF0BC217B0A0200E80E70 /* PromiseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */; };
 		CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */; };
 		CE22AEF121311A03004477E8 /* MonthPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */; };
 		CE22AEF321313C72004477E8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22AEF221313C72004477E8 /* UIColor+Ext.swift */; };
-		CE22C76E213A558900878BB1 /* ApolloAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22C76D213A558900878BB1 /* ApolloAPIService.swift */; };
-		CE22C770213AA6CC00878BB1 /* PromisePocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22C76F213AA6CC00878BB1 /* PromisePocket.swift */; };
+		CE22C770213AA6CC00878BB1 /* CatchUpContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */; };
 		CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */; };
 		CE280193212575E20066B344 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE280192212575E20066B344 /* ContactItem.swift */; };
-		CE2801952125A55D0066B344 /* RxApollo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2801942125A55D0066B344 /* RxApollo.swift */; };
+		CE290561216B8A5A0061D984 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE290560216B8A5A0061D984 /* AppVersion.swift */; };
+		CE2BB5B62172477600BB05D7 /* PlaceSearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2BB5B52172477600BB05D7 /* PlaceSearchListViewController.swift */; };
 		CE34B4B6211E787100F92D50 /* UpsertUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AA211E787000F92D50 /* UpsertUser.graphql */; };
 		CE34B4B7211E787100F92D50 /* DeletePromiseById.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */; };
 		CE34B4B8211E787100F92D50 /* GetUserWithPromises.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */; };
@@ -28,9 +37,14 @@
 		CE34B4BF211E787100F92D50 /* AttachToken.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B3211E787100F92D50 /* AttachToken.graphql */; };
 		CE34B4C0211E787100F92D50 /* GetPocket.graphql in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B4211E787100F92D50 /* GetPocket.graphql */; };
 		CE34B4C1211E787100F92D50 /* schemaBackup.json in Resources */ = {isa = PBXBuildFile; fileRef = CE34B4B5211E787100F92D50 /* schemaBackup.json */; };
-		CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */; };
-		CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */; };
 		CE3FF957213D6BE000C16338 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */; };
+		CE5AAADC21737081009D96F4 /* PlaceSearchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */; };
+		CE5AAADE2173AB46009D96F4 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AAADD2173AB46009D96F4 /* Destination.swift */; };
+		CE5B023A21847ECC00900414 /* PromiseItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B023921847ECC00900414 /* PromiseItemViewModel.swift */; };
+		CE5B023E218490C100900414 /* PromiseRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B023D218490C100900414 /* PromiseRepresentable.swift */; };
+		CE63A7E2217636A400ED386F /* CatchUpAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A7E1217636A400ED386F /* CatchUpAnnotationView.swift */; };
+		CE63A7E4217636E500ED386F /* CatchUpAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE63A7E3217636E500ED386F /* CatchUpAnnotationView.xib */; };
+		CE63A7E621763F2F00ED386F /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE63A7E521763F2F00ED386F /* Member.swift */; };
 		CE72ECFA2136B49F004BC9C6 /* CatchUpMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */; };
 		CE72ECFC2136B4AC004BC9C6 /* CatchUpMarkerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */; };
 		CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */; };
@@ -39,9 +53,15 @@
 		CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */; };
 		CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */; };
 		CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */; };
+		CE7B0DC52167969F007DAA2A /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DC42167969F007DAA2A /* Array+Ext.swift */; };
+		CE7B0DC721685B6D007DAA2A /* ContextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DC621685B6D007DAA2A /* ContextError.swift */; };
+		CE7B0DC921686763007DAA2A /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DC821686763007DAA2A /* UserDefaultService.swift */; };
+		CE7B0DCB21686E32007DAA2A /* Formatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */; };
+		CE7B0DCD21687C10007DAA2A /* PushMessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B0DCC21687C10007DAA2A /* PushMessageService.swift */; };
 		CE7D369020DA7D2E003E8823 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */; };
 		CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */; };
 		CE825F9021205BF800697F52 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE825F8F21205BF800697F52 /* Util.swift */; };
+		CE914BF0216A39BE00B80121 /* PromiseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE914BEF216A39BE00B80121 /* PromiseCollectionViewCell.swift */; };
 		CEA2EA1E21357AA5006F05C3 /* PromiseInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA2EA1D21357AA5006F05C3 /* PromiseInputView.swift */; };
 		CEA2EA2021357AB2006F05C3 /* PromiseInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA2EA1F21357AB2006F05C3 /* PromiseInputView.xib */; };
 		CEAD38B321230B63009B0A5A /* MemberSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */; };
@@ -58,8 +78,10 @@
 		CEBD21F121344F570039A457 /* KakaoLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD21F021344F570039A457 /* KakaoLink.framework */; };
 		CEBD21F321344F900039A457 /* KakaoCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD21F221344F900039A457 /* KakaoCommon.framework */; };
 		CEBD21F521344FAE0039A457 /* KakaoMessageTemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD21F421344FAE0039A457 /* KakaoMessageTemplate.framework */; };
+		CEC9A415216D04D600DC322B /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9A414216D04D600DC322B /* MapSearchViewController.swift */; };
 		CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */; };
 		CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */; };
+		CECE30682180AE7C00BA150A /* PromiseDetailUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE30672180AE7C00BA150A /* PromiseDetailUserViewModel.swift */; };
 		CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */; };
 		CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAD20C979040063D89F /* AppDelegate.swift */; };
 		CED4CCB020C979040063D89F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCAF20C979040063D89F /* MainViewController.swift */; };
@@ -71,6 +93,7 @@
 		CED4CCD120C979060063D89F /* Audigo_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4CCD020C979060063D89F /* Audigo_iOSUITests.swift */; };
 		CED6494B212B803100C6BD6D /* LocationTrackingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED6494A212B803100C6BD6D /* LocationTrackingService.swift */; };
 		CED6494D212B80E600C6BD6D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED6494C212B80E600C6BD6D /* CoreLocation.framework */; };
+		CED88AA5216656BD0045E2E5 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED88AA4216656BD0045E2E5 /* UserInfo.swift */; };
 		CEEE5D9C212717090023E2FC /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */; };
 		CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */; };
 		CEEE5DA02127D6540023E2FC /* PromiseDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */; };
@@ -103,14 +126,23 @@
 		A15A740631A4179D9F919E4F /* Pods-Audigo-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSTests/Pods-Audigo-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B5DF70456DCA29CA99440351 /* Pods-Audigo-iOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOSUITests/Pods-Audigo-iOSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CA541320104F8C0FED8535D0 /* Pods-Audigo-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Audigo-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		CE038B0221650602001D140B /* Define.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
+		CE038B0421650784001D140B /* APIKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyProvider.swift; sourceTree = "<group>"; };
+		CE038B06216508E8001D140B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = SOURCE_ROOT; };
+		CE038B0821662D6B001D140B /* EntranceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceViewModel.swift; sourceTree = "<group>"; };
+		CE038B0A21662DC4001D140B /* EntranceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceScene.swift; sourceTree = "<group>"; };
+		CE038B0C2166329B001D140B /* RxAppSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxAppSync.swift; sourceTree = "<group>"; };
+		CE1A3605217F57380025F64F /* UIAlert+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlert+Ext.swift"; sourceTree = "<group>"; };
+		CE1A7C142185AB2900B1F655 /* KMTLocationTemplate+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KMTLocationTemplate+Ext.swift"; sourceTree = "<group>"; };
+		CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseItem.swift; sourceTree = "<group>"; };
 		CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSelectPickerView.swift; sourceTree = "<group>"; };
 		CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPopupViewController.swift; sourceTree = "<group>"; };
 		CE22AEF221313C72004477E8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
-		CE22C76D213A558900878BB1 /* ApolloAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApolloAPIService.swift; path = "Audigo-iOS/ApolloAPIService.swift"; sourceTree = SOURCE_ROOT; };
-		CE22C76F213AA6CC00878BB1 /* PromisePocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromisePocket.swift; sourceTree = "<group>"; };
+		CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpContact.swift; sourceTree = "<group>"; };
 		CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
 		CE280192212575E20066B344 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
-		CE2801942125A55D0066B344 /* RxApollo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxApollo.swift; sourceTree = "<group>"; };
+		CE290560216B8A5A0061D984 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		CE2BB5B52172477600BB05D7 /* PlaceSearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchListViewController.swift; sourceTree = "<group>"; };
 		CE34B4AA211E787000F92D50 /* UpsertUser.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UpsertUser.graphql; sourceTree = "<group>"; };
 		CE34B4AB211E787000F92D50 /* DeletePromiseById.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DeletePromiseById.graphql; sourceTree = "<group>"; };
 		CE34B4AC211E787000F92D50 /* GetUserWithPromises.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetUserWithPromises.graphql; sourceTree = "<group>"; };
@@ -122,10 +154,15 @@
 		CE34B4B3211E787100F92D50 /* AttachToken.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AttachToken.graphql; sourceTree = "<group>"; };
 		CE34B4B4211E787100F92D50 /* GetPocket.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GetPocket.graphql; sourceTree = "<group>"; };
 		CE34B4B5211E787100F92D50 /* schemaBackup.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schemaBackup.json; sourceTree = "<group>"; };
-		CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCheckViewController.swift; sourceTree = "<group>"; };
-		CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTableViewCell.swift; sourceTree = "<group>"; };
 		CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Audigo-iOS.entitlements"; sourceTree = "<group>"; };
+		CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchListTableViewCell.swift; sourceTree = "<group>"; };
+		CE5AAADD2173AB46009D96F4 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
+		CE5B023921847ECC00900414 /* PromiseItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseItemViewModel.swift; sourceTree = "<group>"; };
+		CE5B023D218490C100900414 /* PromiseRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseRepresentable.swift; sourceTree = "<group>"; };
+		CE63A7E1217636A400ED386F /* CatchUpAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpAnnotationView.swift; sourceTree = "<group>"; };
+		CE63A7E3217636E500ED386F /* CatchUpAnnotationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatchUpAnnotationView.xib; sourceTree = "<group>"; };
+		CE63A7E521763F2F00ED386F /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpMarkerView.swift; sourceTree = "<group>"; };
 		CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CatchUpMarkerView.xib; sourceTree = "<group>"; };
 		CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPromiseViewController.swift; sourceTree = "<group>"; };
@@ -134,10 +171,16 @@
 		CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailViewController.swift; sourceTree = "<group>"; };
 		CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePopupViewController.swift; sourceTree = "<group>"; };
 		CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePopupViewController.swift; sourceTree = "<group>"; };
+		CE7B0DC42167969F007DAA2A /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
+		CE7B0DC621685B6D007DAA2A /* ContextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextError.swift; sourceTree = "<group>"; };
+		CE7B0DC821686763007DAA2A /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
+		CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Ext.swift"; sourceTree = "<group>"; };
+		CE7B0DCC21687C10007DAA2A /* PushMessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushMessageService.swift; sourceTree = "<group>"; };
 		CE7D368F20DA7D2E003E8823 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		CE7D369120DA803B003E8823 /* KakaoOpenSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KakaoOpenSDK-Bridging-Header.h"; sourceTree = "<group>"; };
 		CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
 		CE825F8F21205BF800697F52 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		CE914BEF216A39BE00B80121 /* PromiseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseCollectionViewCell.swift; sourceTree = "<group>"; };
 		CEA2EA1D21357AA5006F05C3 /* PromiseInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInputView.swift; sourceTree = "<group>"; };
 		CEA2EA1F21357AB2006F05C3 /* PromiseInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PromiseInputView.xib; sourceTree = "<group>"; };
 		CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectTableViewCell.swift; sourceTree = "<group>"; };
@@ -154,8 +197,10 @@
 		CEBD21F021344F570039A457 /* KakaoLink.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoLink.framework; sourceTree = "<group>"; };
 		CEBD21F221344F900039A457 /* KakaoCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoCommon.framework; sourceTree = "<group>"; };
 		CEBD21F421344FAE0039A457 /* KakaoMessageTemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoMessageTemplate.framework; sourceTree = "<group>"; };
+		CEC9A414216D04D600DC322B /* MapSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
 		CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSelectedCollectionViewCell.swift; sourceTree = "<group>"; };
 		CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseConfirmViewController.swift; sourceTree = "<group>"; };
+		CECE30672180AE7C00BA150A /* PromiseDetailUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailUserViewModel.swift; sourceTree = "<group>"; };
 		CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		CED4CCAA20C979040063D89F /* Audigo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Audigo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED4CCAD20C979040063D89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +218,7 @@
 		CED4CCD220C979060063D89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CED6494A212B803100C6BD6D /* LocationTrackingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTrackingService.swift; sourceTree = "<group>"; };
 		CED6494C212B80E600C6BD6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CED88AA4216656BD0045E2E5 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
 		CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailScene.swift; sourceTree = "<group>"; };
 		CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailViewModel.swift; sourceTree = "<group>"; };
@@ -229,22 +275,138 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		CE280191212575B10066B344 /* Data */ = {
+		CE1EF0BA217B09C800E80E70 /* Local */ = {
 			isa = PBXGroup;
 			children = (
 				CE280192212575E20066B344 /* ContactItem.swift */,
-				CE22C76F213AA6CC00878BB1 /* PromisePocket.swift */,
+				CE1EF0BB217B0A0200E80E70 /* PromiseItem.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		CE280191212575B10066B344 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				CE5B023C218490B400900414 /* Protocols */,
+				CE1EF0BA217B09C800E80E70 /* Local */,
+				CE5AAADF2173AB4B009D96F4 /* Annotation */,
+				CE22C76F213AA6CC00878BB1 /* CatchUpContact.swift */,
+				CED88AA4216656BD0045E2E5 /* UserInfo.swift */,
+				CE290560216B8A5A0061D984 /* AppVersion.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		CE5AAADF2173AB4B009D96F4 /* Annotation */ = {
+			isa = PBXGroup;
+			children = (
+				CE5AAADD2173AB46009D96F4 /* Destination.swift */,
+				CE63A7E521763F2F00ED386F /* Member.swift */,
+			);
+			path = Annotation;
+			sourceTree = "<group>";
+		};
+		CE5B023721847E5900900414 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				CEB41F062115C4A6006BC729 /* MainViewModel.swift */,
+				CE5B023921847ECC00900414 /* PromiseItemViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		CE5B023821847E6200900414 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CE914BEF216A39BE00B80121 /* PromiseCollectionViewCell.swift */,
+				CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		CE5B023B218490A800900414 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CEB41F022115C41B006BC729 /* BindableTypes.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CE5B023C218490B400900414 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CE5B023D218490C100900414 /* PromiseRepresentable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CE5B023F2184A0C500900414 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */,
+				CECE30672180AE7C00BA150A /* PromiseDetailUserViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		CE5B02402184B24400900414 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CEEE5DA4212817F50023E2FC /* PromiseDetailUserTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		CE5B02412184B25600900414 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */,
+				CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */,
+				CE5AAADB21737081009D96F4 /* PlaceSearchListTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		CE5B02422184B40A00900414 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		CE5B02432184B43C00900414 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */,
+				CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */,
+				CEC9A414216D04D600DC322B /* MapSearchViewController.swift */,
+				CE2BB5B52172477600BB05D7 /* PlaceSearchListViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		CE5B02442184CBD400900414 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */,
+				CEA2EA1D21357AA5006F05C3 /* PromiseInputView.swift */,
+				CEA2EA1F21357AB2006F05C3 /* PromiseInputView.xib */,
+				CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */,
+				CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */,
+				CE63A7E1217636A400ED386F /* CatchUpAnnotationView.swift */,
+				CE63A7E3217636E500ED386F /* CatchUpAnnotationView.xib */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 		CE77EDC521206AE4007A6BF6 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				CE5B02402184B24400900414 /* Cells */,
+				CE5B023F2184A0C500900414 /* View Models */,
 				CE77EDCD21208A7E007A6BF6 /* PromiseDetailViewController.swift */,
 				CEEE5D9D2127D5BA0023E2FC /* PromiseDetailScene.swift */,
-				CEEE5D9F2127D6540023E2FC /* PromiseDetailViewModel.swift */,
-				CEEE5DA4212817F50023E2FC /* PromiseDetailUserTableViewCell.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -252,13 +414,11 @@
 		CE77EDC621206AF4007A6BF6 /* Add */ = {
 			isa = PBXGroup;
 			children = (
+				CE5B02432184B43C00900414 /* View Controllers */,
+				CE5B02422184B40A00900414 /* View Models */,
+				CE5B02412184B25600900414 /* Cells */,
 				CE77EDC721207191007A6BF6 /* NewPromiseViewController.swift */,
 				CE77EDC9212071F9007A6BF6 /* NewPromiseScene.swift */,
-				CE77EDCB21207204007A6BF6 /* NewPromiseViewModel.swift */,
-				CE25BB972121D94A00D1273C /* MemberSelectViewController.swift */,
-				CEAD38B221230B63009B0A5A /* MemberSelectTableViewCell.swift */,
-				CECB07672132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift */,
-				CECB07692132F09B00AFB1D1 /* PromiseConfirmViewController.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -266,14 +426,10 @@
 		CE77EDCF2120962E007A6BF6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				CE5B02442184CBD400900414 /* Custom Views */,
 				CE77EDD021209649007A6BF6 /* DatePopupViewController.swift */,
 				CE77EDD221209655007A6BF6 /* TimePopupViewController.swift */,
-				CE22AEEE21311291004477E8 /* MonthSelectPickerView.swift */,
 				CE22AEF021311A03004477E8 /* MonthPopupViewController.swift */,
-				CEA2EA1D21357AA5006F05C3 /* PromiseInputView.swift */,
-				CEA2EA1F21357AB2006F05C3 /* PromiseInputView.xib */,
-				CE72ECF92136B49F004BC9C6 /* CatchUpMarkerView.swift */,
-				CE72ECFB2136B4AC004BC9C6 /* CatchUpMarkerView.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -281,10 +437,10 @@
 		CEB41EF52115C227006BC729 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				CE22C76D213A558900878BB1 /* ApolloAPIService.swift */,
+				CE038B06216508E8001D140B /* API.swift */,
 				CED4CCAD20C979040063D89F /* AppDelegate.swift */,
 				CE825F8F21205BF800697F52 /* Util.swift */,
-				CE2801942125A55D0066B344 /* RxApollo.swift */,
+				CE038B0221650602001D140B /* Define.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -297,7 +453,6 @@
 				CE77EDC521206AE4007A6BF6 /* Detail */,
 				CEB41F0D2115C545006BC729 /* Enter */,
 				CEB41F0C2115C541006BC729 /* Main */,
-				CEB41F022115C41B006BC729 /* BindableTypes.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -317,11 +472,10 @@
 		CEB41F0C2115C541006BC729 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				CE5B023821847E6200900414 /* Cells */,
+				CE5B023721847E5900900414 /* View Models */,
 				CED4CCAF20C979040063D89F /* MainViewController.swift */,
 				CEB41F042115C484006BC729 /* MainScene.swift */,
-				CEB41F062115C4A6006BC729 /* MainViewModel.swift */,
-				CE34B4CA211EFE7800F92D50 /* PromiseTableViewCell.swift */,
-				CED44215211F081D000D2A8C /* MemberCollectionViewCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -329,9 +483,10 @@
 		CEB41F0D2115C545006BC729 /* Enter */ = {
 			isa = PBXGroup;
 			children = (
+				CE038B0A21662DC4001D140B /* EntranceScene.swift */,
 				CEB41F082115C4F4006BC729 /* EntranceViewController.swift */,
+				CE038B0821662D6B001D140B /* EntranceViewModel.swift */,
 				CEB41F0A2115C52A006BC729 /* PermissionsViewController.swift */,
-				CE34B4C4211E96FA00F92D50 /* PhoneCheckViewController.swift */,
 			);
 			path = Enter;
 			sourceTree = "<group>";
@@ -363,17 +518,18 @@
 		CED4CCAC20C979040063D89F /* Audigo-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */,
-				CED64949212B801E00C6BD6D /* Service */,
-				CED4CCBC20C979060063D89F /* Info.plist */,
-				CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */,
 				CEB41EF52115C227006BC729 /* App */,
 				CEEE5DA1212814AB0023E2FC /* Assets */,
+				CE3FF958213D6E6900C16338 /* Audigo-iOS.entitlements */,
 				CEB41EF72115C3A4006BC729 /* Coordinator */,
 				CE280191212575B10066B344 /* Data */,
-				CEEF4B942117260B002BEF65 /* Resource */,
-				CEB41EF62115C2AF006BC729 /* UI */,
 				CEEE5D9A2127149B0023E2FC /* Extension */,
+				CE3FF956213D6BE000C16338 /* GoogleService-Info.plist */,
+				CED4CCBC20C979060063D89F /* Info.plist */,
+				CE5B023B218490A800900414 /* Protocols */,
+				CEEF4B942117260B002BEF65 /* Resource */,
+				CED64949212B801E00C6BD6D /* Service */,
+				CEB41EF62115C2AF006BC729 /* UI */,
 			);
 			path = "Audigo-iOS";
 			sourceTree = "<group>";
@@ -400,6 +556,8 @@
 			isa = PBXGroup;
 			children = (
 				CED6494A212B803100C6BD6D /* LocationTrackingService.swift */,
+				CE7B0DC821686763007DAA2A /* UserDefaultService.swift */,
+				CE7B0DCC21687C10007DAA2A /* PushMessageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -410,6 +568,13 @@
 				CEEE5D9B212717090023E2FC /* UITableView+Ext.swift */,
 				CE22AEF221313C72004477E8 /* UIColor+Ext.swift */,
 				CE7FF32B21318A2F00279DDE /* UIApplication+Ext.swift */,
+				CE038B0421650784001D140B /* APIKeyProvider.swift */,
+				CE038B0C2166329B001D140B /* RxAppSync.swift */,
+				CE7B0DC42167969F007DAA2A /* Array+Ext.swift */,
+				CE7B0DC621685B6D007DAA2A /* ContextError.swift */,
+				CE7B0DCA21686E32007DAA2A /* Formatter+Ext.swift */,
+				CE1A3605217F57380025F64F /* UIAlert+Ext.swift */,
+				CE1A7C142185AB2900B1F655 /* KMTLocationTemplate+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -467,7 +632,6 @@
 			buildPhases = (
 				4998EC94FBBA764A6C27DB0C /* [CP] Check Pods Manifest.lock */,
 				CE7D369220DA8504003E8823 /* Run R.Swift Phase */,
-				CE7D369520DA8A3F003E8823 /* Generate Apollo GraphQL API */,
 				CED4CCA620C979040063D89F /* Sources */,
 				CED4CCA720C979040063D89F /* Frameworks */,
 				CED4CCA820C979040063D89F /* Resources */,
@@ -574,6 +738,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE63A7E4217636E500ED386F /* CatchUpAnnotationView.xib in Resources */,
 				CED4CCBB20C979060063D89F /* LaunchScreen.storyboard in Resources */,
 				CE34B4BB211E787100F92D50 /* GetPromise.graphql in Resources */,
 				CE34B4B9211E787100F92D50 /* UpdatePromise.graphql in Resources */,
@@ -638,46 +803,68 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Audigo-iOS/Pods-Audigo-iOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSAppSync/AWSAppSync.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/Action/Action.framework",
-				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
 				"${BUILT_PRODUCTS_DIR}/Permission/Permission.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxKeyboard/RxKeyboard.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyContacts/SwiftyContacts.framework",
+				"${BUILT_PRODUCTS_DIR}/ToastKit/ToastKit.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAppSync.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Permission.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxKeyboard.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyContacts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ToastKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -716,20 +903,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"";
-		};
-		CE7D369520DA8A3F003E8823 /* Generate Apollo GraphQL API */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Apollo GraphQL API";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-codegen.sh generate $(find . -name '*.graphql') --schema schema.json --output ApolloAPIService.swift";
 		};
 		D02596870FAEDD9BABFE5494 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -774,32 +947,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CECE30682180AE7C00BA150A /* PromiseDetailUserViewModel.swift in Sources */,
 				CEB41F032115C41B006BC729 /* BindableTypes.swift in Sources */,
+				CE7B0DCD21687C10007DAA2A /* PushMessageService.swift in Sources */,
+				CE2BB5B62172477600BB05D7 /* PlaceSearchListViewController.swift in Sources */,
 				CED4CCB620C979040063D89F /* Audigo_iOS.xcdatamodeld in Sources */,
 				CECB07682132D91000AFB1D1 /* MemberSelectedCollectionViewCell.swift in Sources */,
+				CE038B0921662D6B001D140B /* EntranceViewModel.swift in Sources */,
 				CEB41EFE2115C3FF006BC729 /* SceneTransitionType.swift in Sources */,
-				CE34B4C5211E96FA00F92D50 /* PhoneCheckViewController.swift in Sources */,
+				CE1A7C152185AB2900B1F655 /* KMTLocationTemplate+Ext.swift in Sources */,
+				CE63A7E2217636A400ED386F /* CatchUpAnnotationView.swift in Sources */,
 				CE25BB982121D94A00D1273C /* MemberSelectViewController.swift in Sources */,
 				CEEE5DA5212817F50023E2FC /* PromiseDetailUserTableViewCell.swift in Sources */,
+				CE5AAADE2173AB46009D96F4 /* Destination.swift in Sources */,
 				CEAD38B321230B63009B0A5A /* MemberSelectTableViewCell.swift in Sources */,
 				CE77EDD321209655007A6BF6 /* TimePopupViewController.swift in Sources */,
 				CEB41F012115C3FF006BC729 /* AppCoordinator.swift in Sources */,
 				CE77EDCC21207204007A6BF6 /* NewPromiseViewModel.swift in Sources */,
 				CE22AEF321313C72004477E8 /* UIColor+Ext.swift in Sources */,
+				CE038B0521650784001D140B /* APIKeyProvider.swift in Sources */,
 				CEB41F092115C4F4006BC729 /* EntranceViewController.swift in Sources */,
 				CE77EDCE21208A7E007A6BF6 /* PromiseDetailViewController.swift in Sources */,
 				CEEE5D9C212717090023E2FC /* UITableView+Ext.swift in Sources */,
-				CE22C770213AA6CC00878BB1 /* PromisePocket.swift in Sources */,
+				CE22C770213AA6CC00878BB1 /* CatchUpContact.swift in Sources */,
 				CE72ECFA2136B49F004BC9C6 /* CatchUpMarkerView.swift in Sources */,
 				CE77EDD121209649007A6BF6 /* DatePopupViewController.swift in Sources */,
+				CE7B0DCB21686E32007DAA2A /* Formatter+Ext.swift in Sources */,
 				CE280193212575E20066B344 /* ContactItem.swift in Sources */,
+				CE1EF0BC217B0A0200E80E70 /* PromiseItem.swift in Sources */,
 				CE22AEEF21311291004477E8 /* MonthSelectPickerView.swift in Sources */,
-				CE2801952125A55D0066B344 /* RxApollo.swift in Sources */,
+				CE914BF0216A39BE00B80121 /* PromiseCollectionViewCell.swift in Sources */,
+				CE5B023E218490C100900414 /* PromiseRepresentable.swift in Sources */,
+				CEC9A415216D04D600DC322B /* MapSearchViewController.swift in Sources */,
+				CE5B023A21847ECC00900414 /* PromiseItemViewModel.swift in Sources */,
+				CE1A3606217F57380025F64F /* UIAlert+Ext.swift in Sources */,
 				CE77EDC821207191007A6BF6 /* NewPromiseViewController.swift in Sources */,
 				CE825F9021205BF800697F52 /* Util.swift in Sources */,
+				CE038B0D2166329B001D140B /* RxAppSync.swift in Sources */,
 				CECB076A2132F09B00AFB1D1 /* PromiseConfirmViewController.swift in Sources */,
+				CED88AA5216656BD0045E2E5 /* UserInfo.swift in Sources */,
+				CE290561216B8A5A0061D984 /* AppVersion.swift in Sources */,
+				CE7B0DC52167969F007DAA2A /* Array+Ext.swift in Sources */,
 				CE77EDCA212071F9007A6BF6 /* NewPromiseScene.swift in Sources */,
 				CEEE5D9E2127D5BA0023E2FC /* PromiseDetailScene.swift in Sources */,
+				CE038B0321650602001D140B /* Define.swift in Sources */,
+				CE7B0DC721685B6D007DAA2A /* ContextError.swift in Sources */,
+				CE63A7E621763F2F00ED386F /* Member.swift in Sources */,
 				CE7FF32C21318A2F00279DDE /* UIApplication+Ext.swift in Sources */,
 				CEB41F0B2115C52A006BC729 /* PermissionsViewController.swift in Sources */,
 				CED6494B212B803100C6BD6D /* LocationTrackingService.swift in Sources */,
@@ -810,13 +1003,15 @@
 				CE22AEF121311A03004477E8 /* MonthPopupViewController.swift in Sources */,
 				CEEE5DA7212843400023E2FC /* R.generated.swift in Sources */,
 				CEEE5DA02127D6540023E2FC /* PromiseDetailViewModel.swift in Sources */,
+				CE038B07216508E8001D140B /* API.swift in Sources */,
 				CED4CCAE20C979040063D89F /* AppDelegate.swift in Sources */,
 				CED44217211F081D000D2A8C /* MemberCollectionViewCell.swift in Sources */,
 				CEB41EFF2115C3FF006BC729 /* Scene.swift in Sources */,
-				CE34B4CB211EFE7800F92D50 /* PromiseTableViewCell.swift in Sources */,
+				CE038B0B21662DC4001D140B /* EntranceScene.swift in Sources */,
+				CE5AAADC21737081009D96F4 /* PlaceSearchListTableViewCell.swift in Sources */,
+				CE7B0DC921686763007DAA2A /* UserDefaultService.swift in Sources */,
 				CEB41F052115C484006BC729 /* MainScene.swift in Sources */,
 				CEB41EFD2115C3FF006BC729 /* SceneCoordinatorType.swift in Sources */,
-				CE22C76E213A558900878BB1 /* ApolloAPIService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1000,18 +1195,11 @@
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
 					"\"Action\"",
-					"-framework",
-					"\"Apollo\"",
-					"-framework",
-					"\"Differentiator\"",
 					"-framework",
 					"\"NSObject_Rx\"",
 					"-framework",
@@ -1050,18 +1238,11 @@
 				);
 				INFOPLIST_FILE = "Audigo-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
 					"\"Action\"",
-					"-framework",
-					"\"Apollo\"",
-					"-framework",
-					"\"Differentiator\"",
 					"-framework",
 					"\"NSObject_Rx\"",
 					"-framework",
@@ -1094,11 +1275,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1116,11 +1293,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1137,11 +1310,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1158,11 +1327,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R2ESGSL5P9;
 				INFOPLIST_FILE = "Audigo-iOSUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "blackburn.io.Audigo-iOSUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

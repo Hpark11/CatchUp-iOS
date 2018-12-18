@@ -13,10 +13,10 @@ target 'Audigo-iOS' do
   pod 'R.swift'
   pod 'RxKeyboard'
   pod 'RxGesture'
-  pod 'Apollo'
   pod 'RxDataSources', '~> 3.0'
+  pod 'RxRealm'
   pod 'Firebase/Core'
-  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
   pod 'Firebase/Messaging'
   pod 'Kingfisher'
   pod 'GoogleMaps'
@@ -26,6 +26,9 @@ target 'Audigo-iOS' do
   pod 'Permission/Contacts'
   pod 'Permission/Location'
   pod 'Permission/Notifications'
+  pod 'AWSAppSync', '~> 2.6.22'
+  pod 'Google-Mobile-Ads-SDK'
+  pod 'ToastKit'
 
   target 'Audigo-iOSTests' do
     inherit! :search_paths

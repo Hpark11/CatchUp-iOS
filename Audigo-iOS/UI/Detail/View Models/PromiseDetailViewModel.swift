@@ -1,0 +1,165 @@
+//
+//  PromiseDetailViewModel.swift
+//  Audigo-iOS
+//
+//  Created by hPark on 2018. 8. 18..
+//  Copyright © 2018년 BlackBurn. All rights reserved.
+//
+
+import Foundation
+import Action
+import RxSwift
+import RxDataSources
+import AWSAppSync
+
+typealias MemberSectionModel = AnimatableSectionModel<String, PromiseDetailUserViewModel>
+
+protocol PromiseDetailViewModelInputsType {
+  var editPromiseDone: PublishSubject<PromiseItem> { get }
+}
+
+protocol PromiseDetailViewModelOutputsType {
+  var name: Observable<String> { get }
+  var location: Observable<(latitude: Double, longitude: Double)> { get }
+  var timestamp: Observable<TimeInterval> { get }
+  var pocketItems: Observable<[MemberSectionModel]> { get }
+  var isOwner: Observable<Bool> { get }
+  var push: Observable<String> { get }
+}
+
+protocol PromiseDetailViewModelActionsType {
+  var popScene: CocoaAction { get }
+  var refresh: CocoaAction { get }
+  var pushNewPromiseScene: CocoaAction { get }
+}
+
+protocol PromiseDetailViewModelType {
+  var inputs:  PromiseDetailViewModelInputsType  { get }
+  var outputs: PromiseDetailViewModelOutputsType { get }
+  var actions: PromiseDetailViewModelActionsType { get }
+}
+
+class PromiseDetailViewModel: PromiseDetailViewModelType {
+  var inputs:  PromiseDetailViewModelInputsType  { return self }
+  var outputs: PromiseDetailViewModelOutputsType { return self }
+  var actions: PromiseDetailViewModelActionsType { return self }
+  
+  // MARK: Setup
+  fileprivate var sceneCoordinator: SceneCoordinatorType
+  fileprivate let apiClient: AWSAppSyncClient
+  fileprivate let disposeBag: DisposeBag
+  
+  // MARK: Inputs
+  var editPromiseDone: PublishSubject<PromiseItem>
+  
+  // MARK: Outputs
+  var pocketItems: Observable<[MemberSectionModel]>
+  var name: Observable<String>
+  var location: Observable<(latitude: Double, longitude: Double)>
+  var timestamp: Observable<TimeInterval>
+  var isOwner: Observable<Bool>
+  var push: Observable<String>
+
+  var hasPromiseBeenUpdated: PublishSubject<Bool>?
+  var sendMessage: PublishSubject<String>
+  
+  var promise: PromiseItem? {
+    didSet {
+      loadSinglePromise()
+    }
+  }
+  
+  private let promiseName: Variable<String>
+  private let promiseLocation: Variable<(latitude: Double, longitude: Double)>
+  private let promiseTimestamp: Variable<TimeInterval>
+  private let memberInfoList: Variable<[PromiseDetailUserViewModel]>
+  private let owner: Variable<String>
+  private let address: Variable<String>
+  private let sendPush = PublishSubject<String>()
+  
+  init(coordinator: SceneCoordinatorType, client: AWSAppSyncClient) {
+    sceneCoordinator = coordinator
+    apiClient = client
+    disposeBag = DisposeBag()
+    
+    editPromiseDone = PublishSubject()
+    sendMessage = PublishSubject()
+    
+    memberInfoList = Variable([])
+    promiseName = Variable("")
+    promiseLocation = Variable((latitude: 0, longitude: 0))
+    promiseTimestamp = Variable(0)
+    owner = Variable("")
+    address = Variable("")
+    
+    name = promiseName.asObservable()
+    location = promiseLocation.asObservable()
+    timestamp = promiseTimestamp.asObservable()
+    isOwner = owner.asObservable().map { owner in
+      return UserDefaultService.phoneNumber == owner
+    }
+    
+    push = sendPush.asObservable()
+    
+    pocketItems = memberInfoList.asObservable()
+      .map({ (pocketList) in
+        return [MemberSectionModel(model: "", items: pocketList)]
+      })
+    
+    editPromiseDone.subscribe(onNext: { [weak self] promise in
+      guard let strongSelf = self else { return }
+      strongSelf.promise = promise
+    }).disposed(by: disposeBag)
+  }
+  
+  private func loadSinglePromise() {
+    guard let promise = promise else { return }
+    owner.value = promise.owner
+    address.value = promise.address
+    promiseName.value = promise.name
+    promiseTimestamp.value = TimeInterval(promise.dateTime.timeInMillis / 1000)
+    promiseLocation.value = (latitude: promise.latitude, longitude: promise.longitude)
+    
+    apiClient.rx.fetch(query: BatchGetCatchUpContactsQuery(ids: Array(promise.contacts)), cachePolicy: .fetchIgnoringCacheData)
+      .subscribe(onSuccess: { [weak self] data in
+        guard let `self` = self else { return }
+        self.memberInfoList.value = data.batchGetCatchUpContacts?.compactMap {
+          CatchUpContact(dstLat: promise.latitude, dstLng: promise.longitude, contactData: $0)
+          }.map { contact in
+            return PromiseDetailUserViewModel(promise: promise, contact: contact, sendPush: self.sendPush)
+          } ?? []
+      }).disposed(by: disposeBag)
+  }
+
+  lazy var popScene: CocoaAction = {
+    return Action { [weak self] _ in
+      guard let `self` = self else { return .empty() }
+      self.sceneCoordinator.transition(to: MainScene(viewModel: MainViewModel(coordinator: self.sceneCoordinator, client: self.apiClient)), type: .pop(animated: true, level: .parent))
+      return .empty()
+    }
+  }()
+  
+  lazy var refresh: CocoaAction = {
+    return Action { [weak self] _ in
+      guard let `self` = self else { return .empty() }
+      self.loadSinglePromise()
+      return .empty()
+    }
+  }()
+  
+  lazy var pushNewPromiseScene: CocoaAction = {
+    return Action { [weak self] in
+      guard let `self` = self, let phone = UserDefaultService.phoneNumber, let promise = self.promise else { return .empty() }
+      let viewModel = NewPromiseViewModel(coordinator: self.sceneCoordinator, client: self.apiClient, ownerPhoneNumber: phone, editMode: true)
+      let calendar = Calendar(identifier: .gregorian)
+      
+      viewModel.editPromiseDone = self.editPromiseDone
+      viewModel.applyPreviousInfo(promise: promise)
+      
+      let scene = NewPromiseScene(viewModel: viewModel)
+      return self.sceneCoordinator.transition(to: scene, type: .modal(animated: true))
+    }
+  }()
+}
+
+extension PromiseDetailViewModel: PromiseDetailViewModelInputsType, PromiseDetailViewModelOutputsType, PromiseDetailViewModelActionsType {}

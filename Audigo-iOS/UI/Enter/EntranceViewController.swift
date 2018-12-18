@@ -8,30 +8,56 @@
 
 import UIKit
 import RxSwift
+import Permission
 
-class EntranceViewController: UIViewController {
+class EntranceViewController: UIViewController, BindableType {
   @IBOutlet weak var loginButton: UIButton!
-  
-  var signInDone: PublishSubject<Void>?
 
+  var viewModel: EntranceViewModel!
+  private var signInDone: Bool = false
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    let session = KOSession.shared()
+    if let s = session, s.isOpen()  {
+      signInDone = true
+    }
   }
   
   @IBAction func login(_ sender: Any) {
     let session = KOSession.shared()
     
-    session?.open { (error) in
-      if error == nil {
-        if let s = session, s.isOpen() {
-          self.signInDone?.onNext(())
-          self.dismiss(animated: true, completion: nil)
-        } else {
-          print("Fail")
-        }
+    session?.open { [unowned self] (error) in
+      if let error = error {
+        print("Error Sign In: \(error)")
       } else {
-        print("Error Login: \(error)")
+        if let s = session, s.isOpen() {
+          self.viewModel.inputs.sessionOpened.onNext(Void())
+        } else {
+          print("Open Session Failed")
+        }
       }
+    }
+  }
+  
+  func bindViewModel() {}
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    let permissionSet = PermissionSet([.notifications, .locationAlways])
+    guard permissionSet.status == .authorized else {
+      if let vc = R.storyboard.main.permissionsViewController() {
+        present(vc, animated: true, completion: nil)
+      }
+      return
+    }
+
+    if signInDone {
+      viewModel.inputs.sessionOpened.onNext(Void())
+    } else {
+      loginButton.isHidden = false
     }
   }
 }

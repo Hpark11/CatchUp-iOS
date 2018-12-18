@@ -8,53 +8,77 @@
 
 import UIKit
 import CoreData
-import Apollo
 import Firebase
 import GoogleMaps
 import GooglePlaces
 import UserNotifications
 import FirebaseMessaging
-
-let apollo = ApolloClient(url: URL(string: "http://audigodev.ap-northeast-2.elasticbeanstalk.com/graphql")!)
+import AWSAppSync
+import RealmSwift
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   let gcmMessageIDKey = "gcm.message_id"
-  
+  var appSyncClient: AWSAppSyncClient?
+
   fileprivate var coordinator: SceneCoordinatorType?
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    FirebaseApp.configure()
-    GMSServices.provideAPIKey("AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE")
-    GMSPlacesClient.provideAPIKey("AIzaSyDP-770UOi6uLfb7QlIlWK5r-hMYUrRihE")
     
+    // AWS AppSync --------------------------------------------------------------------------------------------]
+    let databaseURL = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent(Define.appsyncLocalDB)
+    
+    do {
+      let appSyncConfig = try AWSAppSyncClientConfiguration(url: Define.appsyncEndpointURL, serviceRegion: .APNortheast2, apiKeyAuthProvider: Define.appsyncKeyAPI, databaseURL: databaseURL)
+      
+      appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
+      appSyncClient?.apolloClient?.cacheKeyForObject = { $0["id"] }
+    } catch {
+      print("Error initializing AppSync client. \(error)")
+    }
+    
+    // Firebase And Google Services ---------------------------------------------------------------------------]
+    FirebaseApp.configure()
+    GMSServices.provideAPIKey(Define.keyGMSService)
+    GMSPlacesClient.provideAPIKey(Define.keyGMSPlace)
+    GADMobileAds.configure(withApplicationID: Define.idGADMobileAds)
+    
+    // Window Config ------------------------------------------------------------------------------------------]
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
-    
     guard let uWindow = window else {
       fatalError("Unable to create application window")
     }
     
-    coordinator = AppCoordinator(window: uWindow)
-    let viewModel = MainViewModel(coordinator: coordinator!)
-    let scene = MainScene(viewModel: viewModel)
-    coordinator?.transition(to: scene, type: .root)
-    
     UINavigationBar.appearance().shadowImage = UIImage()
     UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
     
-    // [START set_messaging_delegate]
+    // App Coordinator  ---------------------------------------------------------------------------------------]
+    coordinator = AppCoordinator(window: uWindow)
+    let viewModel = EntranceViewModel(coordinator: coordinator!, client: appSyncClient!)
+    let scene = EntranceScene(viewModel: viewModel)
+    coordinator?.transition(to: scene, type: .root)
+    
+    // Realm Config  ------------------------------------------------------------------------------------------]
+    let documentsUrl = try! FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+      .appendingPathComponent(Define.rlmFileUrlPathPromises)
+    
+    Realm.Configuration.defaultConfiguration = Realm.Configuration(
+      schemaVersion: 2,
+      migrationBlock: { migration, oldVersion in
+        if (oldVersion < 2) {
+          
+        }
+    })
+    
+    // Push Messaging  ----------------------------------------------------------------------------------------]
     Messaging.messaging().delegate = self
-    // [END set_messaging_delegate]
-    // Register for remote notifications. This shows a permission dialog on first run, to
-    // show the dialog at a more appropriate time move this registration accordingly.
-    // [START register_for_notifications]
+  
     if #available(iOS 10.0, *) {
-      // For iOS 10 display notification (sent via APNS)
       UNUserNotificationCenter.current().delegate = self
-      
       let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
       UNUserNotificationCenter.current().requestAuthorization(
         options: authOptions,
@@ -66,9 +90,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     application.registerForRemoteNotifications()
-    
-    // [END register_for_notifications]
-    
     return true
   }
   
@@ -88,6 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func applicationDidBecomeActive(_ application: UIApplication) {
     KOSession.handleDidBecomeActive()
+    UIApplication.shared.applicationIconBadgeNumber = 0
   }
   
   func applicationWillTerminate(_ application: UIApplication) {
@@ -107,7 +129,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if let messageID = userInfo[gcmMessageIDKey] {
       print("Message ID: \(messageID)")
     }
-    
     // Print full message.
     print(userInfo)
   }
@@ -148,10 +169,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if KOSession.isKakaoAccountLoginCallback(url) {
       return KOSession.handleOpen(url)
     }
+  
     return true
   }
   
   func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    if KLKTalkLinkCenter.shared().isTalkLinkCallback(url) {
+      guard let params = url.query?.components(separatedBy: "&"), params.count >= 2 else { return true }
+      if let promiseId = params[0].components(separatedBy: "=").last?.dropLast(), promiseId.count == UUID().uuidString.count {
+        guard let userId = UserDefaultService.userId else { return true }
+        appSyncClient?.perform(mutation: AddContactIntoPromiseMutation(id: String(promiseId), phone: userId)) { result, error in
+          PromiseItem.add(promise: result?.data?.addContactIntoPromise, isAllowed: false)
+        }
+      }
+      return true
+    }
+    
     if KOSession.isKakaoAccountLoginCallback(url) {
       return KOSession.handleOpen(url)
     }
@@ -204,7 +237,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
-// [START ios_10_message_handling]
 @available(iOS 10, *)
 extension AppDelegate : UNUserNotificationCenterDelegate {
   
@@ -212,58 +244,27 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: UNUserNotificationCenter,
                               willPresent notification: UNNotification,
                               withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-    let userInfo = notification.request.content.userInfo
-    
-    // With swizzling disabled you must let Messaging know about the message, for Analytics
-    // Messaging.messaging().appDidReceiveMessage(userInfo)
-    // Print message ID.
-    if let messageID = userInfo[gcmMessageIDKey] {
-      print("Message ID: \(messageID)")
-    }
-    
-    // Print full message.
-    print(userInfo)
-    
-    // Change this to your preferred presentation option
-    completionHandler([])
+    let _ = notification.request.content.userInfo
+    completionHandler([.alert, .sound])
   }
   
   func userNotificationCenter(_ center: UNUserNotificationCenter,
                               didReceive response: UNNotificationResponse,
                               withCompletionHandler completionHandler: @escaping () -> Void) {
-    let userInfo = response.notification.request.content.userInfo
-    // Print message ID.
-    if let messageID = userInfo[gcmMessageIDKey] {
-      print("Message ID: \(messageID)")
-    }
-    
-    // Print full message.
-    print(userInfo)
-    
+    let _ = response.notification.request.content.userInfo
     completionHandler()
   }
 }
-// [END ios_10_message_handling]
 
 extension AppDelegate : MessagingDelegate {
-  // [START refresh_token]
   func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
     print("Firebase registration token: \(fcmToken)")
-    
-    // TODO: If necessary send token to application server.
-    // Note: This callback is fired at each app startup and whenever a new token is generated.
-    registerToken = fcmToken
+    UserDefaultService.pushToken = fcmToken
   }
-  // [END refresh_token]
-  // [START ios_10_data_message]
-  // Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
-  // To enable direct data messages, you can set Messaging.messaging().shouldEstablishDirectChannel to true.
+
   func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
     print("Received data message: \(remoteMessage.appData)")
   }
-  // [END ios_10_data_message]
 }
-
-var registerToken: String?
 
 

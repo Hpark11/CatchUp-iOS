@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.5</string>
+	<string>1.0.12</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -39,6 +39,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<true/>
 	<key>KAKAO_APP_KEY</key>
 	<string>dccae63cb73bd8096d09826d2e0ce581</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -58,15 +60,16 @@
 		<true/>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string>This App Needs Contacts</string>
+	<string>This App Needs your Contact information in order to select a group of users when make new promise</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This App Needs Location in order to view each other's locations when the group of users promised</string>
+	<string>This App Needs Location in order to check each other&apos;s location when the group of users agreed to set their meetings. Each Users Location Data will be stored in the server only from 2 hours earlier to an hour later</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This App Needs Location in order to view each other's locations when the group of users promised</string>
+	<string>This App Needs Location in order to check each other&apos;s location when the group of users agreed to set their meetings. Each Users Location Data will be stored in the server only from 2 hours earlier to an hour later</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This App Needs Location in order to view each other's locations when the group of users promised</string>
+	<string>This App Needs Location in order to check each other&apos;s location when the group of users agreed to set their meetings. Each Users Location Data will be stored in the server only from 2 hours earlier to an hour later</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
 		<string>location</string>
 		<string>remote-notification</string>
 	</array>
